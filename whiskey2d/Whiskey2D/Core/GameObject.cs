@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
-    class GameObject
+    public class GameObject
     {
         private static int idCounter = 0;
 

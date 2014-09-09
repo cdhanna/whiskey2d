@@ -18,7 +18,9 @@ namespace Whiskey2D
     public class GameManager : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        
+        RenderManager renMan;
+
 
         public GameManager()
             : base()
@@ -50,8 +52,8 @@ namespace Whiskey2D
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
+            renMan = new RenderManager(GraphicsDevice);
             // TODO: use this.Content to load your game content here
         }
 
@@ -87,8 +89,7 @@ namespace Whiskey2D
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-
+            this.renMan.render();
             base.Draw(gameTime);
         }
     }

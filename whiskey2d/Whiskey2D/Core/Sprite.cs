@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
-    class Sprite
+    public class Sprite
     {
     }
 }
