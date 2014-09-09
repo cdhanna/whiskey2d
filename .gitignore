@@ -5,6 +5,9 @@
 *.suo
 *.user
 *.sln.docstates
+*.exe
+*.pdb
+whiskey2d/Whiskey2D/bin*
 
 # Build results
 [Dd]ebug/
