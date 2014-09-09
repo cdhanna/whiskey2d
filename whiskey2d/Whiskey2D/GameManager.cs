@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Whiskey2D.Core;
 #endregion
 
 namespace Whiskey2D
@@ -14,12 +15,12 @@ namespace Whiskey2D
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class GameManager : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        public GameManager()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +35,10 @@ namespace Whiskey2D
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            GameObject gob = new GameObject();
+            gob.Position = Vector2.Zero;
+            Sprite s = gob.Sprite;
+            
 
             base.Initialize();
         }
