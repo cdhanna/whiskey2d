@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
-    public class GameObject
+    public abstract class GameObject 
     {
         private static int idCounter = 0;
 
@@ -20,20 +20,65 @@ namespace Whiskey2D.Core
             Sprite = null;
             ID = idCounter++;
 
+            
+            //scripts = new List<Script <t> >();
             ObjectManager.getInstance().addObject(this);
 
         }
 
-        public Vector2 Position { get; set; }
-        public Sprite Sprite { get; set; }
-        public int ID { get; set; }
+        private Vector2 position;
+        private Sprite sprite;
+        private int id;
+        private Type type;
+       
+        private List<Script<GameObject>> scripts; //TODO fix
+
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+        public Sprite Sprite
+        {
+            get
+            {
+                return sprite;
+            }
+            set
+            {
+                sprite = value;
+            }
+        }
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
+        }
 
         /// <summary>
         /// Initializes the GameObject
         /// </summary>
         public void init()
         {
-            
+
+            //foreach (Script script in scripts)
+            //{
+            //    script.onStart();
+            //}
+
+
         }
 
         /// <summary>
@@ -44,15 +89,30 @@ namespace Whiskey2D.Core
             ObjectManager.getInstance().removeObject(this);
         }
 
-     
+        //public void addScript(Script<GameObject> s) 
+        //{
+        //    this.scripts.Add(s);
+        //}
 
-        public void update()
+        protected void addScript<T>(Script<T> script) where T : GameObject
         {
+            script.GameObject = (T)this;
 
-           
+            
+            
+            //scripts.Add(script);
         }
 
 
+        public void update()
+        {
+            foreach (Script<GameObject> script in scripts)
+            {
+                script.onUpdate();
+            }
+        }
+
+        //public abstract void update();
 
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Whiskey2D.Core;
+
+using Whiskey2D.TestImpl;
 #endregion
 
 namespace Whiskey2D
@@ -22,6 +24,7 @@ namespace Whiskey2D
         RenderManager renMan;
         ObjectManager objMan;
         ResourceManager resMan;
+        InputManager inMan;
 
         public GameManager()
             : base()
@@ -32,6 +35,7 @@ namespace Whiskey2D
             renMan = RenderManager.getInstance();
             objMan = ObjectManager.getInstance();
             resMan = ResourceManager.getInstance();
+            inMan = InputManager.getInstance();
         }
 
         /// <summary>
@@ -46,8 +50,8 @@ namespace Whiskey2D
             renMan.init(GraphicsDevice);
             objMan.init();
             resMan.init(Content);
-
-
+            inMan.init();
+          
             base.Initialize();
         }
 
@@ -60,9 +64,9 @@ namespace Whiskey2D
             // Create a new SpriteBatch, which can be used to draw textures.
 
             #region TEMP CODE
-            GameObject gob = new GameObject();
+            GameObject gob = new Player();
             Texture2D text = resMan.loadImage("ai.png");
-            Console.WriteLine(text.ToString());
+           
             gob.Sprite = new Sprite(text);
             gob.Position = new Vector2(100, 100);
             //gob.Sprite.Scale = new Vector2(100, 100);
@@ -91,8 +95,9 @@ namespace Whiskey2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            inMan.update();
             objMan.updateAll();
-
+            
             base.Update(gameTime);
         }
 
