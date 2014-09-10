@@ -49,8 +49,7 @@ namespace Whiskey2D.Core
         public void update()
         {
 
-            Position = new Vector2(Position.X + 1f, Position.Y);
-
+           
         }
 
 

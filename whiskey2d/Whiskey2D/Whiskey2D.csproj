@@ -38,6 +38,7 @@
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\ObjectManager.cs" />
     <Compile Include="Core\RenderManager.cs" />
+    <Compile Include="Core\ResourceManager.cs" />
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Program.cs" />
@@ -64,11 +65,15 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ai.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ObamaHatesVideoGames.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

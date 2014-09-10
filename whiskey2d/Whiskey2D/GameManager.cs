@@ -21,6 +21,7 @@ namespace Whiskey2D
         
         RenderManager renMan;
         ObjectManager objMan;
+        ResourceManager resMan;
 
         public GameManager()
             : base()
@@ -30,6 +31,7 @@ namespace Whiskey2D
 
             renMan = RenderManager.getInstance();
             objMan = ObjectManager.getInstance();
+            resMan = ResourceManager.getInstance();
         }
 
         /// <summary>
@@ -43,12 +45,9 @@ namespace Whiskey2D
 
             renMan.init(GraphicsDevice);
             objMan.init();
-            
-            GameObject gob = new GameObject();
-            gob.Sprite = new Sprite(renMan.getPixel());
-            gob.Position = new Vector2(100, 100);
-            gob.Sprite.Scale = new Vector2(100, 100);
-           
+            resMan.init(Content);
+
+
             base.Initialize();
         }
 
@@ -59,7 +58,15 @@ namespace Whiskey2D
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            
+
+            #region TEMP CODE
+            GameObject gob = new GameObject();
+            Texture2D text = resMan.loadImage("ai.png");
+            Console.WriteLine(text.ToString());
+            gob.Sprite = new Sprite(text);
+            gob.Position = new Vector2(100, 100);
+            //gob.Sprite.Scale = new Vector2(100, 100);
+            #endregion
             
             // TODO: use this.Content to load your game content here
         }

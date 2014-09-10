@@ -17,6 +17,7 @@ namespace Whiskey2D.Core
         public Sprite(Texture2D image)
         {
             Image = image;
+            Scale = Vector2.One;
         }
 
     }
