@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\ObjectManager.cs" />
     <Compile Include="Core\RenderManager.cs" />
     <Compile Include="Core\Sprite.cs" />
     <Compile Include="GameManager.cs" />

@@ -19,6 +19,9 @@ namespace Whiskey2D.Core
             Position = Vector2.Zero;
             Sprite = null;
             ID = idCounter++;
+
+            ObjectManager.getInstance().addObject(this);
+
         }
 
         public Vector2 Position { get; set; }
@@ -34,17 +37,19 @@ namespace Whiskey2D.Core
         }
 
         /// <summary>
-        /// Closes out the GameObject
+        /// Closes out the GameObject, and removes it from the ObjectManager
         /// </summary>
         public void close()
         {
-
+            ObjectManager.getInstance().removeObject(this);
         }
 
      
 
         public void update()
         {
+
+            Position = new Vector2(Position.X + 1f, Position.Y);
 
         }
 

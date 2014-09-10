@@ -20,13 +20,16 @@ namespace Whiskey2D
         GraphicsDeviceManager graphics;
         
         RenderManager renMan;
-
+        ObjectManager objMan;
 
         public GameManager()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            renMan = RenderManager.getInstance();
+            objMan = ObjectManager.getInstance();
         }
 
         /// <summary>
@@ -37,11 +40,15 @@ namespace Whiskey2D
         /// </summary>
         protected override void Initialize()
         {
-            GameObject gob = new GameObject();
-            gob.Position = Vector2.Zero;
-            Sprite s = gob.Sprite;
-            
 
+            renMan.init(GraphicsDevice);
+            objMan.init();
+            
+            GameObject gob = new GameObject();
+            gob.Sprite = new Sprite(renMan.getPixel());
+            gob.Position = new Vector2(100, 100);
+            gob.Sprite.Scale = new Vector2(100, 100);
+           
             base.Initialize();
         }
 
@@ -53,7 +60,7 @@ namespace Whiskey2D
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             
-            renMan = new RenderManager(GraphicsDevice);
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -63,7 +70,8 @@ namespace Whiskey2D
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            renMan.close();
+            objMan.close();
         }
 
         /// <summary>
@@ -76,7 +84,7 @@ namespace Whiskey2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            objMan.updateAll();
 
             base.Update(gameTime);
         }
