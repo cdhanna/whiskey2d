@@ -79,41 +79,7 @@ namespace Whiskey2D.TestImpl
 
                 //X CONSIDER
 
-                if (otherGob is Floor)
-                {
-                    Floor floor = (Floor)otherGob;
-
-
-                    if (plr.Position.X + velocity.X >= floor.Position.X &&
-                        plr.Position.X + velocity.X <= floor.Position.X + floor.Size.X &&
-                        plr.Position.Y + velocity.Y >= floor.Position.Y &&
-                        plr.Position.Y + velocity.Y <= floor.Position.Y + floor.Size.Y)
-                    {
-                        //didYHit = true;
-                        //plr.Position.Y = floor.Position.Y;
-                        //plr.Position.Y -= velocity.Y;
-                        //velocity.Y = 0;
-                         velocity.X = 0;
-
-                        float creepSize = .1f;
-                        Vector2 creep = Vector2.Normalize(velocity)*creepSize;
-                        //Vector2 creep = new Vector2(creepSize, 0);
-
-
-                        while ((plr.Position.X + creep.X <= floor.Position.X ||
-                                plr.Position.X + creep.X >= floor.Position.X + floor.Size.X ||
-                                plr.Position.Y + creep.Y <= floor.Position.Y ||
-                                plr.Position.Y + creep.Y >= floor.Position.Y + floor.Size.Y))
-                        {
-                            plr.Position += creep;
-                            //plr.Position += Vector2.Normalize(velocity) * creepSize;
-                        }
-                        //plr.Position -= Vector2.Normalize(velocity) * creepSize;
-
-
-                    }
-
-                }
+         
 
             }
             //if (!didYHit)
@@ -136,7 +102,7 @@ namespace Whiskey2D.TestImpl
 
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 velocity.X = -moveSpeed;
-            velocity.Y = gravity;
+           // velocity.Y = gravity;
 
 
         }

@@ -3,16 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Whiskey2D.Service;
 #endregion
 
-namespace Whiskey2D
+namespace Whiskey2D.Service
 {
 #if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
-    public static class Program
+    public static class WhiskeyLauncher
     {
         /// <summary>
         /// The main entry point for the application.
@@ -25,9 +24,9 @@ namespace Whiskey2D
              *  COMPILER THE CORE AND GAME
              *///
 
-            Compiler compiler = Compiler.getInstance();
+            //Compiler compiler = Compiler.getInstance();
             //compiler.compileDirectory("Whiskey.Core", "Core", "MonoGame.Framework");
-            compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
+            //compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
 
             //////////////////////
 

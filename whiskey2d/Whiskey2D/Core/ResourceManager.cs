@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Whiskey2D.Core
 {
-    class ResourceManager
+    public class ResourceManager
     {
 
         private static ResourceManager instance;

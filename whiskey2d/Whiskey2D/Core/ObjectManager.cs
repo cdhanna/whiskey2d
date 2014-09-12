@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
-    class ObjectManager
+    public class ObjectManager
     {
         private static ObjectManager instance;
         public static ObjectManager getInstance()

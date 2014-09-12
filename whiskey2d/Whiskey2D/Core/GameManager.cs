@@ -7,15 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
-using Whiskey2D.Core;
-
-using Whiskey2D.TestImpl;
+using System.Reflection;
 #endregion
 
-namespace Whiskey2D
+namespace Whiskey2D.Core
 {
     /// <summary>
-    /// This is the main type for your game
+    /// 
     /// </summary>
     public class GameManager : Game
     {
@@ -26,7 +24,9 @@ namespace Whiskey2D
         ResourceManager resMan;
         InputManager inMan;
 
-        public GameManager()
+        Starter starter;
+
+        public GameManager(string gameDataAssmebly)
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,6 +36,25 @@ namespace Whiskey2D
             objMan = ObjectManager.getInstance();
             resMan = ResourceManager.getInstance();
             inMan = InputManager.getInstance();
+
+            //find gameData assmebly
+            Assembly gameAssmebly = Assembly.LoadFrom(gameDataAssmebly);
+            
+            Type[] allGameTypes = gameAssmebly.GetTypes();
+            foreach (Type gt in allGameTypes)
+            {
+                if (gt.IsSubclassOf(typeof(Starter)))
+                {
+                    starter = (Starter)Activator.CreateInstance(gt);
+                }
+            }
+
+
+        }
+
+        public void go()
+        {
+            this.Run(GameRunBehavior.Synchronous);
         }
 
         /// <summary>
@@ -61,27 +80,14 @@ namespace Whiskey2D
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
 
-            #region TEST GAME
+            //RUN THE START CODE
+            if (starter != null)
+            {
+                starter.start();
+            }
+            else Console.WriteLine("ERROR: No start configuration found");
 
-            Floor baseFloor = new Floor();
-            baseFloor.Position = new Vector2(100, 300);
-            baseFloor.Size = new Vector2(200, 20);
-
-            Floor leftWall = new Floor();
-            leftWall.Position = new Vector2(100, 100);
-            leftWall.Size = new Vector2(80, 300);
-
-            Player player = new Player();
-            player.Position = new Vector2(200, 250);
-            player.Sprite = new Sprite(resMan.loadImage("ai.png"));
-
-
-
-            #endregion
-            
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -92,6 +98,8 @@ namespace Whiskey2D
         {
             renMan.close();
             objMan.close();
+            resMan.close();
+            inMan.close();
         }
 
         /// <summary>
