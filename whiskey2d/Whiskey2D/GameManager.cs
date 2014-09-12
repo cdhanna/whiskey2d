@@ -63,13 +63,22 @@ namespace Whiskey2D
         {
             // Create a new SpriteBatch, which can be used to draw textures.
 
-            #region TEMP CODE
-            GameObject gob = new Player();
-            Texture2D text = resMan.loadImage("ai.png");
-           
-            gob.Sprite = new Sprite(text);
-            gob.Position = new Vector2(100, 100);
-            //gob.Sprite.Scale = new Vector2(100, 100);
+            #region TEST GAME
+
+            Floor baseFloor = new Floor();
+            baseFloor.Position = new Vector2(100, 300);
+            baseFloor.Size = new Vector2(200, 20);
+
+            Floor leftWall = new Floor();
+            leftWall.Position = new Vector2(100, 100);
+            leftWall.Size = new Vector2(80, 300);
+
+            Player player = new Player();
+            player.Position = new Vector2(200, 250);
+            player.Sprite = new Sprite(resMan.loadImage("ai.png"));
+
+
+
             #endregion
             
             // TODO: use this.Content to load your game content here

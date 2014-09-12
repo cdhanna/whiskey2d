@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
-    public abstract class Script <G> where G:GameObject
+    public abstract class Script
     {
 
-        private G gob;
+        private GameObject gob;
 
 
         
@@ -17,7 +17,7 @@ namespace Whiskey2D.Core
             
         }
 
-        public G GameObject
+        public GameObject Gob
         {
             get
             {
@@ -29,16 +29,10 @@ namespace Whiskey2D.Core
             }
         }
 
-       
-
-
-        //public Type getGameObjectType()
-        //{
-        //    return typeof(G);
-        //}
 
         public abstract void onStart();
         public abstract void onUpdate();
 
+        
     }
 }

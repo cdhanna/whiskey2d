@@ -19,31 +19,38 @@ namespace Whiskey2D.Core
             Position = Vector2.Zero;
             Sprite = null;
             ID = idCounter++;
+            scripts = new List<Script>();
+
+            Script initScript = getInitialScript();
+            if (initScript != null)
+            {
+                this.addScript(initScript);
+            }
+
 
             
-            //scripts = new List<Script <t> >();
+
             ObjectManager.getInstance().addObject(this);
 
         }
 
-        private Vector2 position;
+        public  Vector2 Position;
         private Sprite sprite;
         private int id;
-        private Type type;
-       
-        private List<Script<GameObject>> scripts; //TODO fix
 
-        public Vector2 Position
-        {
-            get
-            {
-                return position;
-            }
-            set
-            {
-                position = value;
-            }
-        }
+        private List<Script> scripts; 
+
+        //public Vector2 Position
+        //{
+        //    get
+        //    {
+        //        return position;
+        //    }
+        //    set
+        //    {
+        //        position = value;
+        //    }
+        //}
         public Sprite Sprite
         {
             get
@@ -66,7 +73,7 @@ namespace Whiskey2D.Core
                 id = value;
             }
         }
-
+        
         /// <summary>
         /// Initializes the GameObject
         /// </summary>
@@ -94,23 +101,23 @@ namespace Whiskey2D.Core
         //    this.scripts.Add(s);
         //}
 
-        protected void addScript<T>(Script<T> script) where T : GameObject
+        protected void addScript(Script script) 
         {
-            script.GameObject = (T)this;
-
-            
-            
-            //scripts.Add(script);
+            script.Gob = this;
+            scripts.Add(script);
         }
 
 
         public void update()
         {
-            foreach (Script<GameObject> script in scripts)
+            foreach (Script script in scripts)
             {
                 script.onUpdate();
             }
         }
+
+        protected abstract Script getInitialScript();
+
 
         //public abstract void update();
 

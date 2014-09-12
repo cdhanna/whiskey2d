@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+
 using Whiskey2D.Core;
 namespace Whiskey2D.TestImpl
 {
     class Player : GameObject
     {
 
-        public int test;
+        //public Player()
+        //{
+        //    State = new CharacterState();
+        //    addScript( new PlayerMoveScript());
+        //}
 
-       // public List<Script<Player>> scripts;
+       // public Vec
 
-        public Player()
+        protected override Script getInitialScript()
         {
-            
-            this.addScript( new PlayerMoveScript());
+            return new PlayerMoveScript();
         }
 
-
-        //public override void update()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
