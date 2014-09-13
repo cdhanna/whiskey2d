@@ -9,6 +9,7 @@
 *.pdb
 whiskey2d/Whiskey2D/bin/
 whiskey2d/Whiskey2D/obj/
+Whiskey2D.v11
 
 # Build results
 [Dd]ebug/
