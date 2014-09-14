@@ -24,6 +24,9 @@ namespace Whiskey2D.Service
             
         }
 
+
+
+
         /// <summary>
         /// Compile a folder into a dll
         /// </summary>
@@ -34,26 +37,28 @@ namespace Whiskey2D.Service
         {
             System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
-          
             parameters.OutputAssembly = dllName + ".dll";
+
+            //add required refs
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("System.Linq.dll");
-           
+            
+            //add custom references
             foreach (string assmeblyRef in assemblyRefs)
             {
                 parameters.ReferencedAssemblies.Add(assmeblyRef + ".dll");
             }
-          //  parameters.
-
-            //CompilerResults r = CodeDomProvider.CreateProvider("CSharp").CompileAssemblyFromSource(parameters, "public class B {public static int k=7;}");
+  
+            //create the code provider
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             
-
-            //list all files in directory
+            //get all files in directory
             string[] files = Directory.GetFiles(path);
 
+            //run compilation
             CompilerResults results = provider.CompileAssemblyFromFile(parameters, files);
 
+            //display results
             foreach (String line in results.Output)
             {
                 Console.WriteLine(line);

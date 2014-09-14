@@ -35,7 +35,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Compiler.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Service\Compiler.cs" />
     <Compile Include="Core\GameObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -63,7 +64,7 @@
     <Compile Include="Core\GameManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Service\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestImpl\Floor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

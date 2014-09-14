@@ -21,17 +21,6 @@ namespace Whiskey2D.Service
         {
 
             /**
-             *  COMPILER THE CORE AND GAME
-             *///
-
-            //Compiler compiler = Compiler.getInstance();
-            //compiler.compileDirectory("Whiskey.Core", "Core", "MonoGame.Framework");
-            //compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
-
-            //////////////////////
-
-
-            /**
              *   RUN GAME
              *///
 
