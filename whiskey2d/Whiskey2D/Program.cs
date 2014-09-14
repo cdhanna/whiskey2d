@@ -26,7 +26,7 @@ namespace Whiskey2D
              *///
 
             Compiler compiler = Compiler.getInstance();
-            //compiler.compileDirectory("Whiskey.Core", "Core", "MonoGame.Framework");
+            compiler.compileDirectory("Whiskey.Core", "Core", "MonoGame.Framework");
             compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
 
             //////////////////////
@@ -49,7 +49,7 @@ namespace Whiskey2D
             {
                 if (type.Name.Equals("GameManager"))
                 {
-                    object gameManager = Activator.CreateInstance(type, "Whiskey.TestImpl.dll");
+                    object gameManager = Activator.CreateInstance(type, gameAssembly);
                     gameManager.GetType().GetMethod("go").Invoke(gameManager, new object[] { });
                     break;
                 }

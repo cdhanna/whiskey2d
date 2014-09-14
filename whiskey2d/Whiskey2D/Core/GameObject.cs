@@ -40,17 +40,6 @@ namespace Whiskey2D.Core
 
         private List<Script> scripts; 
 
-        //public Vector2 Position
-        //{
-        //    get
-        //    {
-        //        return position;
-        //    }
-        //    set
-        //    {
-        //        position = value;
-        //    }
-        //}
         public Sprite Sprite
         {
             get
@@ -80,11 +69,10 @@ namespace Whiskey2D.Core
         public void init()
         {
 
-            //foreach (Script script in scripts)
-            //{
-            //    script.onStart();
-            //}
-
+            foreach (Script script in scripts)
+            {
+                script.onStart();
+            }
 
         }
 
@@ -95,11 +83,6 @@ namespace Whiskey2D.Core
         {
             ObjectManager.getInstance().removeObject(this);
         }
-
-        //public void addScript(Script<GameObject> s) 
-        //{
-        //    this.scripts.Add(s);
-        //}
 
         protected void addScript(Script script) 
         {
@@ -118,8 +101,6 @@ namespace Whiskey2D.Core
 
         protected abstract Script getInitialScript();
 
-
-        //public abstract void update();
 
     }
 }

@@ -26,7 +26,7 @@ namespace Whiskey2D.Core
 
         Starter starter;
 
-        public GameManager(string gameDataAssmebly)
+        public GameManager(Assembly gameAssmebly)
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,7 +38,7 @@ namespace Whiskey2D.Core
             inMan = InputManager.getInstance();
 
             //find gameData assmebly
-            Assembly gameAssmebly = Assembly.LoadFrom(gameDataAssmebly);
+            //Assembly gameAssmebly = Assembly.LoadFrom(gameDataAssmebly);
             
             Type[] allGameTypes = gameAssmebly.GetTypes();
             foreach (Type gt in allGameTypes)

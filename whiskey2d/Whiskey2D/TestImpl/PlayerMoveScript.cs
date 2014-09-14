@@ -22,7 +22,7 @@ namespace Whiskey2D.TestImpl
         public override void onUpdate()
         {
 
-            Player plr = (Player)Gob;
+            Player plr = (Player)Gob; //nasty. 
 
             ObjectManager objMan = ObjectManager.getInstance();
 
