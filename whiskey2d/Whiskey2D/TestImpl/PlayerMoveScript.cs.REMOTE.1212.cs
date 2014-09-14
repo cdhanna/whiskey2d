@@ -42,7 +42,6 @@ namespace Whiskey2D.TestImpl
                         plr.Position.Y + velocity.Y <= floor.Position.Y + floor.Size.Y)
                     {
                         velocity.Y = 0;
-
                         velocity.X = 0;
                         gravity = 0;
 
@@ -59,7 +58,6 @@ namespace Whiskey2D.TestImpl
                         }
                     }
                 }
-
             }
 
             velocity.X *= .6f;
@@ -73,6 +71,7 @@ namespace Whiskey2D.TestImpl
 
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 velocity.X = -moveSpeed;
+
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
                 velocity.Y = -moveSpeed*4;
 

@@ -12,7 +12,7 @@ namespace Whiskey2D.TestImpl
 
         public float gravity = 1;
         public Vector2 velocity = Vector2.Zero;
-        public float moveSpeed = 4;
+        public float moveSpeed = 3;
 
         public override void onStart()
         {
@@ -24,9 +24,19 @@ namespace Whiskey2D.TestImpl
 
             Player plr = (Player)Gob;
 
+
+            // velocity.Y = gravity;
+            //velocity.Y = 0;
+            //velocity.X = 0;
+          //  velocity = Vector2.Zero;
+
+
+           
+
             ObjectManager objMan = ObjectManager.getInstance();
 
             List<GameObject> allGobs = objMan.getAllObjects();
+            bool didYHit = false;
             foreach (GameObject otherGob in allGobs)
             {
 
@@ -41,13 +51,15 @@ namespace Whiskey2D.TestImpl
                         plr.Position.Y + velocity.Y >= floor.Position.Y &&
                         plr.Position.Y + velocity.Y <= floor.Position.Y + floor.Size.Y)
                     {
+                        //didYHit = true;
+                        //plr.Position.Y = floor.Position.Y;
+                        //plr.Position.Y -= velocity.Y;
                         velocity.Y = 0;
-
-                        velocity.X = 0;
-                        gravity = 0;
+                       // velocity.X = 0;
 
                         float creepSize = .1f;
-                        Vector2 creep = Vector2.Normalize(velocity) * creepSize;
+                        Vector2 creep = Vector2.Normalize(velocity)*creepSize;
+                        //Vector2 creep = new Vector2(0, creepSize);
 
 
                         while ((plr.Position.X + creep.X <= floor.Position.X ||
@@ -56,14 +68,31 @@ namespace Whiskey2D.TestImpl
                                 plr.Position.Y + creep.Y >= floor.Position.Y + floor.Size.Y))
                         {
                             plr.Position += creep;
+                            //plr.Position += Vector2.Normalize(velocity) * creepSize;
                         }
+                        //plr.Position -= Vector2.Normalize(velocity) * creepSize;
+
+
                     }
+
                 }
 
+                //X CONSIDER
+
+         
+
             }
+            //if (!didYHit)
+            //{
+            //    velocity.Y = gravity;
+            //}
 
             velocity.X *= .6f;
             
+
+
+
+
             {
                 plr.Position += velocity;
             }
@@ -73,15 +102,9 @@ namespace Whiskey2D.TestImpl
 
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 velocity.X = -moveSpeed;
-            if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
-                velocity.Y = -moveSpeed*4;
+           // velocity.Y = gravity;
 
-            velocity.Y += gravity;
-            
-            if (velocity.Y > moveSpeed)
-                velocity.Y = moveSpeed;
 
-            gravity = 1;
         }
 
 

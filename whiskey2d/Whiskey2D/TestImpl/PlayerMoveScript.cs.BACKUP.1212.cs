@@ -42,12 +42,19 @@ namespace Whiskey2D.TestImpl
                         plr.Position.Y + velocity.Y <= floor.Position.Y + floor.Size.Y)
                     {
                         velocity.Y = 0;
+<<<<<<< HEAD
+                       // velocity.X = 0;
 
+                        float creepSize = .1f;
+                        Vector2 creep = Vector2.Normalize(velocity)*creepSize;
+                        //Vector2 creep = new Vector2(0, creepSize);
+=======
                         velocity.X = 0;
                         gravity = 0;
 
                         float creepSize = .1f;
                         Vector2 creep = Vector2.Normalize(velocity) * creepSize;
+>>>>>>> Collision
 
 
                         while ((plr.Position.X + creep.X <= floor.Position.X ||
@@ -56,10 +63,25 @@ namespace Whiskey2D.TestImpl
                                 plr.Position.Y + creep.Y >= floor.Position.Y + floor.Size.Y))
                         {
                             plr.Position += creep;
+<<<<<<< HEAD
+                            //plr.Position += Vector2.Normalize(velocity) * creepSize;
+                        }
+                        //plr.Position -= Vector2.Normalize(velocity) * creepSize;
+
+
+                    }
+
+                }
+
+                //X CONSIDER
+
+         
+
+=======
                         }
                     }
                 }
-
+>>>>>>> Collision
             }
 
             velocity.X *= .6f;
@@ -73,6 +95,11 @@ namespace Whiskey2D.TestImpl
 
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 velocity.X = -moveSpeed;
+<<<<<<< HEAD
+           // velocity.Y = gravity;
+=======
+>>>>>>> Collision
+
             if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
                 velocity.Y = -moveSpeed*4;
 
