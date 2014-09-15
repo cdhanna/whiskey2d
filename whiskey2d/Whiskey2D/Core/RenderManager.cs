@@ -63,7 +63,7 @@ namespace Whiskey2D.Core
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-                    spriteBatch.Draw(spr.Image, gob.Position, null, Color.White, 0, Vector2.Zero, spr.Scale, SpriteEffects.None, .5f);
+                    spriteBatch.Draw(spr.Image, gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
                 }
             }
 
