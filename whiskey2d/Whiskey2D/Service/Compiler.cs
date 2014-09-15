@@ -5,10 +5,18 @@ using System.IO;
 
 namespace Whiskey2D.Service
 {
+
+    /// <summary>
+    /// The Compiler will take a directory of .cs files and transform them into an assembled .dll
+    /// </summary>
     public class Compiler
     {
 
         private static Compiler instance;
+        /// <summary>
+        /// Retrieve the compiler
+        /// </summary>
+        /// <returns>the compiler</returns>
         public static Compiler getInstance()
         {
             if (instance == null)
