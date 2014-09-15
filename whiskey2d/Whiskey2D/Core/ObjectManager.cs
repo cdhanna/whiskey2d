@@ -66,6 +66,29 @@ namespace Whiskey2D.Core
             return gameObjects;
         }
 
+        /// <summary>
+        /// Get a list of all GameObjects that are of the specified type. 
+        /// </summary>
+        /// <typeparam name="G">The specific type of GameObject to search for</typeparam>
+        /// <returns>A list of all GameObjects that are of the specified type</returns>
+        public List<G> getAllObjectsOfType<G>() where G : GameObject
+        {
+            List<G> gobs = new List<G>();
+
+            //TODO, make faster? maybe a map.
+            gameObjects.ForEach((gob) =>
+            {
+                if (gob is G)
+                {
+                    gobs.Add((G)gob);
+                }
+            });
+
+
+            return gobs;
+
+        }
+
         public GameObject getObject(int id)
         {
             return null; //todo

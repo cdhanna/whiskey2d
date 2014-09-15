@@ -18,6 +18,9 @@ namespace Whiskey2D.Core
         public float Depth { get; set; }
         public Vector2 Offset { get; set; }
 
+        
+
+
         public Sprite(Texture2D image)
         {
             Image = image;

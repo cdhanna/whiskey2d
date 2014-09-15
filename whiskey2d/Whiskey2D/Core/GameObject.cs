@@ -62,7 +62,15 @@ namespace Whiskey2D.Core
                 id = value;
             }
         }
-        
+
+        public Bounds Bounds
+        {
+            get
+            {
+                return new Bounds(Position, Sprite.ImageSize);
+            } 
+        }
+
         /// <summary>
         /// Initializes the GameObject
         /// </summary>
