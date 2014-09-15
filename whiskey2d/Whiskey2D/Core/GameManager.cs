@@ -13,7 +13,8 @@ using System.Reflection;
 namespace Whiskey2D.Core
 {
     /// <summary>
-    /// 
+    /// The GameManager is the core part of every Whiskey Game. It is a derivation of the monoGame class.
+    /// GameManager will control all of the game components
     /// </summary>
     public class GameManager : Game
     {
@@ -26,6 +27,10 @@ namespace Whiskey2D.Core
 
         Starter starter;
 
+        /// <summary>
+        /// Create a GameManager
+        /// </summary>
+        /// <param name="gameAssmebly">An assembly that contains classes that define a user's game. </param>
         public GameManager(Assembly gameAssmebly)
             : base()
         {
@@ -38,8 +43,6 @@ namespace Whiskey2D.Core
             inMan = InputManager.getInstance();
 
             //find gameData assmebly
-            //Assembly gameAssmebly = Assembly.LoadFrom(gameDataAssmebly);
-            
             Type[] allGameTypes = gameAssmebly.GetTypes();
             foreach (Type gt in allGameTypes)
             {
@@ -52,10 +55,13 @@ namespace Whiskey2D.Core
 
         }
 
+        /// <summary>
+        /// Launch the game
+        /// </summary>
         public void go()
         {
             this.Run();
-            this.TargetElapsedTime = TimeSpan.FromMilliseconds(30);
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(60);
         }
 
         /// <summary>
