@@ -8,9 +8,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.Core
 {
+    /// <summary>
+    /// Renders a Whiskey Game
+    /// </summary>
     public class RenderManager
     {
         private static RenderManager instance;
+
+        /// <summary>
+        /// Retrieves the RenderManager
+        /// </summary>
+        /// <returns>The RenderManager</returns>
         public static RenderManager getInstance()
         {
             if (instance == null)
