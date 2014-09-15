@@ -15,6 +15,11 @@ namespace Whiskey2D.Core
         public Vector2 Position { get { return position; } }
         public Vector2 Size { get { return size; } }
 
+        public float Bottam { get { return position.Y + size.Y; } }
+        public float Top { get { return position.Y; } }
+        public float Right { get { return position.X + size.X; } }
+        public float Left { get { return position.X; } }
+
         public Bounds(Vector2 position, Vector2 size)
         {
             this.position = position;

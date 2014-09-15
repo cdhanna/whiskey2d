@@ -12,7 +12,7 @@ namespace Whiskey2D.TestImpl
 
         public Vector2 gravity = new Vector2(0, .2f);
         public Vector2 velocity = Vector2.Zero;
-        public float maxSpeed = 4;
+        public float maxSpeed = 7;
         public float acceleration = .5f;
         public float friction = .8f;
         public float jumpGravity = 25;
@@ -70,97 +70,52 @@ namespace Whiskey2D.TestImpl
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(2, -.5f);
+                    jumpNormal = new Vector2(2, -1f);
+                    plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
                 }
                 if (wall.Bounds.vectorWithin(rightEdge + velocity))
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(-2, -.5f);
-                }
-
-                if (wall.Bounds.vectorWithin(topEdge + velocity))
-                {
-                    yHit = true;
+                    jumpNormal = new Vector2(-2, -1f);
+                   
+                    plr.Position.X = wall.Bounds.Left - plr.Sprite.ImageSize.X / 2;
                 }
                 if (wall.Bounds.vectorWithin(bottamEdge + velocity))
                 {
+                    plr.Position.Y = wall.Bounds.Top - plr.Sprite.ImageSize.Y / 2;
+
                     yHit = true;
                     onGround = true;
                     jumpNormal = new Vector2(0, -1);
                 }
+                if (wall.Bounds.vectorWithin(topEdge + velocity))
+                {
+                    //topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
+                    plr.Position.Y = wall.Bounds.Bottam + plr.Sprite.ImageSize.Y/2;
+
+                    yHit = true;
+                }
+
 
 
 
             }
 
            
-            if (yHit){
-                velocity.Y = 0;
+            if (yHit)
+            {
+                velocity.Y *= -.1f;
             }
 
             if (xHit)
             {
-                velocity.X = 0;
+                velocity.X *= -.2f;
             }
 
             plr.Position += velocity;
             velocity.X *= friction;
-        //    foreach (GameObject otherGob in allGobs)
-        //    {
 
-        //        //Y CONSIDER
-        //        if (otherGob is Floor)
-        //        {
-        //            Floor floor = (Floor)otherGob;
-
-
-        //            if (plr.Position.X + velocity.X >= floor.Position.X &&
-        //                plr.Position.X + velocity.X <= floor.Position.X + floor.Size.X &&
-        //                plr.Position.Y + velocity.Y >= floor.Position.Y &&
-        //                plr.Position.Y + velocity.Y <= floor.Position.Y + floor.Size.Y)
-        //            {
-        //                velocity.Y = 0;
-
-        //                velocity.X = 0;
-        //                gravity = 0;
-
-        //                float creepSize = .1f;
-        //                Vector2 creep = Vector2.Normalize(velocity) * creepSize;
-
-
-        //                while ((plr.Position.X + creep.X <= floor.Position.X ||
-        //                        plr.Position.X + creep.X >= floor.Position.X + floor.Size.X ||
-        //                        plr.Position.Y + creep.Y <= floor.Position.Y ||
-        //                        plr.Position.Y + creep.Y >= floor.Position.Y + floor.Size.Y))
-        //                {
-        //                    plr.Position += creep;
-        //                }
-        //            }
-        //        }
-
-        //    }
-
-        //    velocity.X *= .6f;
-            
-        //    {
-        //        plr.Position += velocity;
-        //    }
-
-        //    if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
-        //        velocity.X = moveSpeed;
-
-        //    if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
-        //        velocity.X = -moveSpeed;
-        //    if (InputManager.getInstance().isKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
-        //        velocity.Y = -moveSpeed*4;
-
-        //    velocity.Y += gravity;
-            
-        //    if (velocity.Y > moveSpeed)
-        //        velocity.Y = moveSpeed;
-
-        //    gravity = 1;
         }
 
 
