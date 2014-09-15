@@ -45,8 +45,10 @@ namespace WhiskeyEditor
             
             if (result == DialogResult.OK)
             {
-                
-                Console.WriteLine(newProjectDialog.FileName);
+                string directory = this.newProjectDialog.InitialDirectory + this.newProjectDialog.FileName;
+
+                debug.Text = directory;
+
                 //this.debug.Text = this.newProjectDialog.fi;
             }
         }

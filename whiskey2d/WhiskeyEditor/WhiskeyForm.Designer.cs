@@ -104,6 +104,7 @@
             // newProjectDialog
             // 
             this.newProjectDialog.CheckPathExists = false;
+            this.newProjectDialog.DefaultExt = "w2d";
             this.newProjectDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.newProjectDialog_FileOk);
             // 
             // WhiskeyForm
