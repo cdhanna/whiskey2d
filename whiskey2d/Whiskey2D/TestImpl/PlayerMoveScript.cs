@@ -21,7 +21,7 @@ namespace Whiskey2D.TestImpl
 
         public override void onStart()
         {
-           // throw new NotImplementedException();
+
         }
 
         public override void onUpdate()
@@ -38,11 +38,7 @@ namespace Whiskey2D.TestImpl
             Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
             Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
 
-            //Vector2 leftEdge = plr.Position - plr.Sprite.Scale.X * Vector2.UnitX / 2;
-            //Vector2 rightEdge = plr.Position + plr.Sprite.Scale.X * Vector2.UnitX / 2;
-            //Vector2 topEdge = plr.Position - plr.Sprite.Scale.Y * Vector2.UnitY / 2;
-            //Vector2 bottamEdge = plr.Position + plr.Sprite.Scale.Y * Vector2.UnitY / 2;
-
+       
             Boolean yHit = false;
             Boolean xHit = false;
 
@@ -96,7 +92,6 @@ namespace Whiskey2D.TestImpl
                 }
                 if (wall.Bounds.vectorWithin(topEdge + velocity))
                 {
-                    //topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
                     plr.Position.Y = wall.Bounds.Bottam + plr.Sprite.ImageSize.Y/2;
 
                     yHit = true;
@@ -110,7 +105,6 @@ namespace Whiskey2D.TestImpl
            
             if (yHit)
             {
-                //velocity.Y *= -.1f;
                 velocity.Y = 0;
             }
 

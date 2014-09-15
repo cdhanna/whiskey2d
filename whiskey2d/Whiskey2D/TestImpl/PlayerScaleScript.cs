@@ -14,7 +14,6 @@ namespace Whiskey2D.TestImpl
 
         public override void onStart()
         {
-           // throw new NotImplementedException();
         }
 
         public override void onUpdate()
