@@ -12,12 +12,14 @@ namespace WhiskeyEditor
 {
     public partial class WhiskeyForm : Form
     {
+        ProjectManager projMan;
+
+
         public WhiskeyForm()
         {
             InitializeComponent();
 
-            //this.newProjectDialog.ex
-
+            projMan = new ProjectManager();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -31,8 +33,11 @@ namespace WhiskeyEditor
             DialogResult result = this.openProjectDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                string directory = this.openProjectDialog.InitialDirectory + this.openProjectDialog.FileName;
-                //TODO validate this to make sure its a real Whiskey Game Directory
+                string path = this.openProjectDialog.InitialDirectory + this.openProjectDialog.FileName;
+
+                Project project = projMan.loadProject(path);
+                projMan.setTreeFor(project, this.directoryTree);
+                
             }
 
           
@@ -42,14 +47,21 @@ namespace WhiskeyEditor
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult result = this.newProjectDialog.ShowDialog();
-            
+
             if (result == DialogResult.OK)
             {
-                string directory = this.newProjectDialog.InitialDirectory + this.newProjectDialog.FileName;
+                string directory = this.newProjectDialog.FileName;
+                string name = directory.Substring(directory.LastIndexOf('\\') + 1);
+                //directory = directory.Substring(0, directory.Length - name.Length);
 
-                debug.Text = directory;
+                Project project = projMan.createNewProject(directory, name);
+                projMan.setTreeFor(project, this.directoryTree);
+                
 
-                //this.debug.Text = this.newProjectDialog.fi;
+            }
+            else
+            {
+                debug.Text = "FILE NOT OKAY";
             }
         }
 
