@@ -21,10 +21,10 @@ namespace Whiskey2D.Core
             ID = idCounter++;
             scripts = new List<Script>();
 
-            Script initScript = getInitialScript();
-            if (initScript != null)
+            List<Script> initScripts = getInitialScripts();
+            if (initScripts != null)
             {
-                this.addScript(initScript);
+                initScripts.ForEach((script) => { this.addScript(script); });
             }
 
 
@@ -107,7 +107,7 @@ namespace Whiskey2D.Core
             }
         }
 
-        protected abstract Script getInitialScript();
+        protected abstract List<Script> getInitialScripts();
 
 
     }

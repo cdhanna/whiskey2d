@@ -33,10 +33,15 @@ namespace Whiskey2D.TestImpl
 
             List<Floor> walls = objMan.getAllObjectsOfType<Floor>();
 
-            Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X*Vector2.UnitX/2;
-            Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X*Vector2.UnitX/2;
-            Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y*Vector2.UnitY/2;
-            Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y*Vector2.UnitY/2;
+            Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
+            Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
+            Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
+            Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
+
+            //Vector2 leftEdge = plr.Position - plr.Sprite.Scale.X * Vector2.UnitX / 2;
+            //Vector2 rightEdge = plr.Position + plr.Sprite.Scale.X * Vector2.UnitX / 2;
+            //Vector2 topEdge = plr.Position - plr.Sprite.Scale.Y * Vector2.UnitY / 2;
+            //Vector2 bottamEdge = plr.Position + plr.Sprite.Scale.Y * Vector2.UnitY / 2;
 
             Boolean yHit = false;
             Boolean xHit = false;
@@ -105,7 +110,8 @@ namespace Whiskey2D.TestImpl
            
             if (yHit)
             {
-                velocity.Y *= -.1f;
+                //velocity.Y *= -.1f;
+                velocity.Y = 0;
             }
 
             if (xHit)
@@ -115,7 +121,8 @@ namespace Whiskey2D.TestImpl
 
             plr.Position += velocity;
             velocity.X *= friction;
-
+            plr.Velocity = velocity;
+            
         }
 
 

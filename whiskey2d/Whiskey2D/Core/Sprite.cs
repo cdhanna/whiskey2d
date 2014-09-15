@@ -33,7 +33,7 @@ namespace Whiskey2D.Core
 
         public void Center()
         {
-            Offset = ImageSize / 2;
+            Offset = new Vector2(Image.Width, Image.Height) / 2;
         }
     }
 }

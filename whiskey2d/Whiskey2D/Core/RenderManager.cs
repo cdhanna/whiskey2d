@@ -55,7 +55,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void render()
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
             List<GameObject> allGobs = ObjectManager.getInstance().getAllObjects();
             foreach (GameObject gob in allGobs)

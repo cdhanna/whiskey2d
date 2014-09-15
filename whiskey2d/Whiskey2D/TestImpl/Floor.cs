@@ -32,7 +32,7 @@ namespace Whiskey2D.TestImpl
             }
         }
 
-        protected override Script getInitialScript()
+        protected override List<Script> getInitialScripts()
         {
             return null;
         }

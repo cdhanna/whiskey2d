@@ -54,7 +54,8 @@ namespace Whiskey2D.Core
 
         public void go()
         {
-            this.Run(GameRunBehavior.Synchronous);
+            this.Run();
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(30);
         }
 
         /// <summary>

@@ -52,6 +52,7 @@ namespace Whiskey2D.Core
         public void addObject(GameObject gob)
         {
             gameObjects.Add(gob);
+            gob.init();
         }
 
         public void removeObject(GameObject gob)
