@@ -5,9 +5,18 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
+
+    /// <summary>
+    /// Manages all GameObjects in the Whiskey Game. 
+    /// </summary>
     public class ObjectManager
     {
         private static ObjectManager instance;
+
+        /// <summary>
+        /// Retrieves the ObjectManager
+        /// </summary>
+        /// <returns>The ObjectManager</returns>
         public static ObjectManager getInstance()
         {
             if (instance == null)
@@ -40,7 +49,9 @@ namespace Whiskey2D.Core
 
         }
 
-
+        /// <summary>
+        /// Updates all Game Objects
+        /// </summary>
         public void updateAll()
         {
             foreach (GameObject gob in gameObjects)
@@ -49,12 +60,20 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Adds a GameObject to the world. This is called internally by GameObject. 
+        /// </summary>
+        /// <param name="gob"></param>
         public void addObject(GameObject gob)
         {
             gameObjects.Add(gob);
             gob.init();
         }
 
+        /// <summary>
+        /// Removes a GameObject from the world. 
+        /// </summary>
+        /// <param name="gob"></param>
         public void removeObject(GameObject gob)
         {
             gameObjects.Remove(gob);
@@ -62,6 +81,10 @@ namespace Whiskey2D.Core
 
         //todo add a removeObject by ID
 
+        /// <summary>
+        /// Get a list of all existing GameObjects
+        /// </summary>
+        /// <returns>A list of all known GameObjects</returns>
         public List<GameObject> getAllObjects() 
         {
             return gameObjects;
@@ -90,10 +113,6 @@ namespace Whiskey2D.Core
 
         }
 
-        public GameObject getObject(int id)
-        {
-            return null; //todo
-        }
 
     }
 }
