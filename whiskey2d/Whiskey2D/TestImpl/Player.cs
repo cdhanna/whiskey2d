@@ -10,12 +10,6 @@ namespace Whiskey2D.TestImpl
     class Player : GameObject
     {
 
-        //public Player()
-        //{
-        //    State = new CharacterState();
-        //    addScript( new PlayerMoveScript());
-        //}
-
         public Vector2 Velocity { get; set; }
 
         protected override List<Script> getInitialScripts()

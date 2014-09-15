@@ -21,7 +21,7 @@ namespace Whiskey2D.TestImpl
             Player plr = (Player)Gob;
 
             targetScale = (Vector2.One * 30) + new Vector2(
-                 Math.Max(-15, Math.Abs(plr.Velocity.X) - Math.Abs(plr.Velocity.Y)),
+                 Math.Max(-6, Math.Abs(plr.Velocity.X) - Math.Abs(plr.Velocity.Y)),
                  Math.Max(-15, Math.Abs(plr.Velocity.Y) - Math.Abs(plr.Velocity.X))) * 3;
 
             Vector2 scaleDiff = targetScale - plr.Sprite.Scale;
