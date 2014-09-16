@@ -16,11 +16,13 @@ namespace WhiskeyEditor
     {
         ProjectManager projMan;
         Project project;
+        SimpleTextPopup textPopup;
+
 
         public WhiskeyForm()
         {
             InitializeComponent();
-
+            textPopup = new SimpleTextPopup();
             projMan = new ProjectManager();
         }
 
@@ -63,7 +65,6 @@ namespace WhiskeyEditor
             }
             else
             {
-                debug.Text = "FILE NOT OKAY";
             }
         }
 
@@ -75,22 +76,20 @@ namespace WhiskeyEditor
         private void compileButton_Click(object sender, EventArgs e)
         {
             
-            //Compiler.getInstance().compileDirectory(project.NameNoExt, project.Directory + "//Src", "compile-lib\\MonoGame.Framework", "compile-lib\\Whiskey.Core");
-            debug.Text = "compile done";
+            Compiler.getInstance().compileDirectory(project.NameNoExt, project.Directory + "//Src", "compile-lib\\MonoGame.Framework", "compile-lib\\Whiskey.Core");
         }
 
         private void runButton_Click(object sender, EventArgs e)
         {
             
             
-            Compiler.getInstance().compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
+           // Compiler.getInstance().compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
             //add core to path
             Assembly coreAssmebly = Assembly.LoadFrom("Whiskey.Core.dll");
 
             //add game data to path
-            Assembly gameAssembly = Assembly.LoadFrom("Whiskey.TestImpl.dll");
+            Assembly gameAssembly = Assembly.LoadFrom(project.NameNoExt + ".dll");
 
-            debug.Text = "assembly loaded " + gameAssembly.ToString();
 
             //find gameManager
             Type[] coreTypes = coreAssmebly.GetTypes();
@@ -108,6 +107,40 @@ namespace WhiskeyEditor
             }
 
            
+        }
+
+        private void addScriptButton_Click(object sender, EventArgs e)
+        {
+            if (project != null)
+            {
+                textPopup.prompt.Text = "Script Name:";
+                textPopup.DesktopLocation = new Point(this.DesktopLocation.X + this.addScriptButton.Location.X, this.DesktopLocation.Y + this.addScriptButton.Location.Y);
+                textPopup.ShowDialog(this.addScriptButton);
+                Console.WriteLine("done. " + textPopup.Results);
+             //   if (newScriptPopup.DialogResult == DialogResult.OK)
+                {
+                    project.addNewScript(textPopup.EnteredText);
+                    projMan.setTreeFor(project, directoryTree);
+                    Console.WriteLine("added " + textPopup.EnteredText);
+                }
+            }
+        }
+
+        private void addGameObjectButton_Click(object sender, EventArgs e)
+        {
+            if (project != null)
+            {
+                textPopup.prompt.Text = "Object Name:";
+                textPopup.DesktopLocation = new Point(this.DesktopLocation.X + this.addScriptButton.Location.X, this.DesktopLocation.Y + this.addScriptButton.Location.Y);
+                textPopup.ShowDialog(this.addScriptButton);
+                Console.WriteLine("done. " + textPopup.Results);
+                //   if (newScriptPopup.DialogResult == DialogResult.OK)
+                {
+                    project.addNewGameObject(textPopup.EnteredText);
+                    projMan.setTreeFor(project, directoryTree);
+                    Console.WriteLine("added " + textPopup.EnteredText);
+                }
+            }
         }
     }
 }

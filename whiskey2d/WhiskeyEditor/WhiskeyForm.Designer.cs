@@ -35,11 +35,14 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.directoryTree = new System.Windows.Forms.TreeView();
             this.openProjectDialog = new System.Windows.Forms.OpenFileDialog();
-            this.debug = new System.Windows.Forms.Label();
             this.newProjectDialog = new System.Windows.Forms.SaveFileDialog();
             this.compileButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.addScriptButton = new System.Windows.Forms.Button();
+            this.addGameObjectButton = new System.Windows.Forms.Button();
             this.menuBar.SuspendLayout();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuBar
@@ -48,7 +51,7 @@
             this.fileToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(922, 28);
+            this.menuBar.Size = new System.Drawing.Size(608, 28);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "menuBar";
             // 
@@ -85,23 +88,14 @@
             // 
             // directoryTree
             // 
-            this.directoryTree.Location = new System.Drawing.Point(12, 31);
+            this.directoryTree.Location = new System.Drawing.Point(3, 2);
             this.directoryTree.Name = "directoryTree";
-            this.directoryTree.Size = new System.Drawing.Size(225, 377);
+            this.directoryTree.Size = new System.Drawing.Size(223, 361);
             this.directoryTree.TabIndex = 1;
             // 
             // openProjectDialog
             // 
             this.openProjectDialog.FileName = "openProjectDialog";
-            // 
-            // debug
-            // 
-            this.debug.AutoSize = true;
-            this.debug.Location = new System.Drawing.Point(253, 31);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(46, 17);
-            this.debug.TabIndex = 2;
-            this.debug.Text = "label1";
             // 
             // newProjectDialog
             // 
@@ -111,7 +105,7 @@
             // 
             // compileButton
             // 
-            this.compileButton.Location = new System.Drawing.Point(256, 385);
+            this.compileButton.Location = new System.Drawing.Point(32, 427);
             this.compileButton.Name = "compileButton";
             this.compileButton.Size = new System.Drawing.Size(75, 23);
             this.compileButton.TabIndex = 3;
@@ -121,7 +115,7 @@
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(349, 385);
+            this.runButton.Location = new System.Drawing.Point(113, 427);
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(75, 23);
             this.runButton.TabIndex = 4;
@@ -129,21 +123,55 @@
             this.runButton.UseVisualStyleBackColor = true;
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
+            // mainPanel
+            // 
+            this.mainPanel.AutoSize = true;
+            this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainPanel.Controls.Add(this.addGameObjectButton);
+            this.mainPanel.Controls.Add(this.addScriptButton);
+            this.mainPanel.Controls.Add(this.runButton);
+            this.mainPanel.Controls.Add(this.compileButton);
+            this.mainPanel.Controls.Add(this.directoryTree);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(0, 28);
+            this.mainPanel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(608, 459);
+            this.mainPanel.TabIndex = 5;
+            // 
+            // addScriptButton
+            // 
+            this.addScriptButton.Location = new System.Drawing.Point(3, 369);
+            this.addScriptButton.Name = "addScriptButton";
+            this.addScriptButton.Size = new System.Drawing.Size(223, 23);
+            this.addScriptButton.TabIndex = 6;
+            this.addScriptButton.Text = "New Script";
+            this.addScriptButton.UseVisualStyleBackColor = true;
+            this.addScriptButton.Click += new System.EventHandler(this.addScriptButton_Click);
+            // 
+            // addGameObjectButton
+            // 
+            this.addGameObjectButton.Location = new System.Drawing.Point(3, 398);
+            this.addGameObjectButton.Name = "addGameObjectButton";
+            this.addGameObjectButton.Size = new System.Drawing.Size(223, 23);
+            this.addGameObjectButton.TabIndex = 7;
+            this.addGameObjectButton.Text = "New Object";
+            this.addGameObjectButton.UseVisualStyleBackColor = true;
+            this.addGameObjectButton.Click += new System.EventHandler(this.addGameObjectButton_Click);
+            // 
             // WhiskeyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 420);
-            this.Controls.Add(this.runButton);
-            this.Controls.Add(this.compileButton);
-            this.Controls.Add(this.debug);
-            this.Controls.Add(this.directoryTree);
+            this.ClientSize = new System.Drawing.Size(608, 487);
+            this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;
             this.Name = "WhiskeyForm";
             this.Text = "Whiskey2D Editor";
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
+            this.mainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,10 +186,12 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.TreeView directoryTree;
         private System.Windows.Forms.OpenFileDialog openProjectDialog;
-        private System.Windows.Forms.Label debug;
         private System.Windows.Forms.SaveFileDialog newProjectDialog;
         private System.Windows.Forms.Button compileButton;
         private System.Windows.Forms.Button runButton;
+        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Button addScriptButton;
+        private System.Windows.Forms.Button addGameObjectButton;
     }
 }
 

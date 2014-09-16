@@ -5,6 +5,8 @@ using System.Text;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+
+
 namespace Whiskey2D.TestImpl
 {
     class PlayerMoveScript : Script

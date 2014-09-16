@@ -31,7 +31,7 @@ namespace WhiskeyEditor
 
             Directory.CreateDirectory(directory + "\\Src");
             Directory.CreateDirectory(directory + "\\Content");
-
+            GeneratorHelper.generateStarter(directory, project.NameNoExt);
 
             return project;
 
@@ -53,30 +53,33 @@ namespace WhiskeyEditor
         {
             tree.Nodes.Clear();
 
-            TreeNode root = new TreeNode(project.Name);
-
-            string[] subDirs = Directory.GetDirectories(project.Directory);
-            foreach (string dir in subDirs){
-                string dirShort = dir.Substring(project.Directory.Length);
-
-                TreeNode dirNode = new TreeNode(dirShort);
-
-                string[] files = Directory.GetFiles(dir);
-                foreach (string file in files)
-                {
-                    string fileShort = file.Substring(dir.Length);
-                    TreeNode fileNode = new TreeNode(fileShort);
-                    dirNode.Nodes.Add(fileNode);
-                }
-
-                root.Nodes.Add(dirNode);
-
-            }
+            TreeNode root = new TreeNode(project.NameNoExt);
+            setTreeForRecurse(root, project.Directory);
 
             tree.Nodes.Add(root);
         }
 
+        private void setTreeForRecurse(TreeNode parent, string path)
+        {
 
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (string dir in dirs)
+            {
+                string pathShort = dir.Substring(path.Length);
+                TreeNode dirNode = new TreeNode(pathShort);
+                parent.Nodes.Add(dirNode);
+                setTreeForRecurse(dirNode, dir);
+            }
+
+
+            string[] files = Directory.GetFiles(path);
+            foreach (string file in files)
+            {
+                string fileShort = file.Substring(path.Length);
+                TreeNode fileNode = new TreeNode(fileShort);
+                parent.Nodes.Add(fileNode);
+            }
+        }
 
     }
 }
