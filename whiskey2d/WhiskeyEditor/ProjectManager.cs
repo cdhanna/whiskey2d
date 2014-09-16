@@ -57,16 +57,26 @@ namespace WhiskeyEditor
 
             string[] subDirs = Directory.GetDirectories(project.Directory);
             foreach (string dir in subDirs){
+                string dirShort = dir.Substring(project.Directory.Length);
 
-                
+                TreeNode dirNode = new TreeNode(dirShort);
 
-                TreeNode dirNode = new TreeNode(dir);
+                string[] files = Directory.GetFiles(dir);
+                foreach (string file in files)
+                {
+                    string fileShort = file.Substring(dir.Length);
+                    TreeNode fileNode = new TreeNode(fileShort);
+                    dirNode.Nodes.Add(fileNode);
+                }
+
                 root.Nodes.Add(dirNode);
 
             }
 
             tree.Nodes.Add(root);
         }
+
+
 
     }
 }

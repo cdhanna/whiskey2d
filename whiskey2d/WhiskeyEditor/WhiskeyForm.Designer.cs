@@ -37,6 +37,8 @@
             this.openProjectDialog = new System.Windows.Forms.OpenFileDialog();
             this.debug = new System.Windows.Forms.Label();
             this.newProjectDialog = new System.Windows.Forms.SaveFileDialog();
+            this.compileButton = new System.Windows.Forms.Button();
+            this.runButton = new System.Windows.Forms.Button();
             this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -107,11 +109,33 @@
             this.newProjectDialog.DefaultExt = "w2d";
             this.newProjectDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.newProjectDialog_FileOk);
             // 
+            // compileButton
+            // 
+            this.compileButton.Location = new System.Drawing.Point(256, 385);
+            this.compileButton.Name = "compileButton";
+            this.compileButton.Size = new System.Drawing.Size(75, 23);
+            this.compileButton.TabIndex = 3;
+            this.compileButton.Text = "Compile";
+            this.compileButton.UseVisualStyleBackColor = true;
+            this.compileButton.Click += new System.EventHandler(this.compileButton_Click);
+            // 
+            // runButton
+            // 
+            this.runButton.Location = new System.Drawing.Point(349, 385);
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(75, 23);
+            this.runButton.TabIndex = 4;
+            this.runButton.Text = "Run";
+            this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
             // WhiskeyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 420);
+            this.Controls.Add(this.runButton);
+            this.Controls.Add(this.compileButton);
             this.Controls.Add(this.debug);
             this.Controls.Add(this.directoryTree);
             this.Controls.Add(this.menuBar);
@@ -136,6 +160,8 @@
         private System.Windows.Forms.OpenFileDialog openProjectDialog;
         private System.Windows.Forms.Label debug;
         private System.Windows.Forms.SaveFileDialog newProjectDialog;
+        private System.Windows.Forms.Button compileButton;
+        private System.Windows.Forms.Button runButton;
     }
 }
 

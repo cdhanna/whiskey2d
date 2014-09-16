@@ -21,7 +21,7 @@ namespace WhiskeyEditor
 
         public string Directory { get { return this.directory; } }
         public string Name { get { return this.name; } }
-
+        public string NameNoExt { get { return Name.Substring(0, Name.Length - 4); } }
 
     }
 }

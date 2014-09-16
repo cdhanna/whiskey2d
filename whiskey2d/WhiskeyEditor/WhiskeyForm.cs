@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Whiskey2D.Service;
+using System.Reflection;
 
 namespace WhiskeyEditor
 {
     public partial class WhiskeyForm : Form
     {
         ProjectManager projMan;
-
+        Project project;
 
         public WhiskeyForm()
         {
@@ -35,7 +37,7 @@ namespace WhiskeyEditor
             {
                 string path = this.openProjectDialog.InitialDirectory + this.openProjectDialog.FileName;
 
-                Project project = projMan.loadProject(path);
+                project = projMan.loadProject(path);
                 projMan.setTreeFor(project, this.directoryTree);
                 
             }
@@ -54,7 +56,7 @@ namespace WhiskeyEditor
                 string name = directory.Substring(directory.LastIndexOf('\\') + 1);
                 //directory = directory.Substring(0, directory.Length - name.Length);
 
-                Project project = projMan.createNewProject(directory, name);
+                project = projMan.createNewProject(directory, name);
                 projMan.setTreeFor(project, this.directoryTree);
                 
 
@@ -67,6 +69,44 @@ namespace WhiskeyEditor
 
         private void newProjectDialog_FileOk(object sender, CancelEventArgs e)
         {
+           
+        }
+
+        private void compileButton_Click(object sender, EventArgs e)
+        {
+            
+            //Compiler.getInstance().compileDirectory(project.NameNoExt, project.Directory + "//Src", "compile-lib\\MonoGame.Framework", "compile-lib\\Whiskey.Core");
+            debug.Text = "compile done";
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            
+            
+            Compiler.getInstance().compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
+            //add core to path
+            Assembly coreAssmebly = Assembly.LoadFrom("Whiskey.Core.dll");
+
+            //add game data to path
+            Assembly gameAssembly = Assembly.LoadFrom("Whiskey.TestImpl.dll");
+
+            debug.Text = "assembly loaded " + gameAssembly.ToString();
+
+            //find gameManager
+            Type[] coreTypes = coreAssmebly.GetTypes();
+            foreach (Type type in coreTypes)
+            {
+                if (type.Name.Equals("GameManager"))
+                {
+                    object gameManager = Activator.CreateInstance(type, gameAssembly);
+                    //debug.Text = "found game Manager";
+                    gameManager.GetType().GetMethod("go").Invoke(gameManager, new object[] { });
+                    break;
+                    
+                }
+                Console.WriteLine(type.Name);
+            }
+
            
         }
     }
