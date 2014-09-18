@@ -27,7 +27,7 @@ namespace Whiskey2D.Core
 
             
 
-            if (totalTicks > updatesLeft)
+            if (totalTicks >= updatesLeft)
             {
                 lineNumber += (lineNumber < allLines.Length-1 ? 1 : 0);
                 totalTicks = 0;
