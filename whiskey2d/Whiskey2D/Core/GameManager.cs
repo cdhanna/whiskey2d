@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
+using Whiskey2D.TestImpl;
 #endregion
 
 namespace Whiskey2D.Core
@@ -24,6 +25,13 @@ namespace Whiskey2D.Core
         ObjectManager objMan;
         ResourceManager resMan;
         InputManager inMan;
+        LogManager logMan;
+
+
+        ReplayService replServ;
+
+        InputSource inputSource;
+
 
         Starter starter;
 
@@ -41,17 +49,21 @@ namespace Whiskey2D.Core
             objMan = ObjectManager.getInstance();
             resMan = ResourceManager.getInstance();
             inMan = InputManager.getInstance();
+            logMan = LogManager.getInstance();
+            inputSource = new RealKeyBoard();
 
+            replServ = new ReplayService("whiskey_go.txt");
+            inputSource = replServ;
             //find gameData assmebly
-            Type[] allGameTypes = gameAssmebly.GetTypes();
-            foreach (Type gt in allGameTypes)
-            {
-                if (gt.IsSubclassOf(typeof(Starter)))
-                {
-                    starter = (Starter)Activator.CreateInstance(gt);
-                }
-            }
-
+            //Type[] allGameTypes = gameAssmebly.GetTypes();
+            //foreach (Type gt in allGameTypes)
+            //{
+            //    if (gt.IsSubclassOf(typeof(Starter)))
+            //    {
+            //        starter = (Starter)Activator.CreateInstance(gt);
+            //    }
+            //}
+            starter = new Launch();
 
         }
 
@@ -76,8 +88,8 @@ namespace Whiskey2D.Core
             renMan.init(GraphicsDevice);
             objMan.init();
             resMan.init(Content);
-            inMan.init();
-          
+            inMan.init(inputSource);
+            logMan.init(inputSource);
             base.Initialize();
         }
 
@@ -107,6 +119,7 @@ namespace Whiskey2D.Core
             objMan.close();
             resMan.close();
             inMan.close();
+            logMan.close();
         }
 
         /// <summary>
@@ -120,6 +133,8 @@ namespace Whiskey2D.Core
                 Exit();
 
             inMan.update();
+            replServ.update();
+            logMan.update();
             objMan.updateAll();
             
             base.Update(gameTime);

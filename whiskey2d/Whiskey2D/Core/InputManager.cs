@@ -28,7 +28,11 @@ namespace Whiskey2D.Core
         }
 
 
-        private KeyboardState currentState, oldState;
+        //private KeyboardState currentState, oldState;
+
+        private InputSource inputSoure;
+
+        private Dictionary<Keys, bool> currentState, oldState;
 
         private InputManager()
         {
@@ -37,9 +41,10 @@ namespace Whiskey2D.Core
         /// <summary>
         /// Initializes the InputManager
         /// </summary>
-        public void init()
+        public void init(InputSource source)
         {
-            currentState = Keyboard.GetState();
+            inputSoure = source;
+            currentState = inputSoure.getAllKeysDown();
         }
 
         /// <summary>
@@ -55,7 +60,10 @@ namespace Whiskey2D.Core
         public void update()
         {
             oldState = currentState;
-            currentState = Keyboard.GetState();
+            currentState = inputSoure.getAllKeysDown();
+
+            //oldState = currentState;
+            //currentState = Keyboard.GetState();
             
         }
 
@@ -66,7 +74,8 @@ namespace Whiskey2D.Core
         /// <returns>True if the key is down, false otherwise</returns>
         public Boolean isKeyDown(Keys key)
         {
-            return currentState.IsKeyDown(key);
+            return currentState[key];
+           // return currentState.IsKeyDown(key);
         }
 
         /// <summary>
@@ -76,7 +85,8 @@ namespace Whiskey2D.Core
         /// <returns>True if the key was just pressed, false otherwise</returns>
         public Boolean isNewKeyDown(Keys key)
         {
-            return (currentState.IsKeyDown(key) && oldState.IsKeyUp(key));
+            return currentState[key] && !oldState[key];
+            //return (currentState.IsKeyDown(key) && oldState.IsKeyUp(key));
         }
     }
 }
