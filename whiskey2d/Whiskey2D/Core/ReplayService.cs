@@ -21,12 +21,12 @@ namespace Whiskey2D.Core
             updatesLeft = getUpdateCount();
         }
 
+        /// <summary>
+        /// Updates the replay service. This will read through the log file and determine what keys ought to be down at the moment
+        /// </summary>
         public void update()
         {
-            
-
-            
-
+           
             if (totalTicks >= updatesLeft)
             {
                 lineNumber += (lineNumber < allLines.Length-1 ? 1 : 0);
@@ -36,7 +36,11 @@ namespace Whiskey2D.Core
             totalTicks++;
         }
 
-        private List<Keys> getKeysOnLine( )
+        /// <summary>
+        /// Gets all of the keys on a line in the log file. Reads the log file until a valid command is found
+        /// </summary>
+        /// <returns></returns>
+        private List<Keys> getKeysOnLine()
         {
             string line = allLines[lineNumber];
 
@@ -48,29 +52,13 @@ namespace Whiskey2D.Core
 
             InputCommand io = (InputCommand)command;
             return io.KeysDown;
-            //string line = allLines[fileLineNumber];
-            //string[] components = line.Split('|');
-
-            //string right = components[2].Trim();
-            //string[] keys = right.Split('#');
-
-            //List<Keys> allKeys = new List<Keys>();
-
-            //if (keys.Length > 0)
-            //{
-            //    foreach (String key in keys)
-            //    {
-            //        if (key != "")
-            //        {
-            //            Keys k = (Keys)Enum.Parse(typeof(Keys), key.Trim());
-            //            allKeys.Add(k);
-            //        }
-            //    }
-            //}
-
-            //return allKeys;
+            
         }
 
+        /// <summary>
+        /// Gets the number of times to spend on the current line in the log file
+        /// </summary>
+        /// <returns></returns>
         private long getUpdateCount()
         {
             string line = allLines[lineNumber];
@@ -83,13 +71,13 @@ namespace Whiskey2D.Core
 
             InputCommand io = (InputCommand)command;
             return io.Duration;
-            //string[] components = line.Split('|');
-
-            //string middle = components[1].Trim().Substring("for: ".Length);
-            //return int.Parse(middle);
-
+           
         }
 
+        /// <summary>
+        /// part of the InputSource interface. Returns a set of all keys that should be down at the current moment.
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<Keys, bool> getAllKeysDown()
         {
             

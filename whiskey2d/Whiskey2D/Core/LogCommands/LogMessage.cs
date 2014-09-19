@@ -11,7 +11,6 @@ namespace Whiskey2D.Core.LogCommands
         private static LogMessage instance = new LogMessage();
 
 
-        private string delim = "#";
 
         private LogManager.LogLevel level;
         private string message;
@@ -34,7 +33,6 @@ namespace Whiskey2D.Core.LogCommands
             string levelPart = parts[0].Trim();
             string messagePart = parts[1].Trim();
             return new LogMessage(time, (LogManager.LogLevel)Enum.Parse(typeof(LogManager.LogLevel), levelPart), messagePart);
-            //throw new NotImplementedException();
         }
     }
 }

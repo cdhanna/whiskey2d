@@ -96,8 +96,6 @@ namespace Whiskey2D.Core
             if (!listsEqual)
             {
                 writeCommand(new InputCommand(masterCount, activeKeyCounter, oldActiveKeys));
-                //writeKeyMessage(activeKeyCounter, activeKeyString());
-                //writer.WriteLine(masterCount + "\t\t| for: "+activeKeyCounter +"\t| " + activeKeyString());
                 activeKeyCounter = 0;
             }
             else
@@ -115,24 +113,7 @@ namespace Whiskey2D.Core
             masterCount++;
         }
 
-        private string activeKeyString()
-        {
-            string allKeys = "";
-            oldActiveKeys.ForEach((k) => { allKeys += k.ToString() + "#"; });
-            return allKeys;
-        }
-
-        //private void writeKeyMessage(long duration, string message)
-        //{
-        //    string line = masterCount + "\t\t" + COMMAND_DELIM + " for: " + duration + "\t\t" + COMMAND_DELIM + " " + message;
-        //    writer.WriteLine(line);
-        //}
-
-        //public void writeLogMessage(LogLevel level, string message)
-        //{
-        //    string line = masterCount + "\t\t" + COMMAND_DELIM + " " + level.ToString() + "\t\t" + COMMAND_DELIM + " " + message;
-        //    writer.WriteLine(line);
-        //}
+        
 
         private void writeCommand(LogCommand command)
         {
