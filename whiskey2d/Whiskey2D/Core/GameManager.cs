@@ -52,7 +52,7 @@ namespace Whiskey2D.Core
             logMan = LogManager.getInstance();
             inputSource = new RealKeyBoard();
 
-            replServ = new ReplayService("whiskey_comment.txt");
+            replServ = new ReplayService("whiskey.txt");
             inputSource = replServ;
             
             

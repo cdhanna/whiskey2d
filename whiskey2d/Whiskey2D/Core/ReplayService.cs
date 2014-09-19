@@ -8,6 +8,9 @@ using Whiskey2D.Core.LogCommands;
 
 namespace Whiskey2D.Core
 {
+    /// <summary>
+    /// The ReplayService is an InputSource and creates input events from a log file
+    /// </summary>
     class ReplayService : InputSource
     {
         int totalTicks;

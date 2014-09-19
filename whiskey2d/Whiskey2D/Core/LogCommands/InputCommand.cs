@@ -31,7 +31,7 @@ namespace Whiskey2D.Core.LogCommands
             return line;
         }
 
-        public override LogCommand fromCommand(long time, string text)
+        protected override LogCommand fromCommand(long time, string text)
         {
 
             string[] parts = text.Split('#');

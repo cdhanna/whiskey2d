@@ -27,7 +27,7 @@ namespace Whiskey2D.Core.LogCommands
             return level.ToString() + "\t# " + message;
         }
 
-        public override LogCommand fromCommand(long time, string text)
+        protected override LogCommand fromCommand(long time, string text)
         {
             string[] parts = text.Split('#');
             string levelPart = parts[0].Trim();
