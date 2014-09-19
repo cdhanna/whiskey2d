@@ -4,11 +4,23 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using Whiskey2D.Core.LogCommands;
 
 namespace Whiskey2D.Core
 {
     public class LogManager
     {
+        public enum LogLevel
+        {
+            DEBUG,
+            ERROR,
+            RELEASE,
+            WARNING
+        }
+
+
+        private const string COMMAND_DELIM = "|";
+
 
         private static LogManager instance = new LogManager();
         public static LogManager getInstance()
@@ -18,10 +30,10 @@ namespace Whiskey2D.Core
 
         private InputSource inputSource;
         private Dictionary<Keys, bool> oldState, currentState;
-        private long tickCount, nothingCount, masterCount;
+        private long masterCount;
         private StreamWriter writer;
         private List<Keys> oldActiveKeys, currentActiveKeys;
-        private int activeKeyCounter;
+        private long activeKeyCounter;
 
         private LogManager()
         {
@@ -31,7 +43,6 @@ namespace Whiskey2D.Core
         {
             this.inputSource = inputSource;
             currentState = inputSource.getAllKeysDown();
-            this.tickCount = 0;
             writer = File.CreateText( "whiskey.txt"); //TODO make naming unique between runs
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();
@@ -44,7 +55,7 @@ namespace Whiskey2D.Core
 
         public void update()
         {
-            //todo write our input tracking
+            
             oldState = currentState;
             currentState = inputSource.getAllKeysDown();
 
@@ -60,34 +71,9 @@ namespace Whiskey2D.Core
                     {
                         currentActiveKeys.Add(key);
                     }
-
-
-                    //if (currentState[key] && !oldState[key]) //key is DOWN for the first time
-                    //{
-                    //    if (activeKeys.Count == 0)
-                    //        writer.WriteLine(masterCount + "| nothing happened for " + nothingCount);
-                    //    activeKeys.Add(key);
-                    //    tickCount = 0;
-                       
-                    //}
-
-                    //if (!currentState[key] && oldState[key]) //key is UP for the first time
-                    //{
-                       
-                    //    writer.WriteLine(masterCount + "| "+ activeKeyString() + " was down for " + tickCount);
-                    //    activeKeys.Remove(key);
-
-                    //    if( activeKeys.Count == 0)
-                    //        nothingCount = 0;
-                    //}
-
                 }
-
             }
-            else
-            {
 
-            }
 
             currentActiveKeys.Sort();
             bool listsEqual = true;
@@ -109,7 +95,9 @@ namespace Whiskey2D.Core
 
             if (!listsEqual)
             {
-                writer.WriteLine(masterCount + "\t\t| for: "+activeKeyCounter +"\t| " + activeKeyString());
+                writeCommand(new InputCommand(masterCount, activeKeyCounter, oldActiveKeys));
+                //writeKeyMessage(activeKeyCounter, activeKeyString());
+                //writer.WriteLine(masterCount + "\t\t| for: "+activeKeyCounter +"\t| " + activeKeyString());
                 activeKeyCounter = 0;
             }
             else
@@ -124,8 +112,6 @@ namespace Whiskey2D.Core
 
             oldActiveKeys.Sort();
 
-            tickCount++;
-            nothingCount++;
             masterCount++;
         }
 
@@ -136,14 +122,40 @@ namespace Whiskey2D.Core
             return allKeys;
         }
 
-        private Boolean isKeyDown(Keys key)
+        //private void writeKeyMessage(long duration, string message)
+        //{
+        //    string line = masterCount + "\t\t" + COMMAND_DELIM + " for: " + duration + "\t\t" + COMMAND_DELIM + " " + message;
+        //    writer.WriteLine(line);
+        //}
+
+        //public void writeLogMessage(LogLevel level, string message)
+        //{
+        //    string line = masterCount + "\t\t" + COMMAND_DELIM + " " + level.ToString() + "\t\t" + COMMAND_DELIM + " " + message;
+        //    writer.WriteLine(line);
+        //}
+
+        private void writeCommand(LogCommand command)
         {
-            return currentState[key];
+            string line = command.toCommand();
+            writer.WriteLine(line);
         }
 
-        private Boolean isNewKeyDown(Keys key)
+
+        public void debug(string message)
         {
-            return currentState[key] && !oldState[key];
+            writeCommand(new LogMessage(masterCount, LogLevel.DEBUG, message));
+        }
+        public void error(string message)
+        {
+            writeCommand(new LogMessage(masterCount, LogLevel.ERROR, message));
+        }
+        public void warning(string message)
+        {
+            writeCommand(new LogMessage(masterCount, LogLevel.WARNING, message));
+        }
+        public void release(string message)
+        {
+            writeCommand(new LogMessage(masterCount, LogLevel.RELEASE, message));
         }
 
     }

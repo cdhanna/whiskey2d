@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-
+using Whiskey2D.Core.LogCommands;
 
 namespace Whiskey2D.Core
 {
@@ -13,12 +13,12 @@ namespace Whiskey2D.Core
         int totalTicks;
         
         string[] allLines;
-        int lineNumber;
-        int updatesLeft;
+        long lineNumber;
+        long updatesLeft;
         public ReplayService(string logFilePath)
         {
             allLines = File.ReadAllLines(logFilePath);
-            updatesLeft = getUpdateCount(0);
+            updatesLeft = getUpdateCount();
         }
 
         public void update()
@@ -31,43 +31,62 @@ namespace Whiskey2D.Core
             {
                 lineNumber += (lineNumber < allLines.Length-1 ? 1 : 0);
                 totalTicks = 0;
-                updatesLeft = getUpdateCount(lineNumber);
+                updatesLeft = getUpdateCount();
             }
             totalTicks++;
         }
 
-        private List<Keys> getKeysOnLine(int fileLineNumber )
+        private List<Keys> getKeysOnLine( )
         {
-            string line = allLines[fileLineNumber];
-            string[] components = line.Split('|');
+            string line = allLines[lineNumber];
 
-            string right = components[2].Trim();
-            string[] keys = right.Split('#');
-
-            List<Keys> allKeys = new List<Keys>();
-
-            if (keys.Length > 0)
+            LogCommand command = LogCommand.parse(line);
+            while (!(command is InputCommand))
             {
-                foreach (String key in keys)
-                {
-                    if (key != "")
-                    {
-                        Keys k = (Keys)Enum.Parse(typeof(Keys), key.Trim());
-                        allKeys.Add(k);
-                    }
-                }
+                command = LogCommand.parse(allLines[++lineNumber]);
             }
 
-            return allKeys;
+            InputCommand io = (InputCommand)command;
+            return io.KeysDown;
+            //string line = allLines[fileLineNumber];
+            //string[] components = line.Split('|');
+
+            //string right = components[2].Trim();
+            //string[] keys = right.Split('#');
+
+            //List<Keys> allKeys = new List<Keys>();
+
+            //if (keys.Length > 0)
+            //{
+            //    foreach (String key in keys)
+            //    {
+            //        if (key != "")
+            //        {
+            //            Keys k = (Keys)Enum.Parse(typeof(Keys), key.Trim());
+            //            allKeys.Add(k);
+            //        }
+            //    }
+            //}
+
+            //return allKeys;
         }
 
-        private int getUpdateCount(int fileLineNumber)
+        private long getUpdateCount()
         {
-            string line = allLines[fileLineNumber];
-            string[] components = line.Split('|');
+            string line = allLines[lineNumber];
 
-            string middle = components[1].Trim().Substring("for: ".Length);
-            return int.Parse(middle);
+            LogCommand command = LogCommand.parse(line);
+            while (! (command is InputCommand) )
+            {
+                command = LogCommand.parse(allLines[++lineNumber]);
+            }
+
+            InputCommand io = (InputCommand)command;
+            return io.Duration;
+            //string[] components = line.Split('|');
+
+            //string middle = components[1].Trim().Substring("for: ".Length);
+            //return int.Parse(middle);
 
         }
 
@@ -75,7 +94,7 @@ namespace Whiskey2D.Core
         {
             
            
-            List<Keys> downed = getKeysOnLine( lineNumber );
+            List<Keys> downed = getKeysOnLine(  );
             Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
             Dictionary<Keys, bool> keyMap = new Dictionary<Keys, bool>();
             foreach (Keys key in all)

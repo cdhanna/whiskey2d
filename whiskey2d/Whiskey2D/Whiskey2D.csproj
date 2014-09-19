@@ -41,6 +41,9 @@
     <Compile Include="Core\InputSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\LogCommands\InputCommand.cs" />
+    <Compile Include="Core\LogCommands\LogCommand.cs" />
+    <Compile Include="Core\LogCommands\LogMessage.cs" />
     <Compile Include="Core\LogManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

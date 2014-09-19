@@ -75,6 +75,7 @@ namespace Whiskey2D.TestImpl
                     onGround = true;
                     jumpNormal = new Vector2(2, -1f);
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
+                    LogManager.getInstance().debug("left edge hit a wall");
                 }
                 if (wall.Bounds.vectorWithin(rightEdge + velocity))
                 {

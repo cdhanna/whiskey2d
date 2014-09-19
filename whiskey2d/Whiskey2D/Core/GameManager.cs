@@ -52,8 +52,10 @@ namespace Whiskey2D.Core
             logMan = LogManager.getInstance();
             inputSource = new RealKeyBoard();
 
-            replServ = new ReplayService("whiskey_go.txt");
+            replServ = new ReplayService("whiskey_comment.txt");
             inputSource = replServ;
+            
+            
             //find gameData assmebly
             //Type[] allGameTypes = gameAssmebly.GetTypes();
             //foreach (Type gt in allGameTypes)
