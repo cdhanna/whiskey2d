@@ -74,6 +74,9 @@ namespace Whiskey2D.Core
             writer.AutoFlush = true;
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();
+
+            //writer.WriteLine("SEED IS " + Rand.getInstance().getSeed());
+            this.writeCommand(new RandCommand(-1, Rand.getInstance().getSeed()));
         }
 
         /// <summary>

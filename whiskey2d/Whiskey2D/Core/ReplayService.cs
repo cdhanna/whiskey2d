@@ -22,6 +22,13 @@ namespace Whiskey2D.Core
         {
             allLines = File.ReadAllLines(logFilePath);
             updatesLeft = getUpdateCount();
+
+            RandCommand rc = (RandCommand) LogCommand.parse(allLines[0]);
+            Rand.getInstance().setSeed(rc.Seed);
+
+
+            lineNumber = 1;
+
         }
 
         /// <summary>

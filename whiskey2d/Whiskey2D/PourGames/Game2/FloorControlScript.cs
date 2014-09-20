@@ -11,7 +11,9 @@ namespace Whiskey2D.PourGames.Game2
 
         float ticksUntilNewFloor;
         float ticksUntilNewFloorLimit = 200;
-        Random r = new Random(0);
+
+
+        Rand r = Rand.getInstance();
 
 
         float oldY;
@@ -36,7 +38,7 @@ namespace Whiskey2D.PourGames.Game2
 
 
                 float[] distances = new float[]{80, 40, -40, -80};
-
+                
                 float deltaY = distances[r.Next(distances.Length)];
                 float newY = deltaY + oldY;
                 if (newY > 400 || newY < 100)
