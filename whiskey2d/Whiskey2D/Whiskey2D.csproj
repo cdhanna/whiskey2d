@@ -85,7 +85,7 @@
     <Compile Include="Core\ResourceManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Service\Script.cs">
+    <Compile Include="Core\Script.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Core\Sprite.cs">

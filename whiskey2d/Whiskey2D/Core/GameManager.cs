@@ -53,8 +53,8 @@ namespace Whiskey2D.Core
             logMan = LogManager.getInstance();
             inputSource = new RealKeyBoard();
 
-            replServ = new ReplayService("whiskey.txt");
-            inputSource = replServ;
+           // replServ = new ReplayService("whiskey.txt");
+           // inputSource = replServ;
             
             
             //find gameData assmebly
@@ -137,7 +137,7 @@ namespace Whiskey2D.Core
                 Exit();
 
             inMan.update();
-            replServ.update();
+           // replServ.update();
             logMan.update();
             objMan.updateAll();
             
