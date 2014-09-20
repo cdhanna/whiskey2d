@@ -54,6 +54,20 @@
     <Compile Include="Core\SimpleGameObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="PourGames\Game2\Floor.cs" />
+    <Compile Include="PourGames\Game2\FloorControlScript.cs" />
+    <Compile Include="PourGames\Game2\FloorScript.cs" />
+    <Compile Include="PourGames\Game2\GameControl.cs" />
+    <Compile Include="PourGames\Game2\LaunchPour2.cs" />
+    <Compile Include="PourGames\Game2\Player.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PourGames\Game2\PlayerMoveScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PourGames\Game2\PlayerScaleScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Service\Compiler.cs" />
     <Compile Include="Core\GameObject.cs">
@@ -71,7 +85,7 @@
     <Compile Include="Core\ResourceManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Core\Script.cs">
+    <Compile Include="Service\Script.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Core\Sprite.cs">
@@ -84,25 +98,25 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestImpl\StarField.cs">
+    <Compile Include="PourGames\TestImpl\StarField.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\StarFieldMoveScript.cs">
+    <Compile Include="PourGames\TestImpl\StarFieldMoveScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\Floor.cs">
+    <Compile Include="PourGames\TestImpl\Floor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\Launch.cs">
+    <Compile Include="PourGames\TestImpl\Launch.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\Player.cs">
+    <Compile Include="PourGames\TestImpl\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\PlayerMoveScript.cs">
+    <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="TestImpl\PlayerScaleScript.cs">
+    <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>

@@ -8,7 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
-using Whiskey2D.TestImpl;
+using Whiskey2D.PourGames.TestImpl;
+using Whiskey2D.PourGames.Game2;
 #endregion
 
 namespace Whiskey2D.Core
@@ -65,7 +66,7 @@ namespace Whiskey2D.Core
             //        starter = (Starter)Activator.CreateInstance(gt);
             //    }
             //}
-            starter = new Launch();
+            starter = new LaunchPour2();
 
         }
 
@@ -76,6 +77,7 @@ namespace Whiskey2D.Core
         {
             this.Run();
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(60);
+            
         }
 
         /// <summary>

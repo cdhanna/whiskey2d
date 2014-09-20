@@ -5,7 +5,7 @@ using System.Text;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 
-namespace Whiskey2D.TestImpl
+namespace Whiskey2D.PourGames.TestImpl
 {
     class Launch : Starter
     {
