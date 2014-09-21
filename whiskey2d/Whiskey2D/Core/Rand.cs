@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
-    public class Rand : SeedableRandom
+    public class Rand
     {
 
         private static Rand instance = new Rand();
