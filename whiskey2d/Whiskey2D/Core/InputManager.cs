@@ -30,7 +30,7 @@ namespace Whiskey2D.Core
 
         //private KeyboardState currentState, oldState;
 
-        private InputSource inputSoure;
+        private InputSourceManager sourceMan;
 
         private Dictionary<Keys, bool> currentState, oldState;
 
@@ -41,10 +41,12 @@ namespace Whiskey2D.Core
         /// <summary>
         /// Initializes the InputManager
         /// </summary>
-        public void init(InputSource source)
+        public void init()
         {
-            inputSoure = source;
-            currentState = inputSoure.getAllKeysDown();
+            sourceMan = InputSourceManager.getInstance();
+
+            
+            currentState = sourceMan.getSource().getAllKeysDown();
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Whiskey2D.Core
         public void update()
         {
             oldState = currentState;
-            currentState = inputSoure.getAllKeysDown();
+            currentState = sourceMan.getSource().getAllKeysDown();
 
             //oldState = currentState;
             //currentState = Keyboard.GetState();

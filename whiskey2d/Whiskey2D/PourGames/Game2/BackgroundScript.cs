@@ -2,33 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
-
+using Whiskey2D.Core;
 
 namespace Whiskey2D.PourGames.Game2
 {
-    class FloorScript : Script
+    class BackgroundScript : Script
     {
-        
-
         public override void onStart()
         {
-            //throw new NotImplementedException();
+            
         }
 
         public override void onUpdate()
         {
-            Floor floor = (Floor)this.Gob;
 
-            floor.Position.X -= floor.speed;
+            Gob.Position.X -= .5f;
 
-
-            if (floor.Bounds.Right < 0)
+            if (Gob.Bounds.Right < 0)
             {
-                floor.close();
-            }
+                Gob.Position.X = 2080;
 
+            }
         }
     }
 }

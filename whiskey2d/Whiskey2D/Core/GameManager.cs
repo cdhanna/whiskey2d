@@ -20,6 +20,13 @@ namespace Whiskey2D.Core
     /// </summary>
     public class GameManager : Game
     {
+
+        private static GameManager instance;
+        public static GameManager getInstance()
+        {
+            return instance;
+        }
+
         GraphicsDeviceManager graphics;
         
         RenderManager renMan;
@@ -27,11 +34,9 @@ namespace Whiskey2D.Core
         ResourceManager resMan;
         InputManager inMan;
         LogManager logMan;
+        InputSourceManager sourceMan;
 
-
-        ReplayService replServ;
-
-        InputSource inputSource;
+     
 
 
         Starter starter;
@@ -43,6 +48,9 @@ namespace Whiskey2D.Core
         public GameManager(Assembly gameAssmebly)
             : base()
         {
+
+            instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
@@ -54,10 +62,11 @@ namespace Whiskey2D.Core
             resMan = ResourceManager.getInstance();
             inMan = InputManager.getInstance();
             logMan = LogManager.getInstance();
-            inputSource = new RealKeyBoard();
+            sourceMan = InputSourceManager.getInstance();
+            
 
-            replServ = new ReplayService("whiskey.txt");
-            inputSource = replServ;
+            //replServ = new ReplayService("whiskey.txt");
+            //inputSource = replServ;
             
             
             //find gameData assmebly
@@ -84,6 +93,38 @@ namespace Whiskey2D.Core
         }
 
         /// <summary>
+        /// Closes all managers, and re-inits them
+        /// </summary>
+        public void reset()
+        {
+            renMan.close();
+            objMan.close();
+            resMan.close();
+            inMan.close();
+            logMan.close();
+
+            Rand.getInstance().reSeed();
+
+            sourceMan.getSource().init();
+
+            renMan.init(GraphicsDevice);
+            objMan.init();
+            resMan.init(Content);
+            inMan.init();
+            logMan.init();
+
+
+            //RUN THE START CODE
+            if (starter != null)
+            {
+                starter.start();
+            }
+            else Console.WriteLine("ERROR: No start configuration found");
+
+
+        }
+
+        /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
         /// related content.  Calling base.Initialize will enumerate through any components
@@ -95,8 +136,8 @@ namespace Whiskey2D.Core
             renMan.init(GraphicsDevice);
             objMan.init();
             resMan.init(Content);
-            inMan.init(inputSource);
-            logMan.init(inputSource);
+            inMan.init();
+            logMan.init();
             base.Initialize();
         }
 
@@ -127,6 +168,9 @@ namespace Whiskey2D.Core
             resMan.close();
             inMan.close();
             logMan.close();
+
+            Console.WriteLine("CLOSING");
+
         }
 
         /// <summary>
@@ -140,7 +184,7 @@ namespace Whiskey2D.Core
                 Exit();
 
             inMan.update();
-            replServ.update();
+            sourceMan.update();
             logMan.update();
             objMan.updateAll();
             

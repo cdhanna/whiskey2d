@@ -37,6 +37,12 @@ namespace Whiskey2D.Core
             r = new Random(seed);
         }
 
+        public void reSeed()
+        {
+            this.seed = r.Next();
+            r = new Random(this.seed);
+        }
+
         public int Next()
         {
             return r.Next();

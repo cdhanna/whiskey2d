@@ -9,7 +9,7 @@ namespace Whiskey2D.Core
 {
     public interface InputSource
     {
-
+        void init();
         Dictionary<Keys, bool> getAllKeysDown();
 
     }

@@ -18,7 +18,20 @@ namespace Whiskey2D.Core
         string[] allLines;
         long lineNumber;
         long updatesLeft;
+
+        string logFilePath;
+
+        bool replayOver = false;
+
+        public bool ReplayOver { get { return this.replayOver; } }
+
         public ReplayService(string logFilePath)
+        {
+            this.logFilePath = logFilePath;
+
+        }
+
+        public void init()
         {
             allLines = File.ReadAllLines(logFilePath);
             updatesLeft = getUpdateCount();
@@ -28,8 +41,8 @@ namespace Whiskey2D.Core
 
 
             lineNumber = 1;
-
         }
+
 
         /// <summary>
         /// Updates the replay service. This will read through the log file and determine what keys ought to be down at the moment
@@ -37,11 +50,13 @@ namespace Whiskey2D.Core
         public void update()
         {
            
-            if (totalTicks >= updatesLeft)
+            if (totalTicks >= updatesLeft && !replayOver)
             {
-                lineNumber += (lineNumber < allLines.Length-1 ? 1 : 0);
+                lineNumber++;
+                
                 totalTicks = 0;
                 updatesLeft = getUpdateCount();
+                
             }
             totalTicks++;
         }
@@ -52,17 +67,27 @@ namespace Whiskey2D.Core
         /// <returns></returns>
         private List<Keys> getKeysOnLine()
         {
-            string line = allLines[lineNumber];
-
-            LogCommand command = LogCommand.parse(line);
-            while (!(command is InputCommand))
+            try
             {
-                command = LogCommand.parse(allLines[++lineNumber]);
-            }
+                string line = readLine(lineNumber);
 
-            InputCommand io = (InputCommand)command;
-            return io.KeysDown;
-            
+                LogCommand command = LogCommand.parse(line);
+                while (!(command is InputCommand))
+                {
+                    lineNumber++;
+                    command = LogCommand.parse(readLine(lineNumber));
+
+                }
+
+                InputCommand io = (InputCommand)command;
+                return io.KeysDown;
+            }
+            catch (LogOverException e)
+            {
+                replayOver = true;
+                return new List<Keys>();
+            }
+           
         }
 
         /// <summary>
@@ -71,16 +96,27 @@ namespace Whiskey2D.Core
         /// <returns></returns>
         private long getUpdateCount()
         {
-            string line = allLines[lineNumber];
-
-            LogCommand command = LogCommand.parse(line);
-            while (! (command is InputCommand) )
+            try
             {
-                command = LogCommand.parse(allLines[++lineNumber]);
-            }
+                string line = readLine(lineNumber);
 
-            InputCommand io = (InputCommand)command;
-            return io.Duration;
+                LogCommand command = LogCommand.parse(line);
+                while (!(command is InputCommand))
+                {
+                    lineNumber++;
+                    command = LogCommand.parse(readLine(lineNumber));
+                }
+
+
+                InputCommand io = (InputCommand)command;
+                return io.Duration;
+            }
+            catch (LogOverException e)
+            {
+                
+                replayOver = true;
+                return -1;
+            }
            
         }
 
@@ -103,5 +139,32 @@ namespace Whiskey2D.Core
 
             return keyMap;
         }
+
+
+        private string readLine(long index) 
+        {
+            if (index >= allLines.Length)
+            {
+                replayOver = true;
+                throw new LogOverException();
+                
+            }
+            else
+            {
+                return allLines[index];
+            }
+
+        }
+
+        private class LogOverException : Exception
+        {
+            public LogOverException()
+            {
+                
+
+            }
+        }
+
+
     }
 }

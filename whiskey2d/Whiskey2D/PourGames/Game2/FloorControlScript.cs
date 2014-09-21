@@ -31,14 +31,8 @@ namespace Whiskey2D.PourGames.Game2
             if (ticksUntilNewFloor < 0)
             {
 
-                Floor floor = new Floor();
-                floor.Position = new Vector2(800, 100);
-                floor.Size = new Vector2(100, 20);
-                floor.Sprite.Color = Color.Black;
+                float[] distances = new float[] { 80, 40, -40, -80 };
 
-
-                float[] distances = new float[]{80, 40, -40, -80};
-                
                 float deltaY = distances[r.Next(distances.Length)];
                 float newY = deltaY + oldY;
                 if (newY > 400 || newY < 100)
@@ -46,13 +40,33 @@ namespace Whiskey2D.PourGames.Game2
                     deltaY *= -1;
                     newY = deltaY + oldY;
                 }
-                
-                
-                floor.Position.Y = newY;
                 oldY = newY;
 
+                Floor floor = null;
+                for (int i = 0; i < 3; i++)
+                {
+                    floor = new Floor();
+                    floor.Position = new Vector2(800, 100);
+                    floor.Position.X += floor.Sprite.ImageSize.X * i;
+
+                    floor.Position.Y = newY;
+                   
+                }
+                Floor end = new Floor();
+                end.Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_right.png"));
+                end.Sprite.Scale *= .5f;
+                end.Position = new Vector2(800, 100);
+                end.Position.X += floor.Sprite.ImageSize.X * 3;
+                end.Position.Y = newY;
+
+                Floor start = new Floor();
+                start.Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_left.png"));
+                start.Sprite.Scale *= .5f;
+                start.Position = new Vector2(800, 100); 
+                start.Position.X -= start.Sprite.ImageSize.X;
+                start.Position.Y = newY;
+
                 float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
-                floor.speed = speed;
                 ObjectManager.getInstance().getAllObjectsOfType<Floor>().ForEach((f) => { f.speed = speed; });
 
 

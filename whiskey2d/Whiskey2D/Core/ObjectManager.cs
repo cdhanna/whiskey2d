@@ -50,7 +50,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public void close()
         {
-
+            gameObjects.Clear();
+            deadObjects.Clear();
+            newObjects.Clear();
         }
 
         /// <summary>

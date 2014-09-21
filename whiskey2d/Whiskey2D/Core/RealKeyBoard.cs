@@ -9,6 +9,10 @@ namespace Whiskey2D.Core
     class RealKeyBoard : InputSource
     {
 
+        public void init()
+        {
+            //do nothing
+        }
 
         public Dictionary<Keys, bool> getAllKeysDown()
         {

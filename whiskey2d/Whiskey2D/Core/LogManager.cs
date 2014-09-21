@@ -30,6 +30,9 @@ namespace Whiskey2D.Core
         /// </summary>
         private class EmptyInput : InputSource
         {
+            public void init()
+            {
+            }
             public Dictionary<Keys, bool> getAllKeysDown()
             {
                 return new Dictionary<Keys, bool>();
@@ -47,33 +50,39 @@ namespace Whiskey2D.Core
             return instance;
         }
 
-        private InputSource inputSource;
         private Dictionary<Keys, bool> oldState, currentState;
         private long masterCount;
         private StreamWriter writer;
         private List<Keys> oldActiveKeys, currentActiveKeys;
         private long activeKeyCounter;
 
+        private InputSourceManager sourceMan;
+      
+
         private LogManager()
         {
         }
 
-        /// <summary>
-        /// Init the LogManager with an input source.
-        /// </summary>
-        /// <param name="inputSource">This input source will be probed to generate a replayable log file. If the inputsource is given as null, then no replayable log will be created</param>
-        public void init(InputSource inputSource)
+        public void init()
         {
-            if (inputSource == null)
-            {
-                inputSource = new EmptyInput();
-            }
-            this.inputSource = inputSource;
-            currentState = inputSource.getAllKeysDown();
-            writer = File.CreateText( "whiskey.txt"); //TODO make naming unique between runs
+
+            sourceMan = InputSourceManager.getInstance();
+      
+
+            currentState = sourceMan.getSource().getAllKeysDown();
+           
+            writer = File.CreateText( getCurrentLogPath() ); //TODO make naming unique between runs
+            
+
+
             writer.AutoFlush = true;
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();
+
+            oldActiveKeys.Clear();
+            currentActiveKeys.Clear();
+            activeKeyCounter = 0;
+            masterCount = 0;
 
             //writer.WriteLine("SEED IS " + Rand.getInstance().getSeed());
             this.writeCommand(new RandCommand(-1, Rand.getInstance().getSeed()));
@@ -85,7 +94,37 @@ namespace Whiskey2D.Core
         public void close()
         {
             writer.Close();
+
+            File.Delete(getOldLogPath());
+            File.Copy(getCurrentLogPath(), getOldLogPath());
+
+
+            //File.Replace(getCurrentLogPath(), getOldLogPath(), "turd");
+
         }
+
+        public string getCurrentLogPath()
+        {
+            return "whiskey_log_current.txt";
+        }
+        public string getOldLogPath()
+        {
+            return "whiskey_log_last.txt";
+        }
+
+        private string generateLogPath()
+        {
+            string name = "whiskey_";
+
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            int secondsSinceEpoch = (int)t.TotalSeconds;
+            name += secondsSinceEpoch;
+            name += ".txt";
+
+            return name;
+
+        }
+
 
         /// <summary>
         /// updates the LogManager, so that input may be tracked
@@ -94,7 +133,7 @@ namespace Whiskey2D.Core
         {
             
             oldState = currentState;
-            currentState = inputSource.getAllKeysDown();
+            currentState = sourceMan.getSource().getAllKeysDown();
 
             currentActiveKeys.Clear();
             

@@ -40,6 +40,7 @@ namespace Whiskey2D.PourGames.Game2
             Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
             Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
 
+            bottamEdge.Y -= 10;
        
             Boolean yHit = false;
             Boolean xHit = false;
@@ -75,7 +76,6 @@ namespace Whiskey2D.PourGames.Game2
                     onGround = true;
                     jumpNormal = new Vector2(2, -1f);
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
-                    LogManager.getInstance().debug("left edge hit a wall");
                 }
                 if (wall.Bounds.vectorWithin(rightEdge + velocity))
                 {
@@ -88,6 +88,7 @@ namespace Whiskey2D.PourGames.Game2
                 if (wall.Bounds.vectorWithin(bottamEdge + velocity))
                 {
                     plr.Position.Y = wall.Bounds.Top - plr.Sprite.ImageSize.Y / 2;
+                    plr.Position.Y += 10;
 
                     yHit = true;
                     onGround = true;

@@ -41,6 +41,7 @@
     <Compile Include="Core\InputSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\InputSourceManager.cs" />
     <Compile Include="Core\LogCommands\InputCommand.cs" />
     <Compile Include="Core\LogCommands\LogCommand.cs" />
     <Compile Include="Core\LogCommands\LogMessage.cs" />
@@ -56,6 +57,8 @@
     <Compile Include="Core\SimpleGameObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="PourGames\Game2\Background.cs" />
+    <Compile Include="PourGames\Game2\BackgroundScript.cs" />
     <Compile Include="PourGames\Game2\Floor.cs" />
     <Compile Include="PourGames\Game2\FloorControlScript.cs" />
     <Compile Include="PourGames\Game2\FloorScript.cs" />
@@ -144,6 +147,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ai.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\grass_left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\grass_middle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\grass_right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ObamaHatesVideoGames.png">

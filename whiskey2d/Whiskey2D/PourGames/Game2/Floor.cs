@@ -13,25 +13,27 @@ namespace Whiskey2D.PourGames.Game2
 
         public Floor()
         {
-            Sprite = new Sprite(RenderManager.getInstance().getPixel());
-            Size = new Vector2(20, 20);
+           // Sprite = new Sprite(RenderManager.getInstance().getPixel());
+            Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_middle.png"));
+            Sprite.Scale = Vector2.One * .5f;
+           // Size = new Vector2(20, 20);
 
         }
 
-        private Vector2 size;
+       // private Vector2 size;
         public float speed = 1;
-        public Vector2 Size
-        {
-            get
-            {
-                return size;
-            }
-            set
-            {
-                size = value;
-                Sprite.Scale = value;
-            }
-        }
+        //public Vector2 Size
+        //{
+        //    get
+        //    {
+        //        return size;
+        //    }
+        //    set
+        //    {
+        //        size = value;
+        //       // Sprite.Scale = value;
+        //    }
+        //}
 
         protected override List<Script> getInitialScripts()
         {
