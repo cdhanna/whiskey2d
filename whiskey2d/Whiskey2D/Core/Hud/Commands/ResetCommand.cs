@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// ResetCommand resets the game to the initial configuration
+    /// </summary>
     class ResetCommand : ConsoleCommand
     {
         public ResetCommand() : base("reset") { }

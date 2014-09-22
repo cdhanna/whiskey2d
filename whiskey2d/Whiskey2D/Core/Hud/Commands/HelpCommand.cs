@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// The help command will list all known commands to the console
+    /// </summary>
     class HelpCommand : ConsoleCommand
     {
         public HelpCommand() : base("help") { }

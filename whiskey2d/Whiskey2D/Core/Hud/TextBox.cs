@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.Core.Hud
 {
+
+    /// <summary>
+    /// A TextBox is a collection of TextLines and Boxes that represent a set of text
+    /// </summary>
     class TextBox
     {
 
@@ -26,7 +30,9 @@ namespace Whiskey2D.Core.Hud
         private Vector2 lineOffset;
         private int maxSize = 10;
 
-
+        /// <summary>
+        /// Create a new TextBox with default values
+        /// </summary>
         public TextBox()
         {
             textStart = new Vector2(2, 2);
@@ -69,6 +75,9 @@ namespace Whiskey2D.Core.Hud
             Visible = true;
         }
 
+        /// <summary>
+        /// Clears all text in the text box
+        /// </summary>
         public void clearText()
         {
             foreach (TextLine l in lines)
@@ -79,6 +88,9 @@ namespace Whiskey2D.Core.Hud
             text = "";
         }
 
+        /// <summary>
+        /// True if the textbox is visible, false otherwise
+        /// </summary>
         public bool Visible
         {
 
@@ -98,6 +110,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// The top-left corner of the textbox
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -121,6 +136,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// the size of the textbox
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -143,6 +161,10 @@ namespace Whiskey2D.Core.Hud
                 Text = this.text;
             }
         }
+
+        /// <summary>
+        /// The color of the text
+        /// </summary>
         public Color TextColor
         {
             get
@@ -155,6 +177,10 @@ namespace Whiskey2D.Core.Hud
                 this.lines.ForEach((l) => { l.Color = value; });
             }
         }
+
+        /// <summary>
+        /// The color of the background
+        /// </summary>
         public Color BackGroundColor
         {
             get
@@ -167,6 +193,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// the color of the border
+        /// </summary>
         public Color BorderColor
         {
             get
@@ -182,6 +211,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// the size of the text. 
+        /// </summary>
         public float TextSize
         {
             get
@@ -200,6 +232,10 @@ namespace Whiskey2D.Core.Hud
             return font.MeasureString("A").Y * textSize;
         }
 
+        /// <summary>
+        /// add a new line to the bottom of the textbox, pushing all old text UP. 
+        /// </summary>
+        /// <param name="moreText"></param>
         public void pushTextFromBottom(string moreText)
         {
             this.addLinesToEnd(this.convertToLines(moreText));
@@ -210,6 +246,9 @@ namespace Whiskey2D.Core.Hud
 
         }
 
+        /// <summary>
+        /// remove a character from the end of the textbox
+        /// </summary>
         public void removeFromEnd()
         {
             if (lines.Count > 0)
@@ -233,6 +272,10 @@ namespace Whiskey2D.Core.Hud
 
         }
 
+        /// <summary>
+        /// add text to the end of the textbox
+        /// </summary>
+        /// <param name="moreText"></param>
         public void append(string moreText)
         {
             this.textStart = new Vector2(2, 2);
@@ -250,6 +293,10 @@ namespace Whiskey2D.Core.Hud
             
         }
 
+        /// <summary>
+        /// add text to the start of the textbox
+        /// </summary>
+        /// <param name="moreText"></param>
         public void prepend(string moreText)
         {
             this.textStart = new Vector2(2, 2);
@@ -258,6 +305,9 @@ namespace Whiskey2D.Core.Hud
             this.text = moreText + text;
         }
 
+        /// <summary>
+        /// The text inside a textbox
+        /// </summary>
         public string Text
         {
             get

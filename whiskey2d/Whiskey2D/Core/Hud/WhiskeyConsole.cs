@@ -9,10 +9,11 @@ using Whiskey2D.Core.Hud.Commands;
 
 namespace Whiskey2D.Core.Hud
 {
+    /// <summary>
+    /// The WhiskeyConsole allows commands to be entered and interp'd into the Whiskey System
+    /// </summary>
     class WhiskeyConsole
     {
-
-
 
         private TextBox textBox;
         private TextBox inputBox;
@@ -23,6 +24,9 @@ namespace Whiskey2D.Core.Hud
 
         private Dictionary<string, ConsoleCommand> commandTable;
 
+        /// <summary>
+        /// Create a new WhiskeyConsole with default values
+        /// </summary>
         public WhiskeyConsole()
         {
             this.textBox = new TextBox();
@@ -56,16 +60,27 @@ namespace Whiskey2D.Core.Hud
             addCommand(new GameObjectCounterCommand());
         }
 
+        /// <summary>
+        /// Add a command to the Console. By adding a command, the console will direct input of that type of command to the given command for processing
+        /// </summary>
+        /// <param name="command"></param>
         public void addCommand(ConsoleCommand command)
         {
             commandTable.Add(command.CommandName.ToLower(), command);
         }
 
+        /// <summary>
+        /// Get a list of all command names that the console is working with
+        /// </summary>
+        /// <returns></returns>
         public List<string> getCommandNames()
         {
             return commandTable.Keys.ToList();
         }
 
+        /// <summary>
+        /// True if the console is visible, false otherwise
+        /// </summary>
         public bool Visible
         {
             get
@@ -79,11 +94,18 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// writes a line to the console output
+        /// </summary>
+        /// <param name="line"></param>
         public void writeLine(string line)
         {
             textBox.pushTextFromBottom(line);
         }
 
+        /// <summary>
+        /// updates the console
+        /// </summary>
         public void update()
         {
             oldKeys = currentKeys;

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// the exit command will exit the game
+    /// </summary>
     class ExitCommand : ConsoleCommand
     {
         public ExitCommand() : base("exit") { }

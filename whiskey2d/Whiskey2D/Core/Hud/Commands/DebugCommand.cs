@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// The debugcommand allows the designer to toggle the debug window on/off
+    /// </summary>
     class DebugCommand : ConsoleCommand
     {
         public DebugCommand() : base("debug") { }

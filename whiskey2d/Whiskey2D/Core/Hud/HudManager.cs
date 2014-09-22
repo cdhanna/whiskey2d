@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 namespace Whiskey2D.Core.Hud
 {
+    /// <summary>
+    /// The HudManager is responsible for keeping track of all HUD state, including the debug window and the console
+    /// </summary>
     class HudManager
     {
         private static HudManager instance = new HudManager();
@@ -29,7 +32,9 @@ namespace Whiskey2D.Core.Hud
             
         }
 
-
+        /// <summary>
+        /// initialize the HUD
+        /// </summary>
         public void init()
         {
             textLines = new List<TextLine>();
@@ -48,6 +53,9 @@ namespace Whiskey2D.Core.Hud
             ConsoleMode = false;
         }
 
+        /// <summary>
+        /// Gets and Sets if the Console is visible. If the Console is on, the game is paused.
+        /// </summary>
         public bool ConsoleMode
         {
             get
@@ -61,6 +69,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        /// <summary>
+        /// Gets and Sets if the DebugWindow is visible. 
+        /// </summary>
         public bool DebugVisible
         {
             get
@@ -72,8 +83,15 @@ namespace Whiskey2D.Core.Hud
                 debugWindow.Visible = value;
             }
         }
+
+        /// <summary>
+        /// Sets the current log level of the console. 
+        /// </summary>
         public LogLevel DebugLevel { get; set; }
 
+        /// <summary>
+        /// Gets and Sets the debug window text color
+        /// </summary>
         public Color DebugColor
         {
             get
@@ -86,8 +104,9 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
-
-
+        /// <summary>
+        /// Close the HudManager
+        /// </summary>
         public void close()
         {
             textLines.Clear();
@@ -96,6 +115,9 @@ namespace Whiskey2D.Core.Hud
 
         }
 
+        /// <summary>
+        /// update the HudManager
+        /// </summary>
         public void update()
         {
             newKeys = keyboard.getAllKeysDown();
@@ -114,31 +136,55 @@ namespace Whiskey2D.Core.Hud
         }
 
 
-
+        /// <summary>
+        /// adds a line of text
+        /// </summary>
+        /// <param name="line"></param>
         public void addTextLine(TextLine line)
         {
             this.textLines.Add(line);
         }
 
+        /// <summary>
+        /// removes a line of text
+        /// </summary>
+        /// <param name="line"></param>
         public void removeTextLine(TextLine line)
         {
             this.textLines.Remove(line);
         }
 
+        /// <summary>
+        /// gets all of the lines of text
+        /// </summary>
+        /// <returns></returns>
         public List<TextLine> getAllTextLines()
         {
             return textLines;
         }
 
-
+        /// <summary>
+        /// adds a box
+        /// </summary>
+        /// <param name="box"></param>
         public void addBox(Box box)
         {
             this.boxes.Add(box);
         }
+
+        /// <summary>
+        /// removes a box
+        /// </summary>
+        /// <param name="box"></param>
         public void removeBox(Box box)
         {
             this.boxes.Remove(box);
         }
+
+        /// <summary>
+        /// gets all of the boxes
+        /// </summary>
+        /// <returns></returns>
         public List<Box> getAllBoxes()
         {
             return this.boxes;

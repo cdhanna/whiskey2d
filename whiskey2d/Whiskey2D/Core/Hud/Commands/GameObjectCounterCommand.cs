@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// GameObjectCounter will count how many GameObjects exist in ObjectManager, and display it to the designer
+    /// </summary>
     class GameObjectCounterCommand : ConsoleCommand
     {
         public GameObjectCounterCommand() : base("countObjects") { }

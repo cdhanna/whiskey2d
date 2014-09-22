@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Whiskey2D.Core.Hud.Commands
 {
+    /// <summary>
+    /// The ReplayCommand will allow the designer to replay the last play session. As an optional arg, they can specifiy how many frames should take place between ticks.
+    /// </summary>
     class ReplayCommand : ConsoleCommand
     {
         public ReplayCommand() : base("replay") { }

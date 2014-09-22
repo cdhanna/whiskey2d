@@ -78,6 +78,10 @@ namespace Whiskey2D.Core
             spriteBatch.End();
         }
 
+
+        /// <summary>
+        /// Renders the HUD
+        /// </summary>
         public void renderHud()
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
