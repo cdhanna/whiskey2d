@@ -15,6 +15,7 @@ namespace Whiskey2D.Core.Hud.Commands
         {
             InputSourceManager.getInstance().requestRegular();
             HudManager.getInstance().ConsoleMode = false;
+            GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
         }
     }
 }

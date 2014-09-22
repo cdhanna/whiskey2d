@@ -83,7 +83,7 @@ namespace Whiskey2D.Core
             //    }
             //}
             starter = new LaunchPour2();
-
+            GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Whiskey2D.PourGames.Game2
 
                 float deltaY = distances[r.Next(distances.Length)];
                 float newY = deltaY + oldY;
-                if (newY > 400 || newY < 100)
+                if (newY > GameManager.getInstance().ScreenHeight-50 || newY < 100)
                 {
                     deltaY *= -1;
                     newY = deltaY + oldY;

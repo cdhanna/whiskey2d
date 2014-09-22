@@ -146,7 +146,7 @@ namespace Whiskey2D.Core
             if (index >= allLines.Length)
             {
                 replayOver = true;
-                
+                GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
                 throw new LogOverException();
                 
             }

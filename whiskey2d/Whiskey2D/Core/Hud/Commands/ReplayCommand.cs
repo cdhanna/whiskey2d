@@ -15,6 +15,20 @@ namespace Whiskey2D.Core.Hud.Commands
         {
             InputSourceManager.getInstance().requestReplay();
             HudManager.getInstance().ConsoleMode = false;
+
+            if (args.Length == 2)
+            {
+                try
+                {
+                    int m = int.Parse(args[1]);
+                    GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, m);
+                }
+                catch (Exception e)
+                {
+                    console.writeLine("not a integer");
+                }
+                
+            }
         }
     }
 }
