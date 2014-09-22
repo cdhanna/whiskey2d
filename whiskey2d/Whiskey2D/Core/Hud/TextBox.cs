@@ -107,6 +107,7 @@ namespace Whiskey2D.Core.Hud
                 borderTop.Visible = value;
                 borderLow.Visible = value;
                 lines.ForEach((l) => { l.Visible = value; });
+                this.formatLines();
             }
         }
 
@@ -344,7 +345,7 @@ namespace Whiskey2D.Core.Hud
 
                 line.Position = Position + lineOffset;
                 lineOffset.Y += height;
-                if (line.Position.Y < position.Y || line.Position.Y + height > position.Y + size.Y)
+                if (!this.visible || line.Position.Y < position.Y || line.Position.Y + height > position.Y + size.Y)
                 {
                     //line.Color = Color.Red;
                     line.Visible = false;

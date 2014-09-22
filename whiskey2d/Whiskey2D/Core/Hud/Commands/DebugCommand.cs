@@ -24,7 +24,7 @@ namespace Whiskey2D.Core.Hud.Commands
                 if (arg.Equals("0") || arg.Equals("n") || arg.Equals("off") || arg.Equals("no"))
                     HudManager.getInstance().DebugVisible = false;
                 else if (arg.Equals("1") || arg.Equals("y") || arg.Equals("yes") || arg.Equals("on"))
-                    HudManager.getInstance().DebugVisible = false;
+                    HudManager.getInstance().DebugVisible = true;
             }
 
             
