@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Whiskey2D.Core
 {
+    /// <summary>
+    /// An InputSource that gets input directly from the keyboard
+    /// </summary>
     class RealKeyBoard : InputSource
     {
 
@@ -52,12 +55,18 @@ namespace Whiskey2D.Core
             ks.Add(Keys.Space, " ");
         }
 
-
+        /// <summary>
+        /// initializes the keyboard
+        /// </summary>
         public void init()
         {
             //do nothing
         }
 
+        /// <summary>
+        /// Get all keys that are being pressed.
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<Keys, bool> getAllKeysDown()
         {
 
@@ -74,6 +83,11 @@ namespace Whiskey2D.Core
             return keyMap;
         }
 
+        /// <summary>
+        /// Utility function to map a Keys enum to a string. 
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
         public static String keyToString(Keys k)
         {
             if (ks.ContainsKey(k))

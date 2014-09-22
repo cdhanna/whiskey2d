@@ -55,28 +55,24 @@ namespace Whiskey2D.Core
         {
         }
 
+        /// <summary>
+        /// Initializes the LogManager. This is when the log file is created.
+        /// </summary>
         public void init()
         {
 
             sourceMan = InputSourceManager.getInstance();
-      
-
             currentState = sourceMan.getSource().getAllKeysDown();
-           
-            writer = File.CreateText( getCurrentLogPath() ); //TODO make naming unique between runs
-            
-
-
-            writer.AutoFlush = true;
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();
-
             oldActiveKeys.Clear();
             currentActiveKeys.Clear();
             activeKeyCounter = 0;
             masterCount = 0;
 
-            //writer.WriteLine("SEED IS " + Rand.getInstance().getSeed());
+            writer = File.CreateText( getCurrentLogPath() );
+            writer.AutoFlush = true;
+            
             this.writeCommand(new RandCommand(-1, Rand.getInstance().getSeed()));
         }
 
@@ -89,10 +85,6 @@ namespace Whiskey2D.Core
 
             File.Delete(getOldLogPath());
             File.Copy(getCurrentLogPath(), getOldLogPath());
-
-
-            //File.Replace(getCurrentLogPath(), getOldLogPath(), "turd");
-
         }
 
         public string getCurrentLogPath()

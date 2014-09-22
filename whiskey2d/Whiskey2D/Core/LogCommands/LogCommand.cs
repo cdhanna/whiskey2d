@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace Whiskey2D.Core.LogCommands
 {
+    /// <summary>
+    /// A LogCommand controls how a certain type of message is written to a log
+    /// </summary>
     abstract class LogCommand
     {
         //TODO less hacky
