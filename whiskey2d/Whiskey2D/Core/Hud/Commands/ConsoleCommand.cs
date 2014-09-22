@@ -19,5 +19,7 @@ namespace Whiskey2D.Core.Hud.Commands
 
         public abstract void run(WhiskeyConsole console, string[] args);
 
+        
+
     }
 }

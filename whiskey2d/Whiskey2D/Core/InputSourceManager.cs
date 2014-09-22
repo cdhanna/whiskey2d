@@ -46,25 +46,39 @@ namespace Whiskey2D.Core
             return source;
         }
 
+        public void requestReplay()
+        {
+            replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
+            source = replSource;
+            GameManager.getInstance().reset();
+        }
+
+        public void requestRegular()
+        {
+            source = keyboardSource;
+            GameManager.getInstance().reset();
+        }
+
+
         public void update()
         {
 
 
-            if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.R] && source != replSource)
-            {
+            //if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.R] && source != replSource)
+            //{
                
-                replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
-                source = replSource;
-                GameManager.getInstance().reset();
+            //    replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
+            //    source = replSource;
+            //    GameManager.getInstance().reset();
 
                 
-            }
+            //}
 
-            if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.P])
-            {
-                source = keyboardSource;
-                GameManager.getInstance().reset();
-            }
+            //if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.P])
+            //{
+            //    source = keyboardSource;
+            //    GameManager.getInstance().reset();
+            //}
 
             if (replSource != null && replSource.ReplayOver)
             {

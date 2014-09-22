@@ -50,7 +50,9 @@ namespace Whiskey2D.Core.Hud
             //default commands
             addCommand(new ExitCommand());
             addCommand(new HelpCommand());
-
+            addCommand(new ReplayCommand());
+            addCommand(new ResetCommand());
+            addCommand(new DebugCommand());
         }
 
         public void addCommand(ConsoleCommand command)

@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Whiskey2D.Core.Hud.Commands
+{
+    class ResetCommand : ConsoleCommand
+    {
+        public ResetCommand() : base("reset") { }
+
+
+
+        public override void run(WhiskeyConsole console, string[] args)
+        {
+            InputSourceManager.getInstance().requestRegular();
+            HudManager.getInstance().ConsoleMode = false;
+        }
+    }
+}

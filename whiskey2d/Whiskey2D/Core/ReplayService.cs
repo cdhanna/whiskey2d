@@ -146,6 +146,7 @@ namespace Whiskey2D.Core
             if (index >= allLines.Length)
             {
                 replayOver = true;
+                
                 throw new LogOverException();
                 
             }

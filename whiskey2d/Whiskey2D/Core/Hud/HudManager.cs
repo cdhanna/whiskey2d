@@ -61,6 +61,32 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
+        public bool DebugVisible
+        {
+            get
+            {
+                return debugWindow.Visible;
+            }
+            set
+            {
+                debugWindow.Visible = value;
+            }
+        }
+        public LogLevel DebugLevel { get; set; }
+
+        public Color DebugColor
+        {
+            get
+            {
+                return debugWindow.TextColor;
+            }
+            set
+            {
+                debugWindow.TextColor = value;
+            }
+        }
+
+
 
         public void close()
         {
@@ -119,20 +145,6 @@ namespace Whiskey2D.Core.Hud
         }
 
 
-        public bool DebugVisible { get; set; }
-        public LogLevel DebugLevel { get; set; }
-
-        public Color DebugColor
-        {
-            get 
-            { 
-                return debugWindow.TextColor; 
-            }
-            set
-            {
-                debugWindow.TextColor = value;
-            }
-        }
 
 
         public void writeMessage(LogMessage message)

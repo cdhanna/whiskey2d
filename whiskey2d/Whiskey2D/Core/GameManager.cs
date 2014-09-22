@@ -116,13 +116,13 @@ namespace Whiskey2D.Core
             resMan.close();
             inMan.close();
             logMan.close();
-            hudMan.close();
+            //hudMan.close();
 
             Rand.getInstance().reSeed();
 
             sourceMan.getSource().init();
 
-            hudMan.init();
+            //hudMan.init();
             renMan.init(GraphicsDevice);
             objMan.init();
             resMan.init(Content);

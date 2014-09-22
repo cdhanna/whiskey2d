@@ -40,8 +40,11 @@
     </Compile>
     <Compile Include="Core\Hud\Box.cs" />
     <Compile Include="Core\Hud\Commands\ConsoleCommand.cs" />
+    <Compile Include="Core\Hud\Commands\DebugCommand.cs" />
     <Compile Include="Core\Hud\Commands\ExitCommand.cs" />
     <Compile Include="Core\Hud\Commands\HelpCommand.cs" />
+    <Compile Include="Core\Hud\Commands\ReplayCommand.cs" />
+    <Compile Include="Core\Hud\Commands\ResetCommand.cs" />
     <Compile Include="Core\Hud\WhiskeyConsole.cs" />
     <Compile Include="Core\Hud\HudManager.cs" />
     <Compile Include="Core\Hud\TextBox.cs" />
