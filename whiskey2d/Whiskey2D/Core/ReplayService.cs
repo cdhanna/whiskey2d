@@ -25,12 +25,19 @@ namespace Whiskey2D.Core
 
         public bool ReplayOver { get { return this.replayOver; } }
 
+        /// <summary>
+        /// Create a new ReplayService
+        /// </summary>
+        /// <param name="logFilePath">A logFile to create a set of input events from</param>
         public ReplayService(string logFilePath)
         {
             this.logFilePath = logFilePath;
 
         }
 
+        /// <summary>
+        /// initializes the ReplayService. This is when the log file is actually loaded into memory.
+        /// </summary>
         public void init()
         {
             allLines = File.ReadAllLines(logFilePath);
@@ -140,12 +147,18 @@ namespace Whiskey2D.Core
             return keyMap;
         }
 
-
+        /// <summary>
+        /// get the string on a specified line number
+        /// THIS WILL THROW A LOGOVEREXCEPTION if the index is greater than the number of lines. Catch this
+        /// </summary>
+        /// <param name="index">the line number index to read</param>
+        /// <returns>the text on the line</returns>
         private string readLine(long index) 
         {
             if (index >= allLines.Length)
             {
                 replayOver = true;
+                GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
                 throw new LogOverException();
                 
             }
@@ -156,13 +169,12 @@ namespace Whiskey2D.Core
 
         }
 
+        /// <summary>
+        /// utility exception
+        /// </summary>
         private class LogOverException : Exception
         {
-            public LogOverException()
-            {
-                
-
-            }
+         
         }
 
 

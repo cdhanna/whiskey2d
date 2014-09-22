@@ -20,7 +20,7 @@ namespace Whiskey2D.PourGames.Game2
         public float jumpGravity = 25;
         public bool onGround = false;
         public Vector2 jumpNormal = new Vector2(0, -1);
-
+        public bool onWall = false;
         public override void onStart()
         {
 
@@ -75,24 +75,45 @@ namespace Whiskey2D.PourGames.Game2
                     xHit = true;
                     onGround = true;
                     jumpNormal = new Vector2(2, -1f);
+                    if (!onWall)
+                    {
+                        makeParticleCluster(plr.Position + new Vector2(-plr.Sprite.ImageSize.Y / 2, 0), jumpNormal);
+                    }
+                    onWall = true;
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
                 }
-                if (wall.Bounds.vectorWithin(rightEdge + velocity))
+                else if (wall.Bounds.vectorWithin(rightEdge + velocity))
                 {
                     xHit = true;
                     onGround = true;
                     jumpNormal = new Vector2(-2, -1f);
-                   
+                    if (!onWall)
+                    {
+                        makeParticleCluster(plr.Position + new Vector2(plr.Sprite.ImageSize.X / 2, 0), jumpNormal);
+                    }
+                    onWall = true;
                     plr.Position.X = wall.Bounds.Left - plr.Sprite.ImageSize.X / 2;
+                }
+                else
+                {
+                    onWall = false;
                 }
                 if (wall.Bounds.vectorWithin(bottamEdge + velocity))
                 {
+
+             
+                    
                     plr.Position.Y = wall.Bounds.Top - plr.Sprite.ImageSize.Y / 2;
                     plr.Position.Y += 10;
+                    jumpNormal = new Vector2(0, -1);
+                    if (!onGround)
+                    {
+                        makeParticleCluster(plr.Position + new Vector2(0, plr.Sprite.ImageSize.Y/2), jumpNormal);
+                    }
 
                     yHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(0, -1);
+                    
                 }
                 if (wall.Bounds.vectorWithin(topEdge + velocity))
                 {
@@ -134,7 +155,28 @@ namespace Whiskey2D.PourGames.Game2
 
 
 
+        public void makeParticleCluster(Vector2 pos, Vector2 dir)
+        {
+            Rand r = Rand.getInstance();
+            dir = Vector2.Normalize(dir);
+            Vector2 orth = new Vector2(dir.Y, -dir.X);
+           
 
+            for (int i = 0; i < 20; i++)
+            {
+
+                Vector2 start = pos +20 * (orth * (r.nextFloat() - .5f));
+                Vector2 vel = (start - (pos - (20 * dir)));
+                vel.X -= 1;
+                vel.Normalize();
+               // 
+                vel *= (.5f+r.nextFloat())*4;
+                Particle p = new Particle(start, vel);
+                p.Sprite.Color = r.nextColorVariation(Color.Green, .3f, .1f, .4f, 0);
+                //new Particle(pos + r.nextUnit2() * 20, 3*r.nextUnit2()* (r.nextFloat()+.5f));
+            }
+
+        }
 
 
     }

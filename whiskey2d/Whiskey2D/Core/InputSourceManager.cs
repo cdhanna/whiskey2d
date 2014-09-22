@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Whiskey2D.Core
 {
+
+    /// <summary>
+    /// The inputSource Manager decides what kind of input source the game will be using
+    /// </summary>
     class InputSourceManager
     {
 
@@ -24,48 +28,43 @@ namespace Whiskey2D.Core
         {
             keyboardSource = new RealKeyBoard();
             source = keyboardSource;
-            //replSource = new ReplayService("");
         }
 
 
-        
-
-        //public void setInputSource(InputSource inputSource)
-        //{
-
-        //}
-
-        //public InputSource getInputSource()
-        //{
-
-        //}
-
-
+        /// <summary>
+        /// Get the input source that will provide input to the game
+        /// </summary>
+        /// <returns>the current input source</returns>
         public InputSource getSource()
         {
             return source;
         }
 
+        /// <summary>
+        /// Ask the InputSource Manager to switch the input source to a replay service
+        /// </summary>
+        public void requestReplay()
+        {
+            replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
+            source = replSource;
+            GameManager.getInstance().reset();
+        }
+
+        /// <summary>
+        /// Ask the InputSource Manager to switch the input source to the default one (the keyboard)
+        /// </summary>
+        public void requestRegular()
+        {
+            source = keyboardSource;
+            GameManager.getInstance().reset();
+        }
+
+        /// <summary>
+        /// Update the InputSource manager
+        /// </summary>
         public void update()
         {
-
-
-            if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.R] && source != replSource)
-            {
-               
-                replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
-                source = replSource;
-                GameManager.getInstance().reset();
-
-                
-            }
-
-            if (keyboardSource.getAllKeysDown()[Microsoft.Xna.Framework.Input.Keys.P])
-            {
-                source = keyboardSource;
-                GameManager.getInstance().reset();
-            }
-
+         
             if (replSource != null && replSource.ReplayOver)
             {
                 source = keyboardSource;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
@@ -58,7 +59,34 @@ namespace Whiskey2D.Core
             return r.Next(min, max);
         }
 
-        
+        public float nextFloat()
+        {
+            return (float)r.NextDouble();
+        }
+
+        public Vector2 nextUnit2()
+        {
+            float angle = nextFloat() * (float)(Math.PI*2);
+            return new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+        }
+
+        public Color nextColorVariation(Color baseColor, float redVar, float greenVar, float blueVar, float alphaVar)
+        {
+            redVar = (nextFloat() * redVar) - (redVar / 2);
+            greenVar = (nextFloat() * greenVar) - (greenVar / 2);
+            blueVar = (nextFloat() * blueVar) - (blueVar / 2);
+            alphaVar = (nextFloat() * alphaVar) - (alphaVar / 2);
+            
+            float r = redVar + (float)(baseColor.R / 255.0);
+            float g = greenVar + (float)(baseColor.G / 255.0);
+            float b = blueVar + (float)(baseColor.B / 255.0);
+            float a = alphaVar + (float)(baseColor.A / 255.0);
+            r = Math.Min(Math.Max(r, 0), 1);
+            g = Math.Min(Math.Max(g, 0), 1);
+            b = Math.Min(Math.Max(b, 0), 1);
+            a = Math.Min(Math.Max(a, 0), 1);
+            return new Color(r, g, b, a);
+        }
 
     }
 }

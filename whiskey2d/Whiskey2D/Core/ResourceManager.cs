@@ -33,6 +33,8 @@ namespace Whiskey2D.Core
 
         private ContentManager content;
 
+        private SpriteFont defaultFont;
+
         private ResourceManager()
         {
         }
@@ -44,6 +46,9 @@ namespace Whiskey2D.Core
         public void init(ContentManager content)
         {
             this.content = content;
+
+            this.defaultFont = content.Load<SpriteFont>("font");
+
         }
 
         public void close()
@@ -60,5 +65,9 @@ namespace Whiskey2D.Core
             return content.Load<Texture2D>(filePath);
         }
 
+        public SpriteFont getDefaultFont()
+        {
+            return defaultFont;
+        }
     }
 }
