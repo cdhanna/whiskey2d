@@ -6,7 +6,7 @@ using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 namespace Whiskey2D.PourGames.Game2
 {
-    class ParticleScript : Script
+    class ParticleScript : Script<Particle>
     {
         public override void onStart()
         {
@@ -14,7 +14,7 @@ namespace Whiskey2D.PourGames.Game2
 
         public override void onUpdate()
         {
-            Particle p = (Particle)Gob;
+            Particle p = Gob;
 
             p.Position += p.Velocity;
             p.Sprite.Scale *= .97f;

@@ -26,12 +26,11 @@ namespace Whiskey2D.PourGames.Game2
             Velocity = velocity;
         }
 
-        protected override List<Script> getInitialScripts()
-        {
-            List<Script> scripts = new List<Script>();
-            scripts.Add(new ParticleScript());
-            return scripts;
         
+
+        protected override void addInitialScripts()
+        {
+            this.addScript(new ParticleScript());
         }
     }
 }
