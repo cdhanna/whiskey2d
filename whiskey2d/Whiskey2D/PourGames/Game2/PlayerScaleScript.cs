@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.PourGames.Game2
 {
-    class PlayerScaleScript : Script
+    class PlayerScaleScript : Script<Player>
     {
         public Vector2 targetScale;
 
@@ -18,7 +18,7 @@ namespace Whiskey2D.PourGames.Game2
 
         public override void onUpdate()
         {
-            Player plr = (Player)Gob;
+            Player plr = Gob;
 
             targetScale = (Vector2.One * 30) + new Vector2(
                  Math.Max(-6, Math.Abs(plr.Velocity.X) - Math.Abs(plr.Velocity.Y)),

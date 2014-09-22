@@ -7,7 +7,7 @@ using Whiskey2D.Core;
 
 namespace Whiskey2D.PourGames.Game2
 {
-    class BackgroundScript : Script
+    class BackgroundScript : Script<Background>
     {
         public override void onStart()
         {

@@ -57,6 +57,10 @@
     <Compile Include="Core\SimpleGameObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ex2\Gob.cs" />
+    <Compile Include="ex2\GobImpl.cs" />
+    <Compile Include="ex2\Script.cs" />
+    <Compile Include="ex2\ScriptImpl.cs" />
     <Compile Include="PourGames\Game2\Background.cs" />
     <Compile Include="PourGames\Game2\BackgroundScript.cs" />
     <Compile Include="PourGames\Game2\Floor.cs" />

@@ -11,9 +11,10 @@ namespace Whiskey2D.Core
     /// </summary>
     public class SimpleGameObject : GameObject
     {
-        protected override List<Script> getInitialScripts()
+
+        protected override void addInitialScripts()
         {
-            return null;
+            
         }
     }
 }

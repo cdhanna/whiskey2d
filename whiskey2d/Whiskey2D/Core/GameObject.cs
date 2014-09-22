@@ -23,25 +23,27 @@ namespace Whiskey2D.Core
             Position = Vector2.Zero;
             Sprite = null;
             ID = idCounter++;
-            scripts = new List<Script>();
+            scripts = new List<ScriptBundle<GameObject>>();
 
-            List<Script> initScripts = getInitialScripts();
-            if (initScripts != null)
-            {
-                initScripts.ForEach((script) => { this.addScript(script); });
-            }
+            //List<ScriptBundle<GameObject>> initScripts = getInitialScripts();
+            //if (initScripts != null)
+            //{
+            //    initScripts.ForEach((script) => { this.addScript(script); });
+            //}
 
-
+            this.addInitialScripts();
             
 
             ObjectManager.getInstance().addObject(this);
+
+
 
         }
 
 
         private Sprite sprite;
         private int id;
-        private List<Script> scripts;
+        private List<ScriptBundle<GameObject>> scripts;
 
         /// <summary>
         /// The position of the Game Object
@@ -97,9 +99,9 @@ namespace Whiskey2D.Core
         public void init()
         {
 
-            foreach (Script script in scripts)
+            foreach (ScriptBundle<GameObject> script in scripts)
             {
-                script.onStart();
+                script.start();
             }
 
         }
@@ -116,10 +118,23 @@ namespace Whiskey2D.Core
         /// Add a script to the GameObject's behaviour
         /// </summary>
         /// <param name="script"></param>
-        protected void addScript(Script script) 
+        protected void addScript<G>(Script<G> script) where G : GameObject
         {
-            script.Gob = this;
-            scripts.Add(script);
+            //script.Gob = this;
+            //scripts.Add(script);
+            if (this.GetType() != typeof(G)) //runtime exception
+            {
+               // throw new ScriptTypeException();
+            }
+
+            script.Gob = (G)this;
+
+            ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
+            //ScriptBundle<Gob> converted = script.convert();
+
+
+
+            this.scripts.Add(converted);
         }
 
         /// <summary>
@@ -127,9 +142,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public void update()
         {
-            foreach (Script script in scripts)
+            foreach (ScriptBundle<GameObject> script in scripts)
             {
-                script.onUpdate();
+                script.update();
             }
         }
 
@@ -137,8 +152,9 @@ namespace Whiskey2D.Core
         /// Called upon initialization. Used to retrieve a set of start up scripts for the object. 
         /// </summary>
         /// <returns>A list of scripts to be run by the GameObject, or null if no scripts should be run</returns>
-        protected abstract List<Script> getInitialScripts();
+       // protected abstract List<Script> getInitialScripts();
 
+        protected abstract void addInitialScripts();
 
     }
 }

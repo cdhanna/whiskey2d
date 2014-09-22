@@ -12,11 +12,10 @@ namespace Whiskey2D.PourGames.TestImpl
 
         public float StarRotation { get; set; }
 
-        protected override List<Script> getInitialScripts()
+        
+        protected override void addInitialScripts()
         {
-            List<Script> scripts = new List<Script>();
-            scripts.Add(new StarFieldMoveScript());
-            return scripts;
+            this.addScript(new StarFieldMoveScript());
         }
     }
 }

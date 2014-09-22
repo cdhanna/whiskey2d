@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Whiskey2D.Service;
 using Whiskey2D.Core;
-
+using Whiskey2D.ex2;
 #endregion
 
 namespace Whiskey2D
@@ -57,7 +57,7 @@ namespace Whiskey2D
             //    }
             //}
 
-
+           
             using (var game = new GameManager(null))
                 game.Run();
         }

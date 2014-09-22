@@ -32,9 +32,10 @@ namespace Whiskey2D.PourGames.TestImpl
             }
         }
 
-        protected override List<Script> getInitialScripts()
+
+
+        protected override void addInitialScripts()
         {
-            return null;
         }
     }
 }

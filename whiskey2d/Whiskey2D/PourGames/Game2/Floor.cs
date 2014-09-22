@@ -35,11 +35,11 @@ namespace Whiskey2D.PourGames.Game2
         //    }
         //}
 
-        protected override List<Script> getInitialScripts()
+        
+
+        protected override void addInitialScripts()
         {
-            List<Script> scripts = new List<Script>();
-            scripts.Add(new FloorScript());
-            return scripts;
+            this.addScript(new FloorScript());
         }
     }
 }

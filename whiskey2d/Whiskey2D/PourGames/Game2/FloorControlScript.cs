@@ -6,7 +6,7 @@ using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 namespace Whiskey2D.PourGames.Game2
 {
-    class FloorControlScript : Script
+    class FloorControlScript : Script<GameControl>
     {
 
         float ticksUntilNewFloor;

@@ -12,14 +12,15 @@ namespace Whiskey2D.PourGames.TestImpl
 
         public Vector2 Velocity { get; set; }
 
-        protected override List<Script> getInitialScripts()
+       
+
+
+
+
+        protected override void addInitialScripts()
         {
-            List<Script> scripts = new List<Script>();
-            scripts.Add(new PlayerMoveScript());
-            scripts.Add(new PlayerScaleScript());
-
-            return scripts;
+            this.addScript(new PlayerMoveScript());
+            this.addScript(new PlayerScaleScript());
         }
-
     }
 }

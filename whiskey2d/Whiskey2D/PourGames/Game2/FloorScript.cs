@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.PourGames.Game2
 {
-    class FloorScript : Script
+    class FloorScript : Script<Floor>
     {
         
 

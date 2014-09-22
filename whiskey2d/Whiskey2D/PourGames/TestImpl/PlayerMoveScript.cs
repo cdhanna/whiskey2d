@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Whiskey2D.PourGames.TestImpl
 {
-    class PlayerMoveScript : Script
+    class PlayerMoveScript : Script<Player>
     {
 
         public Vector2 gravity = new Vector2(0, .2f);
