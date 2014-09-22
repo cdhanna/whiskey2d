@@ -23,10 +23,14 @@ namespace Whiskey2D.Core.Hud
         private float borderSize;
         private bool visible;
         private Color textColor;
+        private Vector2 lineOffset;
+        private int maxSize = 10;
+
 
         public TextBox()
         {
             textStart = new Vector2(2, 2);
+            lineOffset = textStart;
 
             textColor = Color.White;
             position = Vector2.Zero;
@@ -72,6 +76,7 @@ namespace Whiskey2D.Core.Hud
                 l.close();
             }
             lines.Clear();
+            text = "";
         }
 
         public bool Visible
@@ -190,17 +195,67 @@ namespace Whiskey2D.Core.Hud
             }
         }
 
-        public void pushText(string line)
+        private float getHeight()
         {
-            float lineHeight = (font.MeasureString("A").Y+1) * textSize;
-            textStart.Y = size.Y - lineHeight;
-            textStart.Y -= lineHeight * lines.Count;
-            if (textStart.Y < 2)
+            return font.MeasureString("A").Y * textSize;
+        }
+
+        public void pushTextFromBottom(string moreText)
+        {
+            this.addLinesToEnd(this.convertToLines(moreText));
+            this.text += moreText;
+            //this.textStart = new Vector2(2, -(font.MeasureString("A").Y + 1) * lines.Count);
+            this.textStart = new Vector2(2, size.Y - (getHeight()* lines.Count)) ;
+            this.formatLines();
+
+        }
+
+        public void removeFromEnd()
+        {
+            if (lines.Count > 0)
             {
-            //    textStart.Y = 2;
+                TextLine last = lines[lines.Count - 1];
+                string t = last.Text;
+                if (t.Length > 0)
+                {
+                    last.Text = t.Substring(0, t.Length - 1);
+                }
+                if (last.Text.Length == 0)
+                {
+                    lines.Remove(last);
+                    last.close();
+                }
             }
-            //Text = "hello\nthis\nisnew";
-            Text = text + line + '\n';
+            if (text.Length > 0)
+            {
+                text = text.Substring(0, text.Length - 1);
+            }
+
+        }
+
+        public void append(string moreText)
+        {
+            this.textStart = new Vector2(2, 2);
+
+            if (lines.Count > 0)
+            {
+                TextLine last = this.lines[lines.Count - 1];
+                lines.Remove(last);
+                this.addLinesToEnd(this.convertToLines(last.Text + moreText));
+                last.close();
+            } else this.addLinesToEnd(this.convertToLines(moreText));
+            
+            this.formatLines();
+            this.text = text + moreText;
+            
+        }
+
+        public void prepend(string moreText)
+        {
+            this.textStart = new Vector2(2, 2);
+            this.insertLines(0, this.convertToLines(moreText));
+            this.formatLines();
+            this.text = moreText + text;
         }
 
         public string Text
@@ -211,101 +266,94 @@ namespace Whiskey2D.Core.Hud
             }
             set
             {
-                clearText();
+                this.clearText();
+                this.text = value;
+                this.addLinesToEnd(this.convertToLines(value));
+                this.formatLines();
+            }
+        }
 
-                text = value;
-                string lineText = text;
-                Vector2 lineOffset = textStart;
+        private void addLinesToEnd(List<TextLine> lines)
+        {
+            this.lines.AddRange(lines);
+        }
 
-                string textLeft = text;
-                
-                while (textLeft.Length > 0)
+        private void insertLines(int index, List<TextLine> lines)
+        {
+            this.lines.InsertRange(index, lines);
+        }
+
+        private void formatLines()
+        {
+            lineOffset = textStart;
+            float height = getHeight();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                TextLine line = lines[i];
+
+                line.Position = Position + lineOffset;
+                lineOffset.Y += height;
+                if (line.Position.Y < position.Y || line.Position.Y + height > position.Y + size.Y)
                 {
-                    float height = (font.MeasureString("A").Y+1) * TextSize;
-                    string line = textLeft;
+                    //line.Color = Color.Red;
+                    line.Visible = false;
+                }
+            }
 
-                    int extra = 0;
 
-                    //are there any line breaks?
-                    int lineBreakIndex = textLeft.IndexOf('\n');
-                    if (lineBreakIndex > -1)
-                    {
-                        
-                        line = textLeft.Substring(0, lineBreakIndex);
-                        extra = 1;
-                    }
 
-                    //line has been set. Create line
-                    textLeft = textLeft.Substring(line.Length + extra).Trim();
 
-                    TextLine textLine = new TextLine();
-                    textLine.Color = textColor;
-                    textLine.Text = line;
-                    textLine.Size = Vector2.One * TextSize;
-                    textLine.Position = Position + lineOffset;
-                    lines.Add(textLine);
-                    Console.WriteLine("TEXT: " + line);
-                    if (textLine.Position.Y < position.Y || textLine.Position.Y + height > position.Y + size.Y)
-                    {
-                        textLine.Visible = false;
-                    }
-//
-                    lineOffset += new Vector2(0, height);
+        }
+
+        private List<TextLine> convertToLines(string text)
+        {
+            List<TextLine> lines = new List<TextLine>();
+
+            while (text.Length > 0)
+            {
+                string line = "";
+                int index = text.Length;
+
+
+                int newLineIndex = text.IndexOf("\n");
+                if (newLineIndex > -1)
+                {
+                    index = newLineIndex + 1;
                 }
 
+                line = text.Substring(0, index);
 
-                //while (text.Length > 0)
-                //{
-                //    Vector2 measure = textSize * font.MeasureString(lineText);
-                //    while (measure.X > size.X)
-                //    {
-                //        int indexOfSpace = lineText.LastIndexOf(' ');
-                //        if (indexOfSpace < 0)
-                //        {
-                //            indexOfSpace = lineText.Length - 1;
+                float width = font.MeasureString(line).X * textSize;
+                while (width > size.X)
+                {
 
-                //        }
-                //        lineText = lineText.Substring(0, indexOfSpace);
+                    int makeSmallerIndex = line.Length - 1;
+                    if (line.Contains(" "))
+                    {
+                        makeSmallerIndex = Math.Min(makeSmallerIndex, line.LastIndexOf(" ")+1);
+                    }
 
-                //        measure = textSize * font.MeasureString(lineText);
-                //    }
-                //    int newLineIndex = lineText.IndexOf('\n');
-                //    if (newLineIndex > -1)
-                //    {
-                //        lineText = lineText.Substring(0, newLineIndex);
-                //        lineText.Replace("\n", "");
-                //    }
-                    
-                    
-                //    text = text.Substring(lineText.Length).Trim();
-
-                //    if (text != "")
-                //    {
-
-
-                //        TextLine line = new TextLine();
-                //        line.Text = lineText;
-                //        line.Color = textColor;
-                //        line.Position += Position;
-                //        line.Position += lineOffset;
-                //        line.Size = Vector2.One * textSize;
-                //        lineText = text;
-
-                //        lines.Add(line);
-                //        if (line.Position.Y < Position.Y)
-                //        {
-                //            line.Visible = false;
-                //        }
-                //    }
-                //    lineOffset.Y += measure.Y+1;
-                //    //lineOffset.Y = lines.Count * (1 + measure.Y);
+                    line = line.Substring(0, makeSmallerIndex);
+                    width = font.MeasureString(line).X * textSize;
+                }
                 
+                lines.Add(createTextLine(line));
+                text = text.Substring(line.Length);
 
-                   
-
-                //}
-                this.text = value;
             }
+            
+           
+            return lines;
+        }
+
+        private TextLine createTextLine(string text)
+        {
+            TextLine temp = new TextLine();
+            temp.Size = textSize * Vector2.One;
+            temp.Color = textColor;
+            temp.Text = text;
+            return temp;
         }
 
     }

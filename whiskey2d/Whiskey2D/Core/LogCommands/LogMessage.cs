@@ -27,12 +27,12 @@ namespace Whiskey2D.Core.LogCommands
 
         protected override string toCommandText()
         {
-            return level.ToString() + "\t# " + message;
+            return level.ToString() + "\t$ " + message;
         }
 
         protected override LogCommand fromCommand(long time, string text)
         {
-            string[] parts = text.Split('#');
+            string[] parts = text.Split('$');
             string levelPart = parts[0].Trim();
             string messagePart = parts[1].Trim();
             return new LogMessage(time, (LogLevel)Enum.Parse(typeof(LogLevel), levelPart), messagePart);

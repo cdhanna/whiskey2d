@@ -167,6 +167,20 @@ namespace Whiskey2D.Core
 
             HudManager.getInstance().DebugColor = Color.RoyalBlue;
 
+
+            //TextBox b = new TextBox();
+            //b.Position = new Vector2(100, 100);
+            //b.Size = new Vector2(200, 200);
+            //b.TextSize = .8f;
+
+            //b.pushTextFromBottom("a");
+            //b.pushTextFromBottom("b");
+            //b.pushTextFromBottom("c");
+
+            //b.Text = "test this is a test\nnewline should have just happened";
+            //b.append("another line");
+            //b.append("abc");
+            //b.prepend("in the start");
             //RUN THE START CODE
             if (starter != null)
             {
@@ -192,6 +206,11 @@ namespace Whiskey2D.Core
 
         }
 
+        public void close()
+        {
+            Exit();
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -202,10 +221,15 @@ namespace Whiskey2D.Core
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            inMan.update();
-            sourceMan.update();
-            logMan.update();
-            objMan.updateAll();
+            hudMan.update();
+
+            if (!hudMan.ConsoleMode)
+            {
+                inMan.update();
+                sourceMan.update();
+                logMan.update();
+                objMan.updateAll();
+            }
             
             base.Update(gameTime);
         }

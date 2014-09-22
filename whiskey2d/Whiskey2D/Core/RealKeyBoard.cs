@@ -9,6 +9,50 @@ namespace Whiskey2D.Core
     class RealKeyBoard : InputSource
     {
 
+        private static Dictionary<Keys, String> ks = new Dictionary<Keys, string>();
+
+        static RealKeyBoard()
+        {
+            ks.Add(Keys.A, "a");
+            ks.Add(Keys.B, "b");
+            ks.Add(Keys.C, "c");
+            ks.Add(Keys.D, "d");
+            ks.Add(Keys.E, "e");
+            ks.Add(Keys.F, "f");
+            ks.Add(Keys.G, "g");
+            ks.Add(Keys.H, "h");
+            ks.Add(Keys.I, "i");
+            ks.Add(Keys.J, "j");
+            ks.Add(Keys.K, "k");
+            ks.Add(Keys.L, "l");
+            ks.Add(Keys.M, "m");
+            ks.Add(Keys.N, "n");
+            ks.Add(Keys.O, "o");
+            ks.Add(Keys.P, "p");
+            ks.Add(Keys.Q, "q");
+            ks.Add(Keys.R, "r");
+            ks.Add(Keys.S, "s");
+            ks.Add(Keys.T, "t");
+            ks.Add(Keys.U, "u");
+            ks.Add(Keys.V, "v");
+            ks.Add(Keys.W, "w");
+            ks.Add(Keys.X, "x");
+            ks.Add(Keys.Y, "y");
+            ks.Add(Keys.Z, "z");
+            ks.Add(Keys.D0, "0");
+            ks.Add(Keys.D1, "1");
+            ks.Add(Keys.D2, "2");
+            ks.Add(Keys.D3, "3");
+            ks.Add(Keys.D4, "4");
+            ks.Add(Keys.D5, "5");
+            ks.Add(Keys.D6, "6");
+            ks.Add(Keys.D7, "7");
+            ks.Add(Keys.D8, "8");
+            ks.Add(Keys.D9, "9");
+            ks.Add(Keys.Space, " ");
+        }
+
+
         public void init()
         {
             //do nothing
@@ -29,5 +73,13 @@ namespace Whiskey2D.Core
 
             return keyMap;
         }
+
+        public static String keyToString(Keys k)
+        {
+            if (ks.ContainsKey(k))
+                return ks[k];
+            else return "";
+        }
+
     }
 }

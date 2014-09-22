@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Whiskey2D.Core.LogCommands;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Input;
 namespace Whiskey2D.Core.Hud
 {
     class HudManager
@@ -19,7 +19,10 @@ namespace Whiskey2D.Core.Hud
         private List<Box> boxes;
 
         private TextBox debugWindow;
-
+        private WhiskeyConsole console;
+        private RealKeyBoard keyboard;
+        private Dictionary<Keys, bool> oldKeys, newKeys;
+        private bool consoleMode;
 
         private HudManager()
         {
@@ -35,17 +38,55 @@ namespace Whiskey2D.Core.Hud
             DebugLevel = LogLevel.DEBUG;
 
             debugWindow = new TextBox();
-            debugWindow.Position = new Vector2(2, GameManager.getInstance().ScreenHeight- 300);
-            debugWindow.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 298);
+            debugWindow.Position = new Vector2(2, GameManager.getInstance().ScreenHeight- 100);
+            debugWindow.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 98);
             debugWindow.BackGroundColor = Color.Transparent;
             debugWindow.BorderColor = Color.Transparent;
+            debugWindow.TextSize = .8f;
+            keyboard = new RealKeyBoard();
+            console = new WhiskeyConsole();
+            ConsoleMode = false;
         }
+
+        public bool ConsoleMode
+        {
+            get
+            {
+                return this.consoleMode;
+            }
+            set
+            {
+                this.consoleMode = value;
+                this.console.Visible = value;
+            }
+        }
+
 
         public void close()
         {
             textLines.Clear();
             boxes.Clear();
+            debugWindow.clearText();
+
         }
+
+        public void update()
+        {
+            newKeys = keyboard.getAllKeysDown();
+
+            if (newKeys[Keys.OemTilde] && !oldKeys[Keys.OemTilde])
+            {
+                ConsoleMode = !ConsoleMode;
+            }
+
+            if (ConsoleMode)
+            {
+                console.update();
+            }
+
+            oldKeys = newKeys;
+        }
+
 
 
         public void addTextLine(TextLine line)
@@ -98,8 +139,7 @@ namespace Whiskey2D.Core.Hud
         {
             if (message.Level == DebugLevel)
             {
-                debugWindow.pushText("");
-                //debugWindow.Text += message.Message + "\n";
+                debugWindow.pushTextFromBottom(message.Time + "> " + message.Message);
             }
 
         }
