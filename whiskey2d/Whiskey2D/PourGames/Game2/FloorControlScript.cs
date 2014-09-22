@@ -43,7 +43,8 @@ namespace Whiskey2D.PourGames.Game2
                 oldY = newY;
 
                 Floor floor = null;
-                for (int i = 0; i < 3; i++)
+                int floorSegments = r.Next(2, 5);
+                for (int i = 0; i < floorSegments; i++)
                 {
                     floor = new Floor();
                     floor.Position = new Vector2(800, 100);
@@ -56,7 +57,7 @@ namespace Whiskey2D.PourGames.Game2
                 end.Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_right.png"));
                 end.Sprite.Scale *= .5f;
                 end.Position = new Vector2(800, 100);
-                end.Position.X += floor.Sprite.ImageSize.X * 3;
+                end.Position.X += floor.Sprite.ImageSize.X * floorSegments;
                 end.Position.Y = newY;
 
                 Floor start = new Floor();
@@ -68,13 +69,13 @@ namespace Whiskey2D.PourGames.Game2
 
                 LogManager.getInstance().debug("created a floor segment at " + newY);
 
-                float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
-                ObjectManager.getInstance().getAllObjectsOfType<Floor>().ForEach((f) => { f.speed = speed; });
+                //float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
+                //ObjectManager.getInstance().getAllObjectsOfType<Floor>().ForEach((f) => { f.speed = speed; });
 
 
                 //speed *= 1.1f;
                 //ticksUntilNewFloorLimit *= .9f;
-                ticksUntilNewFloor = ticksUntilNewFloorLimit;
+                ticksUntilNewFloor = ticksUntilNewFloorLimit - (3 - floorSegments)*10;
             }
 
 

@@ -21,7 +21,7 @@ namespace Whiskey2D.PourGames.Game2
         }
 
        // private Vector2 size;
-        public float speed = 1;
+        //public float speed = 1;
         //public Vector2 Size
         //{
         //    get
