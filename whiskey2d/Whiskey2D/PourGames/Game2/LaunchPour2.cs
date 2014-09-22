@@ -25,7 +25,7 @@ namespace Whiskey2D.PourGames.Game2
             player.Sprite = new Sprite(RenderManager.getInstance().getPixel());
             player.Sprite.Scale = new Vector2(20, 20);
             player.Sprite.Center();
-            player.Sprite.Color = Color.Purple;
+            player.Sprite.Color = Color.DarkGreen;
             player.Sprite.Depth = 1;
 
         }

@@ -53,11 +53,12 @@ namespace Whiskey2D.Core.Hud
             addCommand(new ReplayCommand());
             addCommand(new ResetCommand());
             addCommand(new DebugCommand());
+            addCommand(new GameObjectCounterCommand());
         }
 
         public void addCommand(ConsoleCommand command)
         {
-            commandTable.Add(command.CommandName, command);
+            commandTable.Add(command.CommandName.ToLower(), command);
         }
 
         public List<string> getCommandNames()
@@ -132,6 +133,7 @@ namespace Whiskey2D.Core.Hud
 
         private void submitCommand(string command)
         {
+            
             textBox.pushTextFromBottom(command);
 
             string[] parts = command.Split(' ');

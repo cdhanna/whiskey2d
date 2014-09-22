@@ -42,6 +42,7 @@
     <Compile Include="Core\Hud\Commands\ConsoleCommand.cs" />
     <Compile Include="Core\Hud\Commands\DebugCommand.cs" />
     <Compile Include="Core\Hud\Commands\ExitCommand.cs" />
+    <Compile Include="Core\Hud\Commands\GameObjectCounterCommand.cs" />
     <Compile Include="Core\Hud\Commands\HelpCommand.cs" />
     <Compile Include="Core\Hud\Commands\ReplayCommand.cs" />
     <Compile Include="Core\Hud\Commands\ResetCommand.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="PourGames\Game2\FloorScript.cs" />
     <Compile Include="PourGames\Game2\GameControl.cs" />
     <Compile Include="PourGames\Game2\LaunchPour2.cs" />
+    <Compile Include="PourGames\Game2\Particle.cs" />
+    <Compile Include="PourGames\Game2\ParticleScript.cs" />
     <Compile Include="PourGames\Game2\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
