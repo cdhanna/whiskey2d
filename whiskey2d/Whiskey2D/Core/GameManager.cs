@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
+using Whiskey2D.Core.Hud;
+
 using Whiskey2D.PourGames.TestImpl;
 using Whiskey2D.PourGames.Game2;
 #endregion
@@ -35,9 +37,10 @@ namespace Whiskey2D.Core
         InputManager inMan;
         LogManager logMan;
         InputSourceManager sourceMan;
+        HudManager hudMan;
 
-     
-
+        int width;
+        int height;
 
         Starter starter;
 
@@ -54,8 +57,9 @@ namespace Whiskey2D.Core
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-           
 
+            width = graphics.PreferredBackBufferWidth;
+            height = graphics.PreferredBackBufferHeight;
 
             renMan = RenderManager.getInstance();
             objMan = ObjectManager.getInstance();
@@ -63,7 +67,7 @@ namespace Whiskey2D.Core
             inMan = InputManager.getInstance();
             logMan = LogManager.getInstance();
             sourceMan = InputSourceManager.getInstance();
-            
+            hudMan = HudManager.getInstance();
 
             //replServ = new ReplayService("whiskey.txt");
             //inputSource = replServ;
@@ -81,6 +85,16 @@ namespace Whiskey2D.Core
             starter = new LaunchPour2();
 
         }
+
+        /// <summary>
+        /// The width of the window
+        /// </summary>
+        public int ScreenWidth { get { return width; } }
+
+        /// <summary>
+        /// The height of the window
+        /// </summary>
+        public int ScreenHeight { get { return height; } }
 
         /// <summary>
         /// Launch the game
@@ -102,11 +116,13 @@ namespace Whiskey2D.Core
             resMan.close();
             inMan.close();
             logMan.close();
+            hudMan.close();
 
             Rand.getInstance().reSeed();
 
             sourceMan.getSource().init();
 
+            hudMan.init();
             renMan.init(GraphicsDevice);
             objMan.init();
             resMan.init(Content);
@@ -138,6 +154,7 @@ namespace Whiskey2D.Core
             resMan.init(Content);
             inMan.init();
             logMan.init();
+            hudMan.init();
             base.Initialize();
         }
 
@@ -147,6 +164,8 @@ namespace Whiskey2D.Core
         /// </summary>
         protected override void LoadContent()
         {
+
+            HudManager.getInstance().DebugColor = Color.RoyalBlue;
 
             //RUN THE START CODE
             if (starter != null)
@@ -168,7 +187,7 @@ namespace Whiskey2D.Core
             resMan.close();
             inMan.close();
             logMan.close();
-
+            hudMan.close();
             Console.WriteLine("CLOSING");
 
         }
@@ -200,6 +219,7 @@ namespace Whiskey2D.Core
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.renMan.render();
+            this.renMan.renderHud();
             base.Draw(gameTime);
         }
     }

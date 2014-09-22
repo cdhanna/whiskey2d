@@ -12,15 +12,18 @@ namespace Whiskey2D.Core.LogCommands
 
 
 
-        private LogManager.LogLevel level;
+        private LogLevel level;
         private string message;
 
-        public LogMessage(long time, LogManager.LogLevel level, string message) : base(time, "LOG"){
+        public LogMessage(long time, LogLevel level, string message) : base(time, "LOG"){
             this.level = level;
             this.message = message;
         }
 
         protected LogMessage() : base(0, "LOG") { }
+
+        public string Message { get { return this.message; } }
+        public LogLevel Level { get { return this.level; } }
 
         protected override string toCommandText()
         {
@@ -32,7 +35,7 @@ namespace Whiskey2D.Core.LogCommands
             string[] parts = text.Split('#');
             string levelPart = parts[0].Trim();
             string messagePart = parts[1].Trim();
-            return new LogMessage(time, (LogManager.LogLevel)Enum.Parse(typeof(LogManager.LogLevel), levelPart), messagePart);
+            return new LogMessage(time, (LogLevel)Enum.Parse(typeof(LogLevel), levelPart), messagePart);
         }
     }
 }

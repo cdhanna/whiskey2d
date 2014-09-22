@@ -66,6 +66,8 @@ namespace Whiskey2D.PourGames.Game2
                 start.Position.X -= start.Sprite.ImageSize.X;
                 start.Position.Y = newY;
 
+                LogManager.getInstance().debug("created a floor segment at " + newY);
+
                 float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
                 ObjectManager.getInstance().getAllObjectsOfType<Floor>().ForEach((f) => { f.speed = speed; });
 

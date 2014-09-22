@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Whiskey2D.Core.Hud;
 
 namespace Whiskey2D.Core
 {
@@ -77,6 +77,32 @@ namespace Whiskey2D.Core
 
             spriteBatch.End();
         }
+
+        public void renderHud()
+        {
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+
+            List<Box> boxes = HudManager.getInstance().getAllBoxes();
+            foreach (Box box in boxes)
+            {
+                if (box.Visible)
+                {
+                    spriteBatch.Draw(getPixel(), box.Position, null, box.Color, 0, Vector2.Zero, box.Size, SpriteEffects.None,box.Depth);
+                }
+            }
+
+            List<TextLine> lines = HudManager.getInstance().getAllTextLines();
+            foreach (TextLine line in lines)
+            {
+                if (line.Visible)
+                {
+                    spriteBatch.DrawString(line.Font, line.Text, line.Position, line.Color,0, Vector2.Zero, line.Size, SpriteEffects.None, .91f);
+                }
+            }
+
+            spriteBatch.End();
+        }
+
 
         /// <summary>
         /// Gets a pixel image

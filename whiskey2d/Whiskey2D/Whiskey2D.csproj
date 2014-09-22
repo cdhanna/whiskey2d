@@ -38,6 +38,10 @@
     <Compile Include="Core\Bounds.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\Hud\Box.cs" />
+    <Compile Include="Core\Hud\HudManager.cs" />
+    <Compile Include="Core\Hud\TextBox.cs" />
+    <Compile Include="Core\Hud\TextLine.cs" />
     <Compile Include="Core\InputSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -46,6 +50,7 @@
     <Compile Include="Core\LogCommands\LogCommand.cs" />
     <Compile Include="Core\LogCommands\LogMessage.cs" />
     <Compile Include="Core\LogCommands\RandCommand.cs" />
+    <Compile Include="Core\LogLevel.cs" />
     <Compile Include="Core\LogManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -175,7 +180,11 @@
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Content\font.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

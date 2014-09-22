@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Whiskey2D.Core.LogCommands;
+using Whiskey2D.Core.Hud;
 
 namespace Whiskey2D.Core
 {
@@ -14,16 +15,7 @@ namespace Whiskey2D.Core
     /// </summary>
     public class LogManager
     {
-        /// <summary>
-        /// A level of importance placed upon log messages.
-        /// </summary>
-        public enum LogLevel
-        {
-            DEBUG,
-            ERROR,
-            RELEASE,
-            WARNING
-        }
+       
 
         /// <summary>
         /// an empty input source for the LogManager to use if no valid inputsource is given
@@ -206,7 +198,9 @@ namespace Whiskey2D.Core
         /// <param name="message">the message to give to the logger</param>
         public void debug(string message)
         {
-            writeCommand(new LogMessage(masterCount, LogLevel.DEBUG, message));
+            LogMessage msg = new LogMessage(masterCount, LogLevel.DEBUG, message);
+            writeCommand(msg);
+            HudManager.getInstance().writeMessage(msg);
         }
 
         /// <summary>
@@ -215,7 +209,9 @@ namespace Whiskey2D.Core
         /// <param name="message">the message to give to the logger</param>
         public void error(string message)
         {
-            writeCommand(new LogMessage(masterCount, LogLevel.ERROR, message));
+            LogMessage msg = new LogMessage(masterCount, LogLevel.ERROR, message);
+            writeCommand(msg);
+            HudManager.getInstance().writeMessage(msg);
         }
 
         /// <summary>
@@ -224,7 +220,9 @@ namespace Whiskey2D.Core
         /// <param name="message">the message to give to the logger</param>
         public void warning(string message)
         {
-            writeCommand(new LogMessage(masterCount, LogLevel.WARNING, message));
+            LogMessage msg = new LogMessage(masterCount, LogLevel.WARNING, message);
+            writeCommand(msg);
+            HudManager.getInstance().writeMessage(msg);
         }
 
         /// <summary>
@@ -233,7 +231,9 @@ namespace Whiskey2D.Core
         /// <param name="message">the message to give to the logger</param>
         public void release(string message)
         {
-            writeCommand(new LogMessage(masterCount, LogLevel.RELEASE, message));
+            LogMessage msg = new LogMessage(masterCount, LogLevel.RELEASE, message);
+            writeCommand(msg);
+            HudManager.getInstance().writeMessage(msg);
         }
 
     }

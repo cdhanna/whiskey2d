@@ -13,7 +13,7 @@ namespace Whiskey2D.Core.LogCommands
 
         static LogCommand()
         {
-            typeTable.Add("LOG", new LogMessage(0, LogManager.LogLevel.DEBUG, ""));
+            typeTable.Add("LOG", new LogMessage(0, LogLevel.DEBUG, ""));
             typeTable.Add("KEY", new InputCommand(0, 0, null));
             typeTable.Add("RAND", new RandCommand(0, 0));
         }
