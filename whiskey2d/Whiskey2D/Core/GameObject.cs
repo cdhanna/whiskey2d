@@ -124,7 +124,7 @@ namespace Whiskey2D.Core
             //scripts.Add(script);
             if (this.GetType() != typeof(G)) //runtime exception
             {
-               // throw new ScriptTypeException();
+                throw new Exception("Cannot add a script of type " + typeof(G) + " to a game object of type " + this.GetType());
             }
 
             script.Gob = (G)this;

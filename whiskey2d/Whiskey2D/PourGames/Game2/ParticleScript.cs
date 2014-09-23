@@ -14,14 +14,14 @@ namespace Whiskey2D.PourGames.Game2
 
         public override void onUpdate()
         {
-            Particle p = Gob;
+            //Particle p = Gob;
 
-            p.Position += p.Velocity;
-            p.Sprite.Scale *= .97f;
-            p.Velocity += Vector2.UnitY*.2f;
-            if (p.Sprite.Scale.Length() < .1f)
+            Gob.Position += Gob.Velocity;
+            Gob.Sprite.Scale *= .97f;
+            Gob.Velocity += Vector2.UnitY * .2f;
+            if (Gob.Sprite.Scale.Length() < .1f)
             {
-                p.close();
+                Gob.close();
             }
 
         }

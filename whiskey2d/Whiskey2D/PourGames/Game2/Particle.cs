@@ -30,6 +30,7 @@ namespace Whiskey2D.PourGames.Game2
 
         protected override void addInitialScripts()
         {
+            
             this.addScript(new ParticleScript());
         }
     }
