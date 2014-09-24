@@ -32,6 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\station12\Station12\Station12\Station12\lib\WindowsGL\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\station12\Station12\Station12\Station12\lib\WindowsGL\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\..\..\..\opentk-code-3127-trunk\Binaries\OpenTK\Debug\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -46,7 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneratorHelper.cs" />
+    <Compile Include="GraphicsDeviceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicsDeviceService.cs" />
     <Compile Include="ScriptGenerator.cs" />
+    <Compile Include="ServiceContainer.cs" />
     <Compile Include="SimpleTextPopup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +71,9 @@
     </Compile>
     <Compile Include="Project.cs" />
     <Compile Include="ProjectManager.cs" />
+    <Compile Include="SpinningTriangleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WhiskeyForm.cs">
       <SubType>Form</SubType>
     </Compile>

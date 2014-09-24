@@ -39,8 +39,9 @@
             this.compileButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.addScriptButton = new System.Windows.Forms.Button();
             this.addGameObjectButton = new System.Windows.Forms.Button();
+            this.addScriptButton = new System.Windows.Forms.Button();
+            this.spinningTriangleControl1 = new WinFormsGraphicsDevice.SpinningTriangleControl();
             this.menuBar.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +128,7 @@
             // 
             this.mainPanel.AutoSize = true;
             this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainPanel.Controls.Add(this.spinningTriangleControl1);
             this.mainPanel.Controls.Add(this.addGameObjectButton);
             this.mainPanel.Controls.Add(this.addScriptButton);
             this.mainPanel.Controls.Add(this.runButton);
@@ -134,10 +136,20 @@
             this.mainPanel.Controls.Add(this.directoryTree);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(0, 28);
-            this.mainPanel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.mainPanel.MinimumSize = new System.Drawing.Size(100, 2);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(608, 459);
             this.mainPanel.TabIndex = 5;
+            // 
+            // addGameObjectButton
+            // 
+            this.addGameObjectButton.Location = new System.Drawing.Point(3, 398);
+            this.addGameObjectButton.Name = "addGameObjectButton";
+            this.addGameObjectButton.Size = new System.Drawing.Size(223, 23);
+            this.addGameObjectButton.TabIndex = 7;
+            this.addGameObjectButton.Text = "New Object";
+            this.addGameObjectButton.UseVisualStyleBackColor = true;
+            this.addGameObjectButton.Click += new System.EventHandler(this.addGameObjectButton_Click);
             // 
             // addScriptButton
             // 
@@ -149,15 +161,15 @@
             this.addScriptButton.UseVisualStyleBackColor = true;
             this.addScriptButton.Click += new System.EventHandler(this.addScriptButton_Click);
             // 
-            // addGameObjectButton
+            // spinningTriangleControl1
             // 
-            this.addGameObjectButton.Location = new System.Drawing.Point(3, 398);
-            this.addGameObjectButton.Name = "addGameObjectButton";
-            this.addGameObjectButton.Size = new System.Drawing.Size(223, 23);
-            this.addGameObjectButton.TabIndex = 7;
-            this.addGameObjectButton.Text = "New Object";
-            this.addGameObjectButton.UseVisualStyleBackColor = true;
-            this.addGameObjectButton.Click += new System.EventHandler(this.addGameObjectButton_Click);
+            this.spinningTriangleControl1.BackColor = System.Drawing.Color.Black;
+            this.spinningTriangleControl1.Location = new System.Drawing.Point(233, 4);
+            this.spinningTriangleControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.spinningTriangleControl1.Name = "spinningTriangleControl1";
+            this.spinningTriangleControl1.Size = new System.Drawing.Size(361, 359);
+            this.spinningTriangleControl1.TabIndex = 8;
+            this.spinningTriangleControl1.VSync = false;
             // 
             // WhiskeyForm
             // 
@@ -192,6 +204,7 @@
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Button addScriptButton;
         private System.Windows.Forms.Button addGameObjectButton;
+        private WinFormsGraphicsDevice.SpinningTriangleControl spinningTriangleControl1;
     }
 }
 
