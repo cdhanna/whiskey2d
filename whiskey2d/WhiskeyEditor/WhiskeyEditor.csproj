@@ -57,12 +57,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneratorHelper.cs" />
-    <Compile Include="GraphicsDeviceControl.cs">
+    <Compile Include="MonoHelp\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GraphicsDeviceService.cs" />
+    <Compile Include="MonoHelp\GraphicsDeviceService.cs" />
+    <Compile Include="MonoHelp\WhiskeyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ScriptGenerator.cs" />
-    <Compile Include="ServiceContainer.cs" />
+    <Compile Include="MonoHelp\ServiceContainer.cs" />
     <Compile Include="SimpleTextPopup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,7 +74,7 @@
     </Compile>
     <Compile Include="Project.cs" />
     <Compile Include="ProjectManager.cs" />
-    <Compile Include="SpinningTriangleControl.cs">
+    <Compile Include="MonoHelp\SpinningTriangleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="WhiskeyForm.cs">

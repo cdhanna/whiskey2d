@@ -41,7 +41,7 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.addGameObjectButton = new System.Windows.Forms.Button();
             this.addScriptButton = new System.Windows.Forms.Button();
-            this.spinningTriangleControl1 = new WinFormsGraphicsDevice.SpinningTriangleControl();
+            this.whiskeyControl1 = new WhiskeyEditor.MonoHelp.WhiskeyControl();
             this.menuBar.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
@@ -128,7 +128,7 @@
             // 
             this.mainPanel.AutoSize = true;
             this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainPanel.Controls.Add(this.spinningTriangleControl1);
+            this.mainPanel.Controls.Add(this.whiskeyControl1);
             this.mainPanel.Controls.Add(this.addGameObjectButton);
             this.mainPanel.Controls.Add(this.addScriptButton);
             this.mainPanel.Controls.Add(this.runButton);
@@ -161,15 +161,15 @@
             this.addScriptButton.UseVisualStyleBackColor = true;
             this.addScriptButton.Click += new System.EventHandler(this.addScriptButton_Click);
             // 
-            // spinningTriangleControl1
+            // whiskeyControl1
             // 
-            this.spinningTriangleControl1.BackColor = System.Drawing.Color.Black;
-            this.spinningTriangleControl1.Location = new System.Drawing.Point(233, 4);
-            this.spinningTriangleControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.spinningTriangleControl1.Name = "spinningTriangleControl1";
-            this.spinningTriangleControl1.Size = new System.Drawing.Size(361, 359);
-            this.spinningTriangleControl1.TabIndex = 8;
-            this.spinningTriangleControl1.VSync = false;
+            this.whiskeyControl1.BackColor = System.Drawing.Color.Black;
+            this.whiskeyControl1.Location = new System.Drawing.Point(233, 4);
+            this.whiskeyControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.whiskeyControl1.Name = "whiskeyControl1";
+            this.whiskeyControl1.Size = new System.Drawing.Size(361, 359);
+            this.whiskeyControl1.TabIndex = 8;
+            this.whiskeyControl1.VSync = false;
             // 
             // WhiskeyForm
             // 
@@ -204,7 +204,7 @@
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Button addScriptButton;
         private System.Windows.Forms.Button addGameObjectButton;
-        private WinFormsGraphicsDevice.SpinningTriangleControl spinningTriangleControl1;
+        private MonoHelp.WhiskeyControl whiskeyControl1;
     }
 }
 
