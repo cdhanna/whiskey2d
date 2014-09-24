@@ -27,6 +27,8 @@ namespace Whiskey2D.Core
         }
 
         private List<GameObject> gameObjects;
+        private List<GameObject> deadObjects;
+        private List<GameObject> newObjects;
 
         private ObjectManager()
         {
@@ -39,6 +41,8 @@ namespace Whiskey2D.Core
         public void init()
         {
             gameObjects = new List<GameObject>();
+            deadObjects = new List<GameObject>();
+            newObjects = new List<GameObject>();
         }
 
         /// <summary>
@@ -46,7 +50,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public void close()
         {
-
+            gameObjects.Clear();
+            deadObjects.Clear();
+            newObjects.Clear();
         }
 
         /// <summary>
@@ -58,6 +64,20 @@ namespace Whiskey2D.Core
             {
                 gob.update();
             }
+            foreach (GameObject gob in deadObjects)
+            {
+                gameObjects.Remove(gob);
+            }
+            foreach (GameObject gob in newObjects)
+            {
+                gameObjects.Add(gob);
+                gob.init();
+            }
+
+
+            deadObjects.Clear();
+            newObjects.Clear();
+
         }
 
         /// <summary>
@@ -66,8 +86,9 @@ namespace Whiskey2D.Core
         /// <param name="gob"></param>
         public void addObject(GameObject gob)
         {
-            gameObjects.Add(gob);
-            gob.init();
+            //gameObjects.Add(gob);
+            //gob.init();
+            newObjects.Add(gob);
         }
 
         /// <summary>
@@ -76,7 +97,8 @@ namespace Whiskey2D.Core
         /// <param name="gob"></param>
         public void removeObject(GameObject gob)
         {
-            gameObjects.Remove(gob);
+            //gameObjects.Remove(gob);
+            deadObjects.Add(gob);
         }
 
         //todo add a removeObject by ID

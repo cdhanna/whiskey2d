@@ -6,9 +6,9 @@ using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 
 
-namespace Whiskey2D.TestImpl
+namespace Whiskey2D.PourGames.TestImpl
 {
-    class PlayerScaleScript : Script
+    class PlayerScaleScript : Script<Player>
     {
         public Vector2 targetScale;
 

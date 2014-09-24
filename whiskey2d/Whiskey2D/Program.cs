@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Whiskey2D.Service;
+using Whiskey2D.Core;
+using Whiskey2D.ex2;
 #endregion
 
 namespace Whiskey2D
@@ -25,9 +27,9 @@ namespace Whiskey2D
              *  COMPILER THE CORE AND GAME
              *///
 
-            Compiler compiler = Compiler.getInstance();
+            //Compiler compiler = Compiler.getInstance();
             //compiler.compileDirectory("Whiskey.Core", "Core", "MonoGame.Framework");
-            compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
+            //compiler.compileDirectory("Whiskey.TestImpl", "TestImpl", "MonoGame.Framework", "Whiskey.Core");
 
             //////////////////////
 
@@ -36,28 +38,28 @@ namespace Whiskey2D
              *   RUN GAME
              *///
 
-            //add core to path
-            Assembly coreAssmebly = Assembly.LoadFrom("Whiskey.Core.dll");
+            ////add core to path
+            //Assembly coreAssmebly = Assembly.LoadFrom("Whiskey.Core.dll");
 
-            //add game data to path
-            Assembly gameAssembly = Assembly.LoadFrom("Whiskey.TestImpl.dll");
-
-
-            //find gameManager
-            Type[] coreTypes = coreAssmebly.GetTypes();
-            foreach (Type type in coreTypes)
-            {
-                if (type.Name.Equals("GameManager"))
-                {
-                    object gameManager = Activator.CreateInstance(type, gameAssembly);
-                    gameManager.GetType().GetMethod("go").Invoke(gameManager, new object[] { });
-                    break;
-                }
-            }
+            ////add game data to path
+            //Assembly gameAssembly = Assembly.LoadFrom("Whiskey.TestImpl.dll");
 
 
-            //using (var game = new GameManager("Whiskey.TestImpl.dll"))
-            //    game.Run();
+            ////find gameManager
+            //Type[] coreTypes = coreAssmebly.GetTypes();
+            //foreach (Type type in coreTypes)
+            //{
+            //    if (type.Name.Equals("GameManager"))
+            //    {
+            //        object gameManager = Activator.CreateInstance(type, gameAssembly);
+            //        gameManager.GetType().GetMethod("go").Invoke(gameManager, new object[] { });
+            //        break;
+            //    }
+            //}
+
+           
+            using (var game = new GameManager(null))
+                game.Run();
         }
     }
 #endif

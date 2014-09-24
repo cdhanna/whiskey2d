@@ -5,7 +5,7 @@ using System.Text;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 
-namespace Whiskey2D.TestImpl
+namespace Whiskey2D.PourGames.TestImpl
 {
     class Launch : Starter
     {
@@ -19,6 +19,7 @@ namespace Whiskey2D.TestImpl
             addFloor(new Vector2(0, 0), new Vector2(20, 600));      //left wall
             addFloor(new Vector2(20, 460), new Vector2(760, 20));   //floor
             addFloor(new Vector2(780, 0), new Vector2(20, 480));    //right wall
+            addFloor(new Vector2(20, 0), new Vector2(760, 20));
 
             addFloor(new Vector2(200, 405), new Vector2(100, 20));  //platforms
             addFloor(new Vector2(350, 370), new Vector2(100, 20));  //..
@@ -55,7 +56,7 @@ namespace Whiskey2D.TestImpl
             floor.Position = position;
             floor.Sprite = new Sprite(RenderManager.getInstance().getPixel());
             floor.Sprite.Scale = size;
-            floor.Sprite.Color = Color.DarkSlateGray;
+            floor.Sprite.Color = Color.Black;
             return floor;
         }
 

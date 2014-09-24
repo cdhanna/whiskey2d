@@ -5,9 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Whiskey2D.Core;
 
-namespace Whiskey2D.TestImpl
+namespace Whiskey2D.PourGames.TestImpl
 {
-    class StarFieldMoveScript : Script
+    class StarFieldMoveScript : Script<StarField>
     {
         Random rand = new Random();
 

@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
+using Whiskey2D.Core.Hud;
+
+using Whiskey2D.PourGames.TestImpl;
+using Whiskey2D.PourGames.Game2;
 #endregion
 
 namespace Whiskey2D.Core
@@ -18,12 +22,25 @@ namespace Whiskey2D.Core
     /// </summary>
     public class GameManager : Game
     {
+
+        private static GameManager instance;
+        public static GameManager getInstance()
+        {
+            return instance;
+        }
+
         GraphicsDeviceManager graphics;
         
         RenderManager renMan;
         ObjectManager objMan;
         ResourceManager resMan;
         InputManager inMan;
+        LogManager logMan;
+        InputSourceManager sourceMan;
+        HudManager hudMan;
+
+        int width;
+        int height;
 
         Starter starter;
 
@@ -34,26 +51,50 @@ namespace Whiskey2D.Core
         public GameManager(Assembly gameAssmebly)
             : base()
         {
+
+            instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+
+            width = graphics.PreferredBackBufferWidth;
+            height = graphics.PreferredBackBufferHeight;
 
             renMan = RenderManager.getInstance();
             objMan = ObjectManager.getInstance();
             resMan = ResourceManager.getInstance();
             inMan = InputManager.getInstance();
+            logMan = LogManager.getInstance();
+            sourceMan = InputSourceManager.getInstance();
+            hudMan = HudManager.getInstance();
 
+            //replServ = new ReplayService("whiskey.txt");
+            //inputSource = replServ;
+            
+            
             //find gameData assmebly
-            Type[] allGameTypes = gameAssmebly.GetTypes();
-            foreach (Type gt in allGameTypes)
-            {
-                if (gt.IsSubclassOf(typeof(Starter)))
-                {
-                    starter = (Starter)Activator.CreateInstance(gt);
-                }
-            }
-
-
+            //Type[] allGameTypes = gameAssmebly.GetTypes();
+            //foreach (Type gt in allGameTypes)
+            //{
+            //    if (gt.IsSubclassOf(typeof(Starter)))
+            //    {
+            //        starter = (Starter)Activator.CreateInstance(gt);
+            //    }
+            //}
+            starter = new LaunchPour2();
+            GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
         }
+
+        /// <summary>
+        /// The width of the window
+        /// </summary>
+        public int ScreenWidth { get { return width; } }
+
+        /// <summary>
+        /// The height of the window
+        /// </summary>
+        public int ScreenHeight { get { return height; } }
 
         /// <summary>
         /// Launch the game
@@ -62,6 +103,41 @@ namespace Whiskey2D.Core
         {
             this.Run();
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(60);
+            
+        }
+
+        /// <summary>
+        /// Closes all managers, and re-inits them
+        /// </summary>
+        public void reset()
+        {
+            renMan.close();
+            objMan.close();
+            resMan.close();
+            inMan.close();
+            logMan.close();
+            //hudMan.close();
+
+            Rand.getInstance().reSeed();
+
+            sourceMan.getSource().init();
+
+            //hudMan.init();
+            renMan.init(GraphicsDevice);
+            objMan.init();
+            resMan.init(Content);
+            inMan.init();
+            logMan.init();
+
+
+            //RUN THE START CODE
+            if (starter != null)
+            {
+                starter.start();
+            }
+            else Console.WriteLine("ERROR: No start configuration found");
+
+
         }
 
         /// <summary>
@@ -77,7 +153,8 @@ namespace Whiskey2D.Core
             objMan.init();
             resMan.init(Content);
             inMan.init();
-          
+            logMan.init();
+            hudMan.init();
             base.Initialize();
         }
 
@@ -88,6 +165,22 @@ namespace Whiskey2D.Core
         protected override void LoadContent()
         {
 
+            HudManager.getInstance().DebugColor = Color.RoyalBlue;
+
+
+            //TextBox b = new TextBox();
+            //b.Position = new Vector2(100, 100);
+            //b.Size = new Vector2(200, 200);
+            //b.TextSize = .8f;
+
+            //b.pushTextFromBottom("a");
+            //b.pushTextFromBottom("b");
+            //b.pushTextFromBottom("c");
+
+            //b.Text = "test this is a test\nnewline should have just happened";
+            //b.append("another line");
+            //b.append("abc");
+            //b.prepend("in the start");
             //RUN THE START CODE
             if (starter != null)
             {
@@ -107,6 +200,15 @@ namespace Whiskey2D.Core
             objMan.close();
             resMan.close();
             inMan.close();
+            logMan.close();
+            hudMan.close();
+            Console.WriteLine("CLOSING");
+
+        }
+
+        public void close()
+        {
+            Exit();
         }
 
         /// <summary>
@@ -119,8 +221,15 @@ namespace Whiskey2D.Core
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            inMan.update();
-            objMan.updateAll();
+            hudMan.update();
+
+            if (!hudMan.ConsoleMode)
+            {
+                inMan.update();
+                sourceMan.update();
+                logMan.update();
+                objMan.updateAll();
+            }
             
             base.Update(gameTime);
         }
@@ -134,6 +243,7 @@ namespace Whiskey2D.Core
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.renMan.render();
+            this.renMan.renderHud();
             base.Draw(gameTime);
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Whiskey2D.Core;
 
-namespace Whiskey2D.TestImpl
+namespace Whiskey2D.PourGames.TestImpl
 {
     class Floor : GameObject
     {
@@ -32,9 +32,10 @@ namespace Whiskey2D.TestImpl
             }
         }
 
-        protected override List<Script> getInitialScripts()
+
+
+        protected override void addInitialScripts()
         {
-            return null;
         }
     }
 }
