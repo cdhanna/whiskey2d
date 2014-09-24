@@ -18,7 +18,8 @@ namespace Whiskey2D.Core.Hud.Commands
         public override void run(WhiskeyConsole console, string[] args)
         {
             console.writeLine("SYS EXIT");
-            GameManager.getInstance().close();
+            console.writeLine("not yet impled");
+            //GameManager.getInstance().close();
         }
     }
 }

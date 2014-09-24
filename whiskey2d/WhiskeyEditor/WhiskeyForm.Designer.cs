@@ -39,9 +39,9 @@
             this.compileButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.whiskeyControl1 = new WhiskeyEditor.MonoHelp.WhiskeyControl();
             this.addGameObjectButton = new System.Windows.Forms.Button();
             this.addScriptButton = new System.Windows.Forms.Button();
-            this.whiskeyControl1 = new WhiskeyEditor.MonoHelp.WhiskeyControl();
             this.menuBar.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.fileToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(608, 28);
+            this.menuBar.Size = new System.Drawing.Size(1127, 28);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "menuBar";
             // 
@@ -138,8 +138,18 @@
             this.mainPanel.Location = new System.Drawing.Point(0, 28);
             this.mainPanel.MinimumSize = new System.Drawing.Size(100, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(608, 459);
+            this.mainPanel.Size = new System.Drawing.Size(1127, 674);
             this.mainPanel.TabIndex = 5;
+            // 
+            // whiskeyControl1
+            // 
+            this.whiskeyControl1.BackColor = System.Drawing.Color.Black;
+            this.whiskeyControl1.Location = new System.Drawing.Point(233, 4);
+            this.whiskeyControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.whiskeyControl1.Name = "whiskeyControl1";
+            this.whiskeyControl1.Size = new System.Drawing.Size(880, 645);
+            this.whiskeyControl1.TabIndex = 8;
+            this.whiskeyControl1.VSync = false;
             // 
             // addGameObjectButton
             // 
@@ -161,21 +171,11 @@
             this.addScriptButton.UseVisualStyleBackColor = true;
             this.addScriptButton.Click += new System.EventHandler(this.addScriptButton_Click);
             // 
-            // whiskeyControl1
-            // 
-            this.whiskeyControl1.BackColor = System.Drawing.Color.Black;
-            this.whiskeyControl1.Location = new System.Drawing.Point(233, 4);
-            this.whiskeyControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.whiskeyControl1.Name = "whiskeyControl1";
-            this.whiskeyControl1.Size = new System.Drawing.Size(361, 359);
-            this.whiskeyControl1.TabIndex = 8;
-            this.whiskeyControl1.VSync = false;
-            // 
             // WhiskeyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 487);
+            this.ClientSize = new System.Drawing.Size(1127, 702);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;

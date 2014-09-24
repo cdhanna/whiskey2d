@@ -20,17 +20,33 @@ namespace Whiskey2D.Core
     /// The GameManager is the core part of every Whiskey Game. It is a derivation of the monoGame class.
     /// GameManager will control all of the game components
     /// </summary>
-    public class GameManager : Game
+    public class GameManager
     {
 
         private static GameManager instance;
         public static GameManager getInstance()
         {
+            if (instance == null)
+            {
+                instance = new GameManager();
+            }
+            return instance;
+        }
+        public static GameManager getInstance<G>() where G : GameManager
+        {
+            if (instance == null)
+            {
+                instance = Activator.CreateInstance<G>();
+            }
             return instance;
         }
 
-        GraphicsDeviceManager graphics;
-        
+
+
+        ContentManager Content;
+        GraphicsDevice Device;
+
+
         RenderManager renMan;
         ObjectManager objMan;
         ResourceManager resMan;
@@ -44,46 +60,15 @@ namespace Whiskey2D.Core
 
         Starter starter;
 
-        /// <summary>
-        /// Create a GameManager
-        /// </summary>
-        /// <param name="gameAssmebly">An assembly that contains classes that define a user's game. </param>
-        public GameManager(Assembly gameAssmebly)
-            : base()
+        
+
+
+        protected GameManager()
         {
 
             instance = this;
 
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
 
-
-            width = graphics.PreferredBackBufferWidth;
-            height = graphics.PreferredBackBufferHeight;
-
-            renMan = RenderManager.getInstance();
-            objMan = ObjectManager.getInstance();
-            resMan = ResourceManager.getInstance();
-            inMan = InputManager.getInstance();
-            logMan = LogManager.getInstance();
-            sourceMan = InputSourceManager.getInstance();
-            hudMan = HudManager.getInstance();
-
-            //replServ = new ReplayService("whiskey.txt");
-            //inputSource = replServ;
-            
-            
-            //find gameData assmebly
-            //Type[] allGameTypes = gameAssmebly.GetTypes();
-            //foreach (Type gt in allGameTypes)
-            //{
-            //    if (gt.IsSubclassOf(typeof(Starter)))
-            //    {
-            //        starter = (Starter)Activator.CreateInstance(gt);
-            //    }
-            //}
-            starter = new LaunchPour2();
-            GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
         }
 
         /// <summary>
@@ -96,20 +81,20 @@ namespace Whiskey2D.Core
         /// </summary>
         public int ScreenHeight { get { return height; } }
 
-        /// <summary>
-        /// Launch the game
-        /// </summary>
-        public void go()
-        {
-            this.Run();
-            this.TargetElapsedTime = TimeSpan.FromMilliseconds(60);
-            
-        }
+        public TimeSpan TargetElapsedTime { get; set; }
+
+        ///// <summary>
+        ///// Launch the game
+        ///// </summary>
+        //public void go()
+        //{
+        //    this.Run();
+        //}
 
         /// <summary>
         /// Closes all managers, and re-inits them
         /// </summary>
-        public void reset()
+        public virtual void reset()
         {
             renMan.close();
             objMan.close();
@@ -123,7 +108,7 @@ namespace Whiskey2D.Core
             sourceMan.getSource().init();
 
             //hudMan.init();
-            renMan.init(GraphicsDevice);
+            renMan.init(Device);
             objMan.init();
             resMan.init(Content);
             inMan.init();
@@ -146,23 +131,52 @@ namespace Whiskey2D.Core
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
+        public virtual void Initialize(ContentManager Content, GraphicsDevice Device)
         {
+            this.Device = Device;
+            this.Content = Content;
+            Content.RootDirectory = "Content";
 
-            renMan.init(GraphicsDevice);
+
+            width = Device.PresentationParameters.BackBufferWidth;
+            height = Device.PresentationParameters.BackBufferHeight;
+
+            renMan = RenderManager.getInstance();
+            objMan = ObjectManager.getInstance();
+            resMan = ResourceManager.getInstance();
+            inMan = InputManager.getInstance();
+            logMan = LogManager.getInstance();
+            sourceMan = InputSourceManager.getInstance();
+            hudMan = HudManager.getInstance();
+
+
+            //find gameData assmebly
+            //Type[] allGameTypes = gameAssmebly.GetTypes();
+            //foreach (Type gt in allGameTypes)
+            //{
+            //    if (gt.IsSubclassOf(typeof(Starter)))
+            //    {
+            //        starter = (Starter)Activator.CreateInstance(gt);
+            //    }
+            //}
+            starter = new Launch();
+
+
+
+
+            renMan.init(Device);
             objMan.init();
             resMan.init(Content);
             inMan.init();
             logMan.init();
             hudMan.init();
-            base.Initialize();
         }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent()
+        public virtual void LoadContent()
         {
 
             HudManager.getInstance().DebugColor = Color.RoyalBlue;
@@ -194,7 +208,7 @@ namespace Whiskey2D.Core
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
-        protected override void UnloadContent()
+        public virtual void UnloadContent()
         {
             renMan.close();
             objMan.close();
@@ -206,9 +220,11 @@ namespace Whiskey2D.Core
 
         }
 
-        public void close()
+        public virtual void Exit()
         {
-            Exit();
+            UnloadContent();
+            //TODO signal for close
+            //Exit();
         }
 
         /// <summary>
@@ -216,10 +232,9 @@ namespace Whiskey2D.Core
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            
 
             hudMan.update();
 
@@ -231,20 +246,18 @@ namespace Whiskey2D.Core
                 objMan.updateAll();
             }
             
-            base.Update(gameTime);
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            Device.Clear(Color.CornflowerBlue);
 
             this.renMan.render();
             this.renMan.renderHud();
-            base.Draw(gameTime);
         }
     }
 }

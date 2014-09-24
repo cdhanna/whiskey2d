@@ -9,7 +9,7 @@ namespace Whiskey2D.Core
     /// <summary>
     /// The inputSource Manager decides what kind of input source the game will be using
     /// </summary>
-    class InputSourceManager
+    public class InputSourceManager
     {
 
         private static InputSourceManager instance = new InputSourceManager();
@@ -22,12 +22,14 @@ namespace Whiskey2D.Core
         private RealKeyBoard keyboardSource;
         private ReplayService replSource;
 
-        private InputSource source;
+        private InputSource activeSource;
+        private InputSource defaultSource;
 
         private InputSourceManager()
         {
             keyboardSource = new RealKeyBoard();
-            source = keyboardSource;
+            activeSource = keyboardSource;
+            defaultSource = keyboardSource;
         }
 
 
@@ -37,7 +39,17 @@ namespace Whiskey2D.Core
         /// <returns>the current input source</returns>
         public InputSource getSource()
         {
-            return source;
+            return activeSource;
+        }
+
+        public void setRegularSource(InputSource inputSource)
+        {
+            defaultSource = inputSource;
+        }
+
+        public void resetRegularSource()
+        {
+            defaultSource = keyboardSource;
         }
 
         /// <summary>
@@ -46,7 +58,7 @@ namespace Whiskey2D.Core
         public void requestReplay()
         {
             replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
-            source = replSource;
+            activeSource = replSource;
             GameManager.getInstance().reset();
         }
 
@@ -55,7 +67,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void requestRegular()
         {
-            source = keyboardSource;
+            activeSource = defaultSource;
             GameManager.getInstance().reset();
         }
 
@@ -67,7 +79,7 @@ namespace Whiskey2D.Core
          
             if (replSource != null && replSource.ReplayOver)
             {
-                source = keyboardSource;
+                activeSource = defaultSource;
                 replSource = null;
             }
 
