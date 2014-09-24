@@ -62,6 +62,7 @@
     <Compile Include="Core\LogManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\MonoGame.cs" />
     <Compile Include="Core\Rand.cs" />
     <Compile Include="Core\RealKeyBoard.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
