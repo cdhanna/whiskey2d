@@ -32,9 +32,9 @@ namespace Whiskey2D.Core
             //}
 
             this.addInitialScripts();
-            
 
-            ObjectManager.getInstance().addObject(this);
+
+            GameManager.Objects.addObject(this);
 
 
 
@@ -111,7 +111,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void close()
         {
-            ObjectManager.getInstance().removeObject(this);
+            GameManager.Objects.removeObject(this);
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Whiskey2D.PourGames.Game2
 
         public Particle(Vector2 position, Vector2 velocity)
         {
-            Sprite = new Sprite(RenderManager.getInstance().getPixel());
+            Sprite = new Sprite(GameManager.Renderer.getPixel());
             Sprite.Color = Color.Blue;
             Sprite.Scale *= r.nextFloat() * 10;
             Sprite.Depth = .6f;

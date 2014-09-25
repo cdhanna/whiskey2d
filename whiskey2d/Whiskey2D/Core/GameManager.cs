@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
 using Whiskey2D.Core.Hud;
-
+using Whiskey2D.Core.Managers;
 using Whiskey2D.PourGames.TestImpl;
 using Whiskey2D.PourGames.Game2;
 #endregion
@@ -60,7 +60,14 @@ namespace Whiskey2D.Core
 
         Starter starter;
 
-        
+
+        //MANAGER PROPERTIES : TODO not all should be public
+        public static InputManager Input { get { return getInstance().inMan; } }
+        public static InputSourceManager InputSource { get { return getInstance().sourceMan; } }
+        public static LogManager Log { get { return getInstance().logMan; } }
+        public static ObjectManager Objects { get { return getInstance().objMan; } }
+        public static RenderManager Renderer { get { return getInstance().renMan; } }
+        public static ResourceManager Resources { get { return getInstance().resMan; } }
 
 
         protected GameManager()
@@ -131,7 +138,16 @@ namespace Whiskey2D.Core
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        public virtual void Initialize(ContentManager Content, GraphicsDevice Device)
+        public virtual void Initialize(
+            ContentManager Content,
+            GraphicsDevice Device,
+            InputManager inputMan,
+            InputSourceManager inputSourceMan,
+            LogManager logger,
+            ObjectManager objectMan,
+            RenderManager renderMan,
+            ResourceManager resourceMan
+            )
         {
             this.Device = Device;
             this.Content = Content;
@@ -141,12 +157,15 @@ namespace Whiskey2D.Core
             width = Device.PresentationParameters.BackBufferWidth;
             height = Device.PresentationParameters.BackBufferHeight;
 
-            renMan = RenderManager.getInstance();
-            objMan = ObjectManager.getInstance();
-            resMan = ResourceManager.getInstance();
-            inMan = InputManager.getInstance();
-            logMan = LogManager.getInstance();
-            sourceMan = InputSourceManager.getInstance();
+            inMan = inputMan;
+            sourceMan = inputSourceMan;
+            logMan = logger;
+            objMan = objectMan;
+            renMan = renderMan;
+            resMan = resourceMan;
+            //inMan = InputManager.getInstance();
+           
+            
             hudMan = HudManager.getInstance();
 
 

@@ -21,7 +21,7 @@ namespace Whiskey2D.PourGames.TestImpl
         {
             StarField stars = (StarField)Gob;
 
-            List<Player> playerList = ObjectManager.getInstance().getAllObjectsOfType<Player>();
+            List<Player> playerList = GameManager.Objects.getAllObjectsOfType<Player>();
             Player plr = playerList[0];
 
             stars.Position -= plr.Velocity * stars.Sprite.Depth*.5f;

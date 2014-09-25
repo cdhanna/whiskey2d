@@ -20,7 +20,7 @@ namespace Whiskey2D.Core.Hud
         /// </summary>
         public TextLine()
         {
-            Font = ResourceManager.getInstance().getDefaultFont();
+            Font = GameManager.Resources.getDefaultFont();
             Position = Vector2.Zero;
             Text = "test";
             Color = Color.White;

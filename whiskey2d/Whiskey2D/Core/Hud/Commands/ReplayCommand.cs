@@ -16,7 +16,7 @@ namespace Whiskey2D.Core.Hud.Commands
 
         public override void run(WhiskeyConsole console, string[] args)
         {
-            InputSourceManager.getInstance().requestReplay();
+            GameManager.InputSource.requestReplay();
             HudManager.getInstance().ConsoleMode = false;
 
             if (args.Length == 2)

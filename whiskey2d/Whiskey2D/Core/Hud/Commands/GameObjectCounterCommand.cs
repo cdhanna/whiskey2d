@@ -15,7 +15,7 @@ namespace Whiskey2D.Core.Hud.Commands
         public override void run(WhiskeyConsole console, string[] args)
         {
 
-            console.writeLine("current object count: " + ObjectManager.getInstance().getAllObjects().Count);
+            console.writeLine("current object count: " + GameManager.Objects.getAllObjects().Count);
 
 
         }

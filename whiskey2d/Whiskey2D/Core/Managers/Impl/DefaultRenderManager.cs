@@ -6,36 +6,36 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core.Hud;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
     /// <summary>
     /// Renders a Whiskey Game
     /// </summary>
-    public class RenderManager
+    public class DefaultRenderManager : RenderManager
     {
-        private static RenderManager instance;
+        private static DefaultRenderManager instance;
 
         /// <summary>
         /// Retrieves the RenderManager
         /// </summary>
         /// <returns>The RenderManager</returns>
-        public static RenderManager getInstance()
+        public static DefaultRenderManager getInstance()
         {
             if (instance == null)
             {
-                instance = new RenderManager();
+                instance = new DefaultRenderManager();
             }
             return instance;
         }
         
-        private Texture2D pixel;
+      
         private GraphicsDevice graphicsDevice;
         private SpriteBatch spriteBatch;
-
+        private static Texture2D pixel;
         /// <summary>
         /// Creates a new RenderManager
         /// </summary>
-        private RenderManager()
+        private DefaultRenderManager()
         {
             
         }
@@ -65,7 +65,7 @@ namespace Whiskey2D.Core
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
-            List<GameObject> allGobs = ObjectManager.getInstance().getAllObjects();
+            List<GameObject> allGobs = GameManager.Objects.getAllObjects();
             foreach (GameObject gob in allGobs)
             {
                 Sprite spr = gob.Sprite;

@@ -41,7 +41,7 @@ namespace Whiskey2D.Core.Hud
             textColor = Color.White;
             position = Vector2.Zero;
             size = new Vector2(100, 50);
-            font = ResourceManager.getInstance().getDefaultFont();
+            font = GameManager.Resources.getDefaultFont();
             textSize = 1;
             text = "";
             lines = new List<TextLine>();

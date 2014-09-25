@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+
 using Whiskey2D.Core.LogCommands;
 using Whiskey2D.Core.Hud;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
     /// <summary>
     /// The logManager is responsible for logging any user messages. 
     /// The logger is also capable of tracking all input events, and creating a log file that can be replayed in the future
     /// </summary>
-    public class LogManager
+    public class DefaultLogManager : LogManager
     {
        
 
@@ -36,8 +37,8 @@ namespace Whiskey2D.Core
         private const string COMMAND_DELIM = "|";
 
 
-        private static LogManager instance = new LogManager();
-        public static LogManager getInstance()
+        private static DefaultLogManager instance = new DefaultLogManager();
+        public static DefaultLogManager getInstance()
         {
             return instance;
         }
@@ -51,7 +52,7 @@ namespace Whiskey2D.Core
         private InputSourceManager sourceMan;
       
 
-        private LogManager()
+        private DefaultLogManager()
         {
         }
 
@@ -61,7 +62,7 @@ namespace Whiskey2D.Core
         public void init()
         {
 
-            sourceMan = InputSourceManager.getInstance();
+            sourceMan = GameManager.InputSource;
             currentState = sourceMan.getSource().getAllKeysDown();
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();

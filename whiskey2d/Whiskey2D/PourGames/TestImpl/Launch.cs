@@ -36,14 +36,14 @@ namespace Whiskey2D.PourGames.TestImpl
 
             Player player = new Player();
             player.Position = new Vector2(200, 250);
-            player.Sprite = new Sprite(RenderManager.getInstance().getPixel());
+            player.Sprite = new Sprite(GameManager.Renderer.getPixel());
             player.Sprite.Scale = new Vector2(20, 20);
             player.Sprite.Center();
             player.Sprite.Color = Color.DarkSeaGreen;
 
             SimpleGameObject pour1 = new SimpleGameObject();
             pour1.Position = new Vector2(400, 470);
-            pour1.Sprite = new Sprite(ResourceManager.getInstance().loadImage("pour1.png"));
+            pour1.Sprite = new Sprite(GameManager.Resources.loadImage("pour1.png"));
             pour1.Sprite.Offset = new Vector2(pour1.Sprite.Image.Width / 2, pour1.Sprite.Image.Height);
             pour1.Sprite.Depth = .2f;
             pour1.Sprite.Color = Color.Gray;
@@ -54,7 +54,7 @@ namespace Whiskey2D.PourGames.TestImpl
         {
             Floor floor = new Floor();
             floor.Position = position;
-            floor.Sprite = new Sprite(RenderManager.getInstance().getPixel());
+            floor.Sprite = new Sprite(GameManager.Renderer.getPixel());
             floor.Sprite.Scale = size;
             floor.Sprite.Color = Color.Black;
             return floor;
@@ -64,7 +64,7 @@ namespace Whiskey2D.PourGames.TestImpl
         {
             StarField stars = new StarField();
             stars.Position = position;
-            stars.Sprite = new Sprite(ResourceManager.getInstance().loadImage("stars1.png"));
+            stars.Sprite = new Sprite(GameManager.Resources.loadImage("stars1.png"));
             stars.Sprite.Scale *= 2;
             stars.Sprite.Center();
             stars.Sprite.Depth = depth;

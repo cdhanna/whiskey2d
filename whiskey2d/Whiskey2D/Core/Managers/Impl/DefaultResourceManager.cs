@@ -6,26 +6,27 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
 
     /// <summary>
     /// Loads different Resources into the WHiskey Game
     /// </summary>
-    public class ResourceManager
+    public class DefaultResourceManager : ResourceManager
     {
 
-        private static ResourceManager instance;
+        private static DefaultResourceManager instance;
+
 
         /// <summary>
         /// Retrives the ResourceManager
         /// </summary>
         /// <returns>The ResourceManager</returns>
-        public static ResourceManager getInstance()
+        public static DefaultResourceManager getInstance()
         {
             if (instance == null)
             {
-                instance = new ResourceManager();
+                instance = new DefaultResourceManager();
             }
             return instance;
         }
@@ -35,7 +36,7 @@ namespace Whiskey2D.Core
 
         private SpriteFont defaultFont;
 
-        private ResourceManager()
+        private DefaultResourceManager()
         {
         }
 
@@ -46,7 +47,6 @@ namespace Whiskey2D.Core
         public void init(ContentManager content)
         {
             this.content = content;
-
             this.defaultFont = content.Load<SpriteFont>("font");
 
         }
@@ -69,5 +69,8 @@ namespace Whiskey2D.Core
         {
             return defaultFont;
         }
+
+
+ 
     }
 }

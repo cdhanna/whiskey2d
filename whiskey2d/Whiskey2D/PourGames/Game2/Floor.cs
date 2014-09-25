@@ -14,7 +14,7 @@ namespace Whiskey2D.PourGames.Game2
         public Floor()
         {
            // Sprite = new Sprite(RenderManager.getInstance().getPixel());
-            Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_middle.png"));
+            Sprite = new Sprite(GameManager.Resources.loadImage("grass_middle.png"));
             Sprite.Scale = Vector2.One * .5f;
            // Size = new Vector2(20, 20);
 

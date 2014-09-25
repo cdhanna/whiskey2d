@@ -31,9 +31,9 @@ namespace Whiskey2D.PourGames.Game2
 
             Player plr = (Player)Gob; //nasty. 
 
-            ObjectManager objMan = ObjectManager.getInstance();
 
-            List<Floor> walls = objMan.getAllObjectsOfType<Floor>();
+
+            List<Floor> walls = GameManager.Objects.getAllObjectsOfType<Floor>();
 
             Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
             Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
@@ -47,15 +47,15 @@ namespace Whiskey2D.PourGames.Game2
 
             velocity += gravity;
 
-            if (InputManager.getInstance().isKeyDown(Keys.Right))
+            if (GameManager.Input.isKeyDown(Keys.Right))
             {
                 velocity.X += acceleration;
             }
-            if (InputManager.getInstance().isKeyDown(Keys.Left))
+            if (GameManager.Input.isKeyDown(Keys.Left))
             {
                 velocity.X -= acceleration;
             }
-            if (InputManager.getInstance().isNewKeyDown(Keys.Up) && onGround == true)
+            if (GameManager.Input.isNewKeyDown(Keys.Up) && onGround == true)
             {
                 velocity += jumpNormal * gravity.Length() * jumpGravity;
                 onGround = false;
@@ -131,7 +131,7 @@ namespace Whiskey2D.PourGames.Game2
             if (yHit)
             {
                 velocity.Y = 0;
-                float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
+                float speed = GameManager.Objects.getAllObjectsOfType<GameControl>()[0].gameSpeed;
                 plr.Position.X -= speed;
             }
 

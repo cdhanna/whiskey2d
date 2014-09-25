@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
 
     /// <summary>
     /// Manages all input for the game. Only keyboard input is supported
     /// </summary>
-    public class InputManager
+    public class DefaultInputManager : InputManager
     {
 
-        private static InputManager instance;
+        private static DefaultInputManager instance;
 
         /// <summary>
         /// retrieves the InputManager
         /// </summary>
         /// <returns>The InputManager</returns>
-        public static InputManager getInstance()
+        public static DefaultInputManager getInstance()
         {
             if (instance == null)
             {
-                instance = new InputManager();
+                instance = new DefaultInputManager();
             }
             return instance;
         }
@@ -32,7 +32,7 @@ namespace Whiskey2D.Core
 
         private Dictionary<Keys, bool> currentState, oldState;
 
-        private InputManager()
+        private DefaultInputManager()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void init()
         {
-            sourceMan = InputSourceManager.getInstance();
+            sourceMan = GameManager.InputSource;
 
             
             currentState = sourceMan.getSource().getAllKeysDown();
@@ -82,5 +82,7 @@ namespace Whiskey2D.Core
         {
             return currentState[key] && !oldState[key];
         }
+
+
     }
 }

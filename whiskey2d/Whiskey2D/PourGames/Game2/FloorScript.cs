@@ -21,7 +21,7 @@ namespace Whiskey2D.PourGames.Game2
         {
             Floor floor = (Floor)this.Gob;
 
-            float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
+            float speed = GameManager.Objects.getAllObjectsOfType<GameControl>()[0].gameSpeed;
             floor.Position.X -= speed;
 
 

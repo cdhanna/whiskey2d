@@ -5,7 +5,7 @@ using WinFormsGraphicsDevice;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Whiskey2D.Core;
-
+using Whiskey2D.Core.Managers.Impl;
 
 namespace WhiskeyEditor.MonoHelp
 {
@@ -35,13 +35,20 @@ namespace WhiskeyEditor.MonoHelp
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
             content = new ContentManager(Services);
 
-            gameMan.Initialize(content, GraphicsDevice);
+            gameMan.Initialize(content, GraphicsDevice,
+                DefaultInputManager.getInstance(),
+                DefaultInputSourceManager.getInstance(),
+                DefaultLogManager.getInstance(),
+                DefaultObjectManager.getInstance(),
+                DefaultRenderManager.getInstance(),
+                DefaultResourceManager.getInstance()
+                );
             gameMan.LoadContent();
 
             inputSource = new EditorInputSource(this);
 
-            InputSourceManager.getInstance().setRegularSource(inputSource);
-            InputSourceManager.getInstance().requestRegular();
+            DefaultInputSourceManager.getInstance().setRegularSource(inputSource);
+            DefaultInputSourceManager.getInstance().requestRegular();
             
 
             // Start the animation timer.

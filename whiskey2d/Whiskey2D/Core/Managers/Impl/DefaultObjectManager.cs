@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
 
     /// <summary>
     /// Manages all GameObjects in the Whiskey Game. 
     /// </summary>
-    public class ObjectManager
+    public class DefaultObjectManager : ObjectManager
     {
-        private static ObjectManager instance;
+        private static DefaultObjectManager instance;
 
         /// <summary>
         /// Retrieves the ObjectManager
         /// </summary>
         /// <returns>The ObjectManager</returns>
-        public static ObjectManager getInstance()
+        public static DefaultObjectManager getInstance()
         {
             if (instance == null)
             {
-                instance = new ObjectManager();
+                instance = new DefaultObjectManager();
             }
             return instance;
         }
@@ -30,7 +30,7 @@ namespace Whiskey2D.Core
         private List<GameObject> deadObjects;
         private List<GameObject> newObjects;
 
-        private ObjectManager()
+        private DefaultObjectManager()
         {
            
         }

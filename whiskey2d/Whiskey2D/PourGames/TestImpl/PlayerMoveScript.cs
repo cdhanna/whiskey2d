@@ -31,9 +31,9 @@ namespace Whiskey2D.PourGames.TestImpl
 
             Player plr = (Player)Gob; //nasty. 
 
-            ObjectManager objMan = ObjectManager.getInstance();
+            //ObjectManager objMan = ObjectManager.getInstance();
 
-            List<Floor> walls = objMan.getAllObjectsOfType<Floor>();
+            List<Floor> walls = GameManager.Objects.getAllObjectsOfType<Floor>();
 
             Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
             Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
@@ -46,15 +46,15 @@ namespace Whiskey2D.PourGames.TestImpl
 
             velocity += gravity;
 
-            if (InputManager.getInstance().isKeyDown(Keys.Right))
+            if (GameManager.Input.isKeyDown(Keys.Right))
             {
                 velocity.X += acceleration;
             }
-            if (InputManager.getInstance().isKeyDown(Keys.Left))
+            if (GameManager.Input.isKeyDown(Keys.Left))
             {
                 velocity.X -= acceleration;
             }
-            if (InputManager.getInstance().isNewKeyDown(Keys.Up) && onGround == true)
+            if (GameManager.Input.isNewKeyDown(Keys.Up) && onGround == true)
             {
                 velocity += jumpNormal * gravity.Length() * jumpGravity;
                 onGround = false;
@@ -75,7 +75,7 @@ namespace Whiskey2D.PourGames.TestImpl
                     onGround = true;
                     jumpNormal = new Vector2(2, -1f);
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
-                    LogManager.getInstance().debug("left edge hit a wall");
+                    GameManager.Log.debug("left edge hit a wall");
                 }
                 if (wall.Bounds.vectorWithin(rightEdge + velocity))
                 {

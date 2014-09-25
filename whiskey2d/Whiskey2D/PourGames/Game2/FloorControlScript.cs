@@ -54,20 +54,20 @@ namespace Whiskey2D.PourGames.Game2
                    
                 }
                 Floor end = new Floor();
-                end.Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_right.png"));
+                end.Sprite = new Sprite(GameManager.Resources.loadImage("grass_right.png"));
                 end.Sprite.Scale *= .5f;
                 end.Position = new Vector2(800, 100);
                 end.Position.X += floor.Sprite.ImageSize.X * floorSegments;
                 end.Position.Y = newY;
 
                 Floor start = new Floor();
-                start.Sprite = new Sprite(ResourceManager.getInstance().loadImage("grass_left.png"));
+                start.Sprite = new Sprite(GameManager.Resources.loadImage("grass_left.png"));
                 start.Sprite.Scale *= .5f;
                 start.Position = new Vector2(800, 100); 
                 start.Position.X -= start.Sprite.ImageSize.X;
                 start.Position.Y = newY;
 
-                LogManager.getInstance().debug("created a floor segment at " + newY);
+                GameManager.Log.debug("created a floor segment at " + newY);
 
                 //float speed = ObjectManager.getInstance().getAllObjectsOfType<GameControl>()[0].gameSpeed;
                 //ObjectManager.getInstance().getAllObjectsOfType<Floor>().ForEach((f) => { f.speed = speed; });

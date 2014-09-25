@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Managers.Impl
 {
 
     /// <summary>
     /// The inputSource Manager decides what kind of input source the game will be using
     /// </summary>
-    public class InputSourceManager
+    public class DefaultInputSourceManager : InputSourceManager
     {
 
-        private static InputSourceManager instance = new InputSourceManager();
-        public static InputSourceManager getInstance()
+        private static DefaultInputSourceManager instance = new DefaultInputSourceManager();
+        public static DefaultInputSourceManager getInstance()
         {
             return instance;
         }
@@ -25,7 +25,7 @@ namespace Whiskey2D.Core
         private InputSource activeSource;
         private InputSource defaultSource;
 
-        private InputSourceManager()
+        private DefaultInputSourceManager()
         {
             keyboardSource = new RealKeyBoard();
             activeSource = keyboardSource;
@@ -57,7 +57,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void requestReplay()
         {
-            replSource = new ReplayService(LogManager.getInstance().getOldLogPath());
+            replSource = new ReplayService(DefaultLogManager.getInstance().getOldLogPath());
             activeSource = replSource;
             GameManager.getInstance().reset();
         }

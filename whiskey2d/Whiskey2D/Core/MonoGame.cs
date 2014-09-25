@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using Whiskey2D.Core.Managers.Impl;
 
 namespace Whiskey2D.Core
 {
@@ -38,7 +38,17 @@ namespace Whiskey2D.Core
         {
             gameMan = GameManager.getInstance();
 
-            gameMan.Initialize(Content, GraphicsDevice);
+
+
+
+            gameMan.Initialize(Content, GraphicsDevice,
+                DefaultInputManager.getInstance(),
+                DefaultInputSourceManager.getInstance(),
+                DefaultLogManager.getInstance(),
+                DefaultObjectManager.getInstance(),
+                DefaultRenderManager.getInstance(),
+                DefaultResourceManager.getInstance()
+            );
             base.Initialize();
         }
 
