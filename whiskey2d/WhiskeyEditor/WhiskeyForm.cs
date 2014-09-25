@@ -142,5 +142,10 @@ namespace WhiskeyEditor
                 }
             }
         }
+
+        private void whiskeyControl1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

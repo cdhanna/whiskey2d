@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WinFormsGraphicsDevice;
@@ -18,9 +18,12 @@ namespace WhiskeyEditor.MonoHelp
 
         Stopwatch timer;
 
-        GameManager gameMan = GameManager.getInstance<EditorGameManager>();
+        GameManager gameMan = GameManager.getInstance();
         ContentManager content;
         EditorInputSource inputSource;
+
+
+        TimeSpan TargetElapsedTime;
 
         public WhiskeyControl()
         {
@@ -29,7 +32,7 @@ namespace WhiskeyEditor.MonoHelp
 
         protected override void Initialize()
         {
-
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
             content = new ContentManager(Services);
 
             gameMan.Initialize(content, GraphicsDevice);
@@ -52,20 +55,21 @@ namespace WhiskeyEditor.MonoHelp
         }
 
 
-        //protected override void OnHandleDestroyed(System.EventArgs e)
-        //{
-        //    gameMan.UnloadContent();
-        //    base.OnHandleDestroyed(e);
-        //}
 
         protected void update()
         {
-         
-            
 
-            gameMan.Update(null); //todo fix nullgametime
+            if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
+            {
+                
+                gameMan.Update(null); //todo fix nullgametime
+
+              
+                timer.Restart();
+            }
 
             Invalidate();   //signals draw
+
         }
 
         protected override void Draw()

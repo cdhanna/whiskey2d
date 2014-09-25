@@ -32,14 +32,14 @@ namespace Whiskey2D.Core
             }
             return instance;
         }
-        public static GameManager getInstance<G>() where G : GameManager
-        {
-            if (instance == null)
-            {
-                instance = Activator.CreateInstance<G>();
-            }
-            return instance;
-        }
+        //public static GameManager getInstance<G>() where G : GameManager
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = Activator.CreateInstance<G>();
+        //    }
+        //    return instance;
+        //}
 
 
 
