@@ -50,9 +50,10 @@
     <Compile Include="Core\Hud\HudManager.cs" />
     <Compile Include="Core\Hud\TextBox.cs" />
     <Compile Include="Core\Hud\TextLine.cs" />
-    <Compile Include="Core\InputSource.cs">
+    <Compile Include="Core\Inputs\InputSource.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\Inputs\MouseButtons.cs" />
     <Compile Include="Core\Managers\Impl\DefaultInputSourceManager.cs" />
     <Compile Include="Core\LogCommands\InputCommand.cs" />
     <Compile Include="Core\LogCommands\LogCommand.cs" />
@@ -70,10 +71,10 @@
     <Compile Include="Core\Managers\ResourceManager.cs" />
     <Compile Include="Core\MonoGame.cs" />
     <Compile Include="Core\Rand.cs" />
-    <Compile Include="Core\RealKeyBoard.cs">
+    <Compile Include="Core\Inputs\RealKeyBoard.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Core\ReplayService.cs" />
+    <Compile Include="Core\Inputs\ReplayService.cs" />
     <Compile Include="Core\SimpleGameObject.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -99,6 +100,8 @@
     <Compile Include="PourGames\Game2\PlayerScaleScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="PourGames\TestImpl\MouseScript.cs" />
+    <Compile Include="PourGames\TestImpl\MouseTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Service\Compiler.cs" />
     <Compile Include="Core\GameObject.cs">

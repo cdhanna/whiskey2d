@@ -5,6 +5,9 @@ using System.Text;
 using Whiskey2D.Core.LogCommands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Whiskey2D.Core.Inputs;
+
+
 namespace Whiskey2D.Core.Hud
 {
     /// <summary>

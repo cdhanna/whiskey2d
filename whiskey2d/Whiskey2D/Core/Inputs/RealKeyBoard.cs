@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Inputs
 {
     /// <summary>
     /// An InputSource that gets input directly from the keyboard
@@ -71,7 +71,7 @@ namespace Whiskey2D.Core
         {
 
             KeyboardState state = Keyboard.GetState();
-
+            
             Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
             Dictionary<Keys, bool> keyMap = new Dictionary<Keys, bool>();
             foreach (Keys key in all)
@@ -82,6 +82,15 @@ namespace Whiskey2D.Core
 
             return keyMap;
         }
+
+        public MouseState getMouseState()
+        {
+            MouseState state = Mouse.GetState();
+
+            return state;
+
+        }
+
 
         /// <summary>
         /// Utility function to map a Keys enum to a string. 

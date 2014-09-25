@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Whiskey2D.Core.Inputs;
 namespace Whiskey2D.Core.Managers
 {
     public interface InputSourceManager

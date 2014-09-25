@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Whiskey2D.Core.LogCommands;
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Inputs
 {
     /// <summary>
     /// The ReplayService is an InputSource and creates input events from a log file
@@ -168,6 +168,12 @@ namespace Whiskey2D.Core
             }
 
         }
+
+        public MouseState getMouseState()
+        {
+            return new MouseState(); //TODO FIX
+        }
+
 
         /// <summary>
         /// utility exception

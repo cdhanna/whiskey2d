@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Whiskey2D.Core;
 using Whiskey2D.Core.Managers.Impl;
+using Whiskey2D.Core.Inputs;
 
 namespace WhiskeyEditor.MonoHelp
 {

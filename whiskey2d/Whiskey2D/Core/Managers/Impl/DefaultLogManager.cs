@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-
+using Whiskey2D.Core.Inputs;
 using Whiskey2D.Core.LogCommands;
 using Whiskey2D.Core.Hud;
 
@@ -29,6 +29,11 @@ namespace Whiskey2D.Core.Managers.Impl
             public Dictionary<Keys, bool> getAllKeysDown()
             {
                 return new Dictionary<Keys, bool>();
+            }
+
+            public MouseState getMouseState()
+            {
+                return new MouseState();
             }
         }
 

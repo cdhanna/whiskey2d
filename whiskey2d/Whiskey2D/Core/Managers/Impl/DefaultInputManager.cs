@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
+using Whiskey2D.Core.Inputs;
+
 namespace Whiskey2D.Core.Managers.Impl
 {
 
@@ -31,6 +34,8 @@ namespace Whiskey2D.Core.Managers.Impl
         private InputSourceManager sourceMan;
 
         private Dictionary<Keys, bool> currentState, oldState;
+        private MouseState currentMouse, oldMouse;
+
 
         private DefaultInputManager()
         {
@@ -43,7 +48,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             sourceMan = GameManager.InputSource;
 
-            
+            currentMouse = sourceMan.getSource().getMouseState();
             currentState = sourceMan.getSource().getAllKeysDown();
         }
 
@@ -60,6 +65,9 @@ namespace Whiskey2D.Core.Managers.Impl
         public void update()
         {
             oldState = currentState;
+            oldMouse = currentMouse;
+
+            currentMouse = sourceMan.getSource().getMouseState();
             currentState = sourceMan.getSource().getAllKeysDown();
         }
 
@@ -80,9 +88,47 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>True if the key was just pressed, false otherwise</returns>
         public Boolean isNewKeyDown(Keys key)
         {
+           
             return currentState[key] && !oldState[key];
         }
 
 
+
+
+        public Vector2 getMousePosition()
+        {
+            return new Vector2(currentMouse.Position.X, currentMouse.Position.Y);
+        }
+
+
+        private bool mouseDown(MouseButtons b, MouseState state)
+        {
+            bool answer = false;
+            switch (b)
+            {
+                case MouseButtons.Left:
+                    answer = state.LeftButton == ButtonState.Pressed;
+                    break;
+                case MouseButtons.Right:
+                    answer = state.RightButton == ButtonState.Pressed;
+                    break;
+                case MouseButtons.Middle:
+                    answer = state.MiddleButton == ButtonState.Pressed;
+                    break;
+                default:
+                    break;
+            }
+            return answer;
+        }
+
+        public bool isMouseDown(MouseButtons b)
+        {
+            return mouseDown(b, currentMouse);
+        }
+
+        public bool isNewMouseDown(MouseButtons b)
+        {
+            return mouseDown(b, currentMouse) && !mouseDown(b, oldMouse);
+        }
     }
 }

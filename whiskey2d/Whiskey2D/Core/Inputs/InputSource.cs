@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace Whiskey2D.Core
+namespace Whiskey2D.Core.Inputs
 {
 
     /// <summary>
@@ -23,6 +23,9 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <returns></returns>
         Dictionary<Keys, bool> getAllKeysDown();
+
+
+        MouseState getMouseState();
 
     }
 }

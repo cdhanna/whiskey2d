@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework.Input;
 using Whiskey2D.Core.Hud.Commands;
-
+using Whiskey2D.Core.Inputs;
 namespace Whiskey2D.Core.Hud
 {
     /// <summary>

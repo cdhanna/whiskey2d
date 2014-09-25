@@ -14,7 +14,7 @@ namespace Whiskey2D.PourGames.TestImpl
         {
             Console.WriteLine("HELLO WORLD");
             //put game init
-
+            new MouseTester();
 
             addFloor(new Vector2(0, 0), new Vector2(20, 600));      //left wall
             addFloor(new Vector2(20, 460), new Vector2(760, 20));   //floor
