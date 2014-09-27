@@ -54,6 +54,9 @@ namespace Whiskey2D.Core.Managers.Impl
         private List<Keys> oldActiveKeys, currentActiveKeys;
         private long activeKeyCounter;
 
+        private MouseState oldMouse, currentMouse;
+
+
         private InputSourceManager sourceMan;
       
 
@@ -75,6 +78,8 @@ namespace Whiskey2D.Core.Managers.Impl
             currentActiveKeys.Clear();
             activeKeyCounter = 0;
             masterCount = 0;
+
+            currentMouse = sourceMan.getSource().getMouseState();
 
             writer = File.CreateText( getCurrentLogPath() );
             writer.AutoFlush = true;
@@ -122,8 +127,16 @@ namespace Whiskey2D.Core.Managers.Impl
         public void update()
         {
             
+            //KEYBOARD
             oldState = currentState;
             currentState = sourceMan.getSource().getAllKeysDown();
+
+
+            //MOUSE
+            oldMouse = currentMouse;
+            currentMouse = sourceMan.getSource().getMouseState();
+
+
 
             currentActiveKeys.Clear();
             
@@ -159,16 +172,15 @@ namespace Whiskey2D.Core.Managers.Impl
                 listsEqual = false;
             }
 
-            if (!listsEqual)
+            if (!listsEqual || oldMouse!=currentMouse)
             {
-                writeCommand(new InputCommand(masterCount, activeKeyCounter, oldActiveKeys));
+                writeCommand(new InputCommand(masterCount, activeKeyCounter, oldActiveKeys, oldMouse));
                 activeKeyCounter = 0;
             }
-            else
-            {
-                
-            }
-           activeKeyCounter++;
+            activeKeyCounter++;
+
+
+
 
 
             oldActiveKeys.Clear();
@@ -186,7 +198,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <param name="command">Some LogCommand</param>
         private void writeCommand(LogCommand command)
         {
-            string line = command.toCommand();
+            string line = command.toLogString();
             writer.WriteLine(line);
         }
 

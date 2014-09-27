@@ -68,11 +68,37 @@ namespace Whiskey2D.Core.Inputs
             totalTicks++;
         }
 
-        /// <summary>
-        /// Gets all of the keys on a line in the log file. Reads the log file until a valid command is found
-        /// </summary>
-        /// <returns></returns>
-        private List<Keys> getKeysOnLine()
+        ///// <summary>
+        ///// Gets all of the keys on a line in the log file. Reads the log file until a valid command is found
+        ///// </summary>
+        ///// <returns></returns>
+        //private List<Keys> getKeysOnLine()
+        //{
+        //    try
+        //    {
+        //        string line = readLine(lineNumber);
+
+        //        LogCommand command = LogCommand.parse(line);
+        //        while (!(command is InputCommand))
+        //        {
+        //            lineNumber++;
+        //            command = LogCommand.parse(readLine(lineNumber));
+
+        //        }
+
+        //        InputCommand io = (InputCommand)command;
+        //        return io.KeysDown;
+        //    }
+        //    catch (LogOverException e)
+        //    {
+        //        replayOver = true;
+        //        return new List<Keys>();
+        //    }
+           
+        //}
+
+
+        private InputCommand getInputOnLine()
         {
             try
             {
@@ -87,14 +113,14 @@ namespace Whiskey2D.Core.Inputs
                 }
 
                 InputCommand io = (InputCommand)command;
-                return io.KeysDown;
+                return io;
             }
             catch (LogOverException e)
             {
                 replayOver = true;
-                return new List<Keys>();
+                return new InputCommand(0, 0, new List<Keys>(), Mouse.GetState());
             }
-           
+
         }
 
         /// <summary>
@@ -133,9 +159,9 @@ namespace Whiskey2D.Core.Inputs
         /// <returns></returns>
         public Dictionary<Keys, bool> getAllKeysDown()
         {
-            
-           
-            List<Keys> downed = getKeysOnLine(  );
+
+
+            List<Keys> downed = getInputOnLine().KeysDown;
             Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
             Dictionary<Keys, bool> keyMap = new Dictionary<Keys, bool>();
             foreach (Keys key in all)
@@ -171,7 +197,7 @@ namespace Whiskey2D.Core.Inputs
 
         public MouseState getMouseState()
         {
-            return new MouseState(); //TODO FIX
+            return getInputOnLine().MouseState;
         }
 
 

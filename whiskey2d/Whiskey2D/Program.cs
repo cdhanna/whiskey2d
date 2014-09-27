@@ -57,7 +57,7 @@ namespace Whiskey2D
             //    }
             //}
 
-           
+
             using (var game = new MonoBaseGame())
                 game.Run();
         }

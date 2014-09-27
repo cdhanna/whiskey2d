@@ -24,7 +24,8 @@ namespace Whiskey2D.Core
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
         }
 
 
@@ -38,7 +39,7 @@ namespace Whiskey2D.Core
         {
             gameMan = GameManager.getInstance();
 
-
+            
 
 
             gameMan.Initialize(Content, GraphicsDevice,

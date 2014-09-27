@@ -151,6 +151,9 @@ namespace Whiskey2D.Core
         {
             this.Device = Device;
             this.Content = Content;
+
+           
+
             Content.RootDirectory = "Content";
 
 

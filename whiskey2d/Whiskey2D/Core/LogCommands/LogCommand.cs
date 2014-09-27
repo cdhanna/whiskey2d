@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Microsoft.Xna.Framework.Input;
 
 namespace Whiskey2D.Core.LogCommands
 {
@@ -17,7 +18,7 @@ namespace Whiskey2D.Core.LogCommands
         static LogCommand()
         {
             typeTable.Add("LOG", new LogMessage(0, LogLevel.DEBUG, ""));
-            typeTable.Add("KEY", new InputCommand(0, 0, null));
+            typeTable.Add("KEY", new InputCommand(0, 0, null, Mouse.GetState()));
             typeTable.Add("RAND", new RandCommand(0, 0));
         }
 
@@ -51,7 +52,7 @@ namespace Whiskey2D.Core.LogCommands
         /// convert the log command to a string, to entry into a log file
         /// </summary>
         /// <returns></returns>
-        public string toCommand()
+        public string toLogString()
         {
 
             string c = time + "\t\t| " + name + " | " + toCommandText();
