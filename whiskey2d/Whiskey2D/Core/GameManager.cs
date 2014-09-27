@@ -12,6 +12,8 @@ using Whiskey2D.Core.Hud;
 using Whiskey2D.Core.Managers;
 using Whiskey2D.PourGames.TestImpl;
 using Whiskey2D.PourGames.Game2;
+using Whiskey2D.PourGames.Game3;
+
 #endregion
 
 namespace Whiskey2D.Core
@@ -181,7 +183,7 @@ namespace Whiskey2D.Core
             //        starter = (Starter)Activator.CreateInstance(gt);
             //    }
             //}
-            starter = new Launch();
+            starter = new Game3Launch();
 
 
 
@@ -276,7 +278,7 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            Device.Clear(Color.CornflowerBlue);
+            Device.Clear(Color.DarkOliveGreen);
 
             this.renMan.render();
             this.renMan.renderHud();

@@ -100,6 +100,15 @@
     <Compile Include="PourGames\Game2\PlayerScaleScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="PourGames\Game3\BadGuy.cs" />
+    <Compile Include="PourGames\Game3\BadGuyScript.cs" />
+    <Compile Include="PourGames\Game3\Bullet.cs" />
+    <Compile Include="PourGames\Game3\BulletScript.cs" />
+    <Compile Include="PourGames\Game3\Crosshair.cs" />
+    <Compile Include="PourGames\Game3\CrosshairScript.cs" />
+    <Compile Include="PourGames\Game3\Game3Launch.cs" />
+    <Compile Include="PourGames\Game3\Player.cs" />
+    <Compile Include="PourGames\Game3\PlayerScript.cs" />
     <Compile Include="PourGames\TestImpl\MouseScript.cs" />
     <Compile Include="PourGames\TestImpl\MouseTester.cs" />
     <Compile Include="Program.cs" />
@@ -181,6 +190,15 @@
     <Content Include="Content\background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\badguy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\crosshair.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\grass_left.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -194,6 +212,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\pour1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ricky_shoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ricky_simple.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\stars1.png">
