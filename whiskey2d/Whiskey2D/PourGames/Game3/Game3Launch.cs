@@ -14,7 +14,7 @@ namespace Whiskey2D.PourGames.Game3
         {
 
             Player ricky = new Player();
-            Mouse.SetPosition(100, 100);
+            //Mouse.SetPosition(100, 100);
             ricky.Position = new Vector2(100, 100);
 
 

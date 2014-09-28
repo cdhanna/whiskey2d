@@ -11,26 +11,26 @@ namespace Whiskey2D.Core.Managers.Impl
     /// </summary>
     public class DefaultObjectManager : ObjectManager
     {
-        private static DefaultObjectManager instance;
+        //private static DefaultObjectManager instance;
 
-        /// <summary>
-        /// Retrieves the ObjectManager
-        /// </summary>
-        /// <returns>The ObjectManager</returns>
-        public static DefaultObjectManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DefaultObjectManager();
-            }
-            return instance;
-        }
+        ///// <summary>
+        ///// Retrieves the ObjectManager
+        ///// </summary>
+        ///// <returns>The ObjectManager</returns>
+        //public static DefaultObjectManager getInstance()
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = new DefaultObjectManager();
+        //    }
+        //    return instance;
+        //}
 
-        private List<GameObject> gameObjects;
-        private List<GameObject> deadObjects;
-        private List<GameObject> newObjects;
+        protected List<GameObject> gameObjects;
+        protected List<GameObject> deadObjects;
+        protected List<GameObject> newObjects;
 
-        private DefaultObjectManager()
+        public DefaultObjectManager()
         {
            
         }
@@ -38,7 +38,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <summary>
         /// Initializes the ObjectManager
         /// </summary>
-        public void init()
+        public virtual void init()
         {
             gameObjects = new List<GameObject>();
             deadObjects = new List<GameObject>();
@@ -48,7 +48,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <summary>
         /// Closes out the ObjectManager
         /// </summary>
-        public void close()
+        public virtual void close()
         {
             gameObjects.Clear();
             deadObjects.Clear();
@@ -58,7 +58,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <summary>
         /// Updates all Game Objects
         /// </summary>
-        public void updateAll()
+        public virtual void updateAll()
         {
             foreach (GameObject gob in gameObjects)
             {
@@ -84,7 +84,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// Adds a GameObject to the world. This is called internally by GameObject. 
         /// </summary>
         /// <param name="gob"></param>
-        public void addObject(GameObject gob)
+        public virtual void addObject(GameObject gob)
         {
             //gameObjects.Add(gob);
             //gob.init();
@@ -95,7 +95,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// Removes a GameObject from the world. 
         /// </summary>
         /// <param name="gob"></param>
-        public void removeObject(GameObject gob)
+        public virtual void removeObject(GameObject gob)
         {
             //gameObjects.Remove(gob);
             deadObjects.Add(gob);
@@ -107,7 +107,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// Get a list of all existing GameObjects
         /// </summary>
         /// <returns>A list of all known GameObjects</returns>
-        public List<GameObject> getAllObjects() 
+        public virtual List<GameObject> getAllObjects() 
         {
             return gameObjects;
         }
@@ -117,7 +117,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         /// <typeparam name="G">The specific type of GameObject to search for</typeparam>
         /// <returns>A list of all GameObjects that are of the specified type</returns>
-        public List<G> getAllObjectsOfType<G>() where G : GameObject
+        public virtual List<G> getAllObjectsOfType<G>() where G : GameObject
         {
             List<G> gobs = new List<G>();
 
@@ -135,6 +135,43 @@ namespace Whiskey2D.Core.Managers.Impl
 
         }
 
+        /// <summary>
+        /// Get a list of all GameObjects that are of the specified type. 
+        /// </summary>
+        /// <typeparam name="G">The specific type of GameObject to search for</typeparam>
+        /// <returns>A list of all GameObjects that are of the specified type</returns>
+        public virtual List<GameObject> getAllObjectsNotOfType<G>() where G : GameObject
+        {
+            List<GameObject> gobs = new List<GameObject>();
 
+            //TODO, make faster? maybe a map.
+            gameObjects.ForEach((gob) =>
+            {
+                if (!(gob is G))
+                {
+                    gobs.Add(gob);
+                }
+            });
+
+
+            return gobs;
+
+        }
+
+
+
+        public virtual State getState()
+        {
+            State state = new State();
+            GameObject[] objs = new GameObject[gameObjects.Count];
+            gameObjects.CopyTo(objs);
+            state.GameObjects = objs.ToList();
+            return state;
+        }
+
+        public void setState(State state)
+        {
+            
+        }
     }
 }

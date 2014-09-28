@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-
+using System.ComponentModel;
 namespace Whiskey2D.Core
 {
 
     /// <summary>
     /// The base class for all user game components. 
     /// </summary>
+    /// 
     public abstract class GameObject 
     {
         private static int idCounter = 0;
@@ -48,12 +49,19 @@ namespace Whiskey2D.Core
         /// <summary>
         /// The position of the Game Object
         /// </summary>
+
+        //[TypeConverter(typeof(ExpandableObjectConverter))]
+        //public Vector2 Position;
         public Vector2 Position;
 
+        public float X { get { return Position.X; } set { Position = new Vector2(value, Position.Y); } }
+        public float Y { get { return Position.Y; } set { Position = new Vector2(Position.X, value); } }
         /// <summary>
         /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
         /// To give the Game Object visuals, set this to a new Sprite()
         /// </summary>
+
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public Sprite Sprite
         {
             get
@@ -89,7 +97,7 @@ namespace Whiskey2D.Core
         {
             get
             {
-                return new Bounds(Position, Sprite.ImageSize);
+                return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
             } 
         }
 

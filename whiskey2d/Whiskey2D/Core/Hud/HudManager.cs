@@ -50,6 +50,7 @@ namespace Whiskey2D.Core.Hud
             debugWindow.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 98);
             debugWindow.BackGroundColor = Color.Transparent;
             debugWindow.BorderColor = Color.Transparent;
+            debugWindow.TextColor = Color.White;
             debugWindow.TextSize = .8f;
             keyboard = new RealKeyBoard();
             console = new WhiskeyConsole();

@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework.Content;
 using Whiskey2D.Core;
 using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.Core.Inputs;
+using System.IO;
+using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace WhiskeyEditor.MonoHelp
 {
@@ -14,7 +18,7 @@ namespace WhiskeyEditor.MonoHelp
     /// <summary>
     /// A winforms control that interacts with a WhiskeyGame
     /// </summary>
-    public class WhiskeyControl : GraphicsDeviceControl
+    public class WhiskeyControl : GraphicsDeviceControl, GameController
     {
 
         Stopwatch timer;
@@ -26,21 +30,32 @@ namespace WhiskeyEditor.MonoHelp
 
         TimeSpan TargetElapsedTime;
 
-        public WhiskeyControl()
+
+        GameObject selectedGob;
+        PropertyGrid gobGrid;
+
+        public WhiskeyControl(PropertyGrid gobGrid)
         {
-            
+            this.gobGrid = gobGrid;
+
+
         }
+
+        //protected override void OnResize(EventArgs e)
+        //{
+        //    base.OnResize(e);
+        //}
 
         protected override void Initialize()
         {
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
             content = new ContentManager(Services);
 
-            gameMan.Initialize(content, GraphicsDevice,
+            gameMan.Initialize(this, content, GraphicsDevice,
                 DefaultInputManager.getInstance(),
                 DefaultInputSourceManager.getInstance(),
                 DefaultLogManager.getInstance(),
-                DefaultObjectManager.getInstance(),
+                new EditorObjectManager(),
                 DefaultRenderManager.getInstance(),
                 DefaultResourceManager.getInstance()
                 );
@@ -52,13 +67,16 @@ namespace WhiskeyEditor.MonoHelp
             DefaultInputSourceManager.getInstance().requestRegular();
             
 
+            
+
             // Start the animation timer.
             timer = Stopwatch.StartNew();
 
             // Hook the idle event to constantly redraw our animation.
             Application.Idle += delegate { update(); };
 
-            
+            //add editor objects
+            new EditorObjects.ObjectController();
 
         }
 
@@ -87,6 +105,33 @@ namespace WhiskeyEditor.MonoHelp
         }
 
 
+        public void addNewGameObject(Type gameObjectType, int x, int y)
+        {
+            GameObject gob = (GameObject) gameObjectType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+            gob.Position = new Vector2(x, y);
+
+        }
+
+        public void save()
+        {
+            State state = GameManager.Objects.getState();
+
+  
+
+        }
+
+        GameObject GameController.SelectedGob
+        {
+            get
+            {
+                return selectedGob;
+            }
+            set
+            {
+                selectedGob = value;
+                gobGrid.SelectedObject = value;
+            }
+        }
     }
 
 }

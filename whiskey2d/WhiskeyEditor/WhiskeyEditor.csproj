@@ -56,6 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditorObjectManager.cs" />
+    <Compile Include="EditorObjects\ObjectController.cs" />
+    <Compile Include="EditorObjects\DragControllerScript.cs" />
+    <Compile Include="EditorObjects\EditorGameObject.cs" />
+    <Compile Include="EditorObjects\SelectScript.cs" />
     <Compile Include="GeneratorHelper.cs" />
     <Compile Include="MonoHelp\EditorGameManager.cs" />
     <Compile Include="MonoHelp\EditorInputSource.cs" />

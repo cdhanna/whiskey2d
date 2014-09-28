@@ -41,12 +41,20 @@ namespace Whiskey2D.Core.Managers
         /// <returns>A list of all known GameObjects</returns>
         List<GameObject> getAllObjects();
 
+
+        List<GameObject> getAllObjectsNotOfType<G>() where G : GameObject;
+
         /// <summary>
         /// Get a list of all GameObjects that are of the specified type. 
         /// </summary>
         /// <typeparam name="G">The specific type of GameObject to search for</typeparam>
         /// <returns>A list of all GameObjects that are of the specified type</returns>
         List<G> getAllObjectsOfType<G>() where G : GameObject;
+
+
+        State getState();
+
+        void setState(State state);
 
     }
 }

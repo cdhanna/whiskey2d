@@ -6,7 +6,7 @@ using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 namespace Whiskey2D.PourGames.Game3
 {
-    class BadGuy : GameObject
+    public class BadGuy : GameObject
     {
 
         public BadGuy()

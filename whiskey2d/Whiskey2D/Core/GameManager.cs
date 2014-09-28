@@ -48,6 +48,7 @@ namespace Whiskey2D.Core
         ContentManager Content;
         GraphicsDevice Device;
 
+        GameController controller;
 
         RenderManager renMan;
         ObjectManager objMan;
@@ -70,7 +71,7 @@ namespace Whiskey2D.Core
         public static ObjectManager Objects { get { return getInstance().objMan; } }
         public static RenderManager Renderer { get { return getInstance().renMan; } }
         public static ResourceManager Resources { get { return getInstance().resMan; } }
-
+        public static GameController Controller { get { return getInstance().controller; } }
 
         protected GameManager()
         {
@@ -141,6 +142,7 @@ namespace Whiskey2D.Core
         /// and initialize them as well.
         /// </summary>
         public virtual void Initialize(
+            GameController controller,
             ContentManager Content,
             GraphicsDevice Device,
             InputManager inputMan,
@@ -154,7 +156,7 @@ namespace Whiskey2D.Core
             this.Device = Device;
             this.Content = Content;
 
-           
+            this.controller = controller;
 
             Content.RootDirectory = "Content";
 
@@ -172,7 +174,7 @@ namespace Whiskey2D.Core
            
             
             hudMan = HudManager.getInstance();
-
+           // hudMan.DebugColor = Color.White;
 
             //find gameData assmebly
             //Type[] allGameTypes = gameAssmebly.GetTypes();
@@ -183,7 +185,7 @@ namespace Whiskey2D.Core
             //        starter = (Starter)Activator.CreateInstance(gt);
             //    }
             //}
-            starter = new Game3Launch();
+           // starter = new Game3Launch();
 
 
 

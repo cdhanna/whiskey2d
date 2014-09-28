@@ -13,7 +13,7 @@ namespace Whiskey2D.Core
     /// <summary>
     /// A way to run the GameManager through MonoGame's built in Game
     /// </summary>
-    public class MonoBaseGame : Game
+    public class MonoBaseGame : Game , GameController
     {
         GameManager gameMan;
 
@@ -38,11 +38,11 @@ namespace Whiskey2D.Core
         {
             gameMan = GameManager.getInstance();
 
-            gameMan.Initialize(Content, GraphicsDevice,
+            gameMan.Initialize(this, Content, GraphicsDevice,
                 DefaultInputManager.getInstance(),
                 DefaultInputSourceManager.getInstance(),
                 DefaultLogManager.getInstance(),
-                DefaultObjectManager.getInstance(),
+                new DefaultObjectManager(),
                 DefaultRenderManager.getInstance(),
                 DefaultResourceManager.getInstance()
             );
@@ -76,5 +76,11 @@ namespace Whiskey2D.Core
             base.Draw(gameTime);
         }
 
+
+        public GameObject SelectedGob
+        {
+            get;
+            set;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Whiskey2D.Core
     /// A ScriptBundle gives access to the GameObject, and the function that updates that GameObject
     /// </summary>
     /// <typeparam name="T">The type of GameObject that the script works with</typeparam>
+    
     public class ScriptBundle<T> where T : GameObject
     {
 
@@ -60,6 +61,7 @@ namespace Whiskey2D.Core
     /// The base class for all scripts.
     /// Scripts control GameObject behavour.
     /// </summary>
+    [Serializable]
     public abstract class Script<G> : ScriptBundle<G> where G : GameObject
     {
 
