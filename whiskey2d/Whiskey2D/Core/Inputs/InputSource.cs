@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Whiskey2D.Core.Inputs
 {
-
+    using Microsoft.Xna.Framework.Input;
     /// <summary>
     /// An InputSource provides input to the game.
     /// </summary>
