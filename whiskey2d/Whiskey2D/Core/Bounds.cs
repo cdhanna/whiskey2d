@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
@@ -13,18 +12,18 @@ namespace Whiskey2D.Core
     public class Bounds
     {
 
-        private Vector2 position;
-        private Vector2 size;
+        private Vector position;
+        private Vector size;
 
         /// <summary>
         /// The top-left position of the bounds
         /// </summary>
-        public Vector2 Position { get { return position; } }
+        public Vector Position { get { return position; } }
 
         /// <summary>
         /// The width and height of the bounds, in terms of X and Y 
         /// </summary>
-        public Vector2 Size { get { return size; } }
+        public Vector Size { get { return size; } }
 
         /// <summary>
         /// Tthe bottam Y location of the bound
@@ -51,7 +50,7 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <param name="position">The top-left position of the bounds</param>
         /// <param name="size">The width-height of the bounds, in terms of X and Y</param>
-        public Bounds(Vector2 position, Vector2 size)
+        public Bounds(Vector position, Vector size)
         {
             this.position = position;
             this.size = size;
@@ -62,7 +61,7 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <param name="vec">some vector to check</param>
         /// <returns>true if the point is within the bounds, false otherwise</returns>
-        public virtual Boolean vectorWithin(Vector2 vec)
+        public virtual Boolean vectorWithin(Vector vec)
         {
 
             return vec.X > position.X

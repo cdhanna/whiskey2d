@@ -95,9 +95,9 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
 
-        public Vector2 getMousePosition()
+        public Vector getMousePosition()
         {
-            return new Vector2(currentMouse.Position.X, currentMouse.Position.Y);
+            return new Vector(currentMouse.Position.X, currentMouse.Position.Y);
         }
 
 

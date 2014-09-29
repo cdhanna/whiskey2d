@@ -54,14 +54,14 @@ namespace Whiskey2D.PourGames.Game2
                    
                 }
                 Floor end = new Floor();
-                end.Sprite = new Sprite(GameManager.Resources.loadImage("grass_right.png"));
+                end.Sprite = new Sprite("grass_right.png");
                 end.Sprite.Scale *= .5f;
                 end.Position = new Vector2(800, 100);
                 end.Position.X += floor.Sprite.ImageSize.X * floorSegments;
                 end.Position.Y = newY;
 
                 Floor start = new Floor();
-                start.Sprite = new Sprite(GameManager.Resources.loadImage("grass_left.png"));
+                start.Sprite = new Sprite("grass_left.png");
                 start.Sprite.Scale *= .5f;
                 start.Position = new Vector2(800, 100); 
                 start.Position.X -= start.Sprite.ImageSize.X;

@@ -12,6 +12,9 @@ using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
+
+using ServiceStack.Text.Json;
+
 namespace WhiskeyEditor.MonoHelp
 {
 
@@ -32,14 +35,7 @@ namespace WhiskeyEditor.MonoHelp
 
 
         GameObject selectedGob;
-        PropertyGrid gobGrid;
-
-        public WhiskeyControl(PropertyGrid gobGrid)
-        {
-            this.gobGrid = gobGrid;
-
-
-        }
+        public PropertyGrid GobGrid{get;set;}
 
         //protected override void OnResize(EventArgs e)
         //{
@@ -115,9 +111,13 @@ namespace WhiskeyEditor.MonoHelp
         public void save()
         {
             State state = GameManager.Objects.getState();
+            State.serialize(state, "game-state.txt");
+        }
 
-  
-
+        public void load()
+        {
+            State state = State.deserialize("game-state.txt");
+            GameManager.Objects.setState(state);
         }
 
         GameObject GameController.SelectedGob
@@ -129,7 +129,7 @@ namespace WhiskeyEditor.MonoHelp
             set
             {
                 selectedGob = value;
-                gobGrid.SelectedObject = value;
+                GobGrid.SelectedObject = value;
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Whiskey2D.Core
     /// A ScriptBundle gives access to the GameObject, and the function that updates that GameObject
     /// </summary>
     /// <typeparam name="T">The type of GameObject that the script works with</typeparam>
-    
+    [Serializable]
     public class ScriptBundle<T> where T : GameObject
     {
 

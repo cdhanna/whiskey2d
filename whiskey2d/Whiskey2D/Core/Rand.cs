@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
@@ -64,10 +64,10 @@ namespace Whiskey2D.Core
             return (float)r.NextDouble();
         }
 
-        public Vector2 nextUnit2()
+        public Vector nextUnit2()
         {
             float angle = nextFloat() * (float)(Math.PI*2);
-            return new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+            return new Vector((float)Math.Cos(angle), (float)Math.Sin(angle));
         }
 
         public Color nextColorVariation(Color baseColor, float redVar, float greenVar, float blueVar, float alphaVar)

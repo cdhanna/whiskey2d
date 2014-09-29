@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
+
 namespace Whiskey2D.PourGames.Game2
 {
     class ParticleScript : Script<Particle>
@@ -18,7 +18,7 @@ namespace Whiskey2D.PourGames.Game2
 
             Gob.Position += Gob.Velocity;
             Gob.Sprite.Scale *= .97f;
-            Gob.Velocity += Vector2.UnitY * .2f;
+            Gob.Velocity += Vector.UnitY * .2f;
             if (Gob.Sprite.Scale.Length() < .1f)
             {
                 Gob.close();

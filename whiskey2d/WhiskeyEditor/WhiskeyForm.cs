@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Whiskey2D.Service;
 using System.Reflection;
-
+using System.Diagnostics;
 using Whiskey2D.Core;
-
+using System.IO;
 using Whiskey2D.PourGames.Game3;
 
 namespace WhiskeyEditor
@@ -30,7 +30,7 @@ namespace WhiskeyEditor
             textPopup = new SimpleTextPopup();
             projMan = new ProjectManager();
 
-            
+            whiskeyControl.GobGrid = this.gobGrid;
 
         }
 
@@ -166,8 +166,7 @@ namespace WhiskeyEditor
             Console.WriteLine(typeOfDrag);
             Point p = new Point(e.X, e.Y);
             p = this.PointToClient(p);
-            whiskeyControl1.addNewGameObject((Type)typeOfDrag, p.X, p.Y);
-            //Console.WriteLine(e.Data.GetData();
+            whiskeyControl.addNewGameObject((Type)typeOfDrag, p.X, p.Y);
 
         }
 
@@ -178,7 +177,23 @@ namespace WhiskeyEditor
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            whiskeyControl1.save();
+            whiskeyControl.save();
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            whiskeyControl.load();
+        }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo p = new ProcessStartInfo("Whiskey2D.exe");
+            whiskeyControl.save();
+            File.Delete("..\\..\\..\\Whiskey2D\\bin\\WindowsGL\\Debug\\game-state.txt");
+            File.Copy("game-state.txt", "..\\..\\..\\Whiskey2D\\bin\\WindowsGL\\Debug\\game-state.txt");
+            p.WorkingDirectory = "..\\..\\..\\Whiskey2D\\bin\\WindowsGL\\Debug";
+            Process.Start(p);
+            
         }
     }
 }

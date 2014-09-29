@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core.Hud;
 
 namespace Whiskey2D.Core.Managers.Impl
 {
+
+    using XnaColor = Microsoft.Xna.Framework.Color;
+
     /// <summary>
     /// Renders a Whiskey Game
     /// </summary>
@@ -71,7 +74,12 @@ namespace Whiskey2D.Core.Managers.Impl
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-                    spriteBatch.Draw(spr.Image, gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+
+                    if (spr.getImage() == GameManager.Renderer.getPixel())
+                    {
+
+                    }
+                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
                 }
             }
 
@@ -91,7 +99,7 @@ namespace Whiskey2D.Core.Managers.Impl
             {
                 if (box.Visible)
                 {
-                    spriteBatch.Draw(getPixel(), box.Position, null, box.Color, 0, Vector2.Zero, box.Size, SpriteEffects.None,box.Depth);
+                    spriteBatch.Draw(getPixel(), box.Position, null, box.Color, 0, Vector.Zero, box.Size, SpriteEffects.None,box.Depth);
                 }
             }
 
@@ -100,7 +108,7 @@ namespace Whiskey2D.Core.Managers.Impl
             {
                 if (line.Visible)
                 {
-                    spriteBatch.DrawString(line.Font, line.Text, line.Position, line.Color,0, Vector2.Zero, line.Size, SpriteEffects.None, .91f);
+                    spriteBatch.DrawString(line.Font, line.Text, line.Position, line.Color,0, Vector.Zero, line.Size, SpriteEffects.None, .91f);
                 }
             }
 
@@ -117,7 +125,7 @@ namespace Whiskey2D.Core.Managers.Impl
             if (pixel == null)
             {
                 pixel = new Texture2D(this.graphicsDevice, 1, 1, false, SurfaceFormat.Color);
-                pixel.SetData<Color>(new Color[] { Color.White });
+                pixel.SetData<XnaColor>(new XnaColor[] { XnaColor.White });
             }
             return pixel;
         }

@@ -32,9 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gramma.Serialization">
+      <HintPath>..\packages\Gramma.Serialization.1.1.1\lib\Gramma.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Json">
+      <HintPath>..\packages\JSON.1.0.1\lib\net40\Json.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\station12\Station12\Station12\Station12\lib\WindowsGL\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -42,6 +52,21 @@
     </Reference>
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\..\..\..\opentk-code-3127-trunk\Binaries\OpenTK\Debug\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Polenter.SharpSerializer">
+      <HintPath>..\packages\SharpSerializer.2.20\lib\net20\Polenter.SharpSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="Punch.Contracts">
+      <HintPath>..\packages\Punch.Contracts.2.0.58\lib\net45\Punch.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Punch.Core">
+      <HintPath>..\packages\Punch.Core.2.0.58\lib\net45\Punch.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Punch.Serialization">
+      <HintPath>..\packages\Punch.Serialization.2.0.58\lib\net45\Punch.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.4.0.31\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -107,6 +132,7 @@
     <EmbeddedResource Include="WhiskeyForm.resx">
       <DependentUpon>WhiskeyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -127,6 +153,8 @@
     <Content Include="compile-lib\Whiskey.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\knockout-3.1.0.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Whiskey2D\Whiskey2D.csproj">

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.Core
@@ -10,24 +10,56 @@ namespace Whiskey2D.Core
     /// <summary>
     /// A Sprite holds visual data.
     /// </summary>
+    [Serializable]
     public class Sprite
     {
+        public const string PIXEL = "__PIXEL__";
+
         /// <summary>
         /// The Image that the Sprite is linked to
         /// </summary>
-        public Texture2D Image { get; set; }
+        //public Texture2D Image { get; set; }
+        [NonSerialized]
+        private Texture2D image;
+        
+        public Texture2D getImage()
+        {
+            if (image == null && imagePath != null)
+            {
+                if (imagePath.Equals(PIXEL))
+                {
+                    image = GameManager.Renderer.getPixel();
+                }
+                else
+                {
+                    image = GameManager.Resources.loadImage(imagePath);
+                }
+            }
+            return image;
+        }
+
+        public void setImage(Texture2D image)
+        {
+            this.image = image;
+        }
+
+        private string imagePath;
 
         /// <summary>
         /// The Vector Scale of the Sprite. By default, the Scale is set to (1, 1), which represents 100% scale.
         /// Setting to the scale to (2, 1) would stretch the sprite to 200% in the X direction, and leave it be in the Y direction.
         /// </summary>
-        public Vector2 Scale { get; set; }
+        public Vector Scale { get; set; }
 
         /// <summary>
         /// A Vector representing the actual size of the Image, including the current Scale settings. 
         /// </summary>
-        public Vector2 ImageSize { get { return new Vector2(Image.Width * Scale.X, Image.Height * Scale.Y); } }
-        
+        public Vector ImageSize { get { return new Vector(ImageWidth * Scale.X, ImageHeight * Scale.Y); } }
+
+        public float ImageWidth { get { return (image == null) ? 0 : image.Width; } }
+        public float ImageHeight { get { return (image == null) ? 0 : image.Height; } }
+
+
         /// <summary>
         /// The rotation the Sprite will be drawn at. The Rotation is in radians. 
         /// </summary>
@@ -47,7 +79,7 @@ namespace Whiskey2D.Core
         /// The offset of the sprite. By default, the offset is (0,0), which means all sprites will be drawn from their top-left corner.
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
         /// </summary>
-        public Vector2 Offset { get; set; }
+        public Vector Offset { get; set; }
 
         
 
@@ -55,13 +87,35 @@ namespace Whiskey2D.Core
         /// Creates a sprite with a given Image.
         /// </summary>
         /// <param name="image">A non-null Image</param>
-        public Sprite(Texture2D image)
+        //public Sprite(Texture2D image)
+        //{
+        //    this.image = image;
+        //    Scale = Vector.One;
+        //    Offset = Vector.Zero;
+        //    Depth = .5f;
+        //    Color = Microsoft.Xna.Framework.Color.White;
+        //    Rotation = 0;
+        //}
+
+        public Sprite(string imagePath)
         {
-            Image = image;
-            Scale = Vector2.One;
-            Offset = Vector2.Zero;
+           
+            this.imagePath = imagePath;
+            image = getImage();
+            Scale = Vector.One;
+            Offset = Vector.Zero;
             Depth = .5f;
-            Color = Color.White;
+            Color = Microsoft.Xna.Framework.Color.White;
+            Rotation = 0;
+        }
+        public Sprite()
+        {
+            this.imagePath = PIXEL;
+            image = getImage();
+            Scale = Vector.One;
+            Offset = Vector.Zero;
+            Depth = .5f;
+            Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
         }
 
@@ -70,7 +124,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void Center()
         {
-            Offset = new Vector2(Image.Width, Image.Height) / 2;
+            Offset = new Vector(ImageWidth, ImageHeight) / 2;
         }
     }
 }

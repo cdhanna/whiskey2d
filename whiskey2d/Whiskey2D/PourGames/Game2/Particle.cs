@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
+
 
 namespace Whiskey2D.PourGames.Game2
 {
@@ -12,12 +12,12 @@ namespace Whiskey2D.PourGames.Game2
 
         Rand r = Rand.getInstance();
 
-        public Vector2 Velocity;
+        public Vector Velocity;
 
 
-        public Particle(Vector2 position, Vector2 velocity)
+        public Particle(Vector position, Vector velocity)
         {
-            Sprite = new Sprite(GameManager.Renderer.getPixel());
+            Sprite = new Sprite();
             Sprite.Color = Color.Blue;
             Sprite.Scale *= r.nextFloat() * 10;
             Sprite.Depth = .6f;

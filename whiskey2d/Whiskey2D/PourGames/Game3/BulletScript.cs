@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace Whiskey2D.PourGames.Game3
 {
+    [Serializable]
     class BulletScript : Script<Bullet>
     {
         public override void onStart()

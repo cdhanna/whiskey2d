@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+
 using Whiskey2D.Core;
 
 namespace Whiskey2D.PourGames.TestImpl

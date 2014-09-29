@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Whiskey2D.PourGames.Game3
 {
+    [Serializable]
     class Game3Launch : Starter
     {
         public override void start()

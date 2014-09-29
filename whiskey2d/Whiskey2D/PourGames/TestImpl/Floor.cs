@@ -12,7 +12,7 @@ namespace Whiskey2D.PourGames.TestImpl
 
         public Floor() 
         {
-            Sprite = new Sprite(GameManager.Renderer.getPixel());
+            Sprite = new Sprite();
             Size = new Vector2(20, 20);
            
         }

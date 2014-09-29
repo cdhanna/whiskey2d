@@ -58,6 +58,10 @@ namespace Whiskey2D
             //}
 
 
+          //  MonoBaseGame mbg = new MonoBaseGame();
+            
+            
+
             using (var game = new MonoBaseGame())
                 game.Run();
         }

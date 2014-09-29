@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Whiskey2D.Core.Managers.Impl;
 
+using Whiskey2D.PourGames.Game3;
+using System.IO;
+
 namespace Whiskey2D.Core
 {
 
@@ -15,9 +18,10 @@ namespace Whiskey2D.Core
     /// </summary>
     public class MonoBaseGame : Game , GameController
     {
+        
+        
+        
         GameManager gameMan;
-
-
         GraphicsDeviceManager graphics;
 
         public MonoBaseGame() : base()
@@ -47,12 +51,20 @@ namespace Whiskey2D.Core
                 DefaultResourceManager.getInstance()
             );
             base.Initialize();
+
+
+            GameManager.Objects.setState(State.deserialize("game-state.txt"));
+
         }
 
         protected override void LoadContent()
         {
             gameMan.LoadContent();
             base.LoadContent();
+
+
+            
+
         }
 
         protected override void UnloadContent()
@@ -68,12 +80,16 @@ namespace Whiskey2D.Core
 
             gameMan.Update(gameTime);
             base.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)
         {
             gameMan.Draw(gameTime);
             base.Draw(gameTime);
+
+
+
         }
 
 

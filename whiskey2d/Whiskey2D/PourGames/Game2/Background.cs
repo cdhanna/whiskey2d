@@ -11,7 +11,7 @@ namespace Whiskey2D.PourGames.Game2
     {
         public Background()
         {
-            this.Sprite = new Sprite(GameManager.Resources.loadImage("background.png"));
+            this.Sprite = new Sprite("background.png");
             this.Sprite.Depth = .3f;
         }
 

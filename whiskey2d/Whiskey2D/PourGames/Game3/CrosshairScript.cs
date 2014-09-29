@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.PourGames.Game3
 {
+    [Serializable]
     class CrosshairScript : Script<Crosshair>
     {
         public override void onStart()

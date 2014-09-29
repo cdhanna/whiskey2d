@@ -43,7 +43,10 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.badGuyDrag = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.loadButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.whiskeyControl = new WhiskeyEditor.MonoHelp.WhiskeyControl();
+            this.playButton = new System.Windows.Forms.Button();
             this.menuBar.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -139,17 +142,14 @@
             this.gobGrid.Name = "gobGrid";
             this.gobGrid.Size = new System.Drawing.Size(360, 768);
             this.gobGrid.TabIndex = 0;
-
-            this.whiskeyControl1 = new MonoHelp.WhiskeyControl(gobGrid);
-
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.whiskeyControl1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.badGuyDrag, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.whiskeyControl, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
@@ -170,27 +170,25 @@
             this.badGuyDrag.TabStop = false;
             this.badGuyDrag.MouseDown += new System.Windows.Forms.MouseEventHandler(this.badGuyDrag_MouseDown);
             // 
-            // whiskeyControl1
-            // 
-            this.whiskeyControl1.AllowDrop = true;
-            this.whiskeyControl1.BackColor = System.Drawing.Color.Black;
-            this.whiskeyControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.whiskeyControl1.Location = new System.Drawing.Point(4, 4);
-            this.whiskeyControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.whiskeyControl1.Name = "whiskeyControl1";
-            this.whiskeyControl1.Size = new System.Drawing.Size(886, 552);
-            this.whiskeyControl1.TabIndex = 8;
-            this.whiskeyControl1.VSync = false;
-            this.whiskeyControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragDrop);
-            this.whiskeyControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragEnter);
-            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.playButton);
+            this.panel2.Controls.Add(this.loadButton);
             this.panel2.Controls.Add(this.saveButton);
             this.panel2.Location = new System.Drawing.Point(3, 706);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(803, 59);
             this.panel2.TabIndex = 10;
+            // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(597, 18);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(75, 23);
+            this.loadButton.TabIndex = 1;
+            this.loadButton.Text = "LOAD";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // saveButton
             // 
@@ -201,6 +199,31 @@
             this.saveButton.Text = "SAVE";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // whiskeyControl
+            // 
+            this.whiskeyControl.AllowDrop = true;
+            this.whiskeyControl.BackColor = System.Drawing.Color.Black;
+            this.whiskeyControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whiskeyControl.GobGrid = null;
+            this.whiskeyControl.Location = new System.Drawing.Point(4, 4);
+            this.whiskeyControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.whiskeyControl.Name = "whiskeyControl";
+            this.whiskeyControl.Size = new System.Drawing.Size(886, 552);
+            this.whiskeyControl.TabIndex = 11;
+            this.whiskeyControl.VSync = false;
+            this.whiskeyControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragDrop);
+            this.whiskeyControl.DragEnter += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragEnter);
+            // 
+            // playButton
+            // 
+            this.playButton.Location = new System.Drawing.Point(516, 18);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.TabIndex = 2;
+            this.playButton.Text = "PLAY";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // WhiskeyForm
             // 
@@ -235,7 +258,6 @@
         private System.Windows.Forms.OpenFileDialog openProjectDialog;
         private System.Windows.Forms.SaveFileDialog newProjectDialog;
         private System.Windows.Forms.Panel mainPanel;
-        private MonoHelp.WhiskeyControl whiskeyControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -243,6 +265,9 @@
         private System.Windows.Forms.PictureBox badGuyDrag;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button loadButton;
+        private MonoHelp.WhiskeyControl whiskeyControl;
+        private System.Windows.Forms.Button playButton;
     }
 }
 

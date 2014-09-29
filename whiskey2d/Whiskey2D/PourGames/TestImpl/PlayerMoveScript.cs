@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
@@ -12,14 +11,14 @@ namespace Whiskey2D.PourGames.TestImpl
     class PlayerMoveScript : Script<Player>
     {
 
-        public Vector2 gravity = new Vector2(0, .2f);
-        public Vector2 velocity = Vector2.Zero;
+        public Vector gravity = new Vector(0, .2f);
+        public Vector velocity = Vector.Zero;
         public float maxSpeed = 7;
         public float acceleration = .5f;
         public float friction = .8f;
         public float jumpGravity = 25;
         public bool onGround = false;
-        public Vector2 jumpNormal = new Vector2(0, -1);
+        public Vector jumpNormal = new Vector(0, -1);
 
         public override void onStart()
         {
@@ -35,10 +34,10 @@ namespace Whiskey2D.PourGames.TestImpl
 
             List<Floor> walls = GameManager.Objects.getAllObjectsOfType<Floor>();
 
-            Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
-            Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
-            Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
-            Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
+            Vector leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector.UnitX / 2;
+            Vector rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector.UnitX / 2;
+            Vector topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector.UnitY / 2;
+            Vector bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector.UnitY / 2;
 
        
             Boolean yHit = false;
@@ -73,7 +72,7 @@ namespace Whiskey2D.PourGames.TestImpl
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(2, -1f);
+                    jumpNormal = new Vector(2, -1f);
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
                     GameManager.Log.debug("left edge hit a wall");
                 }
@@ -81,7 +80,7 @@ namespace Whiskey2D.PourGames.TestImpl
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(-2, -1f);
+                    jumpNormal = new Vector(-2, -1f);
                    
                     plr.Position.X = wall.Bounds.Left - plr.Sprite.ImageSize.X / 2;
                 }
@@ -91,7 +90,7 @@ namespace Whiskey2D.PourGames.TestImpl
 
                     yHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(0, -1);
+                    jumpNormal = new Vector(0, -1);
                 }
                 if (wall.Bounds.vectorWithin(topEdge + velocity))
                 {

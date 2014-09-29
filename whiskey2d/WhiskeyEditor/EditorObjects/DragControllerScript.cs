@@ -10,7 +10,7 @@ namespace WhiskeyEditor.EditorObjects
     class DragControllerScript : Script<ObjectController>
     {
 
-        private Vector2 grabOffset;
+        private Vector grabOffset;
 
         public override void onStart()
         {

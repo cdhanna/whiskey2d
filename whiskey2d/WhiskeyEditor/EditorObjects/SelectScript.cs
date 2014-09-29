@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
+
 
 namespace WhiskeyEditor.EditorObjects
 {
@@ -43,10 +43,10 @@ namespace WhiskeyEditor.EditorObjects
 
             if (Gob.Selected != null)
             {
-                
-                Gob.Sprite.Color = Gob.Selected.Sprite.Color;
-                Gob.Position = Gob.Selected.Bounds.Position - new Vector2(5, 5);
-                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector2(10, 10);
+
+                Gob.Sprite.Color = Color.Blue;
+                Gob.Position = Gob.Selected.Bounds.Position - new Vector(5, 5);
+                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(10, 10);
             }
 
         }

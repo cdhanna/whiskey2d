@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.PourGames.Game3
 {
+    [Serializable]
     class Player : GameObject
     {
 
@@ -18,7 +19,7 @@ namespace Whiskey2D.PourGames.Game3
             IdleImagePath = "ricky_simple.png";
             ShootImagePath = "ricky_shoot.png";
             BulletSpeed = 4;
-            Sprite = new Sprite(GameManager.Resources.loadImage(IdleImagePath));
+            Sprite = new Sprite(IdleImagePath);
             Sprite.Center();
             Sprite.Depth -= .1f;
             CrossHair = new Crosshair();

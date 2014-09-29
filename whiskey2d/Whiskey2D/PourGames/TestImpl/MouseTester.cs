@@ -10,7 +10,7 @@ namespace Whiskey2D.PourGames.TestImpl
     {
         public MouseTester()
         {
-            Sprite = new Sprite(GameManager.Renderer.getPixel());
+            Sprite = new Sprite();
             Sprite.Scale *= 40;
         }
 

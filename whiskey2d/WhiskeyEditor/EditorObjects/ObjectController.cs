@@ -16,7 +16,7 @@ namespace WhiskeyEditor.EditorObjects
 
         public ObjectController()
         {
-            Sprite = new Sprite(GameManager.Renderer.getPixel());
+            Sprite = new Sprite();
             
         }
 

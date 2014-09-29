@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
@@ -12,14 +11,14 @@ namespace Whiskey2D.PourGames.Game2
     class PlayerMoveScript : Script<Player>
     {
 
-        public Vector2 gravity = new Vector2(0, .2f);
-        public Vector2 velocity = Vector2.Zero;
+        public Vector gravity = new Vector(0, .2f);
+        public Vector velocity = Vector.Zero;
         public float maxSpeed = 7;
         public float acceleration = .5f;
         public float friction = .8f;
         public float jumpGravity = 25;
         public bool onGround = false;
-        public Vector2 jumpNormal = new Vector2(0, -1);
+        public Vector jumpNormal = new Vector(0, -1);
         public bool onWall = false;
         public override void onStart()
         {
@@ -35,10 +34,10 @@ namespace Whiskey2D.PourGames.Game2
 
             List<Floor> walls = GameManager.Objects.getAllObjectsOfType<Floor>();
 
-            Vector2 leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
-            Vector2 rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector2.UnitX / 2;
-            Vector2 topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
-            Vector2 bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector2.UnitY / 2;
+            Vector leftEdge = plr.Position - plr.Sprite.ImageSize.X * Vector.UnitX / 2;
+            Vector rightEdge = plr.Position + plr.Sprite.ImageSize.X * Vector.UnitX / 2;
+            Vector topEdge = plr.Position - plr.Sprite.ImageSize.Y * Vector.UnitY / 2;
+            Vector bottamEdge = plr.Position + plr.Sprite.ImageSize.Y * Vector.UnitY / 2;
 
             bottamEdge.Y -= 10;
        
@@ -74,10 +73,10 @@ namespace Whiskey2D.PourGames.Game2
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(2, -1f);
+                    jumpNormal = new Vector(2, -1f);
                     if (!onWall)
                     {
-                        makeParticleCluster(plr.Position + new Vector2(-plr.Sprite.ImageSize.Y / 2, 0), jumpNormal);
+                        makeParticleCluster(plr.Position + new Vector(-plr.Sprite.ImageSize.Y / 2, 0), jumpNormal);
                     }
                     onWall = true;
                     plr.Position.X = wall.Bounds.Right + plr.Sprite.ImageSize.X / 2;
@@ -86,10 +85,10 @@ namespace Whiskey2D.PourGames.Game2
                 {
                     xHit = true;
                     onGround = true;
-                    jumpNormal = new Vector2(-2, -1f);
+                    jumpNormal = new Vector(-2, -1f);
                     if (!onWall)
                     {
-                        makeParticleCluster(plr.Position + new Vector2(plr.Sprite.ImageSize.X / 2, 0), jumpNormal);
+                        makeParticleCluster(plr.Position + new Vector(plr.Sprite.ImageSize.X / 2, 0), jumpNormal);
                     }
                     onWall = true;
                     plr.Position.X = wall.Bounds.Left - plr.Sprite.ImageSize.X / 2;
@@ -105,10 +104,10 @@ namespace Whiskey2D.PourGames.Game2
                     
                     plr.Position.Y = wall.Bounds.Top - plr.Sprite.ImageSize.Y / 2;
                     plr.Position.Y += 10;
-                    jumpNormal = new Vector2(0, -1);
+                    jumpNormal = new Vector(0, -1);
                     if (!onGround)
                     {
-                        makeParticleCluster(plr.Position + new Vector2(0, plr.Sprite.ImageSize.Y/2), jumpNormal);
+                        makeParticleCluster(plr.Position + new Vector(0, plr.Sprite.ImageSize.Y/2), jumpNormal);
                     }
 
                     yHit = true;
@@ -155,18 +154,18 @@ namespace Whiskey2D.PourGames.Game2
 
 
 
-        public void makeParticleCluster(Vector2 pos, Vector2 dir)
+        public void makeParticleCluster(Vector pos, Vector dir)
         {
             Rand r = Rand.getInstance();
-            dir = Vector2.Normalize(dir);
-            Vector2 orth = new Vector2(dir.Y, -dir.X);
+            dir = Vector.Normalize(dir);
+            Vector orth = new Vector(dir.Y, -dir.X);
            
 
             for (int i = 0; i < 20; i++)
             {
 
-                Vector2 start = pos +20 * (orth * (r.nextFloat() - .5f));
-                Vector2 vel = (start - (pos - (20 * dir)));
+                Vector start = pos +20 * (orth * (r.nextFloat() - .5f));
+                Vector vel = (start - (pos - (20 * dir)));
                 vel.X -= 1;
                 vel.Normalize();
                // 

@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Whiskey2D.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 
 namespace Whiskey2D.PourGames.Game3
 {
+    [Serializable]
     class Bullet : GameObject
     {
 
         public Bullet()
         {
-            Velocity = Vector2.One;
-            Sprite = new Sprite(GameManager.Resources.loadImage("bullet.png"));
+            Velocity = Vector.One;
+            Sprite = new Sprite("bullet.png");
             Sprite.Center();
             Sprite.Color = Color.Yellow;
         }
 
-        public Vector2 Velocity { get; set; }
+        public Vector Velocity { get; set; }
 
         protected override void addInitialScripts()
         {

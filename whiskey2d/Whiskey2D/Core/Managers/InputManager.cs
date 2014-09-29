@@ -18,7 +18,7 @@ namespace Whiskey2D.Core.Managers
         bool isKeyDown(Keys k);
         bool isNewKeyDown(Keys k);
 
-        Vector2 getMousePosition();
+        Vector getMousePosition();
         bool isMouseDown(MouseButtons b);
         bool isNewMouseDown(MouseButtons b);
     }
