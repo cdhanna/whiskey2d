@@ -73,7 +73,7 @@ namespace WhiskeyEditor.MonoHelp
 
             //add editor objects
             new EditorObjects.ObjectController();
-
+            
         }
 
 

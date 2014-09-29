@@ -59,13 +59,13 @@ namespace Whiskey2D.PourGames.Game3
 
                 isMouthOpen = true;
                 ticksLeftToCloseMouth = 20;
-               // Gob.Sprite.setImage( GameManager.Resources.loadImage(Gob.ShootImagePath) );
+                Gob.Sprite.setImage( GameManager.Resources.loadImage(Gob.ShootImagePath) );
             }
 
             if (ticksLeftToCloseMouth <= 0 && isMouthOpen)
             {
                 isMouthOpen = false;
-               // Gob.Sprite.setImage( GameManager.Resources.loadImage(Gob.IdleImagePath));
+                Gob.Sprite.setImage( GameManager.Resources.loadImage(Gob.IdleImagePath));
             }
 
             ticksLeftToFire--;
