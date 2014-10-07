@@ -160,10 +160,10 @@ namespace Whiskey2D.Core
 
         private int r, g, b, a;
 
-        public int R { get { return r; } }
-        public int G { get { return g; } }
-        public int B { get { return b; } }
-        public int A { get { return a; } }
+        public int R { get { return r; } set { r = value; } }
+        public int G { get { return g; } set { g = value; } }
+        public int B { get { return b; } set { b = value; } }
+        public int A { get { return a; } set { a = value; } }
 
         public Color(float r, float g, float b, float a)
         {

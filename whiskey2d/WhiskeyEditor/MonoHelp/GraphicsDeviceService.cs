@@ -129,7 +129,9 @@ namespace WinFormsGraphicsDevice
         {
             //if (DeviceResetting != null)
             //    DeviceResetting(this, EventArgs.Empty);
-
+            //graphicsDevice.PresentationParameters.BackBufferHeight = height;
+            //graphicsDevice.PresentationParameters.BackBufferHeight = width;
+            
             //parameters.BackBufferWidth = Math.Max(parameters.BackBufferWidth, width);
             //parameters.BackBufferHeight = Math.Max(parameters.BackBufferHeight, height);
 

@@ -296,6 +296,8 @@ namespace WinFormsGraphicsDevice
 
         #endregion
 
+
+
         #region Abstract Methods
 
 
@@ -312,5 +314,18 @@ namespace WinFormsGraphicsDevice
 
 
         #endregion
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // GraphicsDeviceControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoSize = true;
+            this.Name = "GraphicsDeviceControl";
+            this.ResumeLayout(false);
+
+        }
     }
 }

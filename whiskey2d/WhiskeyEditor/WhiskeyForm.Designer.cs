@@ -39,14 +39,14 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.gobGrid = new System.Windows.Forms.PropertyGrid();
+            this.gobGrid = new WhiskeyPropertyGrid();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.badGuyDrag = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.playButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.whiskeyControl = new WhiskeyEditor.MonoHelp.WhiskeyControl();
-            this.playButton = new System.Windows.Forms.Button();
             this.menuBar.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -62,7 +62,7 @@
             this.fileToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1268, 28);
+            this.menuBar.Size = new System.Drawing.Size(1371, 28);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "menuBar";
             // 
@@ -106,7 +106,7 @@
             this.mainPanel.Location = new System.Drawing.Point(0, 28);
             this.mainPanel.MinimumSize = new System.Drawing.Size(100, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1268, 776);
+            this.mainPanel.Size = new System.Drawing.Size(1371, 776);
             this.mainPanel.TabIndex = 5;
             // 
             // tableLayoutPanel1
@@ -123,16 +123,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.24319F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 774F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 774F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1266, 774);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1369, 774);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.gobGrid);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(903, 3);
+            this.panel1.Location = new System.Drawing.Point(976, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(360, 768);
+            this.panel1.Size = new System.Drawing.Size(390, 768);
             this.panel1.TabIndex = 10;
             // 
             // gobGrid
@@ -140,7 +140,7 @@
             this.gobGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gobGrid.Location = new System.Drawing.Point(0, 0);
             this.gobGrid.Name = "gobGrid";
-            this.gobGrid.Size = new System.Drawing.Size(360, 768);
+            this.gobGrid.Size = new System.Drawing.Size(390, 768);
             this.gobGrid.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -150,13 +150,14 @@
             this.tableLayoutPanel2.Controls.Add(this.badGuyDrag, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.whiskeyControl, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.56081F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.43919F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(894, 768);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(967, 768);
             this.tableLayoutPanel2.TabIndex = 11;
             // 
             // badGuyDrag
@@ -179,6 +180,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(803, 59);
             this.panel2.TabIndex = 10;
+            // 
+            // playButton
+            // 
+            this.playButton.Location = new System.Drawing.Point(516, 18);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.TabIndex = 2;
+            this.playButton.Text = "PLAY";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // loadButton
             // 
@@ -205,31 +216,21 @@
             this.whiskeyControl.AllowDrop = true;
             this.whiskeyControl.BackColor = System.Drawing.Color.Black;
             this.whiskeyControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.whiskeyControl.GobGrid = null;
+          //  this.whiskeyControl.GobGrid = null;
             this.whiskeyControl.Location = new System.Drawing.Point(4, 4);
             this.whiskeyControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.whiskeyControl.Name = "whiskeyControl";
-            this.whiskeyControl.Size = new System.Drawing.Size(886, 552);
+            this.whiskeyControl.Size = new System.Drawing.Size(959, 552);
             this.whiskeyControl.TabIndex = 11;
             this.whiskeyControl.VSync = false;
             this.whiskeyControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragDrop);
             this.whiskeyControl.DragEnter += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragEnter);
             // 
-            // playButton
-            // 
-            this.playButton.Location = new System.Drawing.Point(516, 18);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(75, 23);
-            this.playButton.TabIndex = 2;
-            this.playButton.Text = "PLAY";
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
             // WhiskeyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1268, 804);
+            this.ClientSize = new System.Drawing.Size(1371, 804);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;
@@ -261,7 +262,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.PropertyGrid gobGrid;
+        private WhiskeyPropertyGrid gobGrid;
         private System.Windows.Forms.PictureBox badGuyDrag;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button saveButton;

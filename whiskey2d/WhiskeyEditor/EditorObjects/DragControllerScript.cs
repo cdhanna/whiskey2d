@@ -41,6 +41,7 @@ namespace WhiskeyEditor.EditorObjects
 
             if (Gob.Dragging != null)
             {
+                GameManager.Controller.SelectedGob = Gob.Dragging;
                 Gob.Dragging.Position = GameManager.Input.getMousePosition() + grabOffset;
                 if (!GameManager.Input.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
                 {

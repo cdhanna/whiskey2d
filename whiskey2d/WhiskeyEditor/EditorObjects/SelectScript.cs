@@ -22,7 +22,7 @@ namespace WhiskeyEditor.EditorObjects
             {
                 Gob.Selected = null;
                 Gob.Sprite.Color = Color.Transparent;
-                GameManager.Controller.SelectedGob = null;
+                //GameManager.Controller.SelectedGob = null;
                 List<GameObject> objs = GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
 
                 foreach (GameObject obj in objs)

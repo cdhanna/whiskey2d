@@ -11,10 +11,10 @@ using System.IO;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.ComponentModel;
+using System.Drawing.Design;
 
-
-using ServiceStack.Text.Json;
-
+using Whiskey2D.PourGames.Game3;
 namespace WhiskeyEditor.MonoHelp
 {
 
@@ -35,7 +35,7 @@ namespace WhiskeyEditor.MonoHelp
 
 
         GameObject selectedGob;
-        public PropertyGrid GobGrid{get;set;}
+        public WhiskeyPropertyGrid GobGrid{get;set;}
 
         //protected override void OnResize(EventArgs e)
         //{
@@ -73,10 +73,27 @@ namespace WhiskeyEditor.MonoHelp
 
             //add editor objects
             new EditorObjects.ObjectController();
+
+            //TypeDescriptor.AddAttributes(   typeof(Whiskey2D.Core.Vector),
+            //                                new EditorAttribute(typeof(VectorEditor),
+            //                                typeof(UITypeEditor)));
+            ////TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector),
+            //                                new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+
+           
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Vector>)));
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Whiskey2D.Core.Color>)));
+            TypeDescriptor.AddAttributes(typeof(GameObject), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
+
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
+
+
+            new Whiskey2D.PourGames.Game3.Game3Launch().start();
             
         }
 
-
+    
 
         protected void update()
         {
@@ -130,6 +147,7 @@ namespace WhiskeyEditor.MonoHelp
             {
                 selectedGob = value;
                 GobGrid.SelectedObject = value;
+                GobGrid.Refresh();
             }
         }
     }

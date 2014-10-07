@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using Microsoft.Xna.Framework;
-using System.ComponentModel;
+
 namespace Whiskey2D.Core
 {
 
@@ -54,7 +53,7 @@ namespace Whiskey2D.Core
         //[TypeConverter(typeof(ExpandableObjectConverter))]
         //public Vector2 Position;
         public Vector Position;
-
+        
         public float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
         public float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
         /// <summary>
@@ -62,7 +61,6 @@ namespace Whiskey2D.Core
         /// To give the Game Object visuals, set this to a new Sprite()
         /// </summary>
 
-        [TypeConverter(typeof(ExpandableObjectConverter))]
         public Sprite Sprite
         {
             get

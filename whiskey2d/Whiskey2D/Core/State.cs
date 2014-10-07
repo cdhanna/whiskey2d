@@ -20,7 +20,7 @@ namespace Whiskey2D.Core
         {
 
         }
-        static Polenter.Serialization.SharpSerializer s = new Polenter.Serialization.SharpSerializer();
+
         public static void serialize(State state, string fileName)
         {
 

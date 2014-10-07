@@ -185,7 +185,10 @@ namespace Whiskey2D.Core
             //        starter = (Starter)Activator.CreateInstance(gt);
             //    }
             //}
-        //    starter = new Game3Launch();
+        
+            
+            
+            starter = new Game3Launch();
 
            // starter = new PourGames.TestImpl.Launch();
 

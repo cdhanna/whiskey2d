@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace Whiskey2D.Core
 {
 
@@ -19,20 +18,25 @@ namespace Whiskey2D.Core
         public static Vector UnitY { get { return new Vector(0, 1); } }
 
 
-        public float X, Y;
+        private float x, y;
 
-       
+        public float X { get { return x; } set { x = value; } }
+        public float Y { get { return y; } set { y = value; } }
 
         public Vector(float v)
         {
-            X = v;
-            Y = v;
+           
+            x = v;
+            y = v;
+            //myX = v;
         }
 
-        public Vector(float x, float y)
+        public Vector(float _x, float _y)
         {
-            X = x;
-            Y = y;
+            
+            x = _x;
+            y = _y;
+            //myX = x;
         }
 
         public override bool Equals(object obj)
