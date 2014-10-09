@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WhiskeyEditor.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,7 +59,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassLoader\GameObjectDescriptor.cs" />
+    <Compile Include="ClassLoader\InitialConfigurator.cs" />
+    <Compile Include="ClassLoader\PropertyDescriptor.cs" />
+    <Compile Include="ClassLoader\TestMain.cs" />
+    <Compile Include="ClassLoader\TypeManager.cs" />
     <Compile Include="ColorEditor.cs" />
+    <Compile Include="EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorObjectManager.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
@@ -67,6 +81,18 @@
     </Compile>
     <Compile Include="FilteredPropertyGrid.Designer.cs">
       <DependentUpon>FilteredPropertyGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameObjectIcon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameObjectIcon.Designer.cs">
+      <DependentUpon>GameObjectIcon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameObjectTypeBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameObjectTypeBrowser.Designer.cs">
+      <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneratorHelper.cs" />
     <Compile Include="GetSetTypeConverter.cs" />
@@ -80,6 +106,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ObjectWrapper.cs" />
+    <Compile Include="PropertyDescriptorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PropertyDescriptorControl.Designer.cs">
+      <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScriptGenerator.cs" />
     <Compile Include="MonoHelp\ServiceContainer.cs" />
     <Compile Include="SimpleTextPopup.cs">
@@ -105,8 +137,20 @@
     <Compile Include="WhiskeyPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameObjectIcon.resx">
+      <DependentUpon>GameObjectIcon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameObjectTypeBrowser.resx">
+      <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">
       <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyDescriptorControl.resx">
+      <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SimpleTextPopup.resx">
       <DependentUpon>SimpleTextPopup.cs</DependentUpon>
@@ -144,8 +188,6 @@
     <Content Include="compile-lib\Whiskey.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\knockout-3.1.0.debug.js" />
-    <Content Include="Scripts\knockout-3.1.0.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Whiskey2D\Whiskey2D.csproj">

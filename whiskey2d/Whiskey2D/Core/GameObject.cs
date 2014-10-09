@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Whiskey2D.Core
 {
@@ -22,7 +20,8 @@ namespace Whiskey2D.Core
         public GameObject()
         {
             Position = Vector.Zero;
-            Sprite = null;
+            Sprite = new Sprite();
+            Sprite.Scale *= 50;
             ID = idCounter++;
             scripts = new List<ScriptBundle<GameObject>>();
 
@@ -96,7 +95,10 @@ namespace Whiskey2D.Core
         {
             get
             {
-                return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
+                if (Sprite == null)
+                {
+                    return new Bounds(Position, Vector.Zero);
+                } else return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
             } 
         }
 

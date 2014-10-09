@@ -51,7 +51,7 @@ namespace Whiskey2D.Core
         GameController controller;
 
         RenderManager renMan;
-        ObjectManager objMan;
+        ObjectManager objMan = new Managers.Impl.DefaultObjectManager();
         ResourceManager resMan;
         InputManager inMan;
         LogManager logMan;
@@ -75,7 +75,7 @@ namespace Whiskey2D.Core
 
         protected GameManager()
         {
-
+            this.objMan.init();
             instance = this;
 
 
@@ -167,7 +167,16 @@ namespace Whiskey2D.Core
             inMan = inputMan;
             sourceMan = inputSourceMan;
             logMan = logger;
+
+
+            if (objMan != null)
+            {
+                objMan.close();
+            }
             objMan = objectMan;
+            
+            
+            
             renMan = renderMan;
             resMan = resourceMan;
             //inMan = InputManager.getInstance();

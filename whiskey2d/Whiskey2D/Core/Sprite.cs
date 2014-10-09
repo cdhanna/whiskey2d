@@ -45,6 +45,8 @@ namespace Whiskey2D.Core
 
         private string imagePath;
 
+        public String ImagePath { get { return this.imagePath; } }
+
         /// <summary>
         /// The Vector Scale of the Sprite. By default, the Scale is set to (1, 1), which represents 100% scale.
         /// Setting to the scale to (2, 1) would stretch the sprite to 200% in the X direction, and leave it be in the Y direction.

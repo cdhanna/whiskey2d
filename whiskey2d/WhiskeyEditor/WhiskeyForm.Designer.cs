@@ -39,7 +39,7 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.gobGrid = new WhiskeyPropertyGrid();
+            this.gobGrid = new WhiskeyEditor.WhiskeyPropertyGrid();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.badGuyDrag = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -62,7 +62,7 @@
             this.fileToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1371, 28);
+            this.menuBar.Size = new System.Drawing.Size(1330, 28);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "menuBar";
             // 
@@ -106,7 +106,7 @@
             this.mainPanel.Location = new System.Drawing.Point(0, 28);
             this.mainPanel.MinimumSize = new System.Drawing.Size(100, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1371, 776);
+            this.mainPanel.Size = new System.Drawing.Size(1330, 567);
             this.mainPanel.TabIndex = 5;
             // 
             // tableLayoutPanel1
@@ -123,16 +123,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.24319F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 774F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 774F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1369, 774);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1328, 565);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.gobGrid);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(976, 3);
+            this.panel1.Location = new System.Drawing.Point(947, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(390, 768);
+            this.panel1.Size = new System.Drawing.Size(378, 559);
             this.panel1.TabIndex = 10;
             // 
             // gobGrid
@@ -140,7 +140,7 @@
             this.gobGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gobGrid.Location = new System.Drawing.Point(0, 0);
             this.gobGrid.Name = "gobGrid";
-            this.gobGrid.Size = new System.Drawing.Size(390, 768);
+            this.gobGrid.Size = new System.Drawing.Size(378, 559);
             this.gobGrid.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -157,16 +157,16 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.56081F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.43919F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(967, 768);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(938, 559);
             this.tableLayoutPanel2.TabIndex = 11;
             // 
             // badGuyDrag
             // 
             this.badGuyDrag.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("badGuyDrag.BackgroundImage")));
             this.badGuyDrag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.badGuyDrag.Location = new System.Drawing.Point(3, 563);
+            this.badGuyDrag.Location = new System.Drawing.Point(3, 396);
             this.badGuyDrag.Name = "badGuyDrag";
-            this.badGuyDrag.Size = new System.Drawing.Size(126, 118);
+            this.badGuyDrag.Size = new System.Drawing.Size(126, 95);
             this.badGuyDrag.TabIndex = 9;
             this.badGuyDrag.TabStop = false;
             this.badGuyDrag.MouseDown += new System.Windows.Forms.MouseEventHandler(this.badGuyDrag_MouseDown);
@@ -176,7 +176,7 @@
             this.panel2.Controls.Add(this.playButton);
             this.panel2.Controls.Add(this.loadButton);
             this.panel2.Controls.Add(this.saveButton);
-            this.panel2.Location = new System.Drawing.Point(3, 706);
+            this.panel2.Location = new System.Drawing.Point(3, 497);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(803, 59);
             this.panel2.TabIndex = 10;
@@ -216,11 +216,11 @@
             this.whiskeyControl.AllowDrop = true;
             this.whiskeyControl.BackColor = System.Drawing.Color.Black;
             this.whiskeyControl.Dock = System.Windows.Forms.DockStyle.Fill;
-          //  this.whiskeyControl.GobGrid = null;
+            this.whiskeyControl.GobGrid = null;
             this.whiskeyControl.Location = new System.Drawing.Point(4, 4);
             this.whiskeyControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.whiskeyControl.Name = "whiskeyControl";
-            this.whiskeyControl.Size = new System.Drawing.Size(959, 552);
+            this.whiskeyControl.Size = new System.Drawing.Size(930, 385);
             this.whiskeyControl.TabIndex = 11;
             this.whiskeyControl.VSync = false;
             this.whiskeyControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl1_DragDrop);
@@ -230,7 +230,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1371, 804);
+            this.ClientSize = new System.Drawing.Size(1330, 595);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;
