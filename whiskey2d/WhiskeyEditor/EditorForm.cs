@@ -33,7 +33,7 @@ namespace WhiskeyEditor
         {
 
         }
-
+        
         private void addPropertyBtn_Click(object sender, EventArgs e)
         {
             PropertyDescriptorControl pControl = new PropertyDescriptorControl();

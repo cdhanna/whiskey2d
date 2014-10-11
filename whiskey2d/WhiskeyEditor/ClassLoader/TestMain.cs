@@ -22,19 +22,24 @@ namespace WhiskeyEditor.ClassLoader
             gobd.addProperty(new PropertyDescriptor("Name", typeof(String), "empty"));
             gobd.addProperty(new PropertyDescriptor("Pos", typeof(Vector), new Vector(43, 1235)));
 
+            //GameObjectConfigurator.getInstance().getInitialValueFor(this, "soup");
+           
+
 
             Type gobType = TypeManager.convertDescriptorToType(gobd);
 
-            GameObjectDescriptor gobd3 = TypeManager.convertTypeToDescriptor(gobType);
+            //object v = GameObjectConfigurator.getInstance().getInitialValueFor(gobd.QualifiedName, "pos");
+
+            //GameObjectDescriptor gobd3 = TypeManager.convertTypeToDescriptor(gobType);
 
 
-            TypeManager.convertDescriptorToFile(gobd3);
+            string fileName = TypeManager.convertDescriptorToFile(gobd);
+            Type type = TypeManager.convertFileToType(fileName);
+
+            //Type gobType2 = TypeManager.convertFileToType("SomeNameSpace\\TestClass.cs");
 
 
-            Type gobType2 = TypeManager.convertFileToType("SomeNameSpace\\TestClass.cs");
-
-
-            GameObjectDescriptor gobd2 = TypeManager.convertTypeToDescriptor(gobType2);
+            //GameObjectDescriptor gobd2 = TypeManager.convertTypeToDescriptor(gobType2);
 
             //gobd.generateSource("test_gen.cs");
             //Assembly code = gobd.generateSourceInMem();
@@ -42,7 +47,7 @@ namespace WhiskeyEditor.ClassLoader
             //Type type = code.GetType("SomeNameSpace.TestClass");
             //Console.WriteLine("TYPE IS " + type);
 
-            //object obj = type.GetConstructor(new Type[] { }).Invoke(new Object[] { });
+            object obj = type.GetConstructor(new Type[] { }).Invoke(new Object[] { });
             
             //type.GetProperty("Name").SetValue(obj, "TestHello");
             //string objName = (string)type.GetProperty("Name").GetValue(obj);
