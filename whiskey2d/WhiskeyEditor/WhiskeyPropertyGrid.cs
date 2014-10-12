@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
-using Azuria.Common.Controls;
 using System.Reflection;
 
 namespace WhiskeyEditor

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Whiskey2D.Core;
 namespace WhiskeyEditor
 {
     using Prop = ClassLoader.PropertyDescriptor;
@@ -35,13 +35,29 @@ namespace WhiskeyEditor
 
         }
 
-        public PropertyDescriptorControl()
+
+        public PropertyDescriptorControl(Prop property)
         {
             InitializeComponent();
             this.typeBox.Items.Clear();
             this.typeBox.Items.Add(typeof(int));
             this.typeBox.Items.Add(typeof(string));
-            prop = new Prop("x", typeof(int), 0);
+            this.typeBox.Items.Add(typeof(float));
+            this.typeBox.Items.Add(typeof(Sprite));
+            this.typeBox.Items.Add(typeof(Vector));
+            this.typeBox.Items.Add(typeof(Whiskey2D.Core.Color));
+            prop = property;
+
+
+            nameBox.Text = prop.Name;
+            typeBox.SelectedItem = property.Type;
+            valueGrid.SelectedObject = property.Value;
+
+        }
+
+        public PropertyDescriptorControl()
+            : this(new Prop("x", typeof(int), 0))
+        {
            
         }
 
@@ -49,6 +65,16 @@ namespace WhiskeyEditor
         {
             
             
+        }
+
+        private void PropertyDescriptorControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

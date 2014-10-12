@@ -47,17 +47,35 @@ namespace Whiskey2D.Core
         private GameObjectConfigurator()
         {
             valueTable = new Dictionary<GameObjectPropertyPair, object>();
+            try
+            {
+                setInitialValueFor("GameObject", "Sprite", new Sprite());
+                setInitialValueFor("GameObject", "X", 0f);
+                setInitialValueFor("GameObject", "Y", 0f);
+                setInitialValueFor("GameObject", "ID", 0);
+            }
+            catch (Exception e)
+            {
 
+                throw e;
+            }
         }
 
         public static object getInitialValueFor(string qualifiedName, string propertyName)
         {
-            return getInstance().getInitialValueFor_(qualifiedName, propertyName);
+            try
+            {
+                return getInstance().getInitialValueFor_(qualifiedName, propertyName);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public object getInitialValueFor_(string qualifiedName, string propertyName)
         {
-
+           
             GameObjectPropertyPair pair = new GameObjectPropertyPair(qualifiedName, propertyName);
             if (valueTable.ContainsKey(pair))
             {
@@ -65,14 +83,13 @@ namespace Whiskey2D.Core
             }
             else
             {
-                return null; 
+                return null;
             }
 
         }
 
         public void setInitialValueFor(string qualifiedName, string propertyName, object value)
         {
-
             GameObjectPropertyPair pair = new GameObjectPropertyPair(qualifiedName, propertyName);
             if (valueTable.ContainsKey(pair))
             {

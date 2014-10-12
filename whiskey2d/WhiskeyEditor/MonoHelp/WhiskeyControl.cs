@@ -81,12 +81,7 @@ namespace WhiskeyEditor.MonoHelp
             //                                new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
 
            
-            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
-            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Vector>)));
-            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Whiskey2D.Core.Color>)));
-            TypeDescriptor.AddAttributes(typeof(GameObject), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
-
-            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
+            
 
 
             new Whiskey2D.PourGames.Game3.Game3Launch().start();

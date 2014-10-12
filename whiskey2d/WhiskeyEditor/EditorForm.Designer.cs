@@ -37,17 +37,19 @@
             this.addGameObjectTypeBtn = new System.Windows.Forms.Button();
             this.gobTypePage = new System.Windows.Forms.TabPage();
             this.gameObjectPropertyPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.acceptBtn = new System.Windows.Forms.Button();
+            this.instPage = new System.Windows.Forms.TabPage();
+            this.propertyScrollPanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.gameObjectTypeName = new System.Windows.Forms.Label();
             this.gameObjectTypeNameBox = new System.Windows.Forms.TextBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.acceptBtn = new System.Windows.Forms.Button();
             this.addPropertyBtn = new System.Windows.Forms.Button();
-            this.propertyScrollPanel = new System.Windows.Forms.Panel();
-            this.instPage = new System.Windows.Forms.TabPage();
             this.gameObjectTypeBrowser = new WhiskeyEditor.GameObjectTypeBrowser();
-            this.whiskeyControl = new WhiskeyEditor.MonoHelp.WhiskeyControl();
+            this.gameObjectTypeEditor = new WhiskeyEditor.GameObjectTypeEditor();
             this.whiskeyPropertyGrid1 = new WhiskeyEditor.WhiskeyPropertyGrid();
+            this.whiskeyControl = new WhiskeyEditor.MonoHelp.WhiskeyControl();
             this.verticalSplit.SuspendLayout();
             this.centerSplit.SuspendLayout();
             this.detailTabs.SuspendLayout();
@@ -56,9 +58,10 @@
             this.panel1.SuspendLayout();
             this.gobTypePage.SuspendLayout();
             this.gameObjectPropertyPanel.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.instPage.SuspendLayout();
+            this.propertyScrollPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // verticalSplit
@@ -66,6 +69,7 @@
             this.verticalSplit.ColumnCount = 1;
             this.verticalSplit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.65537F));
             this.verticalSplit.Controls.Add(this.centerSplit, 0, 1);
+            this.verticalSplit.Controls.Add(this.propertyScrollPanel, 0, 0);
             this.verticalSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.verticalSplit.Location = new System.Drawing.Point(0, 0);
             this.verticalSplit.Name = "verticalSplit";
@@ -143,10 +147,11 @@
             // 
             this.addGameObjectTypeBtn.Location = new System.Drawing.Point(3, 3);
             this.addGameObjectTypeBtn.Name = "addGameObjectTypeBtn";
-            this.addGameObjectTypeBtn.Size = new System.Drawing.Size(75, 23);
+            this.addGameObjectTypeBtn.Size = new System.Drawing.Size(183, 23);
             this.addGameObjectTypeBtn.TabIndex = 0;
-            this.addGameObjectTypeBtn.Text = "New";
+            this.addGameObjectTypeBtn.Text = "New GameObject Type";
             this.addGameObjectTypeBtn.UseVisualStyleBackColor = true;
+            this.addGameObjectTypeBtn.Click += new System.EventHandler(this.addGameObjectTypeBtn_Click);
             // 
             // gobTypePage
             // 
@@ -163,26 +168,75 @@
             // 
             this.gameObjectPropertyPanel.ColumnCount = 1;
             this.gameObjectPropertyPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.gameObjectPropertyPanel.Controls.Add(this.panel2, 0, 0);
-            this.gameObjectPropertyPanel.Controls.Add(this.panel3, 0, 2);
-            this.gameObjectPropertyPanel.Controls.Add(this.propertyScrollPanel, 0, 1);
+            this.gameObjectPropertyPanel.Controls.Add(this.gameObjectTypeEditor, 0, 0);
+            this.gameObjectPropertyPanel.Controls.Add(this.panel3, 0, 1);
             this.gameObjectPropertyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gameObjectPropertyPanel.Location = new System.Drawing.Point(3, 3);
             this.gameObjectPropertyPanel.Margin = new System.Windows.Forms.Padding(0);
             this.gameObjectPropertyPanel.Name = "gameObjectPropertyPanel";
-            this.gameObjectPropertyPanel.RowCount = 3;
-            this.gameObjectPropertyPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.42857F));
-            this.gameObjectPropertyPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.57143F));
-            this.gameObjectPropertyPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.gameObjectPropertyPanel.RowCount = 2;
+            this.gameObjectPropertyPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.04478F));
+            this.gameObjectPropertyPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.955224F));
             this.gameObjectPropertyPanel.Size = new System.Drawing.Size(415, 536);
             this.gameObjectPropertyPanel.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.acceptBtn);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 491);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(409, 42);
+            this.panel3.TabIndex = 5;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(162, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "New GameObject Type";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // acceptBtn
+            // 
+            this.acceptBtn.Location = new System.Drawing.Point(285, 3);
+            this.acceptBtn.Name = "acceptBtn";
+            this.acceptBtn.Size = new System.Drawing.Size(121, 23);
+            this.acceptBtn.TabIndex = 1;
+            this.acceptBtn.Text = "Accept";
+            this.acceptBtn.UseVisualStyleBackColor = true;
+            this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_Click);
+            // 
+            // instPage
+            // 
+            this.instPage.Controls.Add(this.whiskeyPropertyGrid1);
+            this.instPage.Location = new System.Drawing.Point(4, 25);
+            this.instPage.Name = "instPage";
+            this.instPage.Padding = new System.Windows.Forms.Padding(3);
+            this.instPage.Size = new System.Drawing.Size(421, 542);
+            this.instPage.TabIndex = 2;
+            this.instPage.Text = "Instance Properties";
+            this.instPage.UseVisualStyleBackColor = true;
+            // 
+            // propertyScrollPanel
+            // 
+            this.propertyScrollPanel.AutoScroll = true;
+            this.propertyScrollPanel.Controls.Add(this.panel2);
+            this.propertyScrollPanel.Controls.Add(this.addPropertyBtn);
+            this.propertyScrollPanel.Location = new System.Drawing.Point(0, 0);
+            this.propertyScrollPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.propertyScrollPanel.Name = "propertyScrollPanel";
+            this.propertyScrollPanel.Size = new System.Drawing.Size(175, 86);
+            this.propertyScrollPanel.TabIndex = 4;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.gameObjectTypeName);
             this.panel2.Controls.Add(this.gameObjectTypeNameBox);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Location = new System.Drawing.Point(92, 39);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(415, 56);
@@ -191,7 +245,7 @@
             // gameObjectTypeName
             // 
             this.gameObjectTypeName.AutoSize = true;
-            this.gameObjectTypeName.Location = new System.Drawing.Point(3, 5);
+            this.gameObjectTypeName.Location = new System.Drawing.Point(16, 5);
             this.gameObjectTypeName.Name = "gameObjectTypeName";
             this.gameObjectTypeName.Size = new System.Drawing.Size(172, 17);
             this.gameObjectTypeName.TabIndex = 0;
@@ -208,30 +262,9 @@
             this.gameObjectTypeNameBox.Text = "UnnamedGameObject";
             this.gameObjectTypeNameBox.TextChanged += new System.EventHandler(this.gameObjectTypeNameBox_TextChanged);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.acceptBtn);
-            this.panel3.Controls.Add(this.addPropertyBtn);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 497);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(415, 39);
-            this.panel3.TabIndex = 3;
-            // 
-            // acceptBtn
-            // 
-            this.acceptBtn.Location = new System.Drawing.Point(291, 3);
-            this.acceptBtn.Name = "acceptBtn";
-            this.acceptBtn.Size = new System.Drawing.Size(121, 23);
-            this.acceptBtn.TabIndex = 1;
-            this.acceptBtn.Text = "Accept";
-            this.acceptBtn.UseVisualStyleBackColor = true;
-            this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_Click);
-            // 
             // addPropertyBtn
             // 
-            this.addPropertyBtn.Location = new System.Drawing.Point(6, 3);
+            this.addPropertyBtn.Location = new System.Drawing.Point(0, 13);
             this.addPropertyBtn.Name = "addPropertyBtn";
             this.addPropertyBtn.Size = new System.Drawing.Size(121, 23);
             this.addPropertyBtn.TabIndex = 0;
@@ -239,36 +272,30 @@
             this.addPropertyBtn.UseVisualStyleBackColor = true;
             this.addPropertyBtn.Click += new System.EventHandler(this.addPropertyBtn_Click);
             // 
-            // propertyScrollPanel
-            // 
-            this.propertyScrollPanel.AutoScroll = true;
-            this.propertyScrollPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyScrollPanel.Location = new System.Drawing.Point(0, 56);
-            this.propertyScrollPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.propertyScrollPanel.Name = "propertyScrollPanel";
-            this.propertyScrollPanel.Size = new System.Drawing.Size(415, 441);
-            this.propertyScrollPanel.TabIndex = 4;
-            // 
-            // instPage
-            // 
-            this.instPage.Controls.Add(this.whiskeyPropertyGrid1);
-            this.instPage.Location = new System.Drawing.Point(4, 25);
-            this.instPage.Name = "instPage";
-            this.instPage.Padding = new System.Windows.Forms.Padding(3);
-            this.instPage.Size = new System.Drawing.Size(421, 542);
-            this.instPage.TabIndex = 2;
-            this.instPage.Text = "Instance Properties";
-            this.instPage.UseVisualStyleBackColor = true;
-            // 
             // gameObjectTypeBrowser
             // 
             this.gameObjectTypeBrowser.AutoScroll = true;
             this.gameObjectTypeBrowser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gameObjectTypeBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gameObjectTypeBrowser.Location = new System.Drawing.Point(3, 3);
             this.gameObjectTypeBrowser.Name = "gameObjectTypeBrowser";
-            this.gameObjectTypeBrowser.Size = new System.Drawing.Size(409, 487);
+            this.gameObjectTypeBrowser.Size = new System.Drawing.Size(159, 229);
             this.gameObjectTypeBrowser.TabIndex = 1;
+            // 
+            // gameObjectTypeEditor
+            // 
+            this.gameObjectTypeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameObjectTypeEditor.Location = new System.Drawing.Point(3, 3);
+            this.gameObjectTypeEditor.Name = "gameObjectTypeEditor";
+            this.gameObjectTypeEditor.Size = new System.Drawing.Size(409, 482);
+            this.gameObjectTypeEditor.TabIndex = 4;
+            // 
+            // whiskeyPropertyGrid1
+            // 
+            this.whiskeyPropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whiskeyPropertyGrid1.Location = new System.Drawing.Point(3, 3);
+            this.whiskeyPropertyGrid1.Name = "whiskeyPropertyGrid1";
+            this.whiskeyPropertyGrid1.Size = new System.Drawing.Size(415, 536);
+            this.whiskeyPropertyGrid1.TabIndex = 0;
             // 
             // whiskeyControl
             // 
@@ -284,14 +311,6 @@
             this.whiskeyControl.VSync = false;
             this.whiskeyControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl_DragDrop);
             this.whiskeyControl.DragEnter += new System.Windows.Forms.DragEventHandler(this.whiskeyControl_DragEnter);
-            // 
-            // whiskeyPropertyGrid1
-            // 
-            this.whiskeyPropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.whiskeyPropertyGrid1.Location = new System.Drawing.Point(3, 3);
-            this.whiskeyPropertyGrid1.Name = "whiskeyPropertyGrid1";
-            this.whiskeyPropertyGrid1.Size = new System.Drawing.Size(415, 536);
-            this.whiskeyPropertyGrid1.TabIndex = 0;
             // 
             // EditorForm
             // 
@@ -309,10 +328,11 @@
             this.panel1.ResumeLayout(false);
             this.gobTypePage.ResumeLayout(false);
             this.gameObjectPropertyPanel.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.instPage.ResumeLayout(false);
+            this.propertyScrollPanel.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -332,12 +352,14 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label gameObjectTypeName;
         private System.Windows.Forms.TextBox gameObjectTypeNameBox;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button acceptBtn;
         private System.Windows.Forms.Button addPropertyBtn;
         private System.Windows.Forms.Panel propertyScrollPanel;
         private GameObjectTypeBrowser gameObjectTypeBrowser;
         private MonoHelp.WhiskeyControl whiskeyControl;
         private WhiskeyPropertyGrid whiskeyPropertyGrid1;
+        private GameObjectTypeEditor gameObjectTypeEditor;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button button1;
     }
 }

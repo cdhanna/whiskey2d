@@ -7,54 +7,67 @@ using Whiskey2D.Core;
 using System.Reflection;
 
 
+
+
 namespace WhiskeyEditor.ClassLoader
 {
+
+
     static class TestMain
     {
+
+  
+
         [STAThread]
         static void Main()
         {
 
-            Console.WriteLine("running test main");
-
-            GameObjectDescriptor gobd = new GameObjectDescriptor("SomeNameSpace", "TestClass");
-
-            gobd.addProperty(new PropertyDescriptor("Name", typeof(String), "empty"));
-            gobd.addProperty(new PropertyDescriptor("Pos", typeof(Vector), new Vector(43, 1235)));
-
-            //GameObjectConfigurator.getInstance().getInitialValueFor(this, "soup");
            
 
 
-            Type gobType = TypeManager.convertDescriptorToType(gobd);
+            Console.WriteLine("running test main");
 
-            //object v = GameObjectConfigurator.getInstance().getInitialValueFor(gobd.QualifiedName, "pos");
+            List<object> objList = new List<object>();
 
-            //GameObjectDescriptor gobd3 = TypeManager.convertTypeToDescriptor(gobType);
+            //////////AAAAAAAAAAAAAAAAAAa
+            GameObjectDescriptor aGobd = new GameObjectDescriptor("SomeNameSpace", "A");
+            Type aType = TypeManager.getInstance().addDescriptor(aGobd);
+
+            object aInst = TypeManager.instantiate(aType);
+            objList.Add(aInst);
 
 
-            string fileName = TypeManager.convertDescriptorToFile(gobd);
-            Type type = TypeManager.convertFileToType(fileName);
+            /////BBBBBBBBBBBBBBBBBBBBBBb
 
-            //Type gobType2 = TypeManager.convertFileToType("SomeNameSpace\\TestClass.cs");
+            GameObjectDescriptor bGobd = new GameObjectDescriptor("SomeNameSpace", "B");
+            bGobd.addProperty(new PropertyDescriptor("AProp", aType, aInst));
 
+            Type bType = TypeManager.getInstance().addDescriptor(bGobd);
 
-            //GameObjectDescriptor gobd2 = TypeManager.convertTypeToDescriptor(gobType2);
+            object bInst = TypeManager.instantiate(bType);
+            objList.Add(bInst);
+            /////CCCCCCCCCCCCCCCCCCCCCCCc
 
-            //gobd.generateSource("test_gen.cs");
-            //Assembly code = gobd.generateSourceInMem();
+            GameObjectDescriptor cGobd = new GameObjectDescriptor("SomeNameSpace", "C");
+            cGobd.addProperty(new PropertyDescriptor("BProp", bType, bInst));
 
-            //Type type = code.GetType("SomeNameSpace.TestClass");
-            //Console.WriteLine("TYPE IS " + type);
+            Type cType = TypeManager.getInstance().addDescriptor(cGobd);
 
-            object obj = type.GetConstructor(new Type[] { }).Invoke(new Object[] { });
-            
-            //type.GetProperty("Name").SetValue(obj, "TestHello");
-            //string objName = (string)type.GetProperty("Name").GetValue(obj);
-            //Console.WriteLine("NAME IS " + objName);
-            //type.GetProperty("Pos").SetValue(obj, new Vector(1, 3));
-            //Vector objPos = (Vector)type.GetProperty("Pos").GetValue(obj);
-            //Console.WriteLine("POS IS " + objPos.X);
+            object cInst = TypeManager.instantiate(cType);
+            objList.Add(cInst);
+
+            ////////
+           // GameObjectDescriptor aGobdNew = new GameObjectDescriptor(aGobd);
+            aGobd.addProperty(new PropertyDescriptor("Fluff", typeof(int), 4));
+
+            //TypeManager.getInstance().recReplace(aGobd, aGobdNew, cGobd);
+            //Type aTypeOld = aType;
+            Type aType2 = TypeManager.getInstance().updateDescriptor(aGobd);
+
+            TypeManager.getInstance().replace(aType, aType2);
+
+            List<object> awesome = TypeManager.getInstance().updateObjects(objList);
+
 
 
         }

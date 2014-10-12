@@ -20,8 +20,10 @@ namespace WhiskeyEditor.ClassLoader
     class TypeManager
     {
 
-        List<GameObjectDescriptor> descritors;
+        public List<GameObjectDescriptor> descritors;
         List<Type> gobTypes;
+        Dictionary<GameObjectDescriptor, Type> descToTypeMap;
+        Dictionary<Type, GameObjectDescriptor> typeToDescMap;
 
 
         List<DescriptorAddedListener> addListeners;
@@ -37,21 +39,49 @@ namespace WhiskeyEditor.ClassLoader
             descritors = new List<GameObjectDescriptor>();
             gobTypes = new List<Type>();
             addListeners = new List<DescriptorAddedListener>();
+            descToTypeMap = new Dictionary<GameObjectDescriptor, Type>();
+            typeToDescMap = new Dictionary<Type, GameObjectDescriptor>();
         }
 
 
-        public void addDescriptor(GameObjectDescriptor descr)
+        public Type updateDescriptor(GameObjectDescriptor descr)
+        {
+            if (descritors.Contains(descr)){
+
+                gobTypes.Remove( descToTypeMap[descr] );
+                typeToDescMap.Remove(descToTypeMap[descr]);
+
+
+                Type type = convertDescriptorToType(descr);
+                convertDescriptorToFile(descr);
+                gobTypes.Add(type);
+                typeToDescMap.Add(type, descr);
+                descToTypeMap[descr] = type;
+                foreach (DescriptorAddedListener da in addListeners)
+                {
+                    da(descr, type);
+                }
+                return type;
+
+            } else {
+                return addDescriptor(descr);
+            }
+
+        }
+
+        public Type addDescriptor(GameObjectDescriptor descr)
         {
             descritors.Add(descr);
             Type type = convertDescriptorToType(descr);
+            convertDescriptorToFile(descr);
             gobTypes.Add(type);
-            Console.WriteLine("hello " + addListeners.Count);
+            descToTypeMap.Add(descr, type);
+            typeToDescMap.Add(type, descr);
             foreach (DescriptorAddedListener da in addListeners)
             {
                 da(descr, type);
-
             }
-
+            return type;
         }
 
         public void addDescriptorAddedListener( DescriptorAddedListener addedListener )
@@ -59,6 +89,285 @@ namespace WhiskeyEditor.ClassLoader
             addListeners.Add(addedListener);
         }
 
+        public void replace(Type oldType, Type newType)
+        {
+            List<Type> badTypes = new List<Type>();
+
+            foreach (Type type in gobTypes)
+            {
+                PropertyInfo[] props = type.GetProperties();
+              
+                foreach (PropertyInfo prop in props)
+                {
+                    if (prop.PropertyType.Equals(oldType) || prop.PropertyType.IsSubclassOf(oldType))
+                    {
+                        badTypes.Add(type);
+                        break;
+                    }
+                }
+
+            }
+
+            foreach (Type type in badTypes)
+            {
+                //recreate this one
+                Type modifiedType = recreate(type, oldType, newType);
+                replace(type, modifiedType);
+            }
+
+
+        }
+
+        private Type recreate(Type type, Type oldType, Type newType)
+        {
+
+            GameObjectDescriptor descr = typeToDescMap[type];
+
+            foreach (PropertyDescriptor p in descr.Properties)
+            {
+
+                if (p.Type.Equals(oldType) || p.Type.IsSubclassOf(oldType))
+                {
+                    //convertProperty(p, oldType, newType);
+                    p.Value = updateObject(p.Value, oldType, newType);
+                    p.Type = newType;
+                }
+
+            }
+
+
+            Type modType = updateDescriptor(descr);
+
+            return modType;
+        }
+
+        private void convertProperty(PropertyDescriptor prop, Type oldType, Type newType)
+        {
+           
+            object oldValue = prop.Value;
+
+            object newValue = instantiate(newType);
+
+            PropertyInfo[] newProperties = newType.GetProperties();
+            PropertyInfo[] oldProperties = oldType.GetProperties();
+
+            foreach (PropertyInfo newProp in newProperties)
+            {
+                foreach (PropertyInfo oldProp in oldProperties)
+                {
+                    if (oldProp.Name.Equals(newProp.Name) && oldProp.PropertyType.Equals(newProp.PropertyType))
+                    {
+                        if (newProp.SetMethod != null)
+                        {
+                            newProp.SetValue(newValue, oldProp.GetValue(oldValue));
+                        }
+                        break;
+                    }
+
+                }
+            }
+
+            prop.Value = newValue;
+            prop.Type = newType;
+
+        }
+
+        public List<object> updateObjects(List<object> objList)
+        {
+
+            List<object> newObjList = new List<object>();
+
+            foreach (object obj in objList)
+            {
+                Type type = obj.GetType();
+
+                foreach (Type gobType in gobTypes)
+                {
+                    if (gobType.FullName.Equals(type.FullName))
+                    {
+                        Console.WriteLine(type.FullName + " convert to " + gobType.FullName);
+                        newObjList.Add(updateObject(obj, type, gobType));
+                    }
+                }
+
+
+            }
+
+
+            return newObjList;
+
+        }
+
+        private object updateObject(object oldValue, Type oldType, Type newType)
+        {
+            object newValue = instantiate(newType);
+            PropertyInfo[] newProperties = newType.GetProperties();
+            PropertyInfo[] oldProperties = oldType.GetProperties();
+
+            foreach (PropertyInfo newProp in newProperties)
+            {
+                foreach (PropertyInfo oldProp in oldProperties)
+                {
+                    if (oldProp.Name.Equals(newProp.Name) && oldProp.PropertyType.Equals(newProp.PropertyType))
+                    {
+                        if (newProp.SetMethod != null)
+                        {
+                            newProp.SetValue(newValue, oldProp.GetValue(oldValue));
+                        }
+                        break;
+                    }
+
+                }
+            }
+
+
+            return newValue;
+        }
+
+
+        //public void recReplace(GameObjectDescriptor oldDesc, GameObjectDescriptor newDesc, GameObjectDescriptor currentDescr)
+        //{
+
+        //    List<PropertyDescriptor> props = currentDescr.Properties;
+
+        //    foreach (PropertyDescriptor prop in props)
+        //    {
+        //        if (prop.Type.IsSubclassOf(typeof(GameObject)))
+        //        {
+
+        //            //get descriptor for propType
+
+        //            GameObjectDescriptor propDescr = typeToDescMap[ prop.Type] ;
+        //            Type oldType = descToTypeMap[oldDesc];
+
+        //            if (prop.Type.Equals(oldType))
+        //            {
+        //                //do something
+
+        //                //prop.Type = newDesc;
+        //                //prop.Value = convertValue(prop.Value, oldDesc, newDesc);
+        //                Console.WriteLine("CHANGE " + currentDescr.Name + " . " + prop.Name);
+
+        //                //Type newType = addDescriptor(newDesc);
+        //                //prop.Type = newType;
+        //                //prop.Value = convertValue(prop.Value, oldType, newType);
+
+        //            }
+        //            else
+        //            {
+        //                recReplace(oldDesc, newDesc, propDescr);
+
+        //            }
+
+
+        //        }
+
+        //    }
+
+        //}
+
+
+        ///// <summary>
+        ///// Replaces all references to the old type, with a reference to the new type.
+        ///// After this function runs, all of the descriptors that contained a property to the old type, will be updated.
+        ///// </summary>
+        ///// <param name="oldType"></param>
+        ///// <param name="type"></param>
+        //public void replace(Type oldType, Type type)
+        //{
+        //    //all gobds
+        //    foreach (GameObjectDescriptor desc in descritors)
+        //    {
+        //        List<PropertyDescriptor> badProps = new List<PropertyDescriptor>();
+
+        //        //all props
+        //        foreach (PropertyDescriptor prop in desc.Properties)
+        //        {
+        //            //is the property of oldtype?
+        //            if (prop.Type.Equals(oldType))
+        //            {
+        //                badProps.Add(prop);
+        //            }
+        //        }
+
+        //        //remove bad properties, add a new one of correct type
+        //        foreach (PropertyDescriptor prop in badProps)
+        //        {
+        //            desc.Properties.Remove(prop);
+
+        //            object newValue = convertValue(prop.Value, oldType, type);
+        //            PropertyDescriptor newProp = new PropertyDescriptor(prop.Name, type, newValue);
+        //            desc.Properties.Add(newProp);
+        //        }
+
+        //        //if (badProps.Count > 0)
+        //        //{
+        //        //    updateDescriptor(desc);
+        //        //}
+
+        //    }
+
+        //    ////all descriptors have been updated
+        //    foreach (GameObjectDescriptor descr in descritors)
+        //    {
+        //        updateDescriptor(descr);
+        //    }
+
+        //}
+
+        ///// <summary>
+        ///// Takes a value of an old type, and tries to convert it to a value of the new type. 
+        ///// This will return null if nothing can be done
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="oldType"></param>
+        ///// <param name="newType"></param>
+        ///// <returns></returns>
+        //public object convertValue(object value, Type oldType, Type newType)
+        //{
+
+        //    object newValue = instantiate(newType);
+
+        //    PropertyInfo[] newProps = newType.GetProperties();
+        //    PropertyInfo[] oldProps = oldType.GetProperties();
+        //    foreach (PropertyInfo newProp in newProps)
+        //    {
+        //        foreach (PropertyInfo oldProp in oldProps)
+        //        {
+        //            if (oldProp.Name.Equals(newProp.Name) && oldProp.PropertyType.Equals(newProp.PropertyType))
+        //            {
+        //                if (newProp.SetMethod != null)
+        //                {
+        //                    newProp.SetValue(newValue, oldProp.GetValue(value));
+        //                }
+        //            }
+
+        //        }
+
+
+        //    }
+
+        //    return newValue;
+        //}
+
+
+        public static object instantiate(Type gobType)
+        {
+           
+            try
+            {
+                object obj = gobType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                return obj;
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                {
+                    throw e.InnerException;
+                } else throw e;
+
+            }
+        }
 
 
         public static Type convertDescriptorToType(GameObjectDescriptor desc)

@@ -76,12 +76,6 @@
     <Compile Include="EditorObjects\DragControllerScript.cs" />
     <Compile Include="EditorObjects\EditorGameObject.cs" />
     <Compile Include="EditorObjects\SelectScript.cs" />
-    <Compile Include="FilteredPropertyGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FilteredPropertyGrid.Designer.cs">
-      <DependentUpon>FilteredPropertyGrid.cs</DependentUpon>
-    </Compile>
     <Compile Include="GameObjectIcon.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,6 +88,12 @@
     <Compile Include="GameObjectTypeBrowser.Designer.cs">
       <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObjectTypeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameObjectTypeEditor.Designer.cs">
+      <DependentUpon>GameObjectTypeEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GeneratorHelper.cs" />
     <Compile Include="GetSetTypeConverter.cs" />
     <Compile Include="MonoHelp\EditorGameManager.cs" />
@@ -105,7 +105,6 @@
     <Compile Include="MonoHelp\WhiskeyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ObjectWrapper.cs" />
     <Compile Include="PropertyDescriptorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,13 +124,22 @@
     <Compile Include="MonoHelp\SpinningTriangleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ValueEditors\IntEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValueEditors\IntEditor.Designer.cs">
+      <DependentUpon>IntEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ValueEditors\StringEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValueEditors\StringEditor.Designer.cs">
+      <DependentUpon>StringEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ValueEditors\ValueEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ValueTypeChangeConverter.cs" />
-    <Compile Include="WhiskeyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WhiskeyForm.Designer.cs">
-      <DependentUpon>WhiskeyForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhiskeyPropertyGrid.cs">
@@ -145,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameObjectTypeBrowser.resx">
       <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameObjectTypeEditor.resx">
+      <DependentUpon>GameObjectTypeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">
       <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
@@ -164,8 +175,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="WhiskeyForm.resx">
-      <DependentUpon>WhiskeyForm.cs</DependentUpon>
+    <EmbeddedResource Include="ValueEditors\IntEditor.resx">
+      <DependentUpon>IntEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValueEditors\StringEditor.resx">
+      <DependentUpon>StringEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -24,10 +24,16 @@ namespace Whiskey2D.Core
         
         public Texture2D getImage()
         {
+            if (GameManager.Renderer == null)
+            {
+                return null;
+            }
+
             if (image == null && imagePath != null)
             {
                 if (imagePath.Equals(PIXEL))
                 {
+                    
                     image = GameManager.Renderer.getPixel();
                 }
                 else

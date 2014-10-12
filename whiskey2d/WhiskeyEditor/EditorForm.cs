@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WhiskeyEditor.ClassLoader;
+using Whiskey2D.Core;
+
 
 namespace WhiskeyEditor
 {
@@ -24,7 +26,14 @@ namespace WhiskeyEditor
 
             InitializeComponent();
 
-
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Vector>)));
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color), new TypeConverterAttribute(typeof(ValueTypeTypeConverter<Whiskey2D.Core.Color>)));
+            TypeDescriptor.AddAttributes(typeof(GameObject), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
+            TypeDescriptor.AddAttributes(typeof(GameObjectDescriptor), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
+            TypeDescriptor.AddAttributes(typeof(GameObjectDescriptor), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            TypeDescriptor.AddAttributes(typeof(List<ClassLoader.PropertyDescriptor>), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
 
 
         }
@@ -86,6 +95,17 @@ namespace WhiskeyEditor
         private void whiskeyControl_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.All;
+        }
+
+        private void addGameObjectTypeBtn_Click(object sender, EventArgs e)
+        {
+            gameObjectTypeEditor.createNewType();
+            detailTabs.SelectedTab = gobTypePage;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

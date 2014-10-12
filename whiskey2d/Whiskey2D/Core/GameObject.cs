@@ -14,6 +14,7 @@ namespace Whiskey2D.Core
         private static int idCounter = 0;
 
 
+
         /// <summary>
         /// Create a new Game Object
         /// </summary>
@@ -36,7 +37,8 @@ namespace Whiskey2D.Core
 
             GameManager.Objects.addObject(this);
 
-
+           
+           // GameObjectConfigurator.getInstance().setInitialValueFor("GameObject", "Bounds", Bounds);
 
         }
 
