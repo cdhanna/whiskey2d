@@ -107,5 +107,12 @@ namespace WhiskeyEditor
         {
 
         }
+
+        private void textEditorControl1_Load(object sender, EventArgs e)
+        {
+            textEditorControl1.SetHighlighting("C#");
+
+
+        }
     }
 }

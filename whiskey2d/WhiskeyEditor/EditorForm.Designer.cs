@@ -46,7 +46,11 @@
             this.gameObjectTypeName = new System.Windows.Forms.Label();
             this.gameObjectTypeNameBox = new System.Windows.Forms.TextBox();
             this.addPropertyBtn = new System.Windows.Forms.Button();
-            this.gameObjectTypeBrowser = new WhiskeyEditor.GameObjectTypeBrowser();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textEditorControl1 = new ICSharpCode.TextEditor.TextEditorControl();
+            this.gameObjectTypeBrowser = new WhiskeyEditor.Controls.TypeEditor.GameObjectTypeBrowser();
             this.gameObjectTypeEditor = new WhiskeyEditor.GameObjectTypeEditor();
             this.whiskeyPropertyGrid1 = new WhiskeyEditor.WhiskeyPropertyGrid();
             this.whiskeyControl = new WhiskeyEditor.MonoHelp.WhiskeyControl();
@@ -62,6 +66,9 @@
             this.instPage.SuspendLayout();
             this.propertyScrollPanel.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // verticalSplit
@@ -86,7 +93,7 @@
             this.centerSplit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.68909F));
             this.centerSplit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.31091F));
             this.centerSplit.Controls.Add(this.detailTabs, 0, 0);
-            this.centerSplit.Controls.Add(this.whiskeyControl, 1, 0);
+            this.centerSplit.Controls.Add(this.tabControl1, 1, 0);
             this.centerSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.centerSplit.Location = new System.Drawing.Point(3, 89);
             this.centerSplit.Name = "centerSplit";
@@ -272,6 +279,54 @@
             this.addPropertyBtn.UseVisualStyleBackColor = true;
             this.addPropertyBtn.Click += new System.EventHandler(this.addPropertyBtn_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(438, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(934, 571);
+            this.tabControl1.TabIndex = 5;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.whiskeyControl);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(926, 542);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.textEditorControl1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(926, 542);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // textEditorControl1
+            // 
+            this.textEditorControl1.BackColor = System.Drawing.Color.Purple;
+            this.textEditorControl1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.textEditorControl1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.textEditorControl1.IsReadOnly = false;
+            this.textEditorControl1.Location = new System.Drawing.Point(44, 48);
+            this.textEditorControl1.Name = "textEditorControl1";
+            this.textEditorControl1.ShowTabs = true;
+            this.textEditorControl1.Size = new System.Drawing.Size(715, 420);
+            this.textEditorControl1.TabIndex = 0;
+            this.textEditorControl1.Text = "some code\r\n";
+            this.textEditorControl1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.textEditorControl1.Load += new System.EventHandler(this.textEditorControl1_Load);
+            // 
             // gameObjectTypeBrowser
             // 
             this.gameObjectTypeBrowser.AutoScroll = true;
@@ -303,10 +358,10 @@
             this.whiskeyControl.BackColor = System.Drawing.Color.Black;
             this.whiskeyControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whiskeyControl.GobGrid = this.whiskeyPropertyGrid1;
-            this.whiskeyControl.Location = new System.Drawing.Point(439, 4);
+            this.whiskeyControl.Location = new System.Drawing.Point(3, 3);
             this.whiskeyControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.whiskeyControl.Name = "whiskeyControl";
-            this.whiskeyControl.Size = new System.Drawing.Size(932, 569);
+            this.whiskeyControl.Size = new System.Drawing.Size(920, 536);
             this.whiskeyControl.TabIndex = 1;
             this.whiskeyControl.VSync = false;
             this.whiskeyControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl_DragDrop);
@@ -333,6 +388,9 @@
             this.propertyScrollPanel.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -355,11 +413,15 @@
         private System.Windows.Forms.Button acceptBtn;
         private System.Windows.Forms.Button addPropertyBtn;
         private System.Windows.Forms.Panel propertyScrollPanel;
-        private GameObjectTypeBrowser gameObjectTypeBrowser;
+        private WhiskeyEditor.Controls.TypeEditor.GameObjectTypeBrowser gameObjectTypeBrowser;
         private MonoHelp.WhiskeyControl whiskeyControl;
         private WhiskeyPropertyGrid whiskeyPropertyGrid1;
         private GameObjectTypeEditor gameObjectTypeEditor;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
     }
 }

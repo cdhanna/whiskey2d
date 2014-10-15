@@ -197,7 +197,7 @@ namespace Whiskey2D.Core
         
             
             
-            starter = new Game3Launch();
+           // starter = new Game3Launch();
 
            // starter = new PourGames.TestImpl.Launch();
 
@@ -236,7 +236,7 @@ namespace Whiskey2D.Core
             //RUN THE START CODE
             if (starter != null)
             {
-                starter.start();
+            //    starter.start();
             }
             else Console.WriteLine("ERROR: No start configuration found");
 
@@ -292,7 +292,7 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            Device.Clear(Color.DarkOliveGreen);
+            Device.Clear(Color.LightGray);
 
             this.renMan.render();
             this.renMan.renderHud();

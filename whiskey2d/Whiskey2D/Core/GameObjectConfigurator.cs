@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Whiskey2D.Core
 {
@@ -49,7 +50,9 @@ namespace Whiskey2D.Core
             valueTable = new Dictionary<GameObjectPropertyPair, object>();
             try
             {
-                setInitialValueFor("GameObject", "Sprite", new Sprite());
+                Sprite s = new Sprite();
+                s.Scale *= 50;
+                setInitialValueFor("GameObject", "Sprite", s);
                 setInitialValueFor("GameObject", "X", 0f);
                 setInitialValueFor("GameObject", "Y", 0f);
                 setInitialValueFor("GameObject", "ID", 0);
@@ -65,7 +68,12 @@ namespace Whiskey2D.Core
         {
             try
             {
-                return getInstance().getInitialValueFor_(qualifiedName, propertyName);
+                object obj = getInstance().getInitialValueFor_(qualifiedName, propertyName);
+                //object newObj = NClone.Clone.ObjectIgnoringConventions(obj);
+                object newObj = Nuclex.Cloning.ReflectionCloner.ShallowFieldClone(obj);
+                return newObj;
+
+
             }
             catch (Exception e)
             {

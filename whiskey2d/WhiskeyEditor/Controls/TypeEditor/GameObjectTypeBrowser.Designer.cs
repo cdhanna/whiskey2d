@@ -1,4 +1,4 @@
-﻿namespace WhiskeyEditor
+﻿namespace WhiskeyEditor.Controls.TypeEditor
 {
     partial class GameObjectTypeBrowser
     {
@@ -28,7 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
+            // 
+            // flowPanel
+            // 
+            this.flowPanel.AutoSize = true;
+            this.flowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowPanel.Location = new System.Drawing.Point(3, 3);
+            this.flowPanel.Name = "flowPanel";
+            this.flowPanel.Size = new System.Drawing.Size(198, 178);
+            this.flowPanel.TabIndex = 0;
             // 
             // GameObjectTypeBrowser
             // 
@@ -36,12 +46,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.flowPanel);
             this.Name = "GameObjectTypeBrowser";
-            this.Size = new System.Drawing.Size(377, 549);
+            this.Size = new System.Drawing.Size(266, 549);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel flowPanel;
     }
 }

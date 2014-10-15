@@ -8,14 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Whiskey2D.Core;
+using WhiskeyEditor.Controls.TypeEditor;
+using WhiskeyEditor.ClassLoader;
 
 namespace WhiskeyEditor
 {
     public partial class GameObjectIcon : UserControl
     {
         private Type gobType;
-        
-        
+        public TypeEditor TypeEditor { get; set; }
+        public GameObjectDescriptor Descriptor { get; set; }
         public GameObjectIcon()
         {
             InitializeComponent();
@@ -45,6 +47,18 @@ namespace WhiskeyEditor
                 //typePictureBox.BackgroundImage = Image.FromFile(
             }
         }
+
+        private void GameObjectIcon_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            TypeEditor.Descriptor = Descriptor;
+        }
+
+
 
     }
 }

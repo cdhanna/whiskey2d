@@ -21,8 +21,8 @@ namespace Whiskey2D.Core
         public GameObject()
         {
             Position = Vector.Zero;
-           // Sprite = new Sprite();
-           // Sprite.Scale *= 50;
+            Sprite = new Sprite();
+            Sprite.Scale *= 50;
             ID = idCounter++;
             scripts = new List<ScriptBundle<GameObject>>();
 

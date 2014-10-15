@@ -44,23 +44,39 @@ namespace WhiskeyEditor.ClassLoader
         }
 
 
+
         public Type updateDescriptor(GameObjectDescriptor descr)
         {
             if (descritors.Contains(descr)){
 
                 gobTypes.Remove( descToTypeMap[descr] );
                 typeToDescMap.Remove(descToTypeMap[descr]);
-
+                Type oldType = descToTypeMap[descr];
 
                 Type type = convertDescriptorToType(descr);
                 convertDescriptorToFile(descr);
                 gobTypes.Add(type);
                 typeToDescMap.Add(type, descr);
                 descToTypeMap[descr] = type;
+
+                //update type+instances
+                if (GameManager.Objects != null && GameManager.Objects is EditorObjectManager)
+                {
+                    replace(oldType, type);
+                    EditorObjectManager eom = (EditorObjectManager)GameManager.Objects;
+                    List<GameObject> olds = eom.getAllObjectsNotOfType<EditorObjects.EditorGameObject>();
+                    //
+                    olds.ForEach((g) => { g.close(); });
+                    List<GameObject> gobs = updateObjects(olds);
+                    
+                    //eom.addObjects(gobs);
+                }
+
                 foreach (DescriptorAddedListener da in addListeners)
                 {
                     da(descr, type);
                 }
+
                 return type;
 
             } else {
@@ -172,12 +188,12 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
-        public List<object> updateObjects(List<object> objList)
+        public List<GameObject> updateObjects(List<GameObject> objList)
         {
 
-            List<object> newObjList = new List<object>();
+            List<GameObject> newObjList = new List<GameObject>();
 
-            foreach (object obj in objList)
+            foreach (GameObject obj in objList)
             {
                 Type type = obj.GetType();
 
@@ -185,8 +201,16 @@ namespace WhiskeyEditor.ClassLoader
                 {
                     if (gobType.FullName.Equals(type.FullName))
                     {
-                        Console.WriteLine(type.FullName + " convert to " + gobType.FullName);
-                        newObjList.Add(updateObject(obj, type, gobType));
+
+                        if (gobType.Equals(type))
+                        {
+                            newObjList.Add(obj);
+                        }
+                        else
+                        {
+                            Console.WriteLine(type.FullName + " convert to " + gobType.FullName);
+                            newObjList.Add((GameObject)updateObject(obj, type, gobType));
+                        }
                     }
                 }
 
@@ -402,7 +426,7 @@ namespace WhiskeyEditor.ClassLoader
             options.GenerateInMemory = true;
             options.GenerateExecutable = false;
             // options.LinkedResources.Add("Whiskey2D.Core");
-            options.ReferencedAssemblies.Add("Whiskey2D.dll");
+            options.ReferencedAssemblies.Add("Whiskey2D_core.dll");
             options.ReferencedAssemblies.Add("System.dll");
             options.ReferencedAssemblies.Add("System.Linq.dll");
 

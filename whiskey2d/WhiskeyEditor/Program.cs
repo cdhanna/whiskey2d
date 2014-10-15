@@ -16,7 +16,7 @@ namespace WhiskeyEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EditorForm());
+            Application.Run(new Controls.Editor());
         }
     }
 }

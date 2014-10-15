@@ -14,9 +14,10 @@ using Whiskey2D.Core;
 
 namespace WhiskeyEditor.ClassLoader
 {
-    class GameObjectDescriptor
+    public class GameObjectDescriptor
     {
-        static Dictionary<GameObjectDescriptor, Assembly> descToAsmMap = new Dictionary<GameObjectDescriptor,Assembly>();
+        public static Dictionary<GameObjectDescriptor, Assembly> descToAsmMap = new Dictionary<GameObjectDescriptor,Assembly>();
+        static Dictionary<GameObjectDescriptor, CodeCompileUnit> descToUnitMap = new Dictionary<GameObjectDescriptor, CodeCompileUnit>();
         static int asmCounter = 0;
 
 
@@ -220,10 +221,12 @@ namespace WhiskeyEditor.ClassLoader
            // options.LinkedResources.Add("Whiskey2D.Core");
             asmCounter++;
             
-            options.ReferencedAssemblies.Add("Whiskey2D.dll");
+            options.ReferencedAssemblies.Add("Whiskey2D_core.dll");
             options.ReferencedAssemblies.Add("System.dll");
             //options.ReferencedAssemblies.Add("System.Linq.dll");
 
+            List<CodeCompileUnit> allUnits = new List<CodeCompileUnit>();
+            allUnits.Add(targetUnit);
             foreach (GameObjectDescriptor ds in descToAsmMap.Keys)
             {
                 if (ds != this)
@@ -231,7 +234,11 @@ namespace WhiskeyEditor.ClassLoader
                     Assembly asm = descToAsmMap[ds];
                     Console.WriteLine("ASSEMBLY: " + asm.Location);
                     options.ReferencedAssemblies.Add(asm.Location);
+
+                    allUnits.Add(descToUnitMap[ds]);
+
                 }
+                
                 
             }
 
@@ -243,6 +250,7 @@ namespace WhiskeyEditor.ClassLoader
             //    options.ReferencedAssemblies.Add(Assembly.Load(assemblyName).Location);
             //}
 
+            
  
             CompilerResults results = provider.CompileAssemblyFromDom(options, targetUnit);
             foreach (String line in results.Output)
@@ -258,10 +266,12 @@ namespace WhiskeyEditor.ClassLoader
                 if (descToAsmMap.ContainsKey(this))
                 {
                     descToAsmMap[this] = compiledAssembly;
+                    descToUnitMap[this] = targetUnit;
                 }
                 else
                 {
                     descToAsmMap.Add(this, compiledAssembly);
+                    descToUnitMap.Add(this, targetUnit);
                 }
 
 

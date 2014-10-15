@@ -22,6 +22,11 @@ namespace WhiskeyEditor
 
         public Boolean UpdateGameObjects { get; set; }
 
+        public void addObjects(List<GameObject> gobs)
+        {
+            gameObjects.AddRange(gobs);
+        }
+
         public override void updateAll()
         {
            

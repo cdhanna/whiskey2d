@@ -29,37 +29,39 @@
         private void InitializeComponent()
         {
             this.typeLabel = new System.Windows.Forms.Label();
-            this.typePictureBox = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.typePictureBox)).BeginInit();
+            this.editBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(51, 11);
+            this.typeLabel.Location = new System.Drawing.Point(17, 21);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(46, 17);
             this.typeLabel.TabIndex = 0;
             this.typeLabel.Text = "label1";
             // 
-            // typePictureBox
+            // editBtn
             // 
-            this.typePictureBox.Location = new System.Drawing.Point(6, 31);
-            this.typePictureBox.Name = "typePictureBox";
-            this.typePictureBox.Size = new System.Drawing.Size(142, 111);
-            this.typePictureBox.TabIndex = 1;
-            this.typePictureBox.TabStop = false;
+            this.editBtn.Location = new System.Drawing.Point(109, 47);
+            this.editBtn.Name = "editBtn";
+            this.editBtn.Size = new System.Drawing.Size(46, 23);
+            this.editBtn.TabIndex = 1;
+            this.editBtn.Text = "edit";
+            this.editBtn.UseVisualStyleBackColor = true;
+            this.editBtn.Click += new System.EventHandler(this.editBtn_Click);
             // 
             // GameObjectIcon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.typePictureBox);
+            this.Controls.Add(this.editBtn);
             this.Controls.Add(this.typeLabel);
             this.Name = "GameObjectIcon";
-            this.Size = new System.Drawing.Size(151, 145);
-            ((System.ComponentModel.ISupportInitialize)(this.typePictureBox)).EndInit();
+            this.Size = new System.Drawing.Size(158, 73);
+            this.Load += new System.EventHandler(this.GameObjectIcon_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -68,6 +70,6 @@
         #endregion
 
         private System.Windows.Forms.Label typeLabel;
-        private System.Windows.Forms.PictureBox typePictureBox;
+        private System.Windows.Forms.Button editBtn;
     }
 }

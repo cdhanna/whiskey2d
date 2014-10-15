@@ -80,11 +80,11 @@ namespace WhiskeyEditor.MonoHelp
             ////TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector),
             //                                new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
 
-           
-            
 
 
-            new Whiskey2D.PourGames.Game3.Game3Launch().start();
+            GameManager.Objects.getAllObjectsNotOfType<EditorObjects.EditorGameObject>().ForEach((g) => { g.close(); });
+
+            //new Whiskey2D.PourGames.Game3.Game3Launch().start();
             
         }
 
@@ -111,6 +111,8 @@ namespace WhiskeyEditor.MonoHelp
             //GraphicsDevice.Clear(Color.CornflowerBlue);
             gameMan.Draw(null); //todo fix null gametime
         }
+
+
 
 
         public void addNewGameObject(Type gameObjectType, int x, int y)

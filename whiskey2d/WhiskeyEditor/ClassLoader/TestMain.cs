@@ -59,16 +59,16 @@ namespace WhiskeyEditor.ClassLoader
             ////////
            // GameObjectDescriptor aGobdNew = new GameObjectDescriptor(aGobd);
             aGobd.addProperty(new PropertyDescriptor("Fluff", typeof(int), 4));
-
+            //aGobd.addProperty(new PropertyDescriptor("WRECKYOU", cType, cInst));
             //TypeManager.getInstance().recReplace(aGobd, aGobdNew, cGobd);
             //Type aTypeOld = aType;
             Type aType2 = TypeManager.getInstance().updateDescriptor(aGobd);
 
             TypeManager.getInstance().replace(aType, aType2);
 
-            List<object> awesome = TypeManager.getInstance().updateObjects(objList);
+            //List<object> awesome = TypeManager.getInstance().updateObjects(objList);
 
-
+            //bool equal = (cInst == awesome[2]);
 
         }
 
