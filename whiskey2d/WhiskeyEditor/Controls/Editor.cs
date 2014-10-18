@@ -8,10 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WhiskeyEditor.ClassLoader;
+using WhiskeyEditor.Project;
 using Whiskey2D.Core;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
+
+
 
 namespace WhiskeyEditor.Controls
 {
@@ -78,6 +81,32 @@ namespace WhiskeyEditor.Controls
             Process.Start(procInfo);
             
 
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = newFileDialog.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+            {
+                string folderName = newFileDialog.FileName;
+                string projectName = folderName.Substring(folderName.LastIndexOf(Path.DirectorySeparatorChar)+1);
+
+                Project.Project project = ProjectManager.Instance.createNewProject(folderName, projectName);
+                ProjectManager.Instance.ActiveProject = project;
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog.ShowDialog(this);
+            if (result == DialogResult.OK)
+            {
+                string settingsPath = openFileDialog.FileName;
+                string path = settingsPath.Substring(0, settingsPath.LastIndexOf(Path.DirectorySeparatorChar));
+                Project.Project project = ProjectManager.Instance.openProject(path);
+                ProjectManager.Instance.ActiveProject = project;
+            }
         }
 
     }

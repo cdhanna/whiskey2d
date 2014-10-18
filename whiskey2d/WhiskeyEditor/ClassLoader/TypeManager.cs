@@ -9,7 +9,7 @@ using System.CodeDom;
 using System.IO;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
-
+using WhiskeyEditor.Project;
 
 
 namespace WhiskeyEditor.ClassLoader
@@ -325,7 +325,7 @@ namespace WhiskeyEditor.ClassLoader
         public static string convertDescriptorToFile(GameObjectDescriptor desc)
         {
 
-            string filePath = desc.QualifiedName;
+            string filePath = ProjectManager.Instance.ActiveProject.PathSrc + Path.DirectorySeparatorChar + desc.QualifiedName;
             filePath = filePath.Replace('.', '\\');
             filePath = filePath + ".cs";
 

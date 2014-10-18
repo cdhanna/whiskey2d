@@ -10,7 +10,7 @@ using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using Whiskey2D.Core;
-
+using WhiskeyEditor.Project;
 
 namespace WhiskeyEditor.ClassLoader
 {
@@ -227,7 +227,7 @@ namespace WhiskeyEditor.ClassLoader
             CompilerParameters options = new CompilerParameters();
             //options.GenerateInMemory = true;
             //options.GenerateExecutable = false;
-            options.OutputAssembly = QualifiedName +asmCounter.ToString()+ ".dll";
+            options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar +  QualifiedName +asmCounter.ToString()+ ".dll";
            // options.LinkedResources.Add("Whiskey2D.Core");
             asmCounter++;
             

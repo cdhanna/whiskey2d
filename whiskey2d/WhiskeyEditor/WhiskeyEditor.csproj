@@ -151,6 +151,9 @@
     <Compile Include="MonoHelp\WhiskeyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Project\Project.cs" />
+    <Compile Include="Project\ProjectManager.cs" />
+    <Compile Include="Project\PropertiesFile.cs" />
     <Compile Include="PropertyDescriptorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
