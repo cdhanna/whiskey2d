@@ -6,9 +6,16 @@ using System.Reflection;
 
 namespace Whiskey2D.Core
 {
+
+    /// <summary>
+    /// The GameObjectConfigurator assigns values to game objects upon initialization 
+    /// </summary>
     public class GameObjectConfigurator
     {
 
+        /// <summary>
+        /// this inner class combines a property and an object type. Used for hashing
+        /// </summary>
         private class GameObjectPropertyPair
         {
             public string typeName;
@@ -52,6 +59,7 @@ namespace Whiskey2D.Core
             {
                 Sprite s = new Sprite();
                 s.Scale *= 50;
+                //assign default values for base game object
                 setInitialValueFor("GameObject", "Sprite", s);
                 setInitialValueFor("GameObject", "X", 0f);
                 setInitialValueFor("GameObject", "Y", 0f);
@@ -64,16 +72,19 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the initial value for a property
+        /// </summary>
+        /// <param name="qualifiedName">the type name of the game object </param>
+        /// <param name="propertyName">the name of the property</param>
+        /// <returns>the default value of the property </returns>
         public static object getInitialValueFor(string qualifiedName, string propertyName)
         {
             try
             {
                 object obj = getInstance().getInitialValueFor_(qualifiedName, propertyName);
-                //object newObj = NClone.Clone.ObjectIgnoringConventions(obj);
                 object newObj = Nuclex.Cloning.ReflectionCloner.ShallowFieldClone(obj);
                 return newObj;
-
-
             }
             catch (Exception e)
             {
@@ -81,6 +92,12 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the initial value for a property
+        /// </summary>
+        /// <param name="qualifiedName">the type name of the game object </param>
+        /// <param name="propertyName">the name of the property</param>
+        /// <returns>the default value of the property </returns>
         public object getInitialValueFor_(string qualifiedName, string propertyName)
         {
            
@@ -96,6 +113,12 @@ namespace Whiskey2D.Core
 
         }
 
+        /// <summary>
+        /// Set the initial value for a property
+        /// </summary>
+        /// <param name="qualifiedName">the type name of the game object</param>
+        /// <param name="propertyName">the name of the property</param>
+        /// <param name="value">the value to set the property to</param>
         public void setInitialValueFor(string qualifiedName, string propertyName, object value)
         {
             GameObjectPropertyPair pair = new GameObjectPropertyPair(qualifiedName, propertyName);

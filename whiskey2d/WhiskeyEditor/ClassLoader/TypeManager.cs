@@ -15,8 +15,16 @@ using Microsoft.CSharp;
 namespace WhiskeyEditor.ClassLoader
 {
 
+    /// <summary>
+    /// used to notify listeners
+    /// </summary>
+    /// <param name="descr">The descriptor that has changed</param>
+    /// <param name="type">The type of that descriptor </param>
     delegate void DescriptorAddedListener(GameObjectDescriptor descr, Type type);
 
+    /// <summary>
+    /// The Tyep Manager is responsible for converting descriptors to/from sourcecode and assemblies 
+    /// </summary>
     class TypeManager
     {
 
@@ -44,7 +52,13 @@ namespace WhiskeyEditor.ClassLoader
         }
 
 
-
+        /// <summary>
+        /// Update the descriptor. 
+        /// If the descriptor is new, this method will call addDescriptor on it. 
+        /// Otherwise, it will auto-update all class references and instances of the old type. 
+        /// </summary>
+        /// <param name="descr"></param>
+        /// <returns></returns>
         public Type updateDescriptor(GameObjectDescriptor descr)
         {
             if (descritors.Contains(descr)){
@@ -85,6 +99,11 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
+        /// <summary>
+        /// Add the descriptor to the type manager's set of descriptors. Creates the type and soruce code. 
+        /// </summary>
+        /// <param name="descr"></param>
+        /// <returns></returns>
         public Type addDescriptor(GameObjectDescriptor descr)
         {
             descritors.Add(descr);
@@ -100,11 +119,21 @@ namespace WhiskeyEditor.ClassLoader
             return type;
         }
 
+        /// <summary>
+        /// Add a listener that will be notified everytime the gameobject descriptors are added/updated
+        /// </summary>
+        /// <param name="addedListener"></param>
         public void addDescriptorAddedListener( DescriptorAddedListener addedListener )
         {
             addListeners.Add(addedListener);
         }
 
+        /// <summary>
+        /// replace all old type refs with the new type. 
+        /// This does not replace instances of the old type
+        /// </summary>
+        /// <param name="oldType">An old type that is a subclass of GameObject</param>
+        /// <param name="newType">the updated type that is still a subclass of GameObject</param>
         public void replace(Type oldType, Type newType)
         {
             List<Type> badTypes = new List<Type>();
@@ -188,6 +217,11 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
+        /// <summary>
+        /// Convert all of the gameobjects of an outdated type to the updated type
+        /// </summary>
+        /// <param name="objList">A set of gameObjects to update </param>
+        /// <returns>An updated list</returns>
         public List<GameObject> updateObjects(List<GameObject> objList)
         {
 
@@ -208,15 +242,11 @@ namespace WhiskeyEditor.ClassLoader
                         }
                         else
                         {
-                            Console.WriteLine(type.FullName + " convert to " + gobType.FullName);
                             newObjList.Add((GameObject)updateObject(obj, type, gobType));
                         }
                     }
                 }
-
-
             }
-
 
             return newObjList;
 
@@ -248,133 +278,11 @@ namespace WhiskeyEditor.ClassLoader
             return newValue;
         }
 
-
-        //public void recReplace(GameObjectDescriptor oldDesc, GameObjectDescriptor newDesc, GameObjectDescriptor currentDescr)
-        //{
-
-        //    List<PropertyDescriptor> props = currentDescr.Properties;
-
-        //    foreach (PropertyDescriptor prop in props)
-        //    {
-        //        if (prop.Type.IsSubclassOf(typeof(GameObject)))
-        //        {
-
-        //            //get descriptor for propType
-
-        //            GameObjectDescriptor propDescr = typeToDescMap[ prop.Type] ;
-        //            Type oldType = descToTypeMap[oldDesc];
-
-        //            if (prop.Type.Equals(oldType))
-        //            {
-        //                //do something
-
-        //                //prop.Type = newDesc;
-        //                //prop.Value = convertValue(prop.Value, oldDesc, newDesc);
-        //                Console.WriteLine("CHANGE " + currentDescr.Name + " . " + prop.Name);
-
-        //                //Type newType = addDescriptor(newDesc);
-        //                //prop.Type = newType;
-        //                //prop.Value = convertValue(prop.Value, oldType, newType);
-
-        //            }
-        //            else
-        //            {
-        //                recReplace(oldDesc, newDesc, propDescr);
-
-        //            }
-
-
-        //        }
-
-        //    }
-
-        //}
-
-
-        ///// <summary>
-        ///// Replaces all references to the old type, with a reference to the new type.
-        ///// After this function runs, all of the descriptors that contained a property to the old type, will be updated.
-        ///// </summary>
-        ///// <param name="oldType"></param>
-        ///// <param name="type"></param>
-        //public void replace(Type oldType, Type type)
-        //{
-        //    //all gobds
-        //    foreach (GameObjectDescriptor desc in descritors)
-        //    {
-        //        List<PropertyDescriptor> badProps = new List<PropertyDescriptor>();
-
-        //        //all props
-        //        foreach (PropertyDescriptor prop in desc.Properties)
-        //        {
-        //            //is the property of oldtype?
-        //            if (prop.Type.Equals(oldType))
-        //            {
-        //                badProps.Add(prop);
-        //            }
-        //        }
-
-        //        //remove bad properties, add a new one of correct type
-        //        foreach (PropertyDescriptor prop in badProps)
-        //        {
-        //            desc.Properties.Remove(prop);
-
-        //            object newValue = convertValue(prop.Value, oldType, type);
-        //            PropertyDescriptor newProp = new PropertyDescriptor(prop.Name, type, newValue);
-        //            desc.Properties.Add(newProp);
-        //        }
-
-        //        //if (badProps.Count > 0)
-        //        //{
-        //        //    updateDescriptor(desc);
-        //        //}
-
-        //    }
-
-        //    ////all descriptors have been updated
-        //    foreach (GameObjectDescriptor descr in descritors)
-        //    {
-        //        updateDescriptor(descr);
-        //    }
-
-        //}
-
-        ///// <summary>
-        ///// Takes a value of an old type, and tries to convert it to a value of the new type. 
-        ///// This will return null if nothing can be done
-        ///// </summary>
-        ///// <param name="value"></param>
-        ///// <param name="oldType"></param>
-        ///// <param name="newType"></param>
-        ///// <returns></returns>
-        //public object convertValue(object value, Type oldType, Type newType)
-        //{
-
-        //    object newValue = instantiate(newType);
-
-        //    PropertyInfo[] newProps = newType.GetProperties();
-        //    PropertyInfo[] oldProps = oldType.GetProperties();
-        //    foreach (PropertyInfo newProp in newProps)
-        //    {
-        //        foreach (PropertyInfo oldProp in oldProps)
-        //        {
-        //            if (oldProp.Name.Equals(newProp.Name) && oldProp.PropertyType.Equals(newProp.PropertyType))
-        //            {
-        //                if (newProp.SetMethod != null)
-        //                {
-        //                    newProp.SetValue(newValue, oldProp.GetValue(value));
-        //                }
-        //            }
-
-        //        }
-
-
-        //    }
-
-        //    return newValue;
-        //}
-
-
+        /// <summary>
+        /// Create a GameObject of the given type
+        /// </summary>
+        /// <param name="gobType">A type that is a subclass of GameObject</param>
+        /// <returns>A gameObject </returns>
         public static object instantiate(Type gobType)
         {
            
@@ -394,6 +302,11 @@ namespace WhiskeyEditor.ClassLoader
         }
 
 
+        /// <summary>
+        /// Convert the given descriptor to a compiled Type
+        /// </summary>
+        /// <param name="desc">A non null gameobject descr</param>
+        /// <returns>the compiled type of the given descr</returns>
         public static Type convertDescriptorToType(GameObjectDescriptor desc)
         {
             Assembly asm = desc.generateSourceInMem();
@@ -403,9 +316,12 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
-
-
-
+        /// <summary>
+        /// Convert the given descriptor to readable sourcecode.
+        /// The source code will be put in a folder equal to the desc's nameSpace.Name
+        /// </summary>
+        /// <param name="desc">A non null gameobject descr</param>
+        /// <returns>the filepath to the source code</returns>
         public static string convertDescriptorToFile(GameObjectDescriptor desc)
         {
 
@@ -418,6 +334,11 @@ namespace WhiskeyEditor.ClassLoader
             return filePath;
         }
 
+        /// <summary>
+        /// Convert a .cs file at the given path to a compiled Type
+        /// </summary>
+        /// <param name="filePath">The path to a .cs file</param>
+        /// <returns>The compiled type of the code </returns>
         public static Type convertFileToType(string filePath)
         {
 
@@ -445,6 +366,11 @@ namespace WhiskeyEditor.ClassLoader
             return asm.GetType(className);
         }
 
+        /// <summary>
+        /// Convert the given type into a gameobject descr
+        /// </summary>
+        /// <param name="gobType">A type that is a subclass of GameObject</param>
+        /// <returns>A new GameObject descr</returns>
         public static GameObjectDescriptor convertTypeToDescriptor(Type gobType)
         {
 
