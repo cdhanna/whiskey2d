@@ -63,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassLoader\GameObjectDescriptor.cs" />
-    <Compile Include="ClassLoader\InitialConfigurator.cs" />
     <Compile Include="ClassLoader\PropertyDescriptor.cs" />
     <Compile Include="ClassLoader\TestMain.cs" />
     <Compile Include="ClassLoader\TypeManager.cs" />
@@ -142,7 +141,6 @@
     <Compile Include="GameObjectTypeEditor.Designer.cs">
       <DependentUpon>GameObjectTypeEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeneratorHelper.cs" />
     <Compile Include="GetSetTypeConverter.cs" />
     <Compile Include="MonoHelp\EditorGameManager.cs" />
     <Compile Include="MonoHelp\EditorInputSource.cs" />
@@ -159,7 +157,6 @@
     <Compile Include="PropertyDescriptorControl.Designer.cs">
       <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScriptGenerator.cs" />
     <Compile Include="MonoHelp\ServiceContainer.cs" />
     <Compile Include="SimpleTextPopup.cs">
       <SubType>Form</SubType>
@@ -167,8 +164,6 @@
     <Compile Include="SimpleTextPopup.Designer.cs">
       <DependentUpon>SimpleTextPopup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Project.cs" />
-    <Compile Include="ProjectManager.cs" />
     <Compile Include="MonoHelp\SpinningTriangleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
