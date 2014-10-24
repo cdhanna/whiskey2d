@@ -23,7 +23,7 @@ namespace WhiskeyEditor.ClassLoader
     delegate void DescriptorAddedListener(GameObjectDescriptor descr, Type type);
 
     /// <summary>
-    /// The Tyep Manager is responsible for converting descriptors to/from sourcecode and assemblies 
+    /// The Type Manager is responsible for converting descriptors to/from sourcecode and assemblies 
     /// </summary>
     class TypeManager
     {
@@ -79,11 +79,11 @@ namespace WhiskeyEditor.ClassLoader
                     replace(oldType, type);
                     EditorObjectManager eom = (EditorObjectManager)GameManager.Objects;
                     List<GameObject> olds = eom.getAllObjectsNotOfType<EditorObjects.EditorGameObject>();
-                    //
+                    
                     olds.ForEach((g) => { g.close(); });
                     List<GameObject> gobs = updateObjects(olds);
                     
-                    //eom.addObjects(gobs);
+                    
                 }
 
                 foreach (DescriptorAddedListener da in addListeners)
@@ -270,7 +270,6 @@ namespace WhiskeyEditor.ClassLoader
                         }
                         break;
                     }
-
                 }
             }
 
@@ -326,7 +325,7 @@ namespace WhiskeyEditor.ClassLoader
         {
 
             string filePath = ProjectManager.Instance.ActiveProject.PathSrc + Path.DirectorySeparatorChar + desc.QualifiedName;
-            filePath = filePath.Replace('.', '\\');
+            filePath = filePath.Replace('.', Path.DirectorySeparatorChar);
             filePath = filePath + ".cs";
 
             desc.generateSource(filePath);
@@ -360,8 +359,9 @@ namespace WhiskeyEditor.ClassLoader
 
             Assembly asm = results.CompiledAssembly;
 
-            string className = filePath.Replace('\\', '.');
-            className = className.Replace(".cs", "");
+            string className = filePath.Replace(Path.DirectorySeparatorChar, '.');
+            className = className.Substring(0, className.Length - 3); //removes .cs from the end
+
 
             return asm.GetType(className);
         }

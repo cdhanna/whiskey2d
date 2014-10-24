@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core.Hud;
 
@@ -66,6 +66,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void render()
         {
+           
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
             List<GameObject> allGobs = GameManager.Objects.getAllObjects();

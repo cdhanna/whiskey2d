@@ -227,6 +227,7 @@ namespace WhiskeyEditor.ClassLoader
             CompilerParameters options = new CompilerParameters();
             //options.GenerateInMemory = true;
             //options.GenerateExecutable = false;
+            
             options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar +  QualifiedName +asmCounter.ToString()+ ".dll";
            // options.LinkedResources.Add("Whiskey2D.Core");
             asmCounter++;
@@ -250,14 +251,6 @@ namespace WhiskeyEditor.ClassLoader
                 
                 
             }
-
-            //Assembly executingAssembly = Assembly.GetExecutingAssembly();
-            //options.ReferencedAssemblies.Add(executingAssembly.Location);
-
-            //foreach (AssemblyName assemblyName in executingAssembly.GetReferencedAssemblies())
-            //{
-            //    options.ReferencedAssemblies.Add(Assembly.Load(assemblyName).Location);
-            //}
 
             
  
