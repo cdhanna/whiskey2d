@@ -36,6 +36,11 @@ namespace WhiskeyEditor.Project
         public string PathSrc { get { return PathBase + Path.DirectorySeparatorChar + "src"; } }
 
         /// <summary>
+        /// the path the scripts directory
+        /// </summary>
+        public string PathSrcScripts { get { return PathSrc + Path.DirectorySeparatorChar + "scripts"; } }
+
+        /// <summary>
         /// the path to the media directory
         /// </summary>
         public string PathMedia { get { return PathBase + Path.DirectorySeparatorChar + "media"; } }
@@ -75,8 +80,10 @@ namespace WhiskeyEditor.Project
         /// </summary>
         public PropertiesFiles Settings {get { return settings; } }
 
-
-        public PropertiesFiles GameSettings { get { return gameSettings; } }
+        /// <summary>
+        /// the settings file that will be genererated when a game is built
+        /// </summary>
+        private PropertiesFiles GameSettings { get { return gameSettings; } }
 
         /// <summary>
         /// Get/Set the name of the project. 
@@ -110,7 +117,9 @@ namespace WhiskeyEditor.Project
             }
         }
 
-
+        /// <summary>
+        /// Get/Set the scene that will be launched when the game is started
+        /// </summary>
         public string GameStartScene
         {
             get
@@ -135,8 +144,7 @@ namespace WhiskeyEditor.Project
             
 
             this.Name = name;
-            this.EditingScene = "default";
-            this.GameStartScene = EditingScene;
+            ensureDefaultProps();
         }
 
         public Project(string path)
@@ -144,28 +152,44 @@ namespace WhiskeyEditor.Project
             this.path = path;
             createDirs();
             createSettings();
-
+            ensureDefaultProps();
 
 
         }
 
+        private void ensureDefaultProps()
+        {
+            if (this.Name == null)
+            {
+                this.Name = "Unnamed Project";
+            }
+            if (this.EditingScene == null)
+            {
+                this.EditingScene = "default";
+            }
+            if (this.GameStartScene == null)
+            {
+                this.GameStartScene = EditingScene;
+            }
+        }
 
-        public void createDirs()
+        private void createDirs()
         {
             Directory.CreateDirectory(PathBase);
             Directory.CreateDirectory(PathSrc);
             Directory.CreateDirectory(PathMedia);
             Directory.CreateDirectory(PathBin);
             Directory.CreateDirectory(PathStates);
+            Directory.CreateDirectory(PathSrcScripts);
         }
 
-        public void createSettings()
+        private void createSettings()
         {
             settings = new PropertiesFiles(FileSettingsPath);
            
         }
 
-        public void createGameSettings()
+        private void createGameSettings()
         {
             gameSettings = new PropertiesFiles(FileBuildGamePropPath);
             
@@ -173,9 +197,12 @@ namespace WhiskeyEditor.Project
 
             gameSettings.Save();
 
-
         }
 
+        /// <summary>
+        /// Save a state to the /states folder
+        /// </summary>
+        /// <param name="state">A valid and named State</param>
         public void saveState(State state)
         {
             string stateName = state.Name + ".state";
@@ -186,6 +213,9 @@ namespace WhiskeyEditor.Project
 
         }
 
+        /// <summary>
+        /// Delete and recreate the build directory structure
+        /// </summary>
         public void cleanProject()
         {
             if (Directory.Exists(PathBuild))
@@ -201,6 +231,10 @@ namespace WhiskeyEditor.Project
             Directory.CreateDirectory(PathBuildStates);
         }
 
+        /// <summary>
+        /// Clean the project
+        /// Then build the project into the build directory
+        /// </summary>
         public void buildExecutable()
         {
             cleanProject();

@@ -32,6 +32,7 @@ namespace WhiskeyEditor.Project
             set
             {
                 active = value;
+                Settings.CurrentProject = active.PathBase;
             }
         }
 

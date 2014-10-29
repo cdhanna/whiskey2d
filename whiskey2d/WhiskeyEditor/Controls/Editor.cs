@@ -36,8 +36,16 @@ namespace WhiskeyEditor.Controls
             TypeDescriptor.AddAttributes(typeof(List<ClassLoader.PropertyDescriptor>), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
             TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(GetSetTypeConverter)));
 
-            textEditorControl1.SetHighlighting("C#");
-            
+            codeControl.SetHighlighting("C#");
+
+
+            if (Settings.CurrentProject != null)
+            {
+                Project.Project p = Project.ProjectManager.Instance.openProject(Settings.CurrentProject);
+                ProjectManager.Instance.ActiveProject = p;
+                this.Text = p.Name;
+            }
+
         }
 
         private void whiskeyControl_DragDrop(object sender, DragEventArgs e)
@@ -108,6 +116,23 @@ namespace WhiskeyEditor.Controls
                 Project.Project project = ProjectManager.Instance.openProject(path);
                 ProjectManager.Instance.ActiveProject = project;
             }
+        }
+
+        private void newScriptBtn_Click(object sender, EventArgs e)
+        {
+           // codeControl.Text = ScriptManager.Instance.getEmptyScriptTemplate(scriptNameBox.Text);
+            ScriptDescriptor sdesc = new ScriptDescriptor(scriptNameBox.Text);
+            codeControl.Text = sdesc.generateScript();
+            
+            scriptNameBox.Text = "Unnamed";
+        }
+
+        private void saveScriptBtn_Click(object sender, EventArgs e)
+        {
+
+            ScriptManager.Instance.writeToDisc(new ScriptDescriptor("poop"));
+
+
         }
 
     }

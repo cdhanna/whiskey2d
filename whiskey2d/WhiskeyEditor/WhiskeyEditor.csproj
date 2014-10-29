@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="ClassLoader\GameObjectDescriptor.cs" />
     <Compile Include="ClassLoader\PropertyDescriptor.cs" />
+    <Compile Include="ClassLoader\ScriptDescriptor.cs" />
+    <Compile Include="ClassLoader\ScriptManager.cs" />
     <Compile Include="ClassLoader\TestMain.cs" />
     <Compile Include="ClassLoader\TypeManager.cs" />
     <Compile Include="ColorEditor.cs" />
@@ -180,6 +182,8 @@
       <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MonoHelp\ServiceContainer.cs" />
+    <Compile Include="ResourceFiles.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SimpleTextPopup.cs">
       <SubType>Form</SubType>
     </Compile>
