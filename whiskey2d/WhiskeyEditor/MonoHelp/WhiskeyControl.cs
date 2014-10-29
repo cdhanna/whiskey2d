@@ -122,10 +122,12 @@ namespace WhiskeyEditor.MonoHelp
 
         }
 
-        public void save()
+        public void save(string stateName)
         {
             State state = GameManager.Objects.getState();
-            State.serialize(state, "game-state.txt");
+            state.Name = stateName;
+            Project.ProjectManager.Instance.ActiveProject.saveState(state);
+            //State.serialize(state, "game-state.txt");
         }
 
         public void load()

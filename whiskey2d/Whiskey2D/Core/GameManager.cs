@@ -158,7 +158,7 @@ namespace Whiskey2D.Core
 
             this.controller = controller;
 
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "media";
 
 
             width = Device.PresentationParameters.BackBufferWidth;

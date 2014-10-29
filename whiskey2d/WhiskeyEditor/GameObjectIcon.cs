@@ -56,6 +56,7 @@ namespace WhiskeyEditor
         private void editBtn_Click(object sender, EventArgs e)
         {
             TypeEditor.Descriptor = Descriptor;
+
         }
 
 

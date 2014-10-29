@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{15388775-2A89-49F7-8BA1-E9D53D29E248}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Whiskey2D</RootNamespace>
     <AssemblyName>Whiskey2D</AssemblyName>
@@ -38,11 +38,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Core\Bounds.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\GameController.cs" />
+    <Compile Include="Core\GameProperties.cs" />
     <Compile Include="Core\Hud\Box.cs" />
     <Compile Include="Core\Hud\Commands\ConsoleCommand.cs" />
     <Compile Include="Core\Hud\Commands\DebugCommand.cs" />
@@ -55,9 +54,7 @@
     <Compile Include="Core\Hud\HudManager.cs" />
     <Compile Include="Core\Hud\TextBox.cs" />
     <Compile Include="Core\Hud\TextLine.cs" />
-    <Compile Include="Core\Inputs\InputSource.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\Inputs\InputSource.cs" />
     <Compile Include="Core\Inputs\MouseButtons.cs" />
     <Compile Include="Core\Managers\Impl\DefaultInputSourceManager.cs" />
     <Compile Include="Core\LogCommands\InputCommand.cs" />
@@ -65,24 +62,18 @@
     <Compile Include="Core\LogCommands\LogMessage.cs" />
     <Compile Include="Core\LogCommands\RandCommand.cs" />
     <Compile Include="Core\LogLevel.cs" />
-    <Compile Include="Core\Managers\Impl\DefaultLogManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\Managers\Impl\DefaultLogManager.cs" />
     <Compile Include="Core\Managers\InputManager.cs" />
     <Compile Include="Core\Managers\InputSourceManager.cs" />
     <Compile Include="Core\Managers\LogManager.cs" />
     <Compile Include="Core\Managers\ObjectManager.cs" />
     <Compile Include="Core\Managers\RenderManager.cs" />
     <Compile Include="Core\Managers\ResourceManager.cs" />
-    <Compile Include="Core\MonoGame.cs" />
+    <Compile Include="Core\PropertiesFile.cs" />
     <Compile Include="Core\Rand.cs" />
-    <Compile Include="Core\Inputs\RealKeyBoard.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\Inputs\RealKeyBoard.cs" />
     <Compile Include="Core\Inputs\ReplayService.cs" />
-    <Compile Include="Core\SimpleGameObject.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\SimpleGameObject.cs" />
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="ex2\Gob.cs" />
@@ -99,15 +90,9 @@
     <Compile Include="PourGames\Game2\LaunchPour2.cs" />
     <Compile Include="PourGames\Game2\Particle.cs" />
     <Compile Include="PourGames\Game2\ParticleScript.cs" />
-    <Compile Include="PourGames\Game2\Player.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\Game2\PlayerMoveScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\Game2\PlayerScaleScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="PourGames\Game2\Player.cs" />
+    <Compile Include="PourGames\Game2\PlayerMoveScript.cs" />
+    <Compile Include="PourGames\Game2\PlayerScaleScript.cs" />
     <Compile Include="PourGames\Game3\BadGuy.cs" />
     <Compile Include="PourGames\Game3\BadGuyScript.cs" />
     <Compile Include="PourGames\Game3\Bullet.cs" />
@@ -119,57 +104,24 @@
     <Compile Include="PourGames\Game3\PlayerScript.cs" />
     <Compile Include="PourGames\TestImpl\MouseScript.cs" />
     <Compile Include="PourGames\TestImpl\MouseTester.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Service\Compiler.cs" />
-    <Compile Include="Core\GameObject.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Managers\Impl\DefaultInputManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Managers\Impl\DefaultObjectManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Managers\Impl\DefaultRenderManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Managers\Impl\DefaultResourceManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Script.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Sprite.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\Starter.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Core\GameManager.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\Managers\Impl\DefaultInputManager.cs" />
+    <Compile Include="Core\Managers\Impl\DefaultObjectManager.cs" />
+    <Compile Include="Core\Managers\Impl\DefaultRenderManager.cs" />
+    <Compile Include="Core\Managers\Impl\DefaultResourceManager.cs" />
+    <Compile Include="Core\Script.cs" />
+    <Compile Include="Core\Sprite.cs" />
+    <Compile Include="Core\Starter.cs" />
+    <Compile Include="Core\GameManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PourGames\TestImpl\StarField.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\StarFieldMoveScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\Floor.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\Launch.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\Player.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="PourGames\TestImpl\StarField.cs" />
+    <Compile Include="PourGames\TestImpl\StarFieldMoveScript.cs" />
+    <Compile Include="PourGames\TestImpl\Floor.cs" />
+    <Compile Include="PourGames\TestImpl\Launch.cs" />
+    <Compile Include="PourGames\TestImpl\Player.cs" />
+    <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs" />
+    <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Nuclex.Cloning">
@@ -195,54 +147,15 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\ai.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\background.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\badguy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\bullet.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\crosshair.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\grass_left.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\grass_middle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\grass_right.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\ObamaHatesVideoGames.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\pour1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\ricky_shoot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\ricky_simple.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\stars1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\whiskeypour1building.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\font.xnb">
+    <Content Include="font.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="media\font.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

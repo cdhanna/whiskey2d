@@ -16,9 +16,11 @@ namespace Whiskey2D.Core
 
         public List<GameObject> GameObjects { get; set; }
 
+        public string Name { get; set; }
+
         public State()
         {
-
+            Name = "unnamed";
         }
 
         public static void serialize(State state, string fileName)

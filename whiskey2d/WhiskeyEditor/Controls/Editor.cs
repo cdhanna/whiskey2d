@@ -62,24 +62,25 @@ namespace WhiskeyEditor.Controls
         private void playTestBtn_Click(object sender, EventArgs e)
         {
 
-            String localPath = "..\\..\\..\\whiskey2d\\Whiskey2D\\bin\\WindowsGL\\Debug\\";
-            String dest = @"C:\Users\cdhan_000\Documents\Dev Projects\Whiskey\whiskey2d\whiskey2d\Whiskey2D\bin\WindowsGL\Debug\";
-            gameSpace.save();
-            File.Delete(dest + "game-state.txt");
-            File.Copy("game-state.txt", dest + "game-state.txt");
-            foreach (GameObjectDescriptor desc in GameObjectDescriptor.descToAsmMap.Keys)
-            {
-                Assembly asm = GameObjectDescriptor.descToAsmMap[desc];
-                string target = dest + asm.FullName.Substring(0, asm.FullName.IndexOf(','))+".dll";
-                File.Delete(target);
-                File.Copy(asm.Location, target);
+            //String localPath = "..\\..\\..\\whiskey2d\\Whiskey2D\\bin\\WindowsGL\\Debug\\";
+            //String dest = @"C:\Users\cdhan_000\Documents\Dev Projects\Whiskey\whiskey2d\whiskey2d\Whiskey2D\bin\WindowsGL\Debug\";
+            gameSpace.save("test");
+            //File.Delete(dest + "game-state.txt");
+            //File.Copy("game-state.txt", dest + "game-state.txt");
+            //foreach (GameObjectDescriptor desc in GameObjectDescriptor.descToAsmMap.Keys)
+            //{
+            //    Assembly asm = GameObjectDescriptor.descToAsmMap[desc];
+            //    string target = dest + asm.FullName.Substring(0, asm.FullName.IndexOf(','))+".dll";
+            //    File.Delete(target);
+            //    File.Copy(asm.Location, target);
 
-            }
-            ProcessStartInfo procInfo = new ProcessStartInfo();
-            procInfo.WorkingDirectory = dest;
-            procInfo.FileName = "Whiskey2D.exe";
-            Process.Start(procInfo);
-            
+            //}
+            //ProcessStartInfo procInfo = new ProcessStartInfo();
+            //procInfo.WorkingDirectory = dest;
+            //procInfo.FileName = "Whiskey2D.exe";
+            //Process.Start(procInfo);
+
+            ProjectManager.Instance.ActiveProject.buildExecutable();
 
         }
 

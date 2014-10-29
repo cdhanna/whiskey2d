@@ -5,11 +5,11 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Whiskey2D.Core.Managers.Impl;
-
+using Whiskey2D.Core;
 using Whiskey2D.PourGames.Game3;
 using System.IO;
 
-namespace Whiskey2D.Core
+namespace WhiskeyRunner
 {
 
 
@@ -18,17 +18,35 @@ namespace Whiskey2D.Core
     /// </summary>
     public class MonoBaseGame : Game , GameController
     {
-        
-        
-        
+
+        PropertiesFiles settings;
         GameManager gameMan;
         GraphicsDeviceManager graphics;
+
+
+        public string StateScene
+        {
+            get
+            {
+                return settings.get(GameProperties.START_SCENE);
+            }
+        }
+
+        public string StateScenePath
+        {
+            get
+            {
+                return "states\\" + StateScene;
+            }
+        }
 
         public MonoBaseGame() : base()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            
+            Content.RootDirectory = "media";
+
+            settings = new PropertiesFiles(".gameprops");
+            Console.WriteLine("created good");
         }
 
 
@@ -53,8 +71,8 @@ namespace Whiskey2D.Core
             base.Initialize();
 
 
-            GameManager.Objects.setState(State.deserialize("game-state.txt"));
-
+            GameManager.Objects.setState(State.deserialize(StateScenePath));
+            Console.WriteLine("inited good");
         }
 
         protected override void LoadContent()
@@ -63,7 +81,7 @@ namespace Whiskey2D.Core
             base.LoadContent();
 
 
-            
+            Console.WriteLine("loaded good");
 
         }
 
