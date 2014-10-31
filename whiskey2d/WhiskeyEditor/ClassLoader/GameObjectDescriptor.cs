@@ -248,8 +248,6 @@ namespace WhiskeyEditor.ClassLoader
                     allUnits.Add(descToUnitMap[ds]);
 
                 }
-                
-                
             }
 
             

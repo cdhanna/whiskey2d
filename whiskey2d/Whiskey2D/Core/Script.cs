@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Whiskey2D.Core
 {
@@ -18,6 +19,10 @@ namespace Whiskey2D.Core
     [Serializable]
     public class ScriptBundle<T> where T : GameObject
     {
+
+        public const string CODE_GOB = "Gob";
+        public const string CODE_START = "onStart";
+        public const string CODE_UPDATE = "onUpdate";
 
         protected ScriptBundle() { }
 
@@ -43,6 +48,25 @@ namespace Whiskey2D.Core
             UpdatePointer();
         }
 
+
+        /// <summary>
+        /// Very Dangerous
+        /// </summary>
+        /// <param name="script"></param>
+        /// <returns></returns>
+        public static ScriptBundle<GameObject> createFrom(object script)
+        {
+            ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>();
+
+            gs.StartPointer = (UpdateFunctionPointer) Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_START, false);
+            gs.UpdatePointer = (UpdateFunctionPointer)Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_UPDATE, false);
+
+            
+            gs.Gob = (GameObject)script.GetType().GetProperty(CODE_GOB).GetValue(script, new object[]{});
+
+            return gs;
+        }
+
         public static ScriptBundle<GameObject> createFrom<X>(Script<X> script) where X : GameObject
         {
             ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>();
@@ -65,30 +89,13 @@ namespace Whiskey2D.Core
     public abstract class Script<G> : ScriptBundle<G> where G : GameObject
     {
 
-        //private GameObject gob;
-
-
-        /// <summary>
-        /// creates a new Script
-        /// </summary>
-        public Script()
-        {
-            
-        }
 
         ///// <summary>
-        ///// The GameObject that the script is controlling
+        ///// creates a new Script
         ///// </summary>
-        //public GameObject Gob
+        //public Script()
         //{
-        //    get
-        //    {
-        //        return gob;
-        //    }
-        //    set
-        //    {
-        //        gob = value;
-        //    }
+            
         //}
 
         /// <summary>

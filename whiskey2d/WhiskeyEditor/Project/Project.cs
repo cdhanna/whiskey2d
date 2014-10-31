@@ -17,10 +17,9 @@ namespace WhiskeyEditor.Project
     {
         public const string PROP_NAME = "Name";
         public const string PROP_LAST_EDITING_SCENE = "LastEditingScene";
-        public const string PATH_COMPILE_LIB = "compile-lib";
-        public const string PATH_COMPILE_MEDIA = "compile-media";
-        public const string PATH_COMPILE_EXE = "compile-exe\\WhiskeyRunner.exe";
-        public const string PATH_COMPILE_EXE_CONFIG = PATH_COMPILE_EXE + ".config";
+
+        
+        public const string PATH_COMPILE_EXE_CONFIG = ResourceFiles.LibExe + ".config";
         private string path;
         private PropertiesFiles settings;
         private PropertiesFiles gameSettings;
@@ -243,9 +242,9 @@ namespace WhiskeyEditor.Project
             DirectoryCopy(PathBin, PathBuildLib, true);
             DirectoryCopy(PathMedia, PathBuildMedia, true);
             DirectoryCopy(PathStates, PathBuildStates, true);
-            DirectoryCopy(PATH_COMPILE_LIB, PathBuildLib, true);
-            DirectoryCopy(PATH_COMPILE_MEDIA, PathBuildMedia, true);
-            File.Copy(PATH_COMPILE_EXE, FileBuildGameExePath);
+            DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+            DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
+            File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
             File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
         }
 

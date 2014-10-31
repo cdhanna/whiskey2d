@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Whiskey2D.Core;
 using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.Core.Inputs;
+using WhiskeyEditor.Controls;
 using System.IO;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -36,6 +37,7 @@ namespace WhiskeyEditor.MonoHelp
 
         GameObject selectedGob;
         public WhiskeyPropertyGrid GobGrid{get;set;}
+        public ScriptCollection GobScriptCollection { get; set; }
 
         //protected override void OnResize(EventArgs e)
         //{
@@ -147,6 +149,10 @@ namespace WhiskeyEditor.MonoHelp
                 selectedGob = value;
                 GobGrid.SelectedObject = value;
                 GobGrid.Refresh();
+
+                GobScriptCollection.SelectedObject = value;
+                GobScriptCollection.Refresh();
+
             }
         }
     }

@@ -89,6 +89,7 @@ namespace Whiskey2D.Core
             }
         }
 
+
         /// <summary>
         /// The bounds of the GameObject. The Bounds are computed from the Position and Sprite of the GameObject. 
         /// If there is no Sprite, do not call this method.
@@ -125,15 +126,30 @@ namespace Whiskey2D.Core
             GameManager.Objects.removeObject(this);
         }
 
+
+        public void removeScript<G>(Script<G> script) where G : GameObject
+        {
+            //todo remove script
+            throw new NotImplementedException();
+        }
+
+        public void addScript(object script)
+        {
+
+            script.GetType().GetProperty(ScriptBundle<GameObject>.CODE_GOB).GetSetMethod().Invoke(script, new object[] { this });
+
+            ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
+            this.scripts.Add(converted);
+        }
+
         /// <summary>
         /// Add a script to the GameObject's behaviour
         /// </summary>
         /// <param name="script"></param>
-        protected void addScript<G>(Script<G> script) where G : GameObject
+        public void addScript<G>(Script<G> script) where G : GameObject
         {
-            //script.Gob = this;
-            //scripts.Add(script);
-            if (this.GetType() != typeof(G)) //runtime exception
+            //if (this.GetType() != typeof(G)) //runtime exception
+            if (!this.GetType().IsSubclassOf(typeof(G)) && (this.GetType() != typeof(G)))
             {
                 throw new Exception("Cannot add a script of type " + typeof(G) + " to a game object of type " + this.GetType());
             }
@@ -141,9 +157,6 @@ namespace Whiskey2D.Core
             script.Gob = (G)this;
 
             ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
-            //ScriptBundle<Gob> converted = script.convert();
-
-
 
             this.scripts.Add(converted);
         }

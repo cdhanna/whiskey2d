@@ -7,13 +7,15 @@ using System.IO;
 
 namespace WhiskeyEditor
 {
-    public class ResourceFiles
+    public static class ResourceFiles
     {
 
-        public const string Lib = "compile-lib";
+        public const string CompileLib = "compile-lib";
+        public const string LibExe = "compile-exe\\WhiskeyRunner.exe";
+        public const string CompileMedia = "compile-media";
 
-        public static readonly string DllMonoGame = Lib + Path.DirectorySeparatorChar + "MonoGame.Framework.dll";
-        public static readonly string DllWhiskeyCore = Lib + Path.DirectorySeparatorChar + "Whiskey2D.dll";
+        public static readonly string DllMonoGame = CompileLib + Path.DirectorySeparatorChar + "MonoGame.Framework.dll";
+        public static readonly string DllWhiskeyCore = CompileLib + Path.DirectorySeparatorChar + "Whiskey2D.dll";
         public static readonly string DllSystem = "system.dll";
 
 

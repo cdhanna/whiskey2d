@@ -4,7 +4,7 @@ using System.Reflection;
 using System;
 using System.IO;
 using Whiskey2D.Core;
-
+using System.Collections.Generic;
 
 
 namespace WhiskeyEditor.ClassLoader
@@ -18,9 +18,25 @@ namespace WhiskeyEditor.ClassLoader
 
         public static ScriptManager Instance { get { return instance; } }
 
+
+        private Dictionary<int, ScriptDescriptor> idScriptTable;
+        private Dictionary<string, ScriptDescriptor> nameScriptTable;
+
         private ScriptManager()
         {
+            idScriptTable = new Dictionary<int, ScriptDescriptor>();
+            nameScriptTable = new Dictionary<string, ScriptDescriptor>();
+        }
 
+
+        public void addScriptDescriptor(ScriptDescriptor sdesc)
+        {
+            if (!idScriptTable.ContainsKey(sdesc.Id))
+            {
+                idScriptTable.Add(sdesc.Id, sdesc);
+                nameScriptTable.Add(sdesc.Name, sdesc);
+            }
+            
         }
 
 
@@ -30,7 +46,7 @@ namespace WhiskeyEditor.ClassLoader
 
             FileStream stream = File.Create(sourceName);
 
-            string src = sdesc.generateScript();
+            string src = sdesc.Code;
             foreach (char c in src.ToCharArray())
             {
                 stream.WriteByte((byte)c);
@@ -39,42 +55,61 @@ namespace WhiskeyEditor.ClassLoader
             stream.Close();
         }
 
-        //public void compileScript(ScriptDescriptor sdesc)
-        //{
 
-        //    string dllName = Project.ProjectManager.Instance.ActiveProject.PathScrScripts + Path.DirectorySeparatorChar + sdesc.Name + ".cs";
+        public void compile(ScriptDescriptor sdesc)
+        {
+            string dllName = Project.ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + "Script." + sdesc.Name + ".dll";
+            CSharpCodeProvider provider = new CSharpCodeProvider();
+            CompilerParameters options = new CompilerParameters();
 
-        //    System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
-        //    parameters.GenerateExecutable = false;
-        //    parameters.OutputAssembly = dllName + ".dll";
+            options.OutputAssembly = dllName;
+            options.GenerateInMemory = true;
+            options.GenerateExecutable = false;
+            options.ReferencedAssemblies.Add(ResourceFiles.DllMonoGame);
+            options.ReferencedAssemblies.Add(ResourceFiles.DllSystem);
+            options.ReferencedAssemblies.Add(ResourceFiles.DllWhiskeyCore);
 
-        //    //add required refs
-        //    parameters.ReferencedAssemblies.Add("System.dll");
-        //    parameters.ReferencedAssemblies.Add("System.Linq.dll");
 
-        //    //add custom references
-        //    foreach (string assmeblyRef in assemblyRefs)
-        //    {
-        //        parameters.ReferencedAssemblies.Add(assmeblyRef + ".dll");
-        //    }
+            foreach (GameObjectDescriptor ds in GameObjectDescriptor.descToAsmMap.Keys)
+            {
+               // if (ds != this)
+                {
+                    Assembly GobdAsm = GameObjectDescriptor.descToAsmMap[ds];
+                    Console.WriteLine("ASSEMBLY: " + GobdAsm.Location);
+                    options.ReferencedAssemblies.Add(GobdAsm.Location);
 
-        //    //create the code provider
-        //    CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+                    
 
-        //    //get all files in directory
-        //    string[] files = Directory.GetFiles(path);
+                }
+            }
 
-        //    //run compilation
-        //    CompilerResults results = provider.CompileAssemblyFromFile(parameters, files);
 
-        //    //display results
-        //    foreach (String line in results.Output)
-        //    {
-        //        Console.WriteLine(line);
-        //    }
+            CompilerResults results = provider.CompileAssemblyFromSource(options, sdesc.Code);
 
-        //}
-        
+            
+
+            Assembly asm = Assembly.LoadFrom(dllName);
+            sdesc.LatestBuiltType = asm.GetType("Project.Scripts."+sdesc.Name);
+            sdesc.LatestDllPath = dllName;
+
+
+
+            foreach (String line in results.Output)
+            {
+                Console.WriteLine(line);
+            }
+
+        }
+
+
+        public ScriptDescriptor getFromName(string name)
+        {
+            if (nameScriptTable.ContainsKey(name))
+            {
+                return nameScriptTable[name];
+            }
+            else return null;
+        }
 
 
     }

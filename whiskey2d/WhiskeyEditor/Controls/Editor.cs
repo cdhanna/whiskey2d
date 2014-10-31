@@ -21,7 +21,7 @@ namespace WhiskeyEditor.Controls
     public partial class Editor : Form
     {
 
-        
+        private ScriptDescriptor activeEditScript = null;
 
         public Editor()
         {
@@ -122,15 +122,18 @@ namespace WhiskeyEditor.Controls
         {
            // codeControl.Text = ScriptManager.Instance.getEmptyScriptTemplate(scriptNameBox.Text);
             ScriptDescriptor sdesc = new ScriptDescriptor(scriptNameBox.Text);
-            codeControl.Text = sdesc.generateScript();
-            
+            codeControl.Text = sdesc.Code;
+            activeEditScript = sdesc;
             scriptNameBox.Text = "Unnamed";
         }
 
         private void saveScriptBtn_Click(object sender, EventArgs e)
         {
 
-            ScriptManager.Instance.writeToDisc(new ScriptDescriptor("poop"));
+            activeEditScript.Code = codeControl.Text;
+
+            ScriptManager.Instance.compile(activeEditScript);
+            ScriptManager.Instance.writeToDisc(activeEditScript);
 
 
         }
