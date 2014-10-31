@@ -19,34 +19,17 @@ namespace WhiskeyRunner
     public class MonoBaseGame : Game , GameController
     {
 
-        PropertiesFiles settings;
         GameManager gameMan;
         GraphicsDeviceManager graphics;
 
 
-        public string StateScene
-        {
-            get
-            {
-                return settings.get(GameProperties.START_SCENE);
-            }
-        }
-
-        public string StateScenePath
-        {
-            get
-            {
-                return "states\\" + StateScene;
-            }
-        }
 
         public MonoBaseGame() : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "media";
 
-            settings = new PropertiesFiles(".gameprops");
-            Console.WriteLine("created good");
+            
         }
 
 
@@ -71,8 +54,6 @@ namespace WhiskeyRunner
             base.Initialize();
 
 
-            GameManager.Objects.setState(State.deserialize(StateScenePath));
-            Console.WriteLine("inited good");
         }
 
         protected override void LoadContent()
@@ -80,8 +61,6 @@ namespace WhiskeyRunner
             gameMan.LoadContent();
             base.LoadContent();
 
-
-            Console.WriteLine("loaded good");
 
         }
 

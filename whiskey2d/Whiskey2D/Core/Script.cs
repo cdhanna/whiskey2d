@@ -56,10 +56,13 @@ namespace Whiskey2D.Core
         /// <returns></returns>
         public static ScriptBundle<GameObject> createFrom(object script)
         {
+
+            //validate script
+
             ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>();
 
             gs.StartPointer = (UpdateFunctionPointer) Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_START, false);
-            gs.UpdatePointer = (UpdateFunctionPointer)Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_UPDATE, false);
+            gs.UpdatePointer = (UpdateFunctionPointer) Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_UPDATE, false);
 
             
             gs.Gob = (GameObject)script.GetType().GetProperty(CODE_GOB).GetValue(script, new object[]{});

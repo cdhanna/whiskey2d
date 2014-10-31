@@ -171,6 +171,12 @@ namespace Whiskey2D.Core.Managers.Impl
 
         public virtual void setState(State state)
         {
+
+            if (state == null)
+            {
+                return;
+            }
+
             close();
             GameObject[] objs = new GameObject[state.GameObjects.Count];
             state.GameObjects.CopyTo(objs);

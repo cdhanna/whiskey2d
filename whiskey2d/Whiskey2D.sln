@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whiskey2D", "Whiskey2D\Whiskey2D.csproj", "{15388775-2A89-49F7-8BA1-E9D53D29E248}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiskeyEditor", "WhiskeyEditor\WhiskeyEditor.csproj", "{B1D13B84-24AB-4922-924C-EB2B17FEFCC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6FC8DBB4-C2CD-44B2-98F9-447AA0E695E6} = {6FC8DBB4-C2CD-44B2-98F9-447AA0E695E6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiskeyRunner", "WhiskeyRunner\WhiskeyRunner.csproj", "{6FC8DBB4-C2CD-44B2-98F9-447AA0E695E6}"
 EndProject

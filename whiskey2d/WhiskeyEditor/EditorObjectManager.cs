@@ -68,6 +68,12 @@ namespace WhiskeyEditor
 
         public override void setState(State state)
         {
+            if (state == null)
+            {
+                return;
+            }
+
+
             deadObjects.Clear();
             newObjects.Clear();
             List<GameObject> gobs = getAllObjectsNotOfType<EditorGameObject>();

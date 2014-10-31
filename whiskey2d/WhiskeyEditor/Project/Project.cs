@@ -223,7 +223,7 @@ namespace WhiskeyEditor.Project
             }
 
 
-            Directory.CreateDirectory(PathBuild);
+            DirectoryInfo buildInfo = Directory.CreateDirectory(PathBuild);
 
             Directory.CreateDirectory(PathBuildLib);
             Directory.CreateDirectory(PathBuildMedia);

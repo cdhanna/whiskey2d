@@ -34,15 +34,36 @@ namespace Whiskey2D.Core
             }
             return instance;
         }
-        //public static GameManager getInstance<G>() where G : GameManager
-        //{
-        //    if (instance == null)
-        //    {
-        //        instance = Activator.CreateInstance<G>();
-        //    }
-        //    return instance;
-        //}
 
+        PropertiesFiles settings;
+        public string StartScene
+        {
+            get
+            {
+                return settings.get(GameProperties.START_SCENE);
+            }
+        }
+
+        public string CurrentScene
+        {
+            get;
+            set;
+        }
+
+        public string CurrentScenePath
+        {
+            get
+            {
+                return "states\\" + CurrentScene;
+            }
+        }
+        public string StartScenePath
+        {
+            get
+            {
+                return "states\\" + StartScene;
+            }
+        }
 
 
         ContentManager Content;
@@ -75,6 +96,7 @@ namespace Whiskey2D.Core
 
         protected GameManager()
         {
+            settings = new PropertiesFiles(".gameprops");
             this.objMan.init();
             instance = this;
 
@@ -111,13 +133,11 @@ namespace Whiskey2D.Core
             resMan.close();
             inMan.close();
             logMan.close();
-            //hudMan.close();
 
             Rand.getInstance().reSeed();
 
             sourceMan.getSource().init();
 
-            //hudMan.init();
             renMan.init(Device);
             objMan.init();
             resMan.init(Content);
@@ -126,13 +146,13 @@ namespace Whiskey2D.Core
 
 
             //RUN THE START CODE
-            if (starter != null)
-            {
-                starter.start();
-            }
-            else Console.WriteLine("ERROR: No start configuration found");
+            GameManager.Objects.setState(State.deserialize(CurrentScenePath));
+        }
 
-
+        private void start()
+        {
+            GameManager.Objects.setState(State.deserialize(StartScenePath));
+            CurrentScene = StartScene;
         }
 
         /// <summary>
@@ -219,27 +239,7 @@ namespace Whiskey2D.Core
 
             HudManager.getInstance().DebugColor = Color.RoyalBlue;
 
-
-            //TextBox b = new TextBox();
-            //b.Position = new Vector2(100, 100);
-            //b.Size = new Vector2(200, 200);
-            //b.TextSize = .8f;
-
-            //b.pushTextFromBottom("a");
-            //b.pushTextFromBottom("b");
-            //b.pushTextFromBottom("c");
-
-            //b.Text = "test this is a test\nnewline should have just happened";
-            //b.append("another line");
-            //b.append("abc");
-            //b.prepend("in the start");
-            //RUN THE START CODE
-            if (starter != null)
-            {
-            //    starter.start();
-            }
-            else Console.WriteLine("ERROR: No start configuration found");
-
+            start();
         }
 
         /// <summary>

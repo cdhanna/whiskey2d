@@ -86,14 +86,11 @@ namespace Whiskey2D.Core
 
         public static State deserialize(string fileName)
         {
-            //FileStream fs = new FileStream(fileName, FileMode.Open);
-            //StreamReader reader = new StreamReader(fs);
 
-            //string json = reader.ReadToEnd();
-            //State state = Newtonsoft.Json.JsonConvert.DeserializeObject<State>(json);
-
-            //fs.Close();
-            //return state;
+            if (!File.Exists(fileName))
+            {
+                return null;
+            }
 
             // Open the file containing the data that you want to deserialize.
             State state;
