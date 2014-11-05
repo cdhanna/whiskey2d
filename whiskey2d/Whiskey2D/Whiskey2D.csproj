@@ -41,6 +41,7 @@
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\GameController.cs" />
+    <Compile Include="Core\GameObjectService.cs" />
     <Compile Include="Core\GameProperties.cs" />
     <Compile Include="Core\Hud\Box.cs" />
     <Compile Include="Core\Hud\Commands\ConsoleCommand.cs" />
@@ -121,6 +122,11 @@
     <Compile Include="PourGames\TestImpl\Player.cs" />
     <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs" />
     <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs" />
+    <Compile Include="Services\DefaultService.cs" />
+    <Compile Include="Services\Library.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\ServiceHandle.cs" />
+    <Compile Include="Services\ServiceLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Nuclex.Cloning">
@@ -156,16 +162,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="onBuiltUtil.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>onBuiltUtil.bat</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

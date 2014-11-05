@@ -11,6 +11,7 @@ using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using Whiskey2D.Core;
 using WhiskeyEditor.Project;
+using WhiskeyEditor.Parsers;
 
 namespace WhiskeyEditor.ClassLoader
 {
@@ -27,7 +28,7 @@ namespace WhiskeyEditor.ClassLoader
 
 
         public CodeCompileUnit targetUnit;
-        CodeTypeDeclaration targetClass;
+        private CodeTypeDeclaration targetClass;
 
 
         private List<PropertyDescriptor> pds;
@@ -38,6 +39,11 @@ namespace WhiskeyEditor.ClassLoader
         public List<PropertyDescriptor> Properties { get { return pds; } set { pds = value; } }
 
 
+        private List<string> dllPaths;
+        private string latestDllPath;
+        public String LatestDllPath { get { return latestDllPath; } }
+
+
         public String QualifiedName { get { return NameSpace + "." + Name; } }
 
         /// <summary>
@@ -46,6 +52,7 @@ namespace WhiskeyEditor.ClassLoader
         /// <param name="other">A non-null GobDescr </param>
         public GameObjectDescriptor(GameObjectDescriptor other)
         {
+            dllPaths = new List<string>();
             NameSpace = other.NameSpace;
             Name = other.Name;
             Properties = new List<PropertyDescriptor>();
@@ -68,6 +75,7 @@ namespace WhiskeyEditor.ClassLoader
         /// <param name="name">the name of the gameobject sub class</param>
         public GameObjectDescriptor(String nameSpace, String name)
         {
+            dllPaths = new List<string>();
             NameSpace = nameSpace;
             Name = name;
             pds = new List<PropertyDescriptor>();
@@ -94,15 +102,22 @@ namespace WhiskeyEditor.ClassLoader
             CodeNamespace samples = new CodeNamespace(NameSpace);
             samples.Imports.Add(new CodeNamespaceImport("System"));
             samples.Imports.Add(new CodeNamespaceImport("Whiskey2D.Core"));
-            targetClass = new CodeTypeDeclaration(Name);
+            targetClass = new CodeTypeDeclaration(Name);            
             targetClass.IsClass = true;
             targetClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Serializable;
+
+            CodeTypeDeclaration dumbClass = new CodeTypeDeclaration("DumbWhiskeyDumb");
+            dumbClass.IsClass = true;
+            dumbClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Serializable;
+            dumbClass.BaseTypes.Add("System.MarshalByRefObject");
 
             CodeAttributeDeclaration classAttr = new CodeAttributeDeclaration("Serializable");
             targetClass.CustomAttributes.Add(classAttr);
             targetClass.BaseTypes.Add("Whiskey2D.Core.GameObject");
+           
 
             samples.Types.Add(targetClass);
+            samples.Types.Add(dumbClass);
             targetUnit.Namespaces.Add(samples);
         }
 
@@ -143,28 +158,98 @@ namespace WhiskeyEditor.ClassLoader
             }
         }
 
+
+        private string parsePrim(object val)
+        {
+            Type t = val.GetType();
+            string str = "";
+            if (t == typeof(int) || t == typeof(Single))
+            {
+                return "" + val;
+            }
+
+            return str;
+        }
+
+        
+        private Dictionary<string, int> nameTable = new Dictionary<string,int>();
+        private string generateName(string name)
+        {
+            name = "_" + name;
+            if (nameTable.ContainsKey(name))
+            {
+                nameTable[name]++;
+                return name + nameTable[name];
+            }
+            else
+            {
+                nameTable.Add(name, 0);
+                return name;
+            }
+        }
+        private string newLine = Environment.NewLine + "\t\t";
+
+
+        private string codeFor(object val, string name)
+        {
+
+            if (Parse.isTerminable(val))
+            {
+                return Parse.stringify(val) + ";";
+            }
+            else
+            {
+
+                string code = "new " + val.GetType().Name + "(); " + newLine;
+
+                PropertyInfo[] props = val.GetType().GetProperties();
+                foreach (PropertyInfo prop in props)
+                {
+                    if (prop.SetMethod != null && prop.SetMethod.IsPublic)
+                    {
+                        string pName = name + "." + prop.Name;
+                        object pVal = prop.GetGetMethod().Invoke(val, new object[] { });
+                        string pValName = generateName(name + prop.Name);
+
+                        code = code + prop.PropertyType.Name + " " + pValName + " = " + codeFor(pVal, pValName) + newLine;
+                        code = code + pName + " = " + pValName + ";" + newLine;
+                        code = code + newLine;
+                    }
+                }
+
+                return code;
+            }
+
+        }
+
+
         private void addConstructor()
         {
             CodeConstructor cons = new CodeConstructor();
             cons.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             targetClass.Members.Add(cons);
-
+            nameTable.Clear();
             foreach (PropertyDescriptor p in pds)
             {
-                GameObjectConfigurator.getInstance().setInitialValueFor(QualifiedName, p.Name, p.Value);
-                
-                if (!parentProperties.Contains(p))
-                {
-                    cons.Statements.Add(new CodeAssignStatement(new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), p.Name),
-                        new CodeCastExpression(p.Type, new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(typeof(GameObjectConfigurator)), "getInitialValueFor",
-                            new CodePrimitiveExpression(QualifiedName), new CodePrimitiveExpression(p.Name)))));
-                }
-                else
-                {
-                    cons.Statements.Add(new CodeAssignStatement(new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), p.Name),
-                       new CodeCastExpression(p.Type, new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(typeof(GameObjectConfigurator)), "getInitialValueFor",
-                           new CodePrimitiveExpression(QualifiedName), new CodePrimitiveExpression(p.Name)))));
-                }
+
+                cons.Statements.Add(new CodeSnippetStatement( newLine + p.Name + " = " + codeFor(p.Value, p.Name)));
+               
+
+
+                //GameObjectConfigurator.getInstance().setInitialValueFor(QualifiedName, p.Name, p.Value);
+                //cons.Statements.Add(new CodeSnippetStatement(";"));
+                //if (!parentProperties.Contains(p))
+                //{
+                //    cons.Statements.Add(new CodeAssignStatement(new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), p.Name),
+                //        new CodeCastExpression(p.Type, new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(typeof(GameObjectConfigurator)), "getInitialValueFor",
+                //            new CodePrimitiveExpression(QualifiedName), new CodePrimitiveExpression(p.Name)))));
+                //}
+                //else
+                //{
+                //    cons.Statements.Add(new CodeAssignStatement(new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), p.Name),
+                //       new CodeCastExpression(p.Type, new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(typeof(GameObjectConfigurator)), "getInitialValueFor",
+                //           new CodePrimitiveExpression(QualifiedName), new CodePrimitiveExpression(p.Name)))));
+                //}
             }
 
             CodeMemberMethod addInitScripts = new CodeMemberMethod();
@@ -211,6 +296,47 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
+        public void compile()
+        {
+            this.setUpClass();
+            this.addFields();
+            this.addProperties();
+            this.addConstructor();
+
+            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+            CompilerParameters options = new CompilerParameters();
+        
+            options.OutputAssembly = ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + QualifiedName + (asmCounter++) + ".dll";
+
+            options.ReferencedAssemblies.Add("Whiskey2D_core.dll");
+            options.ReferencedAssemblies.Add("System.dll");
+
+            List<CodeCompileUnit> allUnits = new List<CodeCompileUnit>();
+            allUnits.Add(targetUnit);
+            foreach (GameObjectDescriptor ds in descToAsmMap.Keys)
+            {
+                if (ds != this)
+                {
+                    Assembly asm = descToAsmMap[ds];
+                    Console.WriteLine("ASSEMBLY: " + asm.Location);
+                    options.ReferencedAssemblies.Add(asm.Location);
+
+                    allUnits.Add(descToUnitMap[ds]);
+
+                }
+            }
+            CompilerResults results = provider.CompileAssemblyFromDom(options, targetUnit);
+
+
+            foreach (String line in results.Output)
+            {
+                Console.WriteLine(line);
+            }
+            latestDllPath = options.OutputAssembly;
+
+      
+          
+        }
 
         /// <summary>
         /// Compile the gameobject descriptor into an assembly
@@ -227,10 +353,18 @@ namespace WhiskeyEditor.ClassLoader
             CompilerParameters options = new CompilerParameters();
             //options.GenerateInMemory = true;
             //options.GenerateExecutable = false;
-            
-            options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar +  QualifiedName +asmCounter.ToString()+ ".dll";
+
+
+            //string dllPath = ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + QualifiedName + ".dll";
+            //if (File.Exists(dllPath))
+            //{
+            //    Console.WriteLine("it exists!!!!");
+            //    File.Delete(dllPath);
+            //}
+            //options.OutputAssembly = dllPath;
+            options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar +  QualifiedName + (asmCounter++) + ".dll";
            // options.LinkedResources.Add("Whiskey2D.Core");
-            asmCounter++;
+            
             
             options.ReferencedAssemblies.Add("Whiskey2D_core.dll");
             options.ReferencedAssemblies.Add("System.dll");
@@ -252,16 +386,30 @@ namespace WhiskeyEditor.ClassLoader
 
             
  
+            
+
             CompilerResults results = provider.CompileAssemblyFromDom(options, targetUnit);
+
+            //in the no error case, we should remember this dll
+
+          
+
             foreach (String line in results.Output)
             {
                 Console.WriteLine(line);
             }
-
+            latestDllPath = options.OutputAssembly;
+     
             Assembly compiledAssembly = results.CompiledAssembly;
+
+
+            //ProxyDomain proxy = new ProxyDomain(options.OutputAssembly, "Project.DumbWhiskeyDumb");
+            //Assembly compiledAssembly = proxy.Assembly;
+
+
             if (compiledAssembly != null)
             {
-                Console.WriteLine("built an asm: " + compiledAssembly.Location);
+                Console.WriteLine("built an asm: " + options.OutputAssembly);
 
                 if (descToAsmMap.ContainsKey(this))
                 {

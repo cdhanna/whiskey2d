@@ -63,6 +63,8 @@ namespace WhiskeyEditor.ClassLoader
         {
             if (descritors.Contains(descr)){
 
+                string oldAsmPath = descr.LatestDllPath;
+
                 gobTypes.Remove( descToTypeMap[descr] );
                 typeToDescMap.Remove(descToTypeMap[descr]);
                 Type oldType = descToTypeMap[descr];
@@ -90,6 +92,8 @@ namespace WhiskeyEditor.ClassLoader
                 {
                     da(descr, type);
                 }
+
+                ProxyDomainManager.Instance.sceduleForClose(oldAsmPath);
 
                 return type;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Whiskey2D.Services;
 namespace Whiskey2D.Core
 {
 
@@ -9,7 +9,7 @@ namespace Whiskey2D.Core
     /// </summary>
     /// 
     [Serializable]
-    public abstract class GameObject 
+    public abstract class GameObject : DefaultService , GameObjectService
     {
         private static int idCounter = 0;
 
@@ -25,7 +25,7 @@ namespace Whiskey2D.Core
             Sprite.Scale *= 50;
             ID = idCounter++;
             scripts = new List<ScriptBundle<GameObject>>();
-
+            objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
             //List<ScriptBundle<GameObject>> initScripts = getInitialScripts();
             //if (initScripts != null)
             //{
@@ -46,7 +46,7 @@ namespace Whiskey2D.Core
         private Sprite sprite;
         private int id;
         private List<ScriptBundle<GameObject>> scripts;
-
+        private Dictionary<object, ScriptBundle<GameObject>> objectScriptTable;
         /// <summary>
         /// The position of the Game Object
         /// </summary>
@@ -127,10 +127,16 @@ namespace Whiskey2D.Core
         }
 
 
-        public void removeScript<G>(Script<G> script) where G : GameObject
+        public List<ScriptBundle<GameObject>> getScriptBundles()
         {
-            //todo remove script
-            throw new NotImplementedException();
+            return this.scripts;
+        }
+
+        public void removeScript(object script)
+        {
+            ScriptBundle<GameObject> converted = this.objectScriptTable[script];
+            this.scripts.Remove(converted);
+            this.objectScriptTable.Remove(script);
         }
 
         public void addScript(object script)
@@ -140,6 +146,12 @@ namespace Whiskey2D.Core
 
             ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
             this.scripts.Add(converted);
+            this.objectScriptTable.Add(script, converted);
+        }
+
+        public void removeScript<G>(Script<G> script) where G : GameObject
+        {
+            removeScript((object)script);
         }
 
         /// <summary>
@@ -158,6 +170,7 @@ namespace Whiskey2D.Core
 
             ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
 
+            this.objectScriptTable.Add(script, converted);
             this.scripts.Add(converted);
         }
 

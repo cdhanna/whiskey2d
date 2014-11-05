@@ -174,16 +174,23 @@ namespace Whiskey2D.Core
             )
         {
             this.Device = Device;
-            this.Content = Content;
+            if (this.Device != null)
+            {
+                width = Device.PresentationParameters.BackBufferWidth;
+                height = Device.PresentationParameters.BackBufferHeight;
+            }
 
+            this.Content = Content;
+            if (Content != null)
+            {
+                Content.RootDirectory = "media";
+            }
+
+            
             this.controller = controller;
 
-            Content.RootDirectory = "media";
 
-
-            width = Device.PresentationParameters.BackBufferWidth;
-            height = Device.PresentationParameters.BackBufferHeight;
-
+            
             inMan = inputMan;
             sourceMan = inputSourceMan;
             logMan = logger;
@@ -199,28 +206,9 @@ namespace Whiskey2D.Core
             
             renMan = renderMan;
             resMan = resourceMan;
-            //inMan = InputManager.getInstance();
            
             
             hudMan = HudManager.getInstance();
-           // hudMan.DebugColor = Color.White;
-
-            //find gameData assmebly
-            //Type[] allGameTypes = gameAssmebly.GetTypes();
-            //foreach (Type gt in allGameTypes)
-            //{
-            //    if (gt.IsSubclassOf(typeof(Starter)))
-            //    {
-            //        starter = (Starter)Activator.CreateInstance(gt);
-            //    }
-            //}
-        
-            
-            
-           // starter = new Game3Launch();
-
-           // starter = new PourGames.TestImpl.Launch();
-
 
             renMan.init(Device);
             objMan.init();

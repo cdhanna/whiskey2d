@@ -24,12 +24,27 @@ namespace Whiskey2D.Core
         public const string CODE_START = "onStart";
         public const string CODE_UPDATE = "onUpdate";
 
-        protected ScriptBundle() { }
+        protected ScriptBundle(object script) {
+
+            if (script != null)
+            {
+
+                this.script = script;
+
+            }
+        }
 
         /// <summary>
         /// The GameObject
         /// </summary>
         public T Gob { get; set; }
+
+
+        public string ScriptName { get { return script.GetType().Name; } }
+
+
+        protected object script;
+        public object Script { get { return script; } }
 
         /// <summary>
         /// The pointer to a function
@@ -59,7 +74,7 @@ namespace Whiskey2D.Core
 
             //validate script
 
-            ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>();
+            ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>(script);
 
             gs.StartPointer = (UpdateFunctionPointer) Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_START, false);
             gs.UpdatePointer = (UpdateFunctionPointer) Delegate.CreateDelegate(typeof(UpdateFunctionPointer), script, CODE_UPDATE, false);
@@ -72,7 +87,7 @@ namespace Whiskey2D.Core
 
         public static ScriptBundle<GameObject> createFrom<X>(Script<X> script) where X : GameObject
         {
-            ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>();
+            ScriptBundle<GameObject> gs = new ScriptBundle<GameObject>(script);
             gs.UpdatePointer = new UpdateFunctionPointer(script.onUpdate);
             gs.StartPointer = new UpdateFunctionPointer(script.onStart);
             gs.Gob = script.Gob;
@@ -93,13 +108,15 @@ namespace Whiskey2D.Core
     {
 
 
+
+
         ///// <summary>
         ///// creates a new Script
         ///// </summary>
-        //public Script()
-        //{
-            
-        //}
+        public Script() : base(null)
+        {
+            script = this;
+        }
 
         /// <summary>
         /// Called once upon startup of the GameObject

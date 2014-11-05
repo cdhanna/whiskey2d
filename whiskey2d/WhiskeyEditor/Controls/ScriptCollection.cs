@@ -27,6 +27,23 @@ namespace WhiskeyEditor.Controls
 
         public override void Refresh()
         {
+
+            scriptIcons.Clear();
+            flowPanel.Controls.Clear();
+
+            if (SelectedObject != null)
+            {
+
+                List<ScriptBundle<GameObject>> scriptBundles = SelectedObject.getScriptBundles();
+                foreach (ScriptBundle<GameObject> sb in scriptBundles)
+                {
+                    string scriptName = sb.ScriptName;
+                    ScriptDescriptor sdesc = ScriptManager.Instance.getFromName(scriptName);
+                    addScriptUI(sdesc, sb.Script);
+                }
+            }
+
+
             base.Refresh();
         }
 
@@ -38,44 +55,48 @@ namespace WhiskeyEditor.Controls
         private void addScriptBtn_Click(object sender, EventArgs e)
         {
             string requestedScriptName = scriptNameBox.Text;
-
-
             ScriptDescriptor sdesc = ScriptManager.Instance.getFromName(requestedScriptName);
-
-            //Type scriptType = ScriptManager.Instance.getTypeOfScript(requestedScriptName);
-            //ScriptManager.Instance.addScriptToGob(gob, scriptType);
-
-            ScriptIcon sIcon = new ScriptIcon(sdesc);
-
-            sIcon.closeBtn.Click += (sndr, args) =>
-            {
-                scriptIcons.Remove(sIcon);
-                flowPanel.Controls.Remove(sIcon);
-            };
-
-            //sIcon.ScriptDescriptor = something;
-
-            scriptIcons.Add(sIcon);
-            flowPanel.Controls.Add(sIcon);
-
-
+            object scriptObject = null;
             try
             {
                 if (SelectedObject != null)
                 {
-
-                    
-                    SelectedObject.addScript( sdesc.generateInstance() );
+                    scriptObject =  sdesc.generateInstance() ;
+                    SelectedObject.addScript( scriptObject );
 
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
-                //Console.WriteLine("could not add script");
             }
 
 
+
+
+            addScriptUI(sdesc, scriptObject);
+
+
+
         }
+
+        private void addScriptUI(ScriptDescriptor sdesc, object scriptObject)
+        {
+            ScriptIcon sIcon = new ScriptIcon(sdesc);
+
+            sIcon.closeBtn.Click += (sndr, args) =>
+            {
+                scriptIcons.Remove(sIcon);
+                flowPanel.Controls.Remove(sIcon);
+
+                SelectedObject.removeScript(scriptObject);
+
+            };
+
+
+            scriptIcons.Add(sIcon);
+            flowPanel.Controls.Add(sIcon);
+        }
+
     }
 }

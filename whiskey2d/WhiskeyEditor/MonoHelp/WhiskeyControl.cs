@@ -99,7 +99,7 @@ namespace WhiskeyEditor.MonoHelp
             {
                 
                 gameMan.Update(null); //todo fix nullgametime
-
+                ProxyDomainManager.Instance.update();
               
                 timer.Restart();
             }

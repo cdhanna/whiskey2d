@@ -103,6 +103,7 @@ namespace WhiskeyEditor.Controls
 
                 Project.Project project = ProjectManager.Instance.createNewProject(folderName, projectName);
                 ProjectManager.Instance.ActiveProject = project;
+                this.Text = project.Name;
             }
         }
 
@@ -115,6 +116,7 @@ namespace WhiskeyEditor.Controls
                 string path = settingsPath.Substring(0, settingsPath.LastIndexOf(Path.DirectorySeparatorChar));
                 Project.Project project = ProjectManager.Instance.openProject(path);
                 ProjectManager.Instance.ActiveProject = project;
+                this.Text = project.Name;
             }
         }
 

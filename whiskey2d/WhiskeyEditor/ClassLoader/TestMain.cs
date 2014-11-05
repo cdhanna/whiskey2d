@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
 using System.Reflection;
-
-
-
+using Whiskey2D.Services;
 
 namespace WhiskeyEditor.ClassLoader
 {
@@ -22,7 +20,27 @@ namespace WhiskeyEditor.ClassLoader
         static void Main()
         {
 
-           
+            Project.ProjectManager.Instance.ActiveProject = Project.ProjectManager.Instance.createNewProject("HomeTest", "HomeTest");
+            GameObjectDescriptor gobd = new GameObjectDescriptor("Project", "A");
+            gobd.compile();
+            //Type gobdType = TypeManager.getInstance().addDescriptor(gobd);
+
+
+            ServiceHandle<GameObjectService> sHandle = new ServiceHandle<GameObjectService>(Project.ProjectManager.Instance.ActiveProject.PathBin + "\\Project.A0.dll", "Project.A");
+
+            Library lib = ServiceLoader.Instance.createLibrary();
+            lib.add(sHandle);
+
+            lib.unload();
+
+
+            //Library lib = ServiceLoader.Instance.createLibrary();
+            //lib.addService(new ServiceHandle<
+
+        }
+
+        private static void old()
+        {
 
 
             Console.WriteLine("running test main");
@@ -57,7 +75,7 @@ namespace WhiskeyEditor.ClassLoader
             objList.Add(cInst);
 
             ////////
-           // GameObjectDescriptor aGobdNew = new GameObjectDescriptor(aGobd);
+            // GameObjectDescriptor aGobdNew = new GameObjectDescriptor(aGobd);
             aGobd.addProperty(new PropertyDescriptor("Fluff", typeof(int), 4));
             //aGobd.addProperty(new PropertyDescriptor("WRECKYOU", cType, cInst));
             //TypeManager.getInstance().recReplace(aGobd, aGobdNew, cGobd);
@@ -69,7 +87,6 @@ namespace WhiskeyEditor.ClassLoader
             //List<object> awesome = TypeManager.getInstance().updateObjects(objList);
 
             //bool equal = (cInst == awesome[2]);
-
         }
 
     }

@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WhiskeyEditor.Program</StartupObject>
+    <StartupObject>WhiskeyEditor.ClassLoader.TestMain</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -146,12 +146,6 @@
     <Compile Include="Controls\ValueEditor\ValueEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditorForm.Designer.cs">
-      <DependentUpon>EditorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EditorObjectManager.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
@@ -185,6 +179,8 @@
     <Compile Include="MonoHelp\WhiskeyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Parsers\IntParser.cs" />
+    <Compile Include="Parsers\Parser.cs" />
     <Compile Include="Project\Project.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="PropertyDescriptorControl.cs">
@@ -194,6 +190,8 @@
       <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MonoHelp\ServiceContainer.cs" />
+    <Compile Include="ProxyClass.cs" />
+    <Compile Include="ProxyDomainManager.cs" />
     <Compile Include="ResourceFiles.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SimpleTextPopup.cs">
@@ -205,6 +203,9 @@
     <Compile Include="MonoHelp\SpinningTriangleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TestFrame\Tester.cs" />
+    <Compile Include="TestFrame\TestRunner.cs" />
+    <Compile Include="TestFrame\Tests\ConfigTest.cs" />
     <Compile Include="ValueEditors\IntEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -252,9 +253,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ValueEditor\ObjectEditor.resx">
       <DependentUpon>ObjectEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditorForm.resx">
-      <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameObjectIcon.resx">
       <DependentUpon>GameObjectIcon.cs</DependentUpon>
@@ -313,6 +311,10 @@
     <ProjectReference Include="..\Whiskey2D\Whiskey2D.csproj">
       <Project>{15388775-2a89-49f7-8ba1-e9d53d29e248}</Project>
       <Name>Whiskey2D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WhiskeyRunner\WhiskeyRunner.csproj">
+      <Project>{6fc8dbb4-c2cd-44b2-98f9-447aa0e695e6}</Project>
+      <Name>WhiskeyRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

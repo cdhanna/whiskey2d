@@ -88,6 +88,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             //gameObjects.Add(gob);
             //gob.init();
+            Console.WriteLine("OBJECT MAN IS ADDING AN OBJECT OF ID = " + gob.ID + "AND TYPE IS " + gob.GetType().Name);
             newObjects.Add(gob);
         }
 
