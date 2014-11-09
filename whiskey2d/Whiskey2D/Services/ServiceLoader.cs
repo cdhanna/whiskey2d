@@ -19,9 +19,9 @@ namespace Whiskey2D.Services
         }
 
 
-        public Library createLibrary()
+        public Library createLibrary(string libraryName)
         {
-            Library lib = new Library();
+            Library lib = new Library(libraryName);
             return lib;
         }
 

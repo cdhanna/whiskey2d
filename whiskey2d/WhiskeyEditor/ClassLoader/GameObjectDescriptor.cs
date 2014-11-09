@@ -12,6 +12,7 @@ using Microsoft.CSharp;
 using Whiskey2D.Core;
 using WhiskeyEditor.Project;
 using WhiskeyEditor.Parsers;
+using Whiskey2D.Services;
 
 namespace WhiskeyEditor.ClassLoader
 {
@@ -20,7 +21,7 @@ namespace WhiskeyEditor.ClassLoader
     /// <summary>
     /// The GameObject Descriptor is responsible for describing the type name and set of properties for a GameObject sub-class. 
     /// </summary>
-    public class GameObjectDescriptor
+    public class GameObjectDescriptor : ServiceDescriptor<GameObjectService>
     {
         public static Dictionary<GameObjectDescriptor, Assembly> descToAsmMap = new Dictionary<GameObjectDescriptor,Assembly>();
         static Dictionary<GameObjectDescriptor, CodeCompileUnit> descToUnitMap = new Dictionary<GameObjectDescriptor, CodeCompileUnit>();
@@ -46,12 +47,18 @@ namespace WhiskeyEditor.ClassLoader
 
         public String QualifiedName { get { return NameSpace + "." + Name; } }
 
+
+        //private static Dictionary<String, ServiceDescriptor<GameObjectService>> serviceNameTable = new Dictionary<string, ServiceDescriptor<GameObjectService>>();
+
         /// <summary>
         /// Create a GameObjectDescriptor from another descriptor. This is the copy constructor
         /// </summary>
         /// <param name="other">A non-null GobDescr </param>
-        public GameObjectDescriptor(GameObjectDescriptor other)
+        public GameObjectDescriptor(GameObjectDescriptor other) : base (new ServiceCollection())
         {
+
+            
+
             dllPaths = new List<string>();
             NameSpace = other.NameSpace;
             Name = other.Name;
@@ -68,12 +75,19 @@ namespace WhiskeyEditor.ClassLoader
 
         }
 
+
+        public GameObjectDescriptor(String nameSpace, String name)
+            : this(new ServiceCollection(), nameSpace, name)
+        {
+
+        }
+
         /// <summary>
         /// Create a GameObjectDescriptor
         /// </summary>
         /// <param name="nameSpace">The namespace that the gameobject sub class resides in </param>
         /// <param name="name">the name of the gameobject sub class</param>
-        public GameObjectDescriptor(String nameSpace, String name)
+        public GameObjectDescriptor(ServiceCollection servColl, String nameSpace, String name) : base(servColl)
         {
             dllPaths = new List<string>();
             NameSpace = nameSpace;
@@ -92,10 +106,12 @@ namespace WhiskeyEditor.ClassLoader
                     pds.Add(pd);
                 }
             }
-
+           // serviceNameTable.Add(QualifiedTypeName, this );
 
         }
 
+
+       
         private void setUpClass()
         {
             targetUnit = new CodeCompileUnit();
@@ -131,7 +147,17 @@ namespace WhiskeyEditor.ClassLoader
                     CodeMemberField field = new CodeMemberField();
                     field.Attributes = MemberAttributes.Private;
                     field.Name = p.Name.ToLower();
-                    field.Type = new CodeTypeReference(p.Type);
+                   
+
+                    if (!p.Type.Equals(typeof(GameObject)))
+                    {
+                        field.Type = new CodeTypeReference(p.Type);
+                    }
+                    else
+                    {
+
+                        field.Type = new CodeTypeReference(((GameObject)p.Value).getServiceTypeName());
+                    }
 
                     targetClass.Members.Add(field);
                 }
@@ -149,7 +175,16 @@ namespace WhiskeyEditor.ClassLoader
                     prop.Name = p.Name.ToUpper().Substring(0, 1) + p.Name.Substring(1);
                     prop.HasGet = true;
                     prop.HasSet = true;
-                    prop.Type = new CodeTypeReference(p.Type);
+                    if (!p.Type.Equals(typeof(GameObject)) )
+                    {
+                        prop.Type = new CodeTypeReference(p.Type);
+                    }
+                    else
+                    {
+
+                        prop.Type = new CodeTypeReference(((GameObject)p.Value).getServiceTypeName());
+                    }
+                    
                     prop.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), p.Name.ToLower())));
                     prop.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), p.Name.ToLower()), new CodePropertySetValueReferenceExpression()));
                     targetClass.Members.Add(prop);
@@ -187,7 +222,7 @@ namespace WhiskeyEditor.ClassLoader
                 return name;
             }
         }
-        private string newLine = Environment.NewLine + "\t\t";
+        private string newLine = Environment.NewLine + "\t\t\t";
 
 
         private string codeFor(object val, string name)
@@ -200,23 +235,31 @@ namespace WhiskeyEditor.ClassLoader
             else
             {
 
-                string code = "new " + val.GetType().Name + "(); " + newLine;
+                string code;
 
-                PropertyInfo[] props = val.GetType().GetProperties();
-                foreach (PropertyInfo prop in props)
+                if (!val.GetType().Equals(typeof(GameObject)))
                 {
-                    if (prop.SetMethod != null && prop.SetMethod.IsPublic)
-                    {
-                        string pName = name + "." + prop.Name;
-                        object pVal = prop.GetGetMethod().Invoke(val, new object[] { });
-                        string pValName = generateName(name + prop.Name);
+                    code = "new " + val.GetType().Name + "(); " + newLine;
 
-                        code = code + prop.PropertyType.Name + " " + pValName + " = " + codeFor(pVal, pValName) + newLine;
-                        code = code + pName + " = " + pValName + ";" + newLine;
-                        code = code + newLine;
+                    PropertyInfo[] props = val.GetType().GetProperties();
+                    foreach (PropertyInfo prop in props)
+                    {
+                        if (prop.SetMethod != null && prop.SetMethod.IsPublic)
+                        {
+                            string pName = name + "." + prop.Name;
+                            object pVal = prop.GetGetMethod().Invoke(val, new object[] { });
+                            string pValName = generateName(name + prop.Name);
+
+                            code = code + prop.PropertyType.Name + " " + pValName + " = " + codeFor(pVal, pValName) + newLine;
+                            code = code + pName + " = " + pValName + ";" + newLine;
+                            code = code + newLine;
+                        }
                     }
                 }
-
+                else
+                {
+                    code = "new " + ((GameObject)val).getServiceTypeName() + "(); " + newLine;
+                }
                 return code;
             }
 
@@ -306,7 +349,7 @@ namespace WhiskeyEditor.ClassLoader
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             CompilerParameters options = new CompilerParameters();
         
-            options.OutputAssembly = ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + QualifiedName + (asmCounter++) + ".dll";
+            options.OutputAssembly = ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + QualifiedName  + ".dll";
 
             options.ReferencedAssemblies.Add("Whiskey2D_core.dll");
             options.ReferencedAssemblies.Add("System.dll");
@@ -429,6 +472,60 @@ namespace WhiskeyEditor.ClassLoader
         }
 
 
+        public override string QualifiedTypeName
+        {
+            get {return QualifiedName; }
+        }
 
+
+        private CodeCompileUnit getUnit()
+        {
+            this.setUpClass();
+            this.addFields();
+            this.addProperties();
+            this.addConstructor();
+            return this.targetUnit;
+        }
+
+        public override CodeCompileUnit Code
+        {
+            get { return getUnit(); }
+        }
+
+        public override String[] References
+        {
+            get { return new string[] { ResourceFiles.DllSystem, ResourceFiles.DllWhiskeyCore }; }
+        }
+
+        public override string DllPath
+        {
+            get { return ProjectManager.Instance.ActiveProject.PathBin + "\\" + QualifiedTypeName + ".dll" ; }
+        }
+        public override string SrcPath
+        {
+            get { return ProjectManager.Instance.ActiveProject.PathSrc + "\\" + QualifiedTypeName + ".cs"; }
+        }
+
+        
+        public override List<ServiceDescriptor> getReferences(List<ServiceDescriptor> visitedRefs)
+        {
+            List<ServiceDescriptor> servRefs = new List<ServiceDescriptor>();
+            
+            foreach (PropertyDescriptor prop in Properties)
+            {
+                if (prop.Type.Equals (typeof (GameObject) ) )
+                {
+                    ServiceDescriptor serv = lookUpDescriptorByName(((GameObject)prop.Value).getServiceTypeName());//typeNameTable[((GameObject)prop.Value).getServiceTypeName()];
+                    if (!visitedRefs.Contains(serv))
+                    {
+                        servRefs.Add(serv);
+                        servRefs.AddRange(serv.getReferences(servRefs));
+                    }
+                }
+            }
+
+
+            return servRefs ;
+        }
     }
 }

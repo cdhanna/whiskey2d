@@ -10,53 +10,64 @@ namespace Whiskey2D.Services
     public class Library
     {
         private AppDomain app;
+        private List< ServiceHandle<Service> > serviceHandles;
+        private String libraryName;
 
 
-       // private List<string> serviceHandles;
-        private List<Service> services;
-        private Dictionary<Service, string> serviceDllTable;
-
-
-        public Library()
+        public Library(string libraryName)
         {
-            app = AppDomain.CreateDomain("app", null, AppDomain.CurrentDomain.SetupInformation);
-            services = new List<Service>();
-            serviceDllTable = new Dictionary<Service, string>();
-           // serviceHandles = new List<ServiceHandle>();
+           
+            this.libraryName = libraryName;
+            refreshApp();
+            serviceHandles = new List<ServiceHandle<Service>>();
 
         }
 
-        public S add<S>(ServiceHandle<S> handle) where S : Service
+        public S instantiate<S>(ServiceHandle<S> handle) where S : Service
         {
-            
+
             
             object obj = app.CreateInstanceFromAndUnwrap(handle.AssemblyName, handle.TypeName);
             S serv = (S)obj;
-            services.Add(serv);
-            serviceDllTable.Add(serv, handle.AssemblyName);
+
+            addHandle(handle);
+            
+            
             return serv;
 
+        }
 
-          //  serviceHandles.Add(handle);
+        private void addHandle<S>(ServiceHandle<S> handle) where S : Service
+        {
+            if (0 == serviceHandles.Where(t => t.HandleID == handle.HandleID).ToList().Count)
+            {
+                serviceHandles.Add(handle.convertUp());
+               
+            }
+        }
 
-            
+        private void refreshApp()
+        {
+            if (app != null)
+            {
+                AppDomain.Unload(app);
+            }
+            app = AppDomain.CreateDomain(libraryName, null, AppDomain.CurrentDomain.SetupInformation);
         }
 
         public void unload()
         {
-            List<String> values = new List<string>();
 
-            foreach (Service serv in serviceDllTable.Keys)
+            refreshApp();
+
+            while (serviceHandles.Count > 0)
             {
-                values.Add(serviceDllTable[serv]);
+                ServiceHandle<Service> handle = serviceHandles[0];
+                serviceHandles.RemoveAt(0);
+                File.Delete(handle.AssemblyName);
             }
 
-            AppDomain.Unload(app);
-            while (values.Count > 0)
-            {
-                File.Delete(values[0]);
-                values.RemoveAt(0);
-            }
+          
         }
     }
 }

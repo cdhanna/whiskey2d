@@ -125,8 +125,13 @@
     <Compile Include="Services\DefaultService.cs" />
     <Compile Include="Services\Library.cs" />
     <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\ServiceCollection.cs" />
+    <Compile Include="Services\ServiceDescriptor.cs" />
     <Compile Include="Services\ServiceHandle.cs" />
     <Compile Include="Services\ServiceLoader.cs" />
+    <Compile Include="Services\ServiceProperty.cs" />
+    <Compile Include="Services\ServicePropertyImpl.cs" />
+    <Compile Include="Services\Temp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Nuclex.Cloning">

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Whiskey2D.Services;
+
+
 namespace Whiskey2D.Core
 {
 
@@ -13,12 +15,13 @@ namespace Whiskey2D.Core
     {
         private static int idCounter = 0;
 
-
-
+        public GameObject()
+        {
+        }
         /// <summary>
         /// Create a new Game Object
         /// </summary>
-        public GameObject()
+        public GameObject(int x)
         {
             Position = Vector.Zero;
             Sprite = new Sprite();
@@ -101,7 +104,11 @@ namespace Whiskey2D.Core
                 if (Sprite == null)
                 {
                     return new Bounds(Position, Vector.Zero);
-                } else return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
+                }
+                else
+                {
+                    return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
+                }
             } 
         }
 

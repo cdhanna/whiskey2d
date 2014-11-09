@@ -10,6 +10,7 @@ using System.IO;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using WhiskeyEditor.Project;
+using Whiskey2D.Services;
 
 
 namespace WhiskeyEditor.ClassLoader
@@ -41,6 +42,7 @@ namespace WhiskeyEditor.ClassLoader
         {
             return instance;
         }
+        public static TypeManager Instance { get { return instance; } }
 
         private TypeManager()
         {
@@ -49,7 +51,14 @@ namespace WhiskeyEditor.ClassLoader
             addListeners = new List<DescriptorAddedListener>();
             descToTypeMap = new Dictionary<GameObjectDescriptor, Type>();
             typeToDescMap = new Dictionary<Type, GameObjectDescriptor>();
+
+
+            //gameObjectLibrary = ServiceLoader.Instance.createLibrary("GameObjectLibrary");
+
         }
+
+        //private Library gameObjectLibrary;
+        //public Library GameObjectLibrary { get { return gameObjectLibrary; } }
 
 
         /// <summary>

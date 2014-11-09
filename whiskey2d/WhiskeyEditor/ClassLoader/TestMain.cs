@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Whiskey2D.Core;
 using System.Reflection;
 using Whiskey2D.Services;
+using System.Diagnostics;
 
 namespace WhiskeyEditor.ClassLoader
 {
 
 
-    static class TestMain
+    class TestMain : MarshalByRefObject
     {
 
   
@@ -20,18 +21,98 @@ namespace WhiskeyEditor.ClassLoader
         static void Main()
         {
 
+            Stopwatch stopWatch = new Stopwatch();
+            
+            
+
             Project.ProjectManager.Instance.ActiveProject = Project.ProjectManager.Instance.createNewProject("HomeTest", "HomeTest");
-            GameObjectDescriptor gobd = new GameObjectDescriptor("Project", "A");
-            gobd.compile();
+            stopWatch.Start();
+            ServiceCollection servColl = new ServiceCollection();
+
+
+            
+            GameObjectDescriptor gobdA = new GameObjectDescriptor(servColl, "Project", "A");
+           // GameObjectDescriptor gobdB = new GameObjectDescriptor(servColl, "Project", "B");
+
+
+            gobdA.compileToDisc();
+
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan ts = stopWatch.Elapsed;
+            Console.WriteLine("TIME: " + ts.TotalMilliseconds);
+
+            //Service instA = gobdA.createServiceInstance();
+
+
+
+            //gobdB.addProperty(new PropertyDescriptor("R", typeof(GameObject), (GameObject)instA));
+            //gobdB.compileToDisc();
+
+            //Service instB = gobdB.createServiceInstance();
+
+            //gobdA.addProperty(new PropertyDescriptor("T", typeof(GameObject), (GameObject)instB));
+            
+            //gobdA.compileToDisc();
+            //gobdA.addProperty(new PropertyDescriptor("Nine", typeof(int), 9));
+            //servColl = gobdA.compileToDisc(servColl);
+            //Service refInst = servColl.get(0);
+
+          //  GameObjectService inst2 = gobdA.createServiceInstance();
+
+
+            //Console.WriteLine("OLD INST NINE = " + refInst.getServiceProperty("Nine").get(inst));
+            //Console.WriteLine("OLD INST EIGHT = " + refInst.getServiceProperty("Eight").get(inst));
+            //gobdB.addProperty(new PropertyDescriptor("R", typeof(GameObject), (GameObject)inst));
+            //gobdB.compileToDisc();
+
+            //GameObjectService instB = gobdB.createServiceInstance();
+            
+
+
+            //object instA = instB.getServiceProperty("R").get(instB);
+            //;
+            //Console.WriteLine("VALUE IS " + inst.getServiceProperty("Eight").get(inst));
+            
+           
+            //gobd.compileToDisc();
+
+
+            //inst = gobd.createServiceInstance();
+            //Console.WriteLine("VALUE IS " + inst.getServiceProperty("Nine").get(inst));
+
+
             //Type gobdType = TypeManager.getInstance().addDescriptor(gobd);
 
 
-            ServiceHandle<GameObjectService> sHandle = new ServiceHandle<GameObjectService>(Project.ProjectManager.Instance.ActiveProject.PathBin + "\\Project.A0.dll", "Project.A");
+           // ServiceHandle<GameObjectService> sHandle = new ServiceHandle<GameObjectService>(Project.ProjectManager.Instance.ActiveProject.PathBin + "\\Project.A.dll", "Project.A");
 
-            Library lib = ServiceLoader.Instance.createLibrary();
-            lib.add(sHandle);
+           // Library lib = ServiceLoader.Instance.createLibrary("test");
+           // GameObjectService gobs = lib.instantiate(sHandle);
 
-            lib.unload();
+
+           // ServiceProperty serv = gobs.getServiceProperty("Eight");
+           // serv.set(gobs, 100);
+            
+           // Console.WriteLine(serv.get(gobs));
+           //// try
+           // {
+           //     ServiceProperty[] props = gobs.getServiceProperties();
+           //     foreach (ServiceProperty p in props)
+           //     {
+                    
+           //         object val = p.get(gobs);
+           //         //Console.WriteLine(val);
+                   
+           //     }
+
+           // }
+          
+
+           // lib.unload();
+
+           // gobd.addProperty(new PropertyDescriptor("Seven", typeof(int), 7));
+           // gobd.compile();
+
 
 
             //Library lib = ServiceLoader.Instance.createLibrary();

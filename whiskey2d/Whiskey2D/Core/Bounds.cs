@@ -9,6 +9,7 @@ namespace Whiskey2D.Core
     /// <summary>
     /// Simple solution for rectangular collision.
     /// </summary>
+    [Serializable]
     public class Bounds
     {
 
