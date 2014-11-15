@@ -13,7 +13,10 @@ namespace WhiskeyEditor.Backend
 
         public RealType(Type type, object value)
         {
-            if (value != null && !value.GetType().Equals(type))
+
+            value = Convert.ChangeType(value, type);
+
+            if (value != null && !value.GetType().IsAssignableFrom(type))
             {
                 throw new WhiskeyException("Given type does not match given value: " + type.Name + " versus value of " + value.GetType().Name);
             }

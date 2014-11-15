@@ -55,14 +55,14 @@ namespace Whiskey2D.Core
         //public Vector2 Position;
         public Vector Position;
 
-        public float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
-        public float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
+        public virtual float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
+        public virtual float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
         /// <summary>
         /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
         /// To give the Game Object visuals, set this to a new Sprite()
         /// </summary>
 
-        public Sprite Sprite
+        public virtual Sprite Sprite
         {
             get
             {

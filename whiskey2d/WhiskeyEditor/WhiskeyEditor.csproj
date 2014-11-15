@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WhiskeyEditor.Program</StartupObject>
+    <StartupObject>WhiskeyEditor.Backend.TestBack</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -86,12 +86,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\Managers\CompileManager.cs" />
     <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />
     <Compile Include="Backend\InstanceDescriptor.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />
+    <Compile Include="Backend\TestBack.cs" />
     <Compile Include="Backend\TypeDescriptor.cs" />
     <Compile Include="Backend\TypeVal.cs" />
     <Compile Include="Backend\WhiskeyException.cs" />
