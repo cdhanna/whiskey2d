@@ -107,6 +107,12 @@
     <Compile Include="Controls\ScriptIcon.Designer.cs">
       <DependentUpon>ScriptIcon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScriptLibrary.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScriptLibrary.Designer.cs">
+      <DependentUpon>ScriptLibrary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TypeEditor\PropertyEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -234,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ScriptIcon.resx">
       <DependentUpon>ScriptIcon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ScriptLibrary.resx">
+      <DependentUpon>ScriptLibrary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TypeEditor\PropertyEditor.resx">
       <DependentUpon>PropertyEditor.cs</DependentUpon>

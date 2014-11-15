@@ -17,7 +17,7 @@ namespace WhiskeyEditor.Controls
 
         private List<ScriptIcon> scriptIcons;
 
-        public GameObject SelectedObject { get; set; } 
+        public GameObject SelectedObject { get; set; }
 
         public ScriptCollection()
         {
@@ -25,8 +25,51 @@ namespace WhiskeyEditor.Controls
             InitializeComponent();
         }
 
+        public void totalRefresh(ScriptDescriptor sdesc)
+        {
+            List<ScriptIcon> icons = new List<ScriptIcon>();
+            foreach (GameObject gob in sdesc.gobRefs)
+            {
+                SelectedObject = gob;
+                Refresh();
+
+                foreach (ScriptIcon icon in scriptIcons)
+                {
+                    if (icon.ScriptDescriptor.Equals(sdesc))
+                    {
+                        icons.Add(icon);
+                        
+                    }
+                }
+
+            }
+
+            foreach (ScriptIcon icon in icons)
+            {
+                icon.closeBtn.PerformClick();
+                addScriptLogic(sdesc.Name);
+            }
+        }
+
         public override void Refresh()
         {
+
+            scriptIcons.Clear();
+            flowPanel.Controls.Clear();
+
+            if (SelectedObject != null)
+            {
+
+                List<ScriptBundle<GameObject>> scriptBundles = SelectedObject.getScriptBundles();
+                foreach (ScriptBundle<GameObject> sb in scriptBundles)
+                {
+                    string scriptName = sb.ScriptName;
+                    ScriptDescriptor sdesc = ScriptManager.Instance.getFromName(scriptName);
+                    addScriptUI(sdesc, sb.Script);
+                }
+            }
+
+
             base.Refresh();
         }
 
@@ -38,44 +81,55 @@ namespace WhiskeyEditor.Controls
         private void addScriptBtn_Click(object sender, EventArgs e)
         {
             string requestedScriptName = scriptNameBox.Text;
+            addScriptLogic(requestedScriptName);
+            
+
+        }
+
+        public void addScriptLogic(string scriptName)
+        {
+            ScriptDescriptor sdesc = ScriptManager.Instance.getFromName(scriptName);
+            sdesc.ScriptCollection = this;
+            object scriptObject = null;
+            try
+            {
+                if (SelectedObject != null)
+                {
+                    scriptObject = sdesc.generateInstance();
+                    SelectedObject.addScript(scriptObject);
+                    sdesc.addGobRef(SelectedObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
 
-            ScriptDescriptor sdesc = ScriptManager.Instance.getFromName(requestedScriptName);
 
-            //Type scriptType = ScriptManager.Instance.getTypeOfScript(requestedScriptName);
-            //ScriptManager.Instance.addScriptToGob(gob, scriptType);
 
+            addScriptUI(sdesc, scriptObject);
+
+        }
+
+
+        private void addScriptUI(ScriptDescriptor sdesc, object scriptObject)
+        {
             ScriptIcon sIcon = new ScriptIcon(sdesc);
 
             sIcon.closeBtn.Click += (sndr, args) =>
             {
                 scriptIcons.Remove(sIcon);
                 flowPanel.Controls.Remove(sIcon);
+                sdesc.removeGobRef(SelectedObject);
+                SelectedObject.removeScript(scriptObject);
+
             };
 
-            //sIcon.ScriptDescriptor = something;
 
             scriptIcons.Add(sIcon);
             flowPanel.Controls.Add(sIcon);
-
-
-            try
-            {
-                if (SelectedObject != null)
-                {
-
-                    
-                    SelectedObject.addScript( sdesc.generateInstance() );
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-                //Console.WriteLine("could not add script");
-            }
-
-
         }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
+using WhiskeyEditor.Controls;
 
 namespace WhiskeyEditor.ClassLoader
 {
@@ -69,6 +70,8 @@ namespace Project.Scripts
         }
         private Type GameObjectType { get; set; }
 
+        public List<GameObject> gobRefs;
+
         private static int sid = 0;
         private int id;
         public int Id { get { return id; } }
@@ -85,6 +88,39 @@ namespace Project.Scripts
             {
                 code = value;
             }
+        }
+
+        public ScriptCollection ScriptCollection { get; set; }
+
+        public void refreshAllGobRefs()
+        {
+            //foreach (GameObject gob in gobRefs)
+            //{
+            //    List<ScriptBundle<GameObject>> scripts = gob.getScriptBundles();
+            //    List<ScriptBundle<GameObject>> marked = new List<ScriptBundle<GameObject>>();
+            //    foreach (ScriptBundle<GameObject> script in scripts)
+            //    {
+            //        if (script.ScriptName.Equals(Name))
+            //        {
+            //            marked.Add(script);
+            //        }
+            //    }
+            //    foreach (ScriptBundle<GameObject> script in marked)
+            //    {
+            //        gob.removeScript(script);
+            //        gob.addScript(generateInstance());
+            //    }
+            //}
+        }
+
+        public void addGobRef(GameObject gob)
+        {
+            gobRefs.Add(gob);
+        }
+
+        public void removeGobRef(GameObject gob)
+        {
+            gobRefs.Remove(gob);
         }
 
         //private string latestDllPath = null;
@@ -105,6 +141,7 @@ namespace Project.Scripts
 
         public ScriptDescriptor(string name)
         {
+            gobRefs = new List<GameObject>();
             id = sid++;
             Name = name;
             GameObjectType = typeof(GameObject);

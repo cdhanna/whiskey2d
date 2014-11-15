@@ -46,6 +46,8 @@ namespace WhiskeyEditor.Controls
                 this.Text = p.Name;
             }
 
+            
+
         }
 
         private void whiskeyControl_DragDrop(object sender, DragEventArgs e)
@@ -118,13 +120,20 @@ namespace WhiskeyEditor.Controls
             }
         }
 
+        public void setActiveScript(ScriptDescriptor sdesc)
+        {
+            codeControl.Text = sdesc.Code;
+            activeEditScript = sdesc;
+            scriptNameBox.Text = sdesc.Name;
+        }
+
         private void newScriptBtn_Click(object sender, EventArgs e)
         {
            // codeControl.Text = ScriptManager.Instance.getEmptyScriptTemplate(scriptNameBox.Text);
             ScriptDescriptor sdesc = new ScriptDescriptor(scriptNameBox.Text);
-            codeControl.Text = sdesc.Code;
-            activeEditScript = sdesc;
-            scriptNameBox.Text = "Unnamed";
+            sdesc.Name = scriptNameBox.Text;
+            setActiveScript(sdesc);
+            
         }
 
         private void saveScriptBtn_Click(object sender, EventArgs e)
@@ -134,8 +143,8 @@ namespace WhiskeyEditor.Controls
 
             ScriptManager.Instance.compile(activeEditScript);
             ScriptManager.Instance.writeToDisc(activeEditScript);
-
-
+            scriptCollection1.totalRefresh(activeEditScript);
+            scriptLibrary.scriptSaved(this, activeEditScript);
         }
 
     }

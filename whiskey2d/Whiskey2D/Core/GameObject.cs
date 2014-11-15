@@ -25,7 +25,7 @@ namespace Whiskey2D.Core
             Sprite.Scale *= 50;
             ID = idCounter++;
             scripts = new List<ScriptBundle<GameObject>>();
-
+            objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
             //List<ScriptBundle<GameObject>> initScripts = getInitialScripts();
             //if (initScripts != null)
             //{
@@ -37,8 +37,8 @@ namespace Whiskey2D.Core
 
             GameManager.Objects.addObject(this);
 
-           
-           // GameObjectConfigurator.getInstance().setInitialValueFor("GameObject", "Bounds", Bounds);
+
+            // GameObjectConfigurator.getInstance().setInitialValueFor("GameObject", "Bounds", Bounds);
 
         }
 
@@ -46,7 +46,7 @@ namespace Whiskey2D.Core
         private Sprite sprite;
         private int id;
         private List<ScriptBundle<GameObject>> scripts;
-
+        private Dictionary<object, ScriptBundle<GameObject>> objectScriptTable;
         /// <summary>
         /// The position of the Game Object
         /// </summary>
@@ -54,7 +54,7 @@ namespace Whiskey2D.Core
         //[TypeConverter(typeof(ExpandableObjectConverter))]
         //public Vector2 Position;
         public Vector Position;
-        
+
         public float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
         public float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
         /// <summary>
@@ -101,8 +101,9 @@ namespace Whiskey2D.Core
                 if (Sprite == null)
                 {
                     return new Bounds(Position, Vector.Zero);
-                } else return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
-            } 
+                }
+                else return new Bounds(Position - Sprite.Offset, Sprite.ImageSize);
+            }
         }
 
         /// <summary>
@@ -127,10 +128,26 @@ namespace Whiskey2D.Core
         }
 
 
-        public void removeScript<G>(Script<G> script) where G : GameObject
+        public List<ScriptBundle<GameObject>> getScriptBundles()
         {
-            //todo remove script
-            throw new NotImplementedException();
+            return this.scripts;
+        }
+
+        public void removeScript(ScriptBundle<GameObject> script)
+        {
+            this.scripts.Remove(script);
+            this.objectScriptTable.Remove(script);
+        }
+
+        public void removeScript(object script)
+        {
+            if (!this.objectScriptTable.ContainsKey(script))
+            {
+                return;
+            }
+            ScriptBundle<GameObject> converted = this.objectScriptTable[script];
+            this.scripts.Remove(converted);
+            this.objectScriptTable.Remove(script);
         }
 
         public void addScript(object script)
@@ -140,6 +157,12 @@ namespace Whiskey2D.Core
 
             ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
             this.scripts.Add(converted);
+            this.objectScriptTable.Add(script, converted);
+        }
+
+        public void removeScript<G>(Script<G> script) where G : GameObject
+        {
+            removeScript((object)script);
         }
 
         /// <summary>
@@ -158,6 +181,7 @@ namespace Whiskey2D.Core
 
             ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
 
+            this.objectScriptTable.Add(script, converted);
             this.scripts.Add(converted);
         }
 
@@ -176,7 +200,7 @@ namespace Whiskey2D.Core
         /// Called upon initialization. Used to retrieve a set of start up scripts for the object. 
         /// </summary>
         /// <returns>A list of scripts to be run by the GameObject, or null if no scripts should be run</returns>
-       // protected abstract List<Script> getInitialScripts();
+        // protected abstract List<Script> getInitialScripts();
 
         protected abstract void addInitialScripts();
 

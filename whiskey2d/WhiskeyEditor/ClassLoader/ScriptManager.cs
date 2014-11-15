@@ -18,12 +18,13 @@ namespace WhiskeyEditor.ClassLoader
 
         public static ScriptManager Instance { get { return instance; } }
 
-
+        private int asmCounter;
         private Dictionary<int, ScriptDescriptor> idScriptTable;
         private Dictionary<string, ScriptDescriptor> nameScriptTable;
 
         private ScriptManager()
         {
+            asmCounter = 0;
             idScriptTable = new Dictionary<int, ScriptDescriptor>();
             nameScriptTable = new Dictionary<string, ScriptDescriptor>();
         }
@@ -58,7 +59,7 @@ namespace WhiskeyEditor.ClassLoader
 
         public void compile(ScriptDescriptor sdesc)
         {
-            string dllName = Project.ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + "Script." + sdesc.Name + ".dll";
+            string dllName = Project.ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + "Script." + sdesc.Name + (asmCounter++) + ".dll";
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters options = new CompilerParameters();
 

@@ -13,10 +13,13 @@ namespace WhiskeyEditor.Controls
 {
     public partial class ScriptIcon : UserControl
     {
+        public ScriptDescriptor ScriptDescriptor { get; set; }
+
         public ScriptIcon(ScriptDescriptor sdesc)
         {
             InitializeComponent();
             scriptNameLabel.Text = sdesc.Name;
+            ScriptDescriptor = sdesc;
         }
 
         //public ScriptDescriptor ScriptDescriptor { get; set; }

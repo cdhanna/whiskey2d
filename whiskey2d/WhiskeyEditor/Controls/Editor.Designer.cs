@@ -28,456 +28,466 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.baseTable = new System.Windows.Forms.TableLayoutPanel();
-            this.playTestBtn = new System.Windows.Forms.Button();
-            this.baseSplitPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.editorTabs = new System.Windows.Forms.TabControl();
-            this.gameSpaceTab = new System.Windows.Forms.TabPage();
-            this.gameSpace = new WhiskeyEditor.MonoHelp.WhiskeyControl();
-            this.instancePropGrid = new WhiskeyEditor.WhiskeyPropertyGrid();
-            this.scriptSpaceTab = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.codeControl = new ICSharpCode.TextEditor.TextEditorControl();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.saveScriptBtn = new System.Windows.Forms.Button();
-            this.scriptNameBox = new System.Windows.Forms.TextBox();
-            this.newScriptBtn = new System.Windows.Forms.Button();
-            this.detailTabs = new System.Windows.Forms.TabControl();
-            this.scriptLibTab = new System.Windows.Forms.TabPage();
-            this.typeBrowserTab = new System.Windows.Forms.TabPage();
-            this.gameObjectTypeBrowser1 = new WhiskeyEditor.Controls.TypeEditor.GameObjectTypeBrowser();
-            this.typeEditor = new WhiskeyEditor.Controls.TypeEditor.TypeEditor();
-            this.instEditorTab = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.propTab = new System.Windows.Forms.TabPage();
-            this.scriptTab = new System.Windows.Forms.TabPage();
-            this.scriptCollection1 = new WhiskeyEditor.Controls.ScriptCollection();
-            this.typeEditorTab = new System.Windows.Forms.TabPage();
-            this.typeTabPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.typeEditorButtonPanel1 = new WhiskeyEditor.Controls.TypeEditor.TypeEditorButtonPanel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.baseTable.SuspendLayout();
-            this.baseSplitPanel.SuspendLayout();
-            this.editorTabs.SuspendLayout();
-            this.gameSpaceTab.SuspendLayout();
-            this.scriptSpaceTab.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.detailTabs.SuspendLayout();
-            this.typeBrowserTab.SuspendLayout();
-            this.instEditorTab.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.propTab.SuspendLayout();
-            this.scriptTab.SuspendLayout();
-            this.typeEditorTab.SuspendLayout();
-            this.typeTabPanel.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            baseTable = new System.Windows.Forms.TableLayoutPanel();
+            playTestBtn = new System.Windows.Forms.Button();
+            baseSplitPanel = new System.Windows.Forms.TableLayoutPanel();
+            editorTabs = new System.Windows.Forms.TabControl();
+            gameSpaceTab = new System.Windows.Forms.TabPage();
+            gameSpace = new WhiskeyEditor.MonoHelp.WhiskeyControl();
+            instancePropGrid = new WhiskeyEditor.WhiskeyPropertyGrid();
+            scriptSpaceTab = new System.Windows.Forms.TabPage();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            codeControl = new ICSharpCode.TextEditor.TextEditorControl();
+            panel1 = new System.Windows.Forms.Panel();
+            saveScriptBtn = new System.Windows.Forms.Button();
+            scriptNameBox = new System.Windows.Forms.TextBox();
+            newScriptBtn = new System.Windows.Forms.Button();
+            detailTabs = new System.Windows.Forms.TabControl();
+            scriptLibTab = new System.Windows.Forms.TabPage();
+            typeBrowserTab = new System.Windows.Forms.TabPage();
+            gameObjectTypeBrowser1 = new WhiskeyEditor.Controls.TypeEditor.GameObjectTypeBrowser();
+            typeEditor = new WhiskeyEditor.Controls.TypeEditor.TypeEditor();
+            instEditorTab = new System.Windows.Forms.TabPage();
+            tabControl1 = new System.Windows.Forms.TabControl();
+            propTab = new System.Windows.Forms.TabPage();
+            scriptTab = new System.Windows.Forms.TabPage();
+            scriptCollection1 = new WhiskeyEditor.Controls.ScriptCollection();
+            typeEditorTab = new System.Windows.Forms.TabPage();
+            typeTabPanel = new System.Windows.Forms.TableLayoutPanel();
+            typeEditorButtonPanel1 = new WhiskeyEditor.Controls.TypeEditor.TypeEditorButtonPanel();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            newFileDialog = new System.Windows.Forms.SaveFileDialog();
+            openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            baseTable.SuspendLayout();
+            baseSplitPanel.SuspendLayout();
+            editorTabs.SuspendLayout();
+            gameSpaceTab.SuspendLayout();
+            scriptSpaceTab.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            detailTabs.SuspendLayout();
+            typeBrowserTab.SuspendLayout();
+            instEditorTab.SuspendLayout();
+            tabControl1.SuspendLayout();
+            propTab.SuspendLayout();
+            scriptTab.SuspendLayout();
+            typeEditorTab.SuspendLayout();
+            typeTabPanel.SuspendLayout();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // baseTable
             // 
-            this.baseTable.ColumnCount = 1;
-            this.baseTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.baseTable.Controls.Add(this.playTestBtn, 0, 3);
-            this.baseTable.Controls.Add(this.baseSplitPanel, 0, 2);
-            this.baseTable.Controls.Add(this.menuStrip1, 0, 0);
-            this.baseTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.baseTable.Location = new System.Drawing.Point(0, 0);
-            this.baseTable.Margin = new System.Windows.Forms.Padding(0);
-            this.baseTable.Name = "baseTable";
-            this.baseTable.RowCount = 4;
-            this.baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 451F));
-            this.baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.baseTable.Size = new System.Drawing.Size(826, 600);
-            this.baseTable.TabIndex = 0;
+            baseTable.ColumnCount = 1;
+            baseTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            baseTable.Controls.Add(playTestBtn, 0, 3);
+            baseTable.Controls.Add(baseSplitPanel, 0, 2);
+            baseTable.Controls.Add(menuStrip1, 0, 0);
+            baseTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            baseTable.Location = new System.Drawing.Point(0, 0);
+            baseTable.Margin = new System.Windows.Forms.Padding(0);
+            baseTable.Name = "baseTable";
+            baseTable.RowCount = 4;
+            baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 451F));
+            baseTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            baseTable.Size = new System.Drawing.Size(826, 600);
+            baseTable.TabIndex = 0;
             // 
             // playTestBtn
             // 
-            this.playTestBtn.Location = new System.Drawing.Point(2, 506);
-            this.playTestBtn.Margin = new System.Windows.Forms.Padding(2);
-            this.playTestBtn.Name = "playTestBtn";
-            this.playTestBtn.Size = new System.Drawing.Size(56, 19);
-            this.playTestBtn.TabIndex = 1;
-            this.playTestBtn.Text = "playTest";
-            this.playTestBtn.UseVisualStyleBackColor = true;
-            this.playTestBtn.Click += new System.EventHandler(this.playTestBtn_Click);
+            playTestBtn.Location = new System.Drawing.Point(2, 506);
+            playTestBtn.Margin = new System.Windows.Forms.Padding(2);
+            playTestBtn.Name = "playTestBtn";
+            playTestBtn.Size = new System.Drawing.Size(56, 19);
+            playTestBtn.TabIndex = 1;
+            playTestBtn.Text = "playTest";
+            playTestBtn.UseVisualStyleBackColor = true;
+            playTestBtn.Click += new System.EventHandler(playTestBtn_Click);
             // 
             // baseSplitPanel
             // 
-            this.baseSplitPanel.ColumnCount = 2;
-            this.baseSplitPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.baseSplitPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 598F));
-            this.baseSplitPanel.Controls.Add(this.editorTabs, 1, 0);
-            this.baseSplitPanel.Controls.Add(this.detailTabs, 0, 0);
-            this.baseSplitPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.baseSplitPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.baseSplitPanel.Location = new System.Drawing.Point(0, 53);
-            this.baseSplitPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.baseSplitPanel.Name = "baseSplitPanel";
-            this.baseSplitPanel.RowCount = 1;
-            this.baseSplitPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.baseSplitPanel.Size = new System.Drawing.Size(826, 451);
-            this.baseSplitPanel.TabIndex = 0;
+            baseSplitPanel.ColumnCount = 2;
+            baseSplitPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            baseSplitPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 598F));
+            baseSplitPanel.Controls.Add(editorTabs, 1, 0);
+            baseSplitPanel.Controls.Add(detailTabs, 0, 0);
+            baseSplitPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            baseSplitPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            baseSplitPanel.Location = new System.Drawing.Point(0, 53);
+            baseSplitPanel.Margin = new System.Windows.Forms.Padding(0);
+            baseSplitPanel.Name = "baseSplitPanel";
+            baseSplitPanel.RowCount = 1;
+            baseSplitPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            baseSplitPanel.Size = new System.Drawing.Size(826, 451);
+            baseSplitPanel.TabIndex = 0;
             // 
             // editorTabs
             // 
-            this.editorTabs.Controls.Add(this.gameSpaceTab);
-            this.editorTabs.Controls.Add(this.scriptSpaceTab);
-            this.editorTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editorTabs.Location = new System.Drawing.Point(229, 1);
-            this.editorTabs.Margin = new System.Windows.Forms.Padding(1);
-            this.editorTabs.Name = "editorTabs";
-            this.editorTabs.SelectedIndex = 0;
-            this.editorTabs.Size = new System.Drawing.Size(596, 449);
-            this.editorTabs.TabIndex = 0;
+            editorTabs.Controls.Add(gameSpaceTab);
+            editorTabs.Controls.Add(scriptSpaceTab);
+            editorTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            editorTabs.Location = new System.Drawing.Point(229, 1);
+            editorTabs.Margin = new System.Windows.Forms.Padding(1);
+            editorTabs.Name = "editorTabs";
+            editorTabs.SelectedIndex = 0;
+            editorTabs.Size = new System.Drawing.Size(596, 449);
+            editorTabs.TabIndex = 0;
             // 
             // gameSpaceTab
             // 
-            this.gameSpaceTab.Controls.Add(this.gameSpace);
-            this.gameSpaceTab.Location = new System.Drawing.Point(4, 22);
-            this.gameSpaceTab.Margin = new System.Windows.Forms.Padding(0);
-            this.gameSpaceTab.Name = "gameSpaceTab";
-            this.gameSpaceTab.Size = new System.Drawing.Size(588, 423);
-            this.gameSpaceTab.TabIndex = 0;
-            this.gameSpaceTab.Text = "Game";
-            this.gameSpaceTab.UseVisualStyleBackColor = true;
+            gameSpaceTab.Controls.Add(gameSpace);
+            gameSpaceTab.Location = new System.Drawing.Point(4, 22);
+            gameSpaceTab.Margin = new System.Windows.Forms.Padding(0);
+            gameSpaceTab.Name = "gameSpaceTab";
+            gameSpaceTab.Size = new System.Drawing.Size(588, 423);
+            gameSpaceTab.TabIndex = 0;
+            gameSpaceTab.Text = "Game";
+            gameSpaceTab.UseVisualStyleBackColor = true;
             // 
             // gameSpace
             // 
-            this.gameSpace.AllowDrop = true;
-            this.gameSpace.AutoSize = true;
-            this.gameSpace.BackColor = System.Drawing.Color.Black;
-            this.gameSpace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gameSpace.GobGrid = this.instancePropGrid;
-            this.gameSpace.GobScriptCollection = this.scriptCollection1;
-            this.gameSpace.Location = new System.Drawing.Point(0, 0);
-            this.gameSpace.Name = "gameSpace";
-            this.gameSpace.Size = new System.Drawing.Size(588, 423);
-            this.gameSpace.TabIndex = 0;
-            this.gameSpace.VSync = false;
-            this.gameSpace.DragDrop += new System.Windows.Forms.DragEventHandler(this.whiskeyControl_DragDrop);
-            this.gameSpace.DragEnter += new System.Windows.Forms.DragEventHandler(this.whiskeyControl_DragEnter);
+            gameSpace.AllowDrop = true;
+            gameSpace.AutoSize = true;
+            gameSpace.BackColor = System.Drawing.Color.Black;
+            gameSpace.Dock = System.Windows.Forms.DockStyle.Fill;
+            gameSpace.GobGrid = instancePropGrid;
+            gameSpace.GobScriptCollection = scriptCollection1;
+            gameSpace.Location = new System.Drawing.Point(0, 0);
+            gameSpace.Name = "gameSpace";
+            gameSpace.Size = new System.Drawing.Size(588, 423);
+            gameSpace.TabIndex = 0;
+            gameSpace.VSync = false;
+            gameSpace.DragDrop += new System.Windows.Forms.DragEventHandler(whiskeyControl_DragDrop);
+            gameSpace.DragEnter += new System.Windows.Forms.DragEventHandler(whiskeyControl_DragEnter);
             // 
             // instancePropGrid
             // 
-            this.instancePropGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.instancePropGrid.Location = new System.Drawing.Point(3, 3);
-            this.instancePropGrid.Margin = new System.Windows.Forms.Padding(2);
-            this.instancePropGrid.Name = "instancePropGrid";
-            this.instancePropGrid.Size = new System.Drawing.Size(204, 391);
-            this.instancePropGrid.TabIndex = 0;
-            this.instancePropGrid.ToolbarVisible = false;
+            instancePropGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            instancePropGrid.Location = new System.Drawing.Point(3, 3);
+            instancePropGrid.Margin = new System.Windows.Forms.Padding(2);
+            instancePropGrid.Name = "instancePropGrid";
+            instancePropGrid.Size = new System.Drawing.Size(204, 391);
+            instancePropGrid.TabIndex = 0;
+            instancePropGrid.ToolbarVisible = false;
             // 
             // scriptSpaceTab
             // 
-            this.scriptSpaceTab.Controls.Add(this.tableLayoutPanel1);
-            this.scriptSpaceTab.Location = new System.Drawing.Point(4, 22);
-            this.scriptSpaceTab.Margin = new System.Windows.Forms.Padding(0);
-            this.scriptSpaceTab.Name = "scriptSpaceTab";
-            this.scriptSpaceTab.Size = new System.Drawing.Size(588, 423);
-            this.scriptSpaceTab.TabIndex = 1;
-            this.scriptSpaceTab.Text = "Code";
-            this.scriptSpaceTab.UseVisualStyleBackColor = true;
+            scriptSpaceTab.Controls.Add(tableLayoutPanel1);
+            scriptSpaceTab.Location = new System.Drawing.Point(4, 22);
+            scriptSpaceTab.Margin = new System.Windows.Forms.Padding(0);
+            scriptSpaceTab.Name = "scriptSpaceTab";
+            scriptSpaceTab.Size = new System.Drawing.Size(588, 423);
+            scriptSpaceTab.TabIndex = 1;
+            scriptSpaceTab.Text = "Code";
+            scriptSpaceTab.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.codeControl, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.16548F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.83452F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(588, 423);
-            this.tableLayoutPanel1.TabIndex = 1;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(codeControl, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.16548F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.83452F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(588, 423);
+            tableLayoutPanel1.TabIndex = 1;
             // 
             // codeControl
             // 
-            this.codeControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeControl.IsReadOnly = false;
-            this.codeControl.Location = new System.Drawing.Point(2, 44);
-            this.codeControl.Margin = new System.Windows.Forms.Padding(2);
-            this.codeControl.Name = "codeControl";
-            this.codeControl.ShowTabs = true;
-            this.codeControl.Size = new System.Drawing.Size(584, 377);
-            this.codeControl.TabIndex = 0;
+            codeControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            codeControl.IsReadOnly = false;
+            codeControl.Location = new System.Drawing.Point(2, 44);
+            codeControl.Margin = new System.Windows.Forms.Padding(2);
+            codeControl.Name = "codeControl";
+            codeControl.ShowTabs = true;
+            codeControl.Size = new System.Drawing.Size(584, 377);
+            codeControl.TabIndex = 0;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.saveScriptBtn);
-            this.panel1.Controls.Add(this.scriptNameBox);
-            this.panel1.Controls.Add(this.newScriptBtn);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(582, 36);
-            this.panel1.TabIndex = 1;
+            panel1.Controls.Add(saveScriptBtn);
+            panel1.Controls.Add(scriptNameBox);
+            panel1.Controls.Add(newScriptBtn);
+            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel1.Location = new System.Drawing.Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(582, 36);
+            panel1.TabIndex = 1;
             // 
             // saveScriptBtn
             // 
-            this.saveScriptBtn.Location = new System.Drawing.Point(503, 7);
-            this.saveScriptBtn.Name = "saveScriptBtn";
-            this.saveScriptBtn.Size = new System.Drawing.Size(75, 23);
-            this.saveScriptBtn.TabIndex = 2;
-            this.saveScriptBtn.Text = "Save";
-            this.saveScriptBtn.UseVisualStyleBackColor = true;
-            this.saveScriptBtn.Click += new System.EventHandler(this.saveScriptBtn_Click);
+            saveScriptBtn.Location = new System.Drawing.Point(503, 7);
+            saveScriptBtn.Name = "saveScriptBtn";
+            saveScriptBtn.Size = new System.Drawing.Size(75, 23);
+            saveScriptBtn.TabIndex = 2;
+            saveScriptBtn.Text = "Save";
+            saveScriptBtn.UseVisualStyleBackColor = true;
+            saveScriptBtn.Click += new System.EventHandler(saveScriptBtn_Click);
             // 
             // scriptNameBox
             // 
-            this.scriptNameBox.Location = new System.Drawing.Point(85, 7);
-            this.scriptNameBox.Name = "scriptNameBox";
-            this.scriptNameBox.Size = new System.Drawing.Size(132, 20);
-            this.scriptNameBox.TabIndex = 1;
-            this.scriptNameBox.Text = "Unnamed";
+            scriptNameBox.Location = new System.Drawing.Point(85, 7);
+            scriptNameBox.Name = "scriptNameBox";
+            scriptNameBox.Size = new System.Drawing.Size(132, 20);
+            scriptNameBox.TabIndex = 1;
+            scriptNameBox.Text = "Unnamed";
             // 
             // newScriptBtn
             // 
-            this.newScriptBtn.Location = new System.Drawing.Point(4, 4);
-            this.newScriptBtn.Name = "newScriptBtn";
-            this.newScriptBtn.Size = new System.Drawing.Size(75, 23);
-            this.newScriptBtn.TabIndex = 0;
-            this.newScriptBtn.Text = "New";
-            this.newScriptBtn.UseVisualStyleBackColor = true;
-            this.newScriptBtn.Click += new System.EventHandler(this.newScriptBtn_Click);
+            newScriptBtn.Location = new System.Drawing.Point(4, 4);
+            newScriptBtn.Name = "newScriptBtn";
+            newScriptBtn.Size = new System.Drawing.Size(75, 23);
+            newScriptBtn.TabIndex = 0;
+            newScriptBtn.Text = "New";
+            newScriptBtn.UseVisualStyleBackColor = true;
+            newScriptBtn.Click += new System.EventHandler(newScriptBtn_Click);
             // 
             // detailTabs
             // 
-            this.detailTabs.Controls.Add(this.scriptLibTab);
-            this.detailTabs.Controls.Add(this.typeBrowserTab);
-            this.detailTabs.Controls.Add(this.instEditorTab);
-            this.detailTabs.Controls.Add(this.typeEditorTab);
-            this.detailTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.detailTabs.Location = new System.Drawing.Point(1, 1);
-            this.detailTabs.Margin = new System.Windows.Forms.Padding(1);
-            this.detailTabs.Multiline = true;
-            this.detailTabs.Name = "detailTabs";
-            this.detailTabs.SelectedIndex = 0;
-            this.detailTabs.Size = new System.Drawing.Size(226, 449);
-            this.detailTabs.TabIndex = 1;
+            detailTabs.Controls.Add(scriptLibTab);
+            detailTabs.Controls.Add(typeBrowserTab);
+            detailTabs.Controls.Add(instEditorTab);
+            detailTabs.Controls.Add(typeEditorTab);
+            detailTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            detailTabs.Location = new System.Drawing.Point(1, 1);
+            detailTabs.Margin = new System.Windows.Forms.Padding(1);
+            detailTabs.Multiline = true;
+            detailTabs.Name = "detailTabs";
+            detailTabs.SelectedIndex = 0;
+            detailTabs.Size = new System.Drawing.Size(226, 449);
+            detailTabs.TabIndex = 1;
             // 
             // scriptLibTab
             // 
-            this.scriptLibTab.Location = new System.Drawing.Point(4, 22);
-            this.scriptLibTab.Margin = new System.Windows.Forms.Padding(2);
-            this.scriptLibTab.Name = "scriptLibTab";
-            this.scriptLibTab.Padding = new System.Windows.Forms.Padding(2);
-            this.scriptLibTab.Size = new System.Drawing.Size(218, 423);
-            this.scriptLibTab.TabIndex = 0;
-            this.scriptLibTab.Text = "Scripts";
-            this.scriptLibTab.UseVisualStyleBackColor = true;
+            scriptLibTab.Location = new System.Drawing.Point(4, 22);
+            scriptLibTab.Margin = new System.Windows.Forms.Padding(2);
+            scriptLibTab.Name = "scriptLibTab";
+            scriptLibTab.Padding = new System.Windows.Forms.Padding(2);
+            scriptLibTab.Size = new System.Drawing.Size(218, 423);
+            scriptLibTab.TabIndex = 0;
+            scriptLibTab.Text = "Scripts";
+            scriptLibTab.UseVisualStyleBackColor = true;
+
+            //lib panel
+            scriptLibrary = new ScriptLibrary();
+            scriptLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+            scriptLibTab.Controls.Add(scriptLibrary);
+
+
             // 
             // typeBrowserTab
             // 
-            this.typeBrowserTab.Controls.Add(this.gameObjectTypeBrowser1);
-            this.typeBrowserTab.Location = new System.Drawing.Point(4, 22);
-            this.typeBrowserTab.Margin = new System.Windows.Forms.Padding(2);
-            this.typeBrowserTab.Name = "typeBrowserTab";
-            this.typeBrowserTab.Padding = new System.Windows.Forms.Padding(2);
-            this.typeBrowserTab.Size = new System.Drawing.Size(218, 423);
-            this.typeBrowserTab.TabIndex = 1;
-            this.typeBrowserTab.Text = "Browser";
-            this.typeBrowserTab.UseVisualStyleBackColor = true;
+            typeBrowserTab.Controls.Add(gameObjectTypeBrowser1);
+            typeBrowserTab.Location = new System.Drawing.Point(4, 22);
+            typeBrowserTab.Margin = new System.Windows.Forms.Padding(2);
+            typeBrowserTab.Name = "typeBrowserTab";
+            typeBrowserTab.Padding = new System.Windows.Forms.Padding(2);
+            typeBrowserTab.Size = new System.Drawing.Size(218, 423);
+            typeBrowserTab.TabIndex = 1;
+            typeBrowserTab.Text = "Browser";
+            typeBrowserTab.UseVisualStyleBackColor = true;
             // 
             // gameObjectTypeBrowser1
             // 
-            this.gameObjectTypeBrowser1.AutoScroll = true;
-            this.gameObjectTypeBrowser1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gameObjectTypeBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gameObjectTypeBrowser1.Location = new System.Drawing.Point(2, 2);
-            this.gameObjectTypeBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.gameObjectTypeBrowser1.Name = "gameObjectTypeBrowser1";
-            this.gameObjectTypeBrowser1.Size = new System.Drawing.Size(214, 419);
-            this.gameObjectTypeBrowser1.TabIndex = 1;
-            this.gameObjectTypeBrowser1.TypeEditor = this.typeEditor;
+            gameObjectTypeBrowser1.AutoScroll = true;
+            gameObjectTypeBrowser1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            gameObjectTypeBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            gameObjectTypeBrowser1.Location = new System.Drawing.Point(2, 2);
+            gameObjectTypeBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            gameObjectTypeBrowser1.Name = "gameObjectTypeBrowser1";
+            gameObjectTypeBrowser1.Size = new System.Drawing.Size(214, 419);
+            gameObjectTypeBrowser1.TabIndex = 1;
+            gameObjectTypeBrowser1.TypeEditor = typeEditor;
             // 
             // typeEditor
             // 
-            this.typeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.typeEditor.Enabled = false;
-            this.typeEditor.Location = new System.Drawing.Point(2, 2);
-            this.typeEditor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.typeEditor.Name = "typeEditor";
-            this.typeEditor.Size = new System.Drawing.Size(214, 369);
-            this.typeEditor.TabIndex = 1;
+            typeEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            typeEditor.Enabled = false;
+            typeEditor.Location = new System.Drawing.Point(2, 2);
+            typeEditor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            typeEditor.Name = "typeEditor";
+            typeEditor.Size = new System.Drawing.Size(214, 369);
+            typeEditor.TabIndex = 1;
             // 
             // instEditorTab
             // 
-            this.instEditorTab.Controls.Add(this.tabControl1);
-            this.instEditorTab.Location = new System.Drawing.Point(4, 22);
-            this.instEditorTab.Margin = new System.Windows.Forms.Padding(2);
-            this.instEditorTab.Name = "instEditorTab";
-            this.instEditorTab.Size = new System.Drawing.Size(218, 423);
-            this.instEditorTab.TabIndex = 2;
-            this.instEditorTab.Text = "Instance";
-            this.instEditorTab.UseVisualStyleBackColor = true;
+            instEditorTab.Controls.Add(tabControl1);
+            instEditorTab.Location = new System.Drawing.Point(4, 22);
+            instEditorTab.Margin = new System.Windows.Forms.Padding(2);
+            instEditorTab.Name = "instEditorTab";
+            instEditorTab.Size = new System.Drawing.Size(218, 423);
+            instEditorTab.TabIndex = 2;
+            instEditorTab.Text = "Instance";
+            instEditorTab.UseVisualStyleBackColor = true;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.propTab);
-            this.tabControl1.Controls.Add(this.scriptTab);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(218, 423);
-            this.tabControl1.TabIndex = 1;
+            tabControl1.Controls.Add(propTab);
+            tabControl1.Controls.Add(scriptTab);
+            tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tabControl1.Location = new System.Drawing.Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new System.Drawing.Size(218, 423);
+            tabControl1.TabIndex = 1;
             // 
             // propTab
             // 
-            this.propTab.Controls.Add(this.instancePropGrid);
-            this.propTab.Location = new System.Drawing.Point(4, 22);
-            this.propTab.Name = "propTab";
-            this.propTab.Padding = new System.Windows.Forms.Padding(3);
-            this.propTab.Size = new System.Drawing.Size(210, 397);
-            this.propTab.TabIndex = 0;
-            this.propTab.Text = "Properties";
-            this.propTab.UseVisualStyleBackColor = true;
+            propTab.Controls.Add(instancePropGrid);
+            propTab.Location = new System.Drawing.Point(4, 22);
+            propTab.Name = "propTab";
+            propTab.Padding = new System.Windows.Forms.Padding(3);
+            propTab.Size = new System.Drawing.Size(210, 397);
+            propTab.TabIndex = 0;
+            propTab.Text = "Properties";
+            propTab.UseVisualStyleBackColor = true;
             // 
             // scriptTab
             // 
-            this.scriptTab.Controls.Add(this.scriptCollection1);
-            this.scriptTab.Location = new System.Drawing.Point(4, 22);
-            this.scriptTab.Name = "scriptTab";
-            this.scriptTab.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptTab.Size = new System.Drawing.Size(210, 397);
-            this.scriptTab.TabIndex = 1;
-            this.scriptTab.Text = "Scripts";
-            this.scriptTab.UseVisualStyleBackColor = true;
+            scriptTab.Controls.Add(scriptCollection1);
+            scriptTab.Location = new System.Drawing.Point(4, 22);
+            scriptTab.Name = "scriptTab";
+            scriptTab.Padding = new System.Windows.Forms.Padding(3);
+            scriptTab.Size = new System.Drawing.Size(210, 397);
+            scriptTab.TabIndex = 1;
+            scriptTab.Text = "Scripts";
+            scriptTab.UseVisualStyleBackColor = true;
             // 
             // scriptCollection1
             // 
-            this.scriptCollection1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptCollection1.Location = new System.Drawing.Point(3, 3);
-            this.scriptCollection1.Name = "scriptCollection1";
-            this.scriptCollection1.SelectedObject = null;
-            this.scriptCollection1.Size = new System.Drawing.Size(204, 391);
-            this.scriptCollection1.TabIndex = 1;
+            scriptCollection1.Dock = System.Windows.Forms.DockStyle.Fill;
+            scriptCollection1.Location = new System.Drawing.Point(3, 3);
+            scriptCollection1.Name = "scriptCollection1";
+            scriptCollection1.SelectedObject = null;
+            scriptCollection1.Size = new System.Drawing.Size(204, 391);
+            scriptCollection1.TabIndex = 1;
             // 
             // typeEditorTab
             // 
-            this.typeEditorTab.Controls.Add(this.typeTabPanel);
-            this.typeEditorTab.Location = new System.Drawing.Point(4, 22);
-            this.typeEditorTab.Margin = new System.Windows.Forms.Padding(2);
-            this.typeEditorTab.Name = "typeEditorTab";
-            this.typeEditorTab.Size = new System.Drawing.Size(218, 423);
-            this.typeEditorTab.TabIndex = 3;
-            this.typeEditorTab.Text = "Type";
-            this.typeEditorTab.UseVisualStyleBackColor = true;
+            typeEditorTab.Controls.Add(typeTabPanel);
+            typeEditorTab.Location = new System.Drawing.Point(4, 22);
+            typeEditorTab.Margin = new System.Windows.Forms.Padding(2);
+            typeEditorTab.Name = "typeEditorTab";
+            typeEditorTab.Size = new System.Drawing.Size(218, 423);
+            typeEditorTab.TabIndex = 3;
+            typeEditorTab.Text = "Type";
+            typeEditorTab.UseVisualStyleBackColor = true;
             // 
             // typeTabPanel
             // 
-            this.typeTabPanel.ColumnCount = 1;
-            this.typeTabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.typeTabPanel.Controls.Add(this.typeEditorButtonPanel1, 0, 1);
-            this.typeTabPanel.Controls.Add(this.typeEditor, 0, 0);
-            this.typeTabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.typeTabPanel.Location = new System.Drawing.Point(0, 0);
-            this.typeTabPanel.Margin = new System.Windows.Forms.Padding(2);
-            this.typeTabPanel.Name = "typeTabPanel";
-            this.typeTabPanel.RowCount = 2;
-            this.typeTabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.32565F));
-            this.typeTabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.67435F));
-            this.typeTabPanel.Size = new System.Drawing.Size(218, 423);
-            this.typeTabPanel.TabIndex = 0;
+            typeTabPanel.ColumnCount = 1;
+            typeTabPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            typeTabPanel.Controls.Add(typeEditorButtonPanel1, 0, 1);
+            typeTabPanel.Controls.Add(typeEditor, 0, 0);
+            typeTabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            typeTabPanel.Location = new System.Drawing.Point(0, 0);
+            typeTabPanel.Margin = new System.Windows.Forms.Padding(2);
+            typeTabPanel.Name = "typeTabPanel";
+            typeTabPanel.RowCount = 2;
+            typeTabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.32565F));
+            typeTabPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.67435F));
+            typeTabPanel.Size = new System.Drawing.Size(218, 423);
+            typeTabPanel.TabIndex = 0;
             // 
             // typeEditorButtonPanel1
             // 
-            this.typeEditorButtonPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.typeEditorButtonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.typeEditorButtonPanel1.Location = new System.Drawing.Point(0, 373);
-            this.typeEditorButtonPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.typeEditorButtonPanel1.Name = "typeEditorButtonPanel1";
-            this.typeEditorButtonPanel1.Size = new System.Drawing.Size(218, 50);
-            this.typeEditorButtonPanel1.TabIndex = 0;
-            this.typeEditorButtonPanel1.TypeEditor = this.typeEditor;
-            this.typeEditorButtonPanel1.Load += new System.EventHandler(this.typeEditorButtonPanel1_Load);
+            typeEditorButtonPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            typeEditorButtonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            typeEditorButtonPanel1.Location = new System.Drawing.Point(0, 373);
+            typeEditorButtonPanel1.Margin = new System.Windows.Forms.Padding(0);
+            typeEditorButtonPanel1.Name = "typeEditorButtonPanel1";
+            typeEditorButtonPanel1.Size = new System.Drawing.Size(218, 50);
+            typeEditorButtonPanel1.TabIndex = 0;
+            typeEditorButtonPanel1.TypeEditor = typeEditor;
+            typeEditorButtonPanel1.Load += new System.EventHandler(typeEditorButtonPanel1_Load);
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(826, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip";
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            fileToolStripMenuItem});
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            menuStrip1.Size = new System.Drawing.Size(826, 24);
+            menuStrip1.TabIndex = 2;
+            menuStrip1.Text = "menuStrip";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            newToolStripMenuItem,
+            openToolStripMenuItem});
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            newToolStripMenuItem.Name = "newToolStripMenuItem";
+            newToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
+            newToolStripMenuItem.Text = "New";
+            newToolStripMenuItem.Click += new System.EventHandler(newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
+            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += new System.EventHandler(openToolStripMenuItem_Click);
             // 
             // newFileDialog
             // 
-            this.newFileDialog.CheckPathExists = false;
-            this.newFileDialog.Title = "New Project";
+            newFileDialog.CheckPathExists = false;
+            newFileDialog.Title = "New Project";
             // 
             // openFileDialog
             // 
-            this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Title = "Open Project";
+            openFileDialog.FileName = "openFileDialog";
+            openFileDialog.Title = "Open Project";
             // 
             // Editor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 600);
-            this.Controls.Add(this.baseTable);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Editor";
-            this.Text = "Whiskey2D Editor";
-            this.baseTable.ResumeLayout(false);
-            this.baseTable.PerformLayout();
-            this.baseSplitPanel.ResumeLayout(false);
-            this.editorTabs.ResumeLayout(false);
-            this.gameSpaceTab.ResumeLayout(false);
-            this.gameSpaceTab.PerformLayout();
-            this.scriptSpaceTab.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.detailTabs.ResumeLayout(false);
-            this.typeBrowserTab.ResumeLayout(false);
-            this.instEditorTab.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.propTab.ResumeLayout(false);
-            this.scriptTab.ResumeLayout(false);
-            this.typeEditorTab.ResumeLayout(false);
-            this.typeTabPanel.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(826, 600);
+            Controls.Add(baseTable);
+            MainMenuStrip = menuStrip1;
+            Margin = new System.Windows.Forms.Padding(2);
+            Name = "Editor";
+            Text = "Whiskey2D Editor";
+            baseTable.ResumeLayout(false);
+            baseTable.PerformLayout();
+            baseSplitPanel.ResumeLayout(false);
+            editorTabs.ResumeLayout(false);
+            gameSpaceTab.ResumeLayout(false);
+            gameSpaceTab.PerformLayout();
+            scriptSpaceTab.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            detailTabs.ResumeLayout(false);
+            typeBrowserTab.ResumeLayout(false);
+            instEditorTab.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            propTab.ResumeLayout(false);
+            scriptTab.ResumeLayout(false);
+            typeEditorTab.ResumeLayout(false);
+            typeTabPanel.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+
+
+
 
         }
 
@@ -485,14 +495,14 @@
 
         private System.Windows.Forms.TableLayoutPanel baseTable;
         private System.Windows.Forms.TableLayoutPanel baseSplitPanel;
-        private System.Windows.Forms.TabControl editorTabs;
-        private System.Windows.Forms.TabPage gameSpaceTab;
-        private System.Windows.Forms.TabPage scriptSpaceTab;
-        private System.Windows.Forms.TabControl detailTabs;
-        private System.Windows.Forms.TabPage scriptLibTab;
-        private System.Windows.Forms.TabPage typeBrowserTab;
-        private System.Windows.Forms.TabPage instEditorTab;
-        private System.Windows.Forms.TabPage typeEditorTab;
+        public static System.Windows.Forms.TabControl editorTabs;
+        public static System.Windows.Forms.TabPage gameSpaceTab;
+        public static System.Windows.Forms.TabPage scriptSpaceTab;
+        public static System.Windows.Forms.TabControl detailTabs;
+        public static System.Windows.Forms.TabPage scriptLibTab;
+        public static System.Windows.Forms.TabPage typeBrowserTab;
+        public static System.Windows.Forms.TabPage instEditorTab;
+        public static System.Windows.Forms.TabPage typeEditorTab;
         private System.Windows.Forms.TableLayoutPanel typeTabPanel;
         private TypeEditor.TypeEditorButtonPanel typeEditorButtonPanel1;
         private TypeEditor.TypeEditor typeEditor;
@@ -514,7 +524,8 @@
         private System.Windows.Forms.Button saveScriptBtn;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage propTab;
-        private System.Windows.Forms.TabPage scriptTab;
-        private ScriptCollection scriptCollection1;
+        public System.Windows.Forms.TabPage scriptTab;
+        public ScriptCollection scriptCollection1;
+        private ScriptLibrary scriptLibrary;
     }
 }

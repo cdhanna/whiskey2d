@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Whiskey2D.Core;
 using WhiskeyEditor.Controls.TypeEditor;
 using WhiskeyEditor.ClassLoader;
+using WhiskeyEditor.Controls;
 
 namespace WhiskeyEditor
 {
@@ -56,7 +57,7 @@ namespace WhiskeyEditor
         private void editBtn_Click(object sender, EventArgs e)
         {
             TypeEditor.Descriptor = Descriptor;
-
+            Editor.detailTabs.SelectedTab = Editor.typeEditorTab;
         }
 
 
