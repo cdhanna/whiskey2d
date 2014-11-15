@@ -10,12 +10,12 @@ namespace WhiskeyEditor.Backend
     {
 
         private List<PropertyDescriptor> propDescs;
-        private List<ScriptDescriptor> scriptDescs;
+        private List<String> scriptNames;
 
         public TypeDescriptor(string filePath, string name)
             : base(filePath, name)
         {
-            scriptDescs = new List<ScriptDescriptor>();
+            scriptNames = new List<String>();
             propDescs = new List<PropertyDescriptor>();
 
             addInitialProps();
@@ -59,19 +59,41 @@ namespace WhiskeyEditor.Backend
         }
 
 
-        public void addScriptDescriptor(ScriptDescriptor scriptDesc)
+        public void addScript(String scriptName)
         {           
-            scriptDescs.Add(scriptDesc);
+            scriptNames.Add(scriptName);
         }
-        public void removeScriptDescriptor(ScriptDescriptor scriptDesc)
+        public void removeScript(String scriptName)
         {
-            if (scriptDescs.Contains(scriptDesc))
+            if (scriptNames.Contains(scriptName))
             {
-                scriptDescs.Remove(scriptDesc);
+                scriptNames.Remove(scriptName);
             }
-            else throw new WhiskeyException("Script Not Found : " + scriptDesc.Name);
+            else throw new WhiskeyException("Script Not Found : " + scriptName);
         }
 
+
+
+        public List<PropertyDescriptor> getPropertySetClone()
+        {
+            List<PropertyDescriptor> props = new List<PropertyDescriptor>();
+            foreach (PropertyDescriptor propDesc in propDescs)
+            {
+                props.Add(propDesc.clone());
+            }
+            return props;
+        }
+
+        public List<String> getScriptNamesClone()
+        {
+
+            List<String> names = new List<string>();
+            foreach (String name in scriptNames)
+            {
+                names.Add(name);
+            }
+            return names;
+        }
 
     }
 }

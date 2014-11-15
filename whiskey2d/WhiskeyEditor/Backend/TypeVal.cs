@@ -9,7 +9,10 @@ namespace WhiskeyEditor.Backend
     interface TypeVal
     {
 
+        string TypeName { get; }
+        object value { get; set; }
 
+        TypeVal clone();
 
     }
 }

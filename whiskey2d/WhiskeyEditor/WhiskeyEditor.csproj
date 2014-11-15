@@ -62,6 +62,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\station12\Station12\Station12\Station12\lib\WindowsGL\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Nuclex.Cloning, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nuclex.Cloning.1.0.0.0\lib\net40\Nuclex.Cloning.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\station12\Station12\Station12\Station12\lib\WindowsGL\OpenTK.dll</HintPath>
@@ -82,7 +86,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />
+    <Compile Include="Backend\InstanceDescriptor.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />

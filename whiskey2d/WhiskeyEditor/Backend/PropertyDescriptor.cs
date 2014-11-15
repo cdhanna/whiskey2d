@@ -40,5 +40,10 @@ namespace WhiskeyEditor.Backend
             get { return TypeVal; }
         }
 
+        public PropertyDescriptor clone()
+        {
+            return new PropertyDescriptor(secure, name, typeVal.clone());
+        }
+
     }
 }

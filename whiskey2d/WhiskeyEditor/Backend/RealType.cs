@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace WhiskeyEditor.Backend
 {
@@ -23,5 +22,35 @@ namespace WhiskeyEditor.Backend
             this.value = value;
         }
 
+
+        public string TypeName
+        {
+            get { return type.Name; }
+        }
+
+        object TypeVal.value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                if (value != null && !value.GetType().Equals(type))
+                {
+                    throw new WhiskeyException("Cannot set value of " + value.GetType().Name + " to a typeval of " + TypeName);
+                }
+                else
+                {
+                    this.value = value;
+                }
+            }
+        }
+
+
+        public TypeVal clone()
+        {
+            return new RealType(type, Nuclex.Cloning.ReflectionCloner.ShallowFieldClone(value) );
+        }
     }
 }
