@@ -127,6 +127,18 @@ namespace Whiskey2D.Core
             Rotation = 0;
         }
 
+        public Sprite(string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
+        {
+            this.imagePath = imagePath;
+            image = getImage();
+            Scale = scale;
+            Offset = offset;
+            Depth = depth;
+            Color = color;
+            Rotation = rotation;
+        }
+
+
         /// <summary>
         /// Centers the offset of a sprite. 
         /// </summary>

@@ -32,6 +32,7 @@ namespace Whiskey2D.Core
             //    initScripts.ForEach((script) => { this.addScript(script); });
             //}
 
+            this.initProperties();
             this.addInitialScripts();
 
 
@@ -203,6 +204,11 @@ namespace Whiskey2D.Core
         // protected abstract List<Script> getInitialScripts();
 
         protected abstract void addInitialScripts();
+
+
+        protected virtual void initProperties()
+        {
+        }
 
     }
 }
