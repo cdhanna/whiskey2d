@@ -59,7 +59,7 @@ namespace WhiskeyEditor.ClassLoader
 
         public void compile(ScriptDescriptor sdesc)
         {
-            string dllName = Project.ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar + "Script." + sdesc.Name + (asmCounter++) + ".dll";
+            string dllName = Project.ProjectManager.Instance.ActiveProject.PathLib + Path.DirectorySeparatorChar + "Script." + sdesc.Name + (asmCounter++) + ".dll";
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters options = new CompilerParameters();
 

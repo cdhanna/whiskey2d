@@ -17,10 +17,24 @@ namespace WhiskeyEditor.Backend
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
 
+        public InstanceDescriptor(TypeDescriptor typeDesc) : base()
+        {
+            propDescs = new List<PropertyDescriptor>();
+            scriptNames = new List<string>();
+
+            initialize(typeDesc);
+        }
+
         public InstanceDescriptor() : base()
         {
+            propDescs = new List<PropertyDescriptor>();
+            scriptNames = new List<string>();
+
             initialized = false;
         }
+
+
+        public TypeDescriptor TypeDescriptor { get { return typeDesc; } }
 
         public void initialize(TypeDescriptor typeDesc)
         {
@@ -70,12 +84,19 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return (float)getTypeValOfName(PROP_X).value;
+                if (!initialized)
+                {
+                    return base.X;
+                }
+                else return (float)getTypeValOfName(PROP_X).value;
             }
             set
             {
                 base.X = value;
-                getTypeValOfName(PROP_X).value = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_X).value = value;
+                }
             }
         }
 
@@ -83,12 +104,19 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return (float)getTypeValOfName(PROP_Y).value;
+                if (!initialized)
+                {
+                    return base.Y;
+                }
+                else return (float)getTypeValOfName(PROP_Y).value;
             }
             set
             {
                 base.Y = value;
-                getTypeValOfName(PROP_Y).value = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_Y).value = value;
+                }
             }
         }
 
@@ -96,12 +124,19 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return (Sprite)getTypeValOfName(PROP_SPRITE).value;
+                if (!initialized)
+                {
+                    return base.Sprite;
+                }
+                else return (Sprite)getTypeValOfName(PROP_SPRITE).value;
             }
             set
             {
                 base.Sprite = value;
-                getTypeValOfName(PROP_SPRITE).value = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_SPRITE).value = value;
+                }
             }
         }
 

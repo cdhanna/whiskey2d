@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
-
+using WhiskeyEditor.Project;
 
 namespace WhiskeyEditor.Backend
 {
@@ -13,7 +13,13 @@ namespace WhiskeyEditor.Backend
 
         private string filePath;
         private string name;
-        
+
+
+        public FileDescriptor(string name)
+            : this(ProjectManager.Instance.ActiveProject.PathSrc + Path.DirectorySeparatorChar + name + ".cs", name)
+        {
+
+        }
 
         public FileDescriptor(string filePath, string name)
         {
@@ -60,14 +66,22 @@ namespace WhiskeyEditor.Backend
 
         protected virtual void addSpecializedCode(StreamWriter writer)
         {
+            //fill in with subclasses
+        }
+
+        protected virtual void processExistingCode(string[] allLines)
+        {
 
         }
+
         public virtual void ensureFileExists()
         {
 
             if (File.Exists(filePath))
             {
                 //do something?
+                string[] allLines = File.ReadAllLines(filePath);
+                processExistingCode(allLines);
             }
             else
             {
@@ -76,7 +90,7 @@ namespace WhiskeyEditor.Backend
                 FileStream fileStream = File.Create(filePath);
                 StreamWriter writer = new StreamWriter(fileStream);
                 
-                writer.AutoFlush = true;
+                //writer.AutoFlush = true;
                 foreach (string usingStatement in CodeUsingStatements)
                 {
                     writer.WriteLine("using " + usingStatement + ";");
@@ -95,6 +109,7 @@ namespace WhiskeyEditor.Backend
 
                 writer.WriteLine("}");
 
+                writer.Flush();
                 writer.Close();
                 fileStream.Close();
             }

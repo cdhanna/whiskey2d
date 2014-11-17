@@ -11,6 +11,12 @@ namespace WhiskeyEditor.Backend
 
         private String typeName;
 
+        public ScriptDescriptor(string name, string typeName)
+            : base(name)
+        {
+            this.typeName = typeName;
+        }
+
         public ScriptDescriptor(string filePath, string name, string typeName)
             : base(filePath, name)
         {

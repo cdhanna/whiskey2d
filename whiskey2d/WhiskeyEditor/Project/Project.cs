@@ -47,7 +47,7 @@ namespace WhiskeyEditor.Project
         /// <summary>
         /// the path to the bin directory
         /// </summary>
-        public string PathBin { get { return PathBase + Path.DirectorySeparatorChar + "bin"; } }
+        public string PathLib { get { return PathBase + Path.DirectorySeparatorChar + "bin"; } }
 
         /// <summary>
         /// the path to the states directory
@@ -177,7 +177,7 @@ namespace WhiskeyEditor.Project
             Directory.CreateDirectory(PathBase);
             Directory.CreateDirectory(PathSrc);
             Directory.CreateDirectory(PathMedia);
-            Directory.CreateDirectory(PathBin);
+            Directory.CreateDirectory(PathLib);
             Directory.CreateDirectory(PathStates);
             Directory.CreateDirectory(PathSrcScripts);
         }
@@ -239,7 +239,7 @@ namespace WhiskeyEditor.Project
             cleanProject();
             createGameSettings();
 
-            DirectoryCopy(PathBin, PathBuildLib, true);
+            DirectoryCopy(PathLib, PathBuildLib, true);
             DirectoryCopy(PathMedia, PathBuildMedia, true);
             DirectoryCopy(PathStates, PathBuildStates, true);
             DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);

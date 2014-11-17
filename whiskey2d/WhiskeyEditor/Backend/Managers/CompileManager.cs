@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
+using WhiskeyEditor.Project;
 
 namespace WhiskeyEditor.Backend.Managers
 {
@@ -37,7 +38,7 @@ namespace WhiskeyEditor.Backend.Managers
             CompilerParameters options = new CompilerParameters();
 
             options.GenerateInMemory = false;
-            options.OutputAssembly = "TESTOUT.dll";
+            options.OutputAssembly = ProjectManager.Instance.ActiveProject.PathLib + Path.DirectorySeparatorChar + "GameData.dll";
             options.ReferencedAssemblies.Add(ResourceFiles.DllMonoGame);
             options.ReferencedAssemblies.Add(ResourceFiles.DllSystem);
             options.ReferencedAssemblies.Add(ResourceFiles.DllWhiskeyCore);

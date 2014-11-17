@@ -228,7 +228,7 @@ namespace WhiskeyEditor.ClassLoader
             //options.GenerateInMemory = true;
             //options.GenerateExecutable = false;
             
-            options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathBin + Path.DirectorySeparatorChar +  QualifiedName +asmCounter.ToString()+ ".dll";
+            options.OutputAssembly =ProjectManager.Instance.ActiveProject.PathLib + Path.DirectorySeparatorChar +  QualifiedName +asmCounter.ToString()+ ".dll";
            // options.LinkedResources.Add("Whiskey2D.Core");
             asmCounter++;
             

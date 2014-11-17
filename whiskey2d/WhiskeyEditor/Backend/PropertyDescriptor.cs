@@ -37,7 +37,7 @@ namespace WhiskeyEditor.Backend
 
         public TypeVal TypeVal
         {
-            get { return TypeVal; }
+            get { return typeVal; }
         }
 
         public PropertyDescriptor clone()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
 using System.IO;
+using WhiskeyEditor.Project;
+
 
 namespace WhiskeyEditor.Backend
 {
@@ -15,8 +17,8 @@ namespace WhiskeyEditor.Backend
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
 
-        public TypeDescriptor(string filePath, string name)
-            : base(filePath, name)
+        public TypeDescriptor(string name)
+            : base(name)
         {
             scriptNames = new List<String>();
             propDescs = new List<PropertyDescriptor>();
@@ -25,6 +27,8 @@ namespace WhiskeyEditor.Backend
             
 
         }
+
+        
 
         public String ClassName
         {
@@ -107,9 +111,8 @@ namespace WhiskeyEditor.Backend
             }
         }
 
-        protected override void addSpecializedCode(StreamWriter writer)
+        private void writeProperties(StreamWriter writer)
         {
-
             writer.WriteLine(CODE_PROP_START);
 
             foreach (PropertyDescriptor prop in propDescs)
@@ -121,10 +124,47 @@ namespace WhiskeyEditor.Backend
             }
 
             writer.WriteLine(CODE_PROP_END);
+        }
 
+        protected override void addSpecializedCode(StreamWriter writer)
+        {
+
+            writeProperties(writer);
+            writer.WriteLine("");
 
             writer.WriteLine("\t\tprotected override void addInitialScripts(){ }");
 
+        }
+
+        protected override void processExistingCode(string[] allLines)
+        {
+
+            File.Delete(FilePath);
+            FileStream stream = File.Create(FilePath);
+            StreamWriter writer = new StreamWriter(stream);
+            
+            for (int i = 0 ; i < allLines.Length ; i ++)
+            {
+
+                if (allLines[i].Equals(CODE_PROP_START))
+                {
+
+                    string nextLine = allLines[i++];
+                    while (!nextLine.Equals(CODE_PROP_END))
+                    {
+                        nextLine = allLines[i++];
+                    }
+                    writeProperties(writer);
+                    //i++;
+                }
+
+                writer.WriteLine(allLines[i]);
+            }
+            writer.Flush();
+            writer.Close();
+            stream.Close();
+
+            base.processExistingCode(allLines);
         }
 
     }
