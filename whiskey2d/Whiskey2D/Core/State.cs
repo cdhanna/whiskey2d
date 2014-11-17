@@ -23,7 +23,7 @@ namespace Whiskey2D.Core
             Name = "unnamed";
         }
 
-        public static void serialize(State state, string fileName)
+        public static string serialize(State state, string fileName)
         {
 
             // To serialize the hashtable and its key/value pairs,   
@@ -52,41 +52,14 @@ namespace Whiskey2D.Core
                 fs.Close();
             }
 
-            //s = new Polenter.Serialization.SharpSerializer();
-            //s.Serialize(state, fileName);
-
-            //string delim = "#";
-            //string nl = Environment.NewLine;
-            //string ser = "";
-
-
-            ////pass one. Create references
-            //for (int i = 0; i < state.GameObjects.Count; i++)
-            //{
-            //    GameObject gob = state.GameObjects[i];
-            //    ser += gob.ID + delim;
-            //}
-
-
-            //for (int i = 0; i < state.GameObjects.Count; i++)
-            //{
-            //    GameObject gob = state.GameObjects[i];
-            //    ser += nl + "gob"+delim+gob.ID+delim;
-            //    ser += gob.GetType()+delim;
-            //    Type gobType = gob.GetType();
-            //    List<FieldInfo> fields = gobType.GetFields().ToList();
-            //    fields.ForEach((f) =>
-            //    {
-            //        ser += nl + f.Name;
-            //    });
-            //}
-
+            return fileName;
            
         }
 
         public static State deserialize(string fileName)
         {
-
+            fileName += ".state";
+            GameManager.Log.debug("State loading : " + fileName);
             if (!File.Exists(fileName))
             {
                 return null;
@@ -99,10 +72,10 @@ namespace Whiskey2D.Core
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 state = (State)formatter.Deserialize(fs);
-                
             }
             catch (SerializationException e)
             {
+                GameManager.Log.error("Cannot deserialize");
                 Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
                 throw;
             }
@@ -110,8 +83,7 @@ namespace Whiskey2D.Core
             {
                 fs.Close();
             }
-
-
+            GameManager.Log.debug("State has  " + state.GameObjects.Count);
             return state;
             //return (State)s.Deserialize(fileName);
         }

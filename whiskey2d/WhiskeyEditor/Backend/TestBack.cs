@@ -23,28 +23,32 @@ namespace WhiskeyEditor.Backend
 
 
 
-            TypeDescriptor t = new TypeDescriptor("TestMe");
             TypeDescriptor t2 = new TypeDescriptor("TestMeAgain");
 
             t2.addPropertyDescriptor(new PropertyDescriptor("Injected", new RealType(typeof(String), "GoodBye")));
 
+            Sprite spr = (Sprite)t2.getTypeValOfName("Sprite").value;
+            spr.Scale = new Vector(100, 100);
+            spr.Color = Color.Turquoise;
+
             InstanceDescriptor t2Instance = new InstanceDescriptor(t2);
+            t2Instance.getTypeValOfName("X").value = (Single) 100;
 
-            t.addPropertyDescriptor(new PropertyDescriptor("TestProp", new RealType(typeof(int), 42)));
-            t.addPropertyDescriptor(new PropertyDescriptor("TestPropGameObject", new InstanceType(t2, t2Instance)));
+            
 
-            t.addPropertyDescriptor(new PropertyDescriptor("MySpot", new RealType(typeof(Vector), Vector.One)));
-            t.addPropertyDescriptor(new PropertyDescriptor("MyColor", new RealType(typeof(Color), new Color(123, 43, 23, 255))));
-
+            ScriptDescriptor s = new ScriptDescriptor("RunMe", "TestMeAgain");
 
 
-            ScriptDescriptor s = new ScriptDescriptor("RunMe", "TestMe");
-
-            InstanceDescriptor i = new InstanceDescriptor(t);
+            t2Instance.addScript("RunMe");
 
            // object testPropVal = i.getTypeValOfName("TestProp").value;
 
-            CompileManager.Instance.compile();
+            string dllPath = CompileManager.Instance.compile();
+            InstanceManager.Instance.convertToGobs(dllPath, "default");
+
+
+            ProjectManager.Instance.ActiveProject.buildExecutable();
+
         }
 
     }

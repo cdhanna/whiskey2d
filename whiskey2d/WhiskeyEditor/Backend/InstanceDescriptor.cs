@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
@@ -40,7 +41,7 @@ namespace WhiskeyEditor.Backend
         {
             initialized = true;
             this.typeDesc = typeDesc;
-
+            InstanceManager.Instance.addInstance(this);
             propDescs = typeDesc.getPropertySetClone();
             scriptNames = typeDesc.getScriptNamesClone();
 
@@ -78,7 +79,11 @@ namespace WhiskeyEditor.Backend
             }
             else throw new WhiskeyException("Script Not Found : " + scriptName);
         }
-
+        public List<String> getScriptNames()
+        {
+            
+            return scriptNames;
+        }
 
         public override float X
         {

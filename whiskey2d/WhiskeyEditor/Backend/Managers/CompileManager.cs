@@ -30,7 +30,7 @@ namespace WhiskeyEditor.Backend.Managers
         }
 
 
-        public void compile()
+        public string compile()
         {
 
 
@@ -58,6 +58,9 @@ namespace WhiskeyEditor.Backend.Managers
             {
                 Console.WriteLine(line);
             }
+
+
+            return options.OutputAssembly;
 
         }
 

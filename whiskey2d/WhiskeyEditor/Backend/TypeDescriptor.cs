@@ -65,6 +65,16 @@ namespace WhiskeyEditor.Backend
             else throw new WhiskeyException("Property Not Found : " + propDesc.Name);
         }
 
+        public TypeVal getTypeValOfName(string name)
+        {
+            List<PropertyDescriptor> props = propDescs.Where(p => p.Name.Equals(name)).ToList();
+            if (props.Count == 1)
+            {
+                return props[0].TypeVal;
+            }
+            else throw new WhiskeyException("Property Name : " + name + " had " + props.Count + " instances.");
+        }
+
 
         public void addScript(String scriptName)
         {           
@@ -102,7 +112,7 @@ namespace WhiskeyEditor.Backend
             return names;
         }
 
-
+    
         protected override string CodeClassDef
         {
             get
@@ -208,6 +218,13 @@ namespace WhiskeyEditor.Backend
             writer.WriteLine("\t\t#endregion");
             writer.WriteLine("");
 
+            writer.WriteLine("\t\t#region DEFAULT CONSTRUCTOR");
+            writer.WriteLine("\t\tpublic " + Name + "(Whiskey2D.Core.Managers.ObjectManager objMan) : this () {}");
+            writer.WriteLine("\t\t#endregion");
+
+            writer.WriteLine("");
+
+
             writer.WriteLine(CODE_PROP_END);
         }
 
@@ -217,6 +234,11 @@ namespace WhiskeyEditor.Backend
             writeProperties(writer);
             writer.WriteLine("");
 
+            writer.WriteLine("\t\tpublic " + Name + " () : base()");
+            writer.WriteLine("\t\t{");
+            writer.WriteLine("\t\t\t//implement your code here!");
+            writer.WriteLine("\t\t}");
+            writer.WriteLine("");
             writer.WriteLine("\t\tprotected override void addInitialScripts(){ }");
 
         }

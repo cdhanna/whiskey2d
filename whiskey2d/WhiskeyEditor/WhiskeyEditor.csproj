@@ -91,6 +91,7 @@
     <Compile Include="Backend\FileDescriptor.cs" />
     <Compile Include="Backend\InstanceDescriptor.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
+    <Compile Include="Backend\Managers\ScriptManager.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />

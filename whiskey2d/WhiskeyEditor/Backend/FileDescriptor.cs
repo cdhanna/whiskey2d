@@ -43,6 +43,13 @@ namespace WhiskeyEditor.Backend
                 return this.name;
             }
         }
+        public String QualifiedName
+        {
+            get
+            {
+                return CodeNameSpace + "." + Name;
+            }
+        }
 
         protected virtual String CodeNameSpace
         {

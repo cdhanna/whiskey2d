@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.IO;
-
+using Whiskey2D.Core;
 
 #endregion
 
@@ -33,6 +33,7 @@ namespace WhiskeyRunner
 
         static Assembly LoadFromSameFolder(object sender, ResolveEventArgs args)
         {
+            GameManager.Log.error("NOOO COULD NOT FIND IT!");
             Console.WriteLine("failed to load " + args.Name);
            // string folderPath = Path.GetDirectoryName("lib");
            // string assemblyPath = Path.Combine(folderPath, new AssemblyName(args.Name).Name + ".dll");

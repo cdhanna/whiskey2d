@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
@@ -15,13 +16,14 @@ namespace WhiskeyEditor.Backend
             : base(name)
         {
             this.typeName = typeName;
+            ScriptManager.Instance.addScript(this);
         }
 
         public ScriptDescriptor(string filePath, string name, string typeName)
             : base(filePath, name)
         {
             this.typeName = typeName;
-
+            ScriptManager.Instance.addScript(this);
         }
 
         protected override string CodeClassDef

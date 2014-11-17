@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Whiskey2D.Core.Managers;
 
 namespace Whiskey2D.Core
 {
@@ -13,12 +14,7 @@ namespace Whiskey2D.Core
     {
         private static int idCounter = 0;
 
-
-
-        /// <summary>
-        /// Create a new Game Object
-        /// </summary>
-        public GameObject()
+        public GameObject(ObjectManager objMan)
         {
             Position = Vector.Zero;
             Sprite = new Sprite();
@@ -35,12 +31,15 @@ namespace Whiskey2D.Core
             this.initProperties();
             this.addInitialScripts();
 
+            objMan.addObject(this);
 
-            GameManager.Objects.addObject(this);
+        }
 
-
-            // GameObjectConfigurator.getInstance().setInitialValueFor("GameObject", "Bounds", Bounds);
-
+        /// <summary>
+        /// Create a new Game Object
+        /// </summary>
+        public GameObject() : this(GameManager.Objects)
+        {
         }
 
 
