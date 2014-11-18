@@ -4,6 +4,8 @@ using System.Linq;
 using Whiskey2D.Core;
 using System.IO;
 using WhiskeyEditor.Project;
+using WhiskeyEditor.Backend.Events;
+using WhiskeyEditor.Backend;
 
 
 namespace WhiskeyEditor.Backend
@@ -43,15 +45,28 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
         }
 
+        public void changePropertyDescriptorName(String propName, String newPropName)
+        {
+            PropertyDescriptor prop = lookUpPropertyDescriptor(propName);
+
+            if (!prop.Secure)
+            {
+                prop.Name = newPropName;
+                base.notifyListeners(new PropertyChangedEvent(propName, prop));
+            }
+            else throw new WhiskeyException("Property is secure : " + propName);
+        }
 
         public void addPropertyDescriptor(PropertyDescriptor propDesc)
         {
             if (0 == propDescs.Where((p) => p.Name.Equals(propDesc.Name)).ToList().Count)
             {
                 propDescs.Add(propDesc);
+                base.notifyListeners(new PropertyAddedEvent(propDesc));
             }
             else throw new WhiskeyException("Property Already Exists : " + propDesc.Name);
         }
+
         public void removePropertyDescriptor(PropertyDescriptor propDesc)
         {
             if (propDescs.Contains(propDesc))
@@ -59,22 +74,33 @@ namespace WhiskeyEditor.Backend
                 if (!propDesc.Secure)
                 {
                     propDescs.Remove(propDesc);
+                    base.notifyListeners(new PropertyRemovedEvent(propDesc));
                 }
                 else throw new WhiskeyException("Property Is Secure : " + propDesc.Name);
             }
             else throw new WhiskeyException("Property Not Found : " + propDesc.Name);
         }
 
+        public void removePropertyDescriptor(String propName)
+        {
+            removePropertyDescriptor(lookUpPropertyDescriptor(propName));
+        }
+
+
         public TypeVal getTypeValOfName(string name)
+        {
+            return lookUpPropertyDescriptor(name).TypeVal;
+        }
+
+        private PropertyDescriptor lookUpPropertyDescriptor(String name)
         {
             List<PropertyDescriptor> props = propDescs.Where(p => p.Name.Equals(name)).ToList();
             if (props.Count == 1)
             {
-                return props[0].TypeVal;
+                return props[0];
             }
             else throw new WhiskeyException("Property Name : " + name + " had " + props.Count + " instances.");
         }
-
 
         public void addScript(String scriptName)
         {           
@@ -143,25 +169,25 @@ namespace WhiskeyEditor.Backend
             else if (typeName.Equals(typeof(Vector).Name))
             {
                 Vector vec = (Vector) val;
-                return " new Vector(" + vec.X + ", " + vec.Y + ")";
+                return "new Vector(" + vec.X + ", " + vec.Y + ")";
             }
             else if (typeName.Equals(typeof(Sprite).Name))
             {
                 Sprite spr = (Sprite)val;
-                return " new Sprite(" + getCodeFor(spr.ImagePath) + ", " + getCodeFor(spr.Scale) + ", " + getCodeFor(spr.Offset) + ", " + getCodeFor(spr.Depth) + ", " + getCodeFor(spr.Color) + ", " + getCodeFor(spr.Rotation) + ")";
+                return "new Sprite(" + getCodeFor(spr.ImagePath) + ", " + getCodeFor(spr.Scale) + ", " + getCodeFor(spr.Offset) + ", " + getCodeFor(spr.Depth) + ", " + getCodeFor(spr.Color) + ", " + getCodeFor(spr.Rotation) + ")";
 
             }
             else if (typeName.Equals(typeof(Color).Name))
             {
                 Color col = (Color)val;
-                return " new Color(" + col.R + ", " + col.G + ", " + col.B + ", " + col.A + ")";
+                return "new Color(" + col.R + ", " + col.G + ", " + col.B + ", " + col.A + ")";
 
             } 
 
             else
             {
                 //assume that the val is an instance desc
-                return " null";
+                return "null";
 
               //  throw new WhiskeyException("Property is not of supported type: " + val.GetType().Name);
             }
@@ -210,7 +236,7 @@ namespace WhiskeyEditor.Backend
             foreach (PropertyDescriptor prop in propDescs)
             {
 
-                writer.WriteLine("\t\t\t" + prop.Name + " =" + getCodeFor(prop.TypeVal.value) + ";");
+                writer.WriteLine("\t\t\t" + prop.Name + " = " + getCodeFor(prop.TypeVal.value) + ";");
             }
 
             writer.WriteLine("\t\t}");
@@ -218,9 +244,24 @@ namespace WhiskeyEditor.Backend
             writer.WriteLine("\t\t#endregion");
             writer.WriteLine("");
 
-            writer.WriteLine("\t\t#region DEFAULT CONSTRUCTOR");
-            writer.WriteLine("\t\tpublic " + Name + "(Whiskey2D.Core.Managers.ObjectManager objMan) : this () {}");
+            writer.WriteLine("\t\t#region INIT_SCRIPTS");
+
+            writer.WriteLine("\t\tprotected override void addInitialScripts()");
+            writer.WriteLine("\t\t{");
+            foreach (String scriptName in scriptNames)
+            {
+                writer.WriteLine("\t\t\tbase.addScript( new " + scriptName + "() );");
+            }
+
+
+           
+            writer.WriteLine("\t\t}");
+
             writer.WriteLine("\t\t#endregion");
+
+            //writer.WriteLine("\t\t#region DEFAULT CONSTRUCTOR");
+            //writer.WriteLine("\t\tpublic " + Name + "(Whiskey2D.Core.Managers.ObjectManager objMan) : this () {}");
+            //writer.WriteLine("\t\t#endregion");
 
             writer.WriteLine("");
 

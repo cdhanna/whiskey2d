@@ -4,11 +4,12 @@ using System.Linq;
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
 using WhiskeyEditor.Project;
+using SmallMVC;
 
 namespace WhiskeyEditor.Backend
 {
 
-    class FileDescriptor
+    class FileDescriptor : Model
     {
 
         private string filePath;
@@ -88,6 +89,19 @@ namespace WhiskeyEditor.Backend
             {
                 //do something?
                 string[] allLines = File.ReadAllLines(filePath);
+
+                foreach (String line in allLines)
+                {
+                    if (line.Contains(" class "))
+                    {
+                        int indexStart = line.IndexOf(" class ") + " class ".Length;
+                        int indexEnd = line.IndexOf(" :");
+                        string realName = line.Substring(indexStart, indexEnd - indexStart).Trim();
+                        name = realName;
+                        break;
+                    }
+                }
+
                 processExistingCode(allLines);
             }
             else

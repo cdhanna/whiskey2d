@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend.Managers;
+using WhiskeyEditor.Backend.Events;
 
 namespace WhiskeyEditor.Backend
 {
@@ -45,8 +46,37 @@ namespace WhiskeyEditor.Backend
             propDescs = typeDesc.getPropertySetClone();
             scriptNames = typeDesc.getScriptNamesClone();
 
+            typeDesc.addListener<PropertyAddedEvent>  (propertyAddedToType);
+            typeDesc.addListener<PropertyRemovedEvent>(propertyRemovedFromType);
+            typeDesc.addListener<PropertyChangedEvent>(propertyChangedInType);
         }
+
+        #region Event Handler Code
+
+        private void propertyChangedInType(PropertyChangedEvent evt)
+        {
+            PropertyDescriptor prop = lookUpPropertyDescriptor(evt.OldName);
+            prop.Name = evt.NewProperty.Name;
+            propDescs.Remove(prop);
+            propDescs.Add(evt.NewProperty.clone());
+            
+        }
+
+        private void propertyAddedToType(PropertyAddedEvent evt)
+        {
+            propDescs.Add(evt.Property.clone());
+        }
+
+        private void propertyRemovedFromType(PropertyRemovedEvent evt)
+        {
+            List<PropertyDescriptor> badProps = propDescs.Where(p => p.Name.Equals(evt.Property.Name)).ToList();
+            badProps.ForEach((p) => { propDescs.Remove(p); });
+        }
+
+        #endregion
+
         private void initCheck()
+
         {
             if (!initialized)
             {
@@ -57,12 +87,7 @@ namespace WhiskeyEditor.Backend
 
         public TypeVal getTypeValOfName(string name)
         {
-            List<PropertyDescriptor> props = propDescs.Where(p => p.Name.Equals(name)).ToList();
-            if (props.Count == 1)
-            {
-                return props[0].TypeVal;
-            }
-            else throw new WhiskeyException("Property Name : " + name + " had " + props.Count + " instances.");
+            return lookUpPropertyDescriptor(name).TypeVal;
         }
 
         public void addScript(String scriptName)
@@ -79,6 +104,17 @@ namespace WhiskeyEditor.Backend
             }
             else throw new WhiskeyException("Script Not Found : " + scriptName);
         }
+
+        private PropertyDescriptor lookUpPropertyDescriptor(String name)
+        {
+            List<PropertyDescriptor> props = propDescs.Where(p => p.Name.Equals(name)).ToList();
+            if (props.Count == 1)
+            {
+                return props[0];
+            }
+            else throw new WhiskeyException("Property Name : " + name + " had " + props.Count + " instances.");
+        }
+
         public List<String> getScriptNames()
         {
             

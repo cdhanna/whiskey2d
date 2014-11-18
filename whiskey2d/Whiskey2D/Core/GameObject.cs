@@ -22,12 +22,7 @@ namespace Whiskey2D.Core
             ID = idCounter++;
             scripts = new List<ScriptBundle<GameObject>>();
             objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
-            //List<ScriptBundle<GameObject>> initScripts = getInitialScripts();
-            //if (initScripts != null)
-            //{
-            //    initScripts.ForEach((script) => { this.addScript(script); });
-            //}
-
+            
             this.initProperties();
             this.addInitialScripts();
 
@@ -50,7 +45,6 @@ namespace Whiskey2D.Core
         /// <summary>
         /// The position of the Game Object
         /// </summary>
-
         //[TypeConverter(typeof(ExpandableObjectConverter))]
         //public Vector2 Position;
         public Vector Position;
@@ -150,6 +144,12 @@ namespace Whiskey2D.Core
             this.objectScriptTable.Remove(script);
         }
 
+        public void clearScripts()
+        {
+            this.scripts.Clear();
+            this.objectScriptTable.Clear();
+        }
+
         public void addScript(object script)
         {
 
@@ -208,6 +208,8 @@ namespace Whiskey2D.Core
         protected virtual void initProperties()
         {
         }
+
+        
 
     }
 }

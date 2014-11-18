@@ -55,6 +55,8 @@ namespace WhiskeyEditor.Backend.Managers
                     }
                 }
 
+                gob.clearScripts();
+
                 foreach (String scriptName in iDesc.getScriptNames())
                 {
                     Type scriptType = gameData.GetType(ScriptManager.Instance.lookUpScript(scriptName).QualifiedName, false);
