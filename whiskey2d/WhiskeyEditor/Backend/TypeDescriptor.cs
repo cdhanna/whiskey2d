@@ -105,12 +105,14 @@ namespace WhiskeyEditor.Backend
         public void addScript(String scriptName)
         {           
             scriptNames.Add(scriptName);
+            base.notifyListeners(new ScriptAdded(scriptName));
         }
         public void removeScript(String scriptName)
         {
             if (scriptNames.Contains(scriptName))
             {
                 scriptNames.Remove(scriptName);
+                base.notifyListeners(new ScriptRemoved(scriptName));
             }
             else throw new WhiskeyException("Script Not Found : " + scriptName);
         }

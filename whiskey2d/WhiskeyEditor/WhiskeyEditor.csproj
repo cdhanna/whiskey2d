@@ -89,13 +89,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\Events\CompilerErrorEvent.cs" />
     <Compile Include="Backend\Events\PropertyAddedEvent.cs" />
     <Compile Include="Backend\Events\PropertyChangedEvent.cs" />
     <Compile Include="Backend\Events\PropertyRemovedEvent.cs" />
+    <Compile Include="Backend\Events\ScriptAdded.cs" />
+    <Compile Include="Backend\Events\ScriptRemoved.cs" />
     <Compile Include="Backend\Managers\CompileManager.cs" />
     <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />
     <Compile Include="Backend\InstanceDescriptor.cs" />
+    <Compile Include="Backend\Managers\FileManager.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
     <Compile Include="Backend\Managers\ScriptManager.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />
@@ -214,6 +218,7 @@
     <Compile Include="MonoHelp\WhiskeyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="NoArgFunction.cs" />
     <Compile Include="Project\Project.cs" />
     <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="PropertyDescriptorControl.cs">
@@ -350,7 +355,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UI\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="compile-exe\WhiskeyRunner.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

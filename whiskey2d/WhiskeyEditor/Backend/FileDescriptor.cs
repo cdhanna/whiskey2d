@@ -9,7 +9,7 @@ using SmallMVC;
 namespace WhiskeyEditor.Backend
 {
 
-    class FileDescriptor : Model
+    public class FileDescriptor : Model
     {
 
         private string filePath;
@@ -27,7 +27,7 @@ namespace WhiskeyEditor.Backend
             this.filePath = filePath;
             this.name = name;
             
-            CompileManager.Instance.addFileDescriptor(this);
+            FileManager.Instance.addFileDescriptor(this);
         }
 
         public String FilePath
@@ -81,6 +81,16 @@ namespace WhiskeyEditor.Backend
         {
 
         }
+
+        public string[] readAllLines()
+        {
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllLines(FilePath);
+            }
+            else return new string[] { };
+        }
+
 
         public virtual void ensureFileExists()
         {

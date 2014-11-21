@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Project;
 using Whiskey2D.Core;
+using WhiskeyEditor.Backend.Events;
+using System.CodeDom.Compiler;
+
+using System.Windows.Forms;
 
 namespace WhiskeyEditor.Backend
 {
     class TestBack
     {
+
+        
 
         [STAThread]
         public static void Main()
@@ -19,6 +25,10 @@ namespace WhiskeyEditor.Backend
             //set active project
             Project.Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
             ProjectManager.Instance.ActiveProject = proj;
+        //    CompileManager.Instance.addListener<CompilerErrorEvent>(compilerErrorHandler);
+           // CompileManager.Instance.startBackBuild();
+
+
 
             //create a type
             TypeDescriptor t2 = new TypeDescriptor("TestMeAgain");
@@ -33,14 +43,13 @@ namespace WhiskeyEditor.Backend
             //create a script
             ScriptDescriptor s = new ScriptDescriptor("RunMe", t2.Name);
             s.ensureFileExists();
-            t2.addScript(s.Name);
             
             
             //create an instance
             InstanceDescriptor t2Instance = new InstanceDescriptor(t2);
             t2Instance.getTypeValOfName("X").value = (Single) 100;
 
-            t2Instance.removeScript("RunMe");
+            t2.addScript(s.Name);
             
             
             
@@ -56,7 +65,14 @@ namespace WhiskeyEditor.Backend
             //build exe
             ProjectManager.Instance.ActiveProject.buildExecutable();
 
+
+            //setup UI for testing
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new BackTestForm());
+
         }
 
+        
     }
 }

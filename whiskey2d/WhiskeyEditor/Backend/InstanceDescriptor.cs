@@ -49,9 +49,20 @@ namespace WhiskeyEditor.Backend
             typeDesc.addListener<PropertyAddedEvent>  (propertyAddedToType);
             typeDesc.addListener<PropertyRemovedEvent>(propertyRemovedFromType);
             typeDesc.addListener<PropertyChangedEvent>(propertyChangedInType);
+            typeDesc.addListener<ScriptAdded>(scriptAddedInType);
+            typeDesc.addListener<ScriptRemoved>(scriptRemovedFromType);
         }
 
         #region Event Handler Code
+
+        private void scriptAddedInType(ScriptAdded evt)
+        {
+            scriptNames.Add(evt.ScriptName);
+        }
+        private void scriptRemovedFromType(ScriptRemoved evt)
+        {
+            scriptNames.Remove(evt.ScriptName);
+        }
 
         private void propertyChangedInType(PropertyChangedEvent evt)
         {
