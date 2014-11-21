@@ -42,6 +42,30 @@ namespace WhiskeyEditor.Backend.Managers
         public event FileRemovedEventHandler FileRemoved;
         public event FileChangedEventHandler FileChanged;
 
+        private void fireFileAdded(FileEventArgs args)
+        {
+            if (FileAdded != null)
+            {
+                FileAdded(this, args);
+            }
+        }
+
+        private void fireFileRemoved(FileEventArgs args)
+        {
+            if (FileRemoved != null)
+            {
+                FileRemoved(this, args);
+            }
+        }
+
+        private void fireFileChanged(FileEventArgs args)
+        {
+            if (FileChanged != null)
+            {
+                FileChanged(this, args);
+            }
+        }
+
         #endregion
 
         private List<FileDescriptor> fileDescs;
@@ -85,7 +109,7 @@ namespace WhiskeyEditor.Backend.Managers
         {
             //validate that this is a file desc
             
-            FileChanged(this, new FileEventArgs(lookUp(args.Name))); //may be broken
+            fireFileChanged( new FileEventArgs(lookUp(args.Name))); //may be broken
         }
 
 
@@ -93,7 +117,7 @@ namespace WhiskeyEditor.Backend.Managers
         {
             fileDescs.Add(fileDesc);
             fileDescMap.Add(fileDesc.Name, fileDesc);
-            FileAdded(this, new FileEventArgs(fileDesc));
+            fireFileAdded(new FileEventArgs(fileDesc));
         }
         public void removeFileDescriptor(FileDescriptor fileDesc)
         {
@@ -105,7 +129,7 @@ namespace WhiskeyEditor.Backend.Managers
             {
                 fileDescMap.Remove(fileDesc.Name);
                 fileDescs.Remove(fileDesc);
-                FileRemoved(this, new FileEventArgs(fileDesc));
+                fireFileRemoved(new FileEventArgs(fileDesc));
             }
         }
 

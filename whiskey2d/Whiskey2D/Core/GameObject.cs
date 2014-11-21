@@ -20,8 +20,8 @@ namespace Whiskey2D.Core
             Sprite = new Sprite();
             Sprite.Scale *= 50;
             ID = idCounter++;
-            scripts = new List<ScriptBundle<GameObject>>();
-            objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
+            scripts = new List<Script>();
+            //objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
             
             this.initProperties();
             this.addInitialScripts();
@@ -40,8 +40,8 @@ namespace Whiskey2D.Core
 
         private Sprite sprite;
         private int id;
-        private List<ScriptBundle<GameObject>> scripts;
-        private Dictionary<object, ScriptBundle<GameObject>> objectScriptTable;
+        private List<Script> scripts;
+       // private Dictionary<object, ScriptBundle<GameObject>> objectScriptTable;
         /// <summary>
         /// The position of the Game Object
         /// </summary>
@@ -106,9 +106,9 @@ namespace Whiskey2D.Core
         public void init()
         {
 
-            foreach (ScriptBundle<GameObject> script in scripts)
+            foreach (Script script in scripts)
             {
-                script.start();
+                script.onStart();
             }
 
         }
@@ -121,50 +121,74 @@ namespace Whiskey2D.Core
             GameManager.Objects.removeObject(this);
         }
 
-
-        public List<ScriptBundle<GameObject>> getScriptBundles()
+        public List<Script> getScripts()
         {
             return this.scripts;
         }
 
-        public void removeScript(ScriptBundle<GameObject> script)
-        {
-            this.scripts.Remove(script);
-            this.objectScriptTable.Remove(script);
-        }
+        //public List<ScriptBundle<GameObject>> getScriptBundles()
+        //{
+        //    return this.scripts;
+        //}
 
-        public void removeScript(object script)
-        {
-            if (!this.objectScriptTable.ContainsKey(script))
-            {
-                return;
-            }
-            ScriptBundle<GameObject> converted = this.objectScriptTable[script];
-            this.scripts.Remove(converted);
-            this.objectScriptTable.Remove(script);
-        }
+        //public void removeScript(ScriptBundle<GameObject> script)
+        //{
+        //    this.scripts.Remove(script);
+        //    this.objectScriptTable.Remove(script);
+        //}
+
+        //public void removeScript(object script)
+        //{
+        //    if (!this.objectScriptTable.ContainsKey(script))
+        //    {
+        //        return;
+        //    }
+        //    ScriptBundle<GameObject> converted = this.objectScriptTable[script];
+        //    this.scripts.Remove(converted);
+        //    this.objectScriptTable.Remove(script);
+        //}
 
         public void clearScripts()
         {
             this.scripts.Clear();
-            this.objectScriptTable.Clear();
+           // this.objectScriptTable.Clear();
         }
 
-        public void addScript(object script)
-        {
+        //public void addScript(object script)
+        //{
 
-            script.GetType().GetProperty(ScriptBundle<GameObject>.CODE_GOB).GetSetMethod().Invoke(script, new object[] { this });
+        //    script.GetType().GetProperty(ScriptBundle<GameObject>.CODE_GOB).GetSetMethod().Invoke(script, new object[] { this });
 
-            ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
-            this.scripts.Add(converted);
-            this.objectScriptTable.Add(script, converted);
-        }
+        //    ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
+        //    this.scripts.Add(converted);
+        //    this.objectScriptTable.Add(script, converted);
+        //}
 
         public void removeScript<G>(Script<G> script) where G : GameObject
         {
-            removeScript((object)script);
+            this.scripts.Remove(script);
+            //removeScript((object)script);
         }
 
+        public void removeScript(Script script)
+        {
+            this.scripts.Remove(script);
+        }
+
+        public void addScript<S>(S script) where S : Script
+        {
+            if (script.GobType.Equals(typeof(GameObject)) || 
+                (!this.GetType().IsSubclassOf(script.GobType)) &&
+                 !this.GetType().Equals(script.GobType))
+            {
+                throw new WhiskeyRunTimeException("Cannot add a script of type " + script.GobType + " to a game object of type " + this.GetType());
+            } else {
+                script.Gob = this;
+                this.scripts.Add(script);
+            }
+            
+
+        }
         /// <summary>
         /// Add a script to the GameObject's behaviour
         /// </summary>
@@ -174,15 +198,15 @@ namespace Whiskey2D.Core
             //if (this.GetType() != typeof(G)) //runtime exception
             if (!this.GetType().IsSubclassOf(typeof(G)) && (this.GetType() != typeof(G)))
             {
-                throw new Exception("Cannot add a script of type " + typeof(G) + " to a game object of type " + this.GetType());
+                throw new WhiskeyRunTimeException("Cannot add a script of type " + typeof(G) + " to a game object of type " + this.GetType());
             }
 
             script.Gob = (G)this;
+            this.scripts.Add(script);
+            //ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
 
-            ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
-
-            this.objectScriptTable.Add(script, converted);
-            this.scripts.Add(converted);
+            //this.objectScriptTable.Add(script, converted);
+            //this.scripts.Add(converted);
         }
 
         /// <summary>
@@ -190,9 +214,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public void update()
         {
-            foreach (ScriptBundle<GameObject> script in scripts)
+            foreach (Script script in scripts)
             {
-                script.update();
+                script.onUpdate();
             }
         }
 

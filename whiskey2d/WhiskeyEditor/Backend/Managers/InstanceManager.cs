@@ -61,7 +61,7 @@ namespace WhiskeyEditor.Backend.Managers
                 {
                     Type scriptType = gameData.GetType(ScriptManager.Instance.lookUpScript(scriptName).QualifiedName, false);
                     object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-                    gob.addScript(script);
+                    gob.addScript((Script)script);
                 }
 
 

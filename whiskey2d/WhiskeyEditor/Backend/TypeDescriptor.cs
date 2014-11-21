@@ -282,8 +282,7 @@ namespace WhiskeyEditor.Backend
             writer.WriteLine("\t\t\t//implement your code here!");
             writer.WriteLine("\t\t}");
             writer.WriteLine("");
-            writer.WriteLine("\t\tprotected override void addInitialScripts(){ }");
-
+            
         }
 
         protected override void processExistingCode(string[] allLines)

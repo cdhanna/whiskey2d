@@ -38,6 +38,14 @@ namespace WhiskeyEditor.Backend.Managers
 
         public event CompileEventHandler Compiled;
 
+        private void fireCompiled(CompileEventArgs args)
+        {
+            if (Compiled != null)
+            {
+                Compiled(this, args);
+            }
+        }
+
         #endregion
 
         public CompileManager() : base()
@@ -82,7 +90,7 @@ namespace WhiskeyEditor.Backend.Managers
             {
                 CompilerResults results = compiler.CompileAssemblyFromFile(options, filePaths.ToArray());
 
-                Compiled(this, new CompileEventArgs(results.Errors));
+                fireCompiled( new CompileEventArgs(results.Errors));
                 
                 return options.OutputAssembly;
 

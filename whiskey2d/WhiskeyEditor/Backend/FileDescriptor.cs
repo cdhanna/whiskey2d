@@ -82,6 +82,15 @@ namespace WhiskeyEditor.Backend
 
         }
 
+        public void delete()
+        {
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
+                FileManager.Instance.removeFileDescriptor(this);
+            }
+        }
+
         public string[] readAllLines()
         {
             if (File.Exists(filePath))

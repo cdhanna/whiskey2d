@@ -78,6 +78,7 @@
     <Compile Include="Core\SimpleGameObject.cs" />
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />
+    <Compile Include="Core\WhiskeyRunTimeException.cs" />
     <Compile Include="ex2\Gob.cs" />
     <Compile Include="ex2\GobImpl.cs" />
     <Compile Include="ex2\Script.cs" />

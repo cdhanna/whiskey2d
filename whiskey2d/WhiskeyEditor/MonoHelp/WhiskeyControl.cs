@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Content;
 using Whiskey2D.Core;
 using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.Core.Inputs;
-using WhiskeyEditor.Controls;
 using System.IO;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -36,8 +35,8 @@ namespace WhiskeyEditor.MonoHelp
 
 
         GameObject selectedGob;
-        public WhiskeyPropertyGrid GobGrid{get;set;}
-        public ScriptCollection GobScriptCollection { get; set; }
+      //  public WhiskeyPropertyGrid GobGrid{get;set;}
+      //  public ScriptCollection GobScriptCollection { get; set; }
 
         //protected override void OnResize(EventArgs e)
         //{
@@ -49,15 +48,15 @@ namespace WhiskeyEditor.MonoHelp
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
             content = new ContentManager(Services);
 
-            gameMan.Initialize(this, content, GraphicsDevice,
-                DefaultInputManager.getInstance(),
-                DefaultInputSourceManager.getInstance(),
-                DefaultLogManager.getInstance(),
-                new EditorObjectManager(),
-                DefaultRenderManager.getInstance(),
-                DefaultResourceManager.getInstance()
-                );
-            gameMan.LoadContent();
+            //gameMan.Initialize(this, content, GraphicsDevice,
+            //    DefaultInputManager.getInstance(),
+            //    DefaultInputSourceManager.getInstance(),
+            //    DefaultLogManager.getInstance(),
+            //    new EditorObjectManager(),
+            //    DefaultRenderManager.getInstance(),
+            //    DefaultResourceManager.getInstance()
+            //    );
+            //gameMan.LoadContent();
 
             inputSource = new EditorInputSource(this);
 
@@ -147,11 +146,11 @@ namespace WhiskeyEditor.MonoHelp
             set
             {
                 selectedGob = value;
-                GobGrid.SelectedObject = value;
-                GobGrid.Refresh();
+                //GobGrid.SelectedObject = value;
+                //GobGrid.Refresh();
 
-                GobScriptCollection.SelectedObject = value;
-                GobScriptCollection.Refresh();
+                //GobScriptCollection.SelectedObject = value;
+                //GobScriptCollection.Refresh();
 
             }
         }

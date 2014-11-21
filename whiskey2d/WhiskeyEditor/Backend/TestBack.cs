@@ -50,10 +50,16 @@ namespace WhiskeyEditor.Backend
             t2Instance.getTypeValOfName("X").value = (Single) 100;
 
             t2.addScript(s.Name);
-            
-            
-            
 
+
+
+            CompileManager.Instance.Compiled += (sender, args) =>
+            {
+                foreach (CompilerError err in args.Errors)
+                {
+                    Console.WriteLine(err.ErrorText);
+                }
+            };
 
             //add the script to an instance
             //t2Instance.addScript("RunMe");

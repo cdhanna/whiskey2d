@@ -109,106 +109,10 @@
     <Compile Include="Backend\TypeDescriptor.cs" />
     <Compile Include="Backend\TypeVal.cs" />
     <Compile Include="Backend\WhiskeyException.cs" />
-    <Compile Include="ClassLoader\GameObjectDescriptor.cs" />
-    <Compile Include="ClassLoader\PropertyDescriptor.cs" />
-    <Compile Include="ClassLoader\ScriptDescriptor.cs" />
-    <Compile Include="ClassLoader\ScriptManager.cs" />
-    <Compile Include="ClassLoader\TestMain.cs" />
-    <Compile Include="ClassLoader\TypeManager.cs" />
-    <Compile Include="ColorEditor.cs" />
-    <Compile Include="Controls\Editor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Editor.Designer.cs">
-      <DependentUpon>Editor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScriptCollection.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ScriptCollection.Designer.cs">
-      <DependentUpon>ScriptCollection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScriptIcon.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ScriptIcon.Designer.cs">
-      <DependentUpon>ScriptIcon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScriptLibrary.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ScriptLibrary.Designer.cs">
-      <DependentUpon>ScriptLibrary.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\PropertyEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\PropertyEditor.Designer.cs">
-      <DependentUpon>PropertyEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\TypeEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\TypeEditor.Designer.cs">
-      <DependentUpon>TypeEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\TypeEditorButtonPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\TypeEditorButtonPanel.Designer.cs">
-      <DependentUpon>TypeEditorButtonPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\FloatEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\FloatEditor.Designer.cs">
-      <DependentUpon>FloatEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\IntEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\IntEditor.Designer.cs">
-      <DependentUpon>IntEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\ObjectEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\ObjectEditor.Designer.cs">
-      <DependentUpon>ObjectEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ValueEditor\ValueEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="EditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditorForm.Designer.cs">
-      <DependentUpon>EditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditorObjectManager.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
     <Compile Include="EditorObjects\EditorGameObject.cs" />
     <Compile Include="EditorObjects\SelectScript.cs" />
-    <Compile Include="GameObjectIcon.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GameObjectIcon.Designer.cs">
-      <DependentUpon>GameObjectIcon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\GameObjectTypeBrowser.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TypeEditor\GameObjectTypeBrowser.Designer.cs">
-      <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GameObjectTypeEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GameObjectTypeEditor.Designer.cs">
-      <DependentUpon>GameObjectTypeEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetSetTypeConverter.cs" />
     <Compile Include="MonoHelp\EditorGameManager.cs" />
     <Compile Include="MonoHelp\EditorInputSource.cs" />
     <Compile Include="MonoHelp\GraphicsDeviceControl.cs">
@@ -221,95 +125,16 @@
     <Compile Include="NoArgFunction.cs" />
     <Compile Include="Project\Project.cs" />
     <Compile Include="Project\ProjectManager.cs" />
-    <Compile Include="PropertyDescriptorControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertyDescriptorControl.Designer.cs">
-      <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="MonoHelp\ServiceContainer.cs" />
     <Compile Include="ResourceFiles.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SimpleTextPopup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SimpleTextPopup.Designer.cs">
-      <DependentUpon>SimpleTextPopup.cs</DependentUpon>
-    </Compile>
     <Compile Include="MonoHelp\SpinningTriangleControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ValueEditors\IntEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ValueEditors\IntEditor.Designer.cs">
-      <DependentUpon>IntEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ValueEditors\StringEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ValueEditors\StringEditor.Designer.cs">
-      <DependentUpon>StringEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ValueEditors\ValueEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ValueTypeChangeConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhiskeyPropertyGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <EmbeddedResource Include="Controls\Editor.resx">
-      <DependentUpon>Editor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ScriptCollection.resx">
-      <DependentUpon>ScriptCollection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ScriptIcon.resx">
-      <DependentUpon>ScriptIcon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ScriptLibrary.resx">
-      <DependentUpon>ScriptLibrary.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TypeEditor\PropertyEditor.resx">
-      <DependentUpon>PropertyEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TypeEditor\TypeEditor.resx">
-      <DependentUpon>TypeEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TypeEditor\TypeEditorButtonPanel.resx">
-      <DependentUpon>TypeEditorButtonPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ValueEditor\FloatEditor.resx">
-      <DependentUpon>FloatEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ValueEditor\IntEditor.resx">
-      <DependentUpon>IntEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ValueEditor\ObjectEditor.resx">
-      <DependentUpon>ObjectEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditorForm.resx">
-      <DependentUpon>EditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GameObjectIcon.resx">
-      <DependentUpon>GameObjectIcon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TypeEditor\GameObjectTypeBrowser.resx">
-      <DependentUpon>GameObjectTypeBrowser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GameObjectTypeEditor.resx">
-      <DependentUpon>GameObjectTypeEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">
       <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertyDescriptorControl.resx">
-      <DependentUpon>PropertyDescriptorControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SimpleTextPopup.resx">
-      <DependentUpon>SimpleTextPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -320,12 +145,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ValueEditors\IntEditor.resx">
-      <DependentUpon>IntEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ValueEditors\StringEditor.resx">
-      <DependentUpon>StringEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <Content Include="compile-media\font.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
