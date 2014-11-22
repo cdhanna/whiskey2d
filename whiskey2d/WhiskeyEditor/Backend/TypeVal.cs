@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WhiskeyEditor.Backend
 {
-    interface TypeVal
+    public interface TypeVal
     {
 
         string TypeName { get; }

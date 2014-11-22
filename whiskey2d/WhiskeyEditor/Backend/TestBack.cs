@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Project;
 using Whiskey2D.Core;
-using WhiskeyEditor.Backend.Events;
 using System.CodeDom.Compiler;
-
+using WhiskeyEditor.UI;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WhiskeyEditor.Backend
 {
@@ -73,9 +73,22 @@ namespace WhiskeyEditor.Backend
 
 
             //setup UI for testing
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new BackTestForm());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new TopView());
+
+            //Thread t = new Thread(() =>
+            //{
+
+
+            //    while (true)
+            //    {
+            //        Thread.Sleep(10);
+            //    }
+
+
+            //});
+            //t.Start();
 
         }
 

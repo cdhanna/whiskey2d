@@ -89,12 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backend\Events\CompilerErrorEvent.cs" />
-    <Compile Include="Backend\Events\PropertyAddedEvent.cs" />
-    <Compile Include="Backend\Events\PropertyChangedEvent.cs" />
-    <Compile Include="Backend\Events\PropertyRemovedEvent.cs" />
-    <Compile Include="Backend\Events\ScriptAdded.cs" />
-    <Compile Include="Backend\Events\ScriptRemoved.cs" />
+    <Compile Include="Backend\CodeDescriptor.cs" />
     <Compile Include="Backend\Managers\CompileManager.cs" />
     <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />
@@ -133,6 +128,22 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Dockable\Dockable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Library\LibraryView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Menu\MenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Output\OutputView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\TopView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UIManager.cs" />
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">
       <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,9 +185,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="compile-exe\WhiskeyRunner.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

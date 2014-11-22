@@ -9,7 +9,7 @@ using Microsoft.CSharp;
 using WhiskeyEditor.Project;
 using System.Threading;
 using SmallMVC;
-using WhiskeyEditor.Backend.Events;
+using System.Threading.Tasks;
 
 namespace WhiskeyEditor.Backend.Managers
 {
@@ -50,7 +50,15 @@ namespace WhiskeyEditor.Backend.Managers
 
         public CompileManager() : base()
         {
-            
+           
+
+            FileManager.Instance.FileChanged += (sender, args) =>
+            {
+                
+
+                compile(false, "test.dll");
+                
+            };
         }
 
 
@@ -74,7 +82,7 @@ namespace WhiskeyEditor.Backend.Managers
 
 
             List<string> filePaths = new List<string>();
-            foreach (FileDescriptor fileDesc in FileManager.Instance.FileDescriptors)
+            foreach (FileDescriptor fileDesc in FileManager.Instance.FileDescriptors.Where( f=> f.FilePath.EndsWith(".cs") ))
             {
                 if (ensured)
                 {
@@ -97,7 +105,7 @@ namespace WhiskeyEditor.Backend.Managers
             }
             catch (Exception e)
             {
-                throw new WhiskeyException("Could not compile" + e.Message);
+                throw new WhiskeyException("Could not compile:: " + e.Message);
                 //return "CouldNotBuild";
             }
 

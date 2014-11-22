@@ -6,7 +6,24 @@ using System.Threading.Tasks;
 
 namespace WhiskeyEditor.Backend
 {
-    class PropertyDescriptor 
+    public delegate void PropertyAddedEventHandler(object sender, PropertyChangeEventArgs args);
+    public delegate void PropertyRemovedEventHandler(object sender, PropertyChangeEventArgs args);
+    public delegate void PropertyChangedEventHandler(object sender, PropertyChangeEventArgs args);
+    public class PropertyChangeEventArgs : EventArgs
+    {
+        private PropertyDescriptor prop;
+        private String propName;
+
+        public PropertyDescriptor Property { get { return prop; }}
+        public String PropertyName { get { return propName; } }
+        public PropertyChangeEventArgs(String propName, PropertyDescriptor prop)
+        {
+            this.propName = propName;
+            this.prop = prop;
+        }
+    }
+
+    public class PropertyDescriptor 
     {
 
         private string name;

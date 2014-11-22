@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend.Managers;
-using WhiskeyEditor.Backend.Events;
 
 namespace WhiskeyEditor.Backend
 {
@@ -46,41 +45,43 @@ namespace WhiskeyEditor.Backend
             propDescs = typeDesc.getPropertySetClone();
             scriptNames = typeDesc.getScriptNamesClone();
 
-            typeDesc.addListener<PropertyAddedEvent>  (propertyAddedToType);
-            typeDesc.addListener<PropertyRemovedEvent>(propertyRemovedFromType);
-            typeDesc.addListener<PropertyChangedEvent>(propertyChangedInType);
-            typeDesc.addListener<ScriptAdded>(scriptAddedInType);
-            typeDesc.addListener<ScriptRemoved>(scriptRemovedFromType);
+            typeDesc.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
+            typeDesc.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
+            typeDesc.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
+
+            typeDesc.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
+            typeDesc.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
+
         }
 
         #region Event Handler Code
 
-        private void scriptAddedInType(ScriptAdded evt)
+        private void scriptAddedInType(object sender, ScriptChangedEventArgs args)
         {
-            scriptNames.Add(evt.ScriptName);
+            scriptNames.Add(args.Script.Name);
         }
-        private void scriptRemovedFromType(ScriptRemoved evt)
+        private void scriptRemovedFromType(object sender, ScriptChangedEventArgs args)
         {
-            scriptNames.Remove(evt.ScriptName);
+            scriptNames.Remove(args.Script.Name);
         }
 
-        private void propertyChangedInType(PropertyChangedEvent evt)
+        private void propertyChangedInType(object sender, PropertyChangeEventArgs args)
         {
-            PropertyDescriptor prop = lookUpPropertyDescriptor(evt.OldName);
-            prop.Name = evt.NewProperty.Name;
+            PropertyDescriptor prop = lookUpPropertyDescriptor(args.PropertyName);
+            prop.Name = args.Property.Name;
             propDescs.Remove(prop);
-            propDescs.Add(evt.NewProperty.clone());
+            propDescs.Add(args.Property.clone());
             
         }
 
-        private void propertyAddedToType(PropertyAddedEvent evt)
+        private void propertyAddedToType(object sender, PropertyChangeEventArgs args)
         {
-            propDescs.Add(evt.Property.clone());
+            propDescs.Add(args.Property.clone());
         }
 
-        private void propertyRemovedFromType(PropertyRemovedEvent evt)
+        private void propertyRemovedFromType(object sender, PropertyChangeEventArgs args)
         {
-            List<PropertyDescriptor> badProps = propDescs.Where(p => p.Name.Equals(evt.Property.Name)).ToList();
+            List<PropertyDescriptor> badProps = propDescs.Where(p => p.Name.Equals(args.Property.Name)).ToList();
             badProps.ForEach((p) => { propDescs.Remove(p); });
         }
 
