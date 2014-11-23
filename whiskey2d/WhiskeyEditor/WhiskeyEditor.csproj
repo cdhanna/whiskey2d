@@ -140,6 +140,9 @@
     <Compile Include="UI\Output\OutputView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Toolbar\ToolbarStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\TopView.cs">
       <SubType>Form</SubType>
     </Compile>

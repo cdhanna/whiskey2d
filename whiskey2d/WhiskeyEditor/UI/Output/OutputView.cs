@@ -38,7 +38,16 @@ namespace WhiskeyEditor.UI.Output
                 data.Clear();
                 foreach (CompilerError err in args.Errors)
                 {
-                    err.FileName = err.FileName.Substring(err.FileName.LastIndexOf(Path.DirectorySeparatorChar));
+                    string fileName = err.FileName;
+                    try
+                    {
+                        err.FileName = err.FileName.Substring(err.FileName.LastIndexOf(Path.DirectorySeparatorChar));
+                    }
+                    catch (Exception e)
+                    {
+                        err.FileName = fileName;
+                    }
+                        
                     data.Add(err);
                     
                 }

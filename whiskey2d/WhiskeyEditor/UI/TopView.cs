@@ -10,6 +10,7 @@ using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Output;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Menu;
+using WhiskeyEditor.UI.Toolbar;
 
 namespace WhiskeyEditor.UI
 {
@@ -24,6 +25,7 @@ namespace WhiskeyEditor.UI
         private DockControl libraryViewDock;
 
         private WhiskeyMenu menu;
+        private ToolBarStrip toolBar;
 
         public TopView()
         {
@@ -32,8 +34,9 @@ namespace WhiskeyEditor.UI
 
 
             initControls();
-            addControls();
             configureControls();
+            addControls();
+            
         }
 
         public DockControl lookUpDockControl(string name)
@@ -76,12 +79,14 @@ namespace WhiskeyEditor.UI
 
         private void initControls()
         {
+            toolBar = new ToolBarStrip();
 
             menu = new WhiskeyMenu();
             mainPanel = new Panel();
-            mainPanel.Padding = new Padding(0, menu.Height, 0, 0);
+            mainPanel.Padding = new Padding(0, menu.Height + toolBar.Height, 0, 0);
 
-            
+           
+
 
 
             outputView = new OutputView();
@@ -103,10 +108,17 @@ namespace WhiskeyEditor.UI
 
         private void addControls()
         {
+            Controls.Add(toolBar);
             Controls.Add(menu);
+
+            
 
             mainPanel.Dock = DockStyle.Fill;
             Controls.Add(mainPanel);
+
+            libraryViewDock.dock();
+            outputViewDock.dock();
+
             //outputViewDock.dock(DockStyle.Bottom);
 
         }

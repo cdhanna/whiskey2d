@@ -21,7 +21,7 @@ namespace WhiskeyEditor.UI
         public static UIManager Instance { get { return instance; } }
         private UIManager()
         {
-            FlairColor = Color.Orange;
+            FlairColor = Color.LimeGreen;
         }
 
         public CompileManager Compiler { get { return CompileManager.Instance; } }
