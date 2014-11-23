@@ -23,6 +23,8 @@ namespace WhiskeyEditor.UI.Output
 
             this.Size = new Size(100, 100);
             
+            
+
             initControls();
             addControls();
 
@@ -71,9 +73,14 @@ namespace WhiskeyEditor.UI.Output
             grid.DataSource = data;
             grid.AutoGenerateColumns = false;
             grid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            
+            grid.Enabled = false;
+
+
 
             DataGridViewColumn column = new DataGridViewTextBoxColumn();
+            
+            
+            
             column.DataPropertyName = "FileName";
             column.HeaderText = "File";
             column.FillWeight = .3f;
@@ -87,9 +94,11 @@ namespace WhiskeyEditor.UI.Output
 
             column = new DataGridViewTextBoxColumn();
             column.DataPropertyName = "ErrorText";
+            column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             column.HeaderText = "Error";
             column.FillWeight = .6f;
             grid.Columns.Add(column);
+
 
             
         }

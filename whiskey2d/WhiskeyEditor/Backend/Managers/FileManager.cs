@@ -116,7 +116,7 @@ namespace WhiskeyEditor.Backend.Managers
         public void addFileDescriptor(FileDescriptor fileDesc)
         {
             fileDescs.Add(fileDesc);
-            fileDescMap.Add(fileDesc.Name, fileDesc);
+            fileDescMap.Add(fileDesc.FilePath, fileDesc);
             fireFileAdded(new FileEventArgs(fileDesc));
         }
         public void removeFileDescriptor(FileDescriptor fileDesc)

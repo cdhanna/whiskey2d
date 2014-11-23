@@ -28,17 +28,22 @@ namespace WhiskeyEditor.UI.Dockable
         private Panel menuPanel;
         private Button closeBtn;
         private Label label;
+        private StatusStrip resizeStrip;
+        private bool horizantalSplit;
 
         public DockControl(Control parent, DockStyle defaultDockStyle)
         {
             this.parent = parent;
             this.defaultDockStyle = defaultDockStyle;
-            Size = new Size(100, 100);
+            Size = new Size(200, 100);
             BackColor = Color.Red;
 
             initControls();
             addControls();
             configureControls();
+
+           
+      
         }
 
         #region events
@@ -105,11 +110,34 @@ namespace WhiskeyEditor.UI.Dockable
         {
             if (!viewable)
             {
-
+                
                 Dock = dockStyle;
                 parent.Controls.Add(this);
                 viewable = true;
                 fireDockedEvt(new DockControlDockChangedEventArgs(this));
+
+                switch (dockStyle)
+                {
+                    case DockStyle.Bottom:
+                        resizeStrip.Dock = DockStyle.Top;
+                        horizantalSplit = true;
+                        break;
+                    case DockStyle.Left:
+                        resizeStrip.Dock = DockStyle.Right;
+                        horizantalSplit = false;
+                        break;
+                    case DockStyle.Right:
+                        resizeStrip.Dock = DockStyle.Left;
+                        horizantalSplit = false;
+                        break;
+                    case DockStyle.Top:
+                        resizeStrip.Dock = DockStyle.Bottom;
+                        horizantalSplit = true;
+                        break;
+                    default:
+                        break;
+                }
+
             }
         }
 
@@ -128,13 +156,34 @@ namespace WhiskeyEditor.UI.Dockable
             closeBtn.Click += (s, args) => {
                 undock();
             };
+
+            //resizeStrip.MouseHover += (s, a) =>
+            //{
+            //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.HSplit;
+            //};
+            //resizeStrip.MouseLeave += (s, a) =>
+            //{
+            //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            //};
+
+            bool down = false;
+
+            
+
         }
 
         private void initControls()
         {
             this.Padding = new Padding(0);
             this.Margin = new Padding(0);
-            
+
+            resizeStrip = new StatusStrip();
+            resizeStrip.Size = new Size(4, 4);
+            resizeStrip.GripStyle = ToolStripGripStyle.Hidden;
+            resizeStrip.SizingGrip = true;
+            resizeStrip.AutoSize = false;
+            resizeStrip.Dock = DockStyle.Top;
+            resizeStrip.BackColor = Color.Black;
 
             menuPanel = new Panel();
             menuPanel.BackColor = UIManager.Instance.FlairColor ;
@@ -170,7 +219,7 @@ namespace WhiskeyEditor.UI.Dockable
         private void addControls()
         {
             tablePanel.Dock = DockStyle.Fill;
-            
+            Controls.Add(resizeStrip);
             Controls.Add(tablePanel);
         }
 

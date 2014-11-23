@@ -21,7 +21,9 @@ namespace WhiskeyEditor.UI
         public static UIManager Instance { get { return instance; } }
         private UIManager()
         {
-            FlairColor = Color.LimeGreen;
+            FlairColor = Color.Orange;
+            ErrorColor = Color.LightPink;
+            WarningColor = Color.LightSalmon;
         }
 
         public CompileManager Compiler { get { return CompileManager.Instance; } }
@@ -46,5 +48,10 @@ namespace WhiskeyEditor.UI
         }
         public Color DullFlairColor { get; private set; }
         public Color PaleFlairColor { get; private set; }
+
+
+        public Color ErrorColor { get; private set; }
+        public Color WarningColor { get; private set; }
+
     }
 }
