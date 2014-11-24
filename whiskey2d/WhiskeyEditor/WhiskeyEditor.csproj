@@ -132,6 +132,15 @@
     <Compile Include="UI\Dockable\DockControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\CodeDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Documents\DocumentTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Documents\DocumentView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Library\LibraryTreeNode.cs" />
     <Compile Include="UI\Library\LibraryView.cs">
       <SubType>Component</SubType>
@@ -149,6 +158,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UIManager.cs" />
+    <Content Include="UI\Assets\closeIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Assets\fileIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

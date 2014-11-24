@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading;
 
 namespace WhiskeyEditor.UI.Dockable
 {
@@ -30,6 +31,8 @@ namespace WhiskeyEditor.UI.Dockable
         private Label label;
         private StatusStrip resizeStrip;
         private bool horizantalSplit;
+
+
 
         public DockControl(Control parent, DockStyle defaultDockStyle)
         {
@@ -110,34 +113,30 @@ namespace WhiskeyEditor.UI.Dockable
         {
             if (!viewable)
             {
-                
                 Dock = dockStyle;
                 parent.Controls.Add(this);
                 viewable = true;
                 fireDockedEvt(new DockControlDockChangedEventArgs(this));
 
+                resizeStrip.Visible = true;
                 switch (dockStyle)
                 {
                     case DockStyle.Bottom:
                         resizeStrip.Dock = DockStyle.Top;
-                        horizantalSplit = true;
                         break;
                     case DockStyle.Left:
                         resizeStrip.Dock = DockStyle.Right;
-                        horizantalSplit = false;
                         break;
                     case DockStyle.Right:
                         resizeStrip.Dock = DockStyle.Left;
-                        horizantalSplit = false;
                         break;
                     case DockStyle.Top:
                         resizeStrip.Dock = DockStyle.Bottom;
-                        horizantalSplit = true;
                         break;
                     default:
+                        resizeStrip.Dock = DockStyle.None;
                         break;
                 }
-
             }
         }
 
@@ -151,26 +150,81 @@ namespace WhiskeyEditor.UI.Dockable
             }
         }
 
+
         private void configureControls()
         {
             closeBtn.Click += (s, args) => {
                 undock();
             };
 
-            //resizeStrip.MouseHover += (s, a) =>
-            //{
-            //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.HSplit;
-            //};
+
             //resizeStrip.MouseLeave += (s, a) =>
             //{
             //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             //};
 
-            bool down = false;
+            resizeStrip.MouseDown += (s, a) =>
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.HSplit;
+                                
 
-            
+                Boolean abort = true;
+                Thread resizeThread = new Thread(() =>
+                {
+
+                    resizeStrip.MouseUp += (s2, a2) =>
+                    {
+                        abort = false;
+                    };
+                   
+                    while (abort)
+                    {
+                        try
+                        {
+                            if (resizeStrip.Dock == DockStyle.Top)
+                            {
+                                Invoke(new NoArgFunction(() =>
+                                {
+                                    int yDelta = resizeStrip.PointToScreen(resizeStrip.Location).Y - Cursor.Position.Y;
+                                    Size = new Size(Width, Height + yDelta);
+                                }));
+                            }
+                            else if (resizeStrip.Dock == DockStyle.Right)
+                            {
+                                Invoke(new NoArgFunction(() =>
+                                {
+                                    int xDelta = Cursor.Position.X - resizeStrip.PointToScreen(resizeStrip.Location).X + Width - resizeStrip.Width;
+                                    Size = new Size(Width + xDelta, Height);
+                                }));
+                            }
+                            else if (resizeStrip.Dock == DockStyle.Right)
+                            {
+                                throw new NotImplementedException("HELP");
+                            }
+                            else if (resizeStrip.Dock == DockStyle.Bottom)
+                            {
+                                throw new NotImplementedException("HELP");
+                            }
+
+                            Thread.Sleep(1);
+                        }
+                        catch (ThreadAbortException e)
+                        {
+                            
+                        }
+                    }
+                });
+
+
+                resizeThread.Start();
+
+            };
+
+         
 
         }
+
+
 
         private void initControls()
         {

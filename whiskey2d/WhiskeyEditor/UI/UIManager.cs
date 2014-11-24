@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhiskeyEditor.Project;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.Backend.Managers;
-
+using WhiskeyEditor.UI.Documents;
 using System.Drawing;
 
 namespace WhiskeyEditor.UI
@@ -16,12 +16,16 @@ namespace WhiskeyEditor.UI
 
         public const string VIEW_NAME_OUTPUT = "output";
         public const string VIEW_NAME_LIBRARY = "lib";
+        public const string VIEW_NAME_DOCUMENTS = "docs";
+
+        public const string COMMAND_SAVE = "save";
+        public const string COMMAND_PLAY = "play";
 
         private static UIManager instance = new UIManager();
         public static UIManager Instance { get { return instance; } }
         private UIManager()
         {
-            FlairColor = Color.Orange;
+            FlairColor = Color.FromArgb(128, 200, 255);
             ErrorColor = Color.LightPink;
             WarningColor = Color.LightSalmon;
         }
@@ -52,6 +56,17 @@ namespace WhiskeyEditor.UI
 
         public Color ErrorColor { get; private set; }
         public Color WarningColor { get; private set; }
+
+
+        public DocumentTab getDocumentTabFor(DocumentView parent, FileDescriptor file)
+        {
+            if (file is CodeDescriptor)
+            {
+                return new CodeDocument( (CodeDescriptor) file, parent);
+            }
+            else return new DocumentTab(file.FilePath, parent);
+
+        }
 
     }
 }

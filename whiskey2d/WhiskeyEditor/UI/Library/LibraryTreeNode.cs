@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 namespace WhiskeyEditor.UI.Library
 {
-    class LibraryTreeNode : TreeNode
+    public class LibraryTreeNode : TreeNode
     {
 
         public string FilePath { get; private set; }

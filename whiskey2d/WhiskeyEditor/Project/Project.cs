@@ -9,6 +9,7 @@ using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using Whiskey2D.Core;
+using System.Diagnostics;
 
 
 namespace WhiskeyEditor.Project
@@ -246,6 +247,15 @@ namespace WhiskeyEditor.Project
             DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
             File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
             File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+        }
+
+        public void runGame()
+        {
+            var startInfo = new ProcessStartInfo();
+            startInfo.WorkingDirectory = PathBuild;
+            // set additional properties 
+            startInfo.FileName = Name + ".exe";
+            Process proc = Process.Start(startInfo);
         }
 
 

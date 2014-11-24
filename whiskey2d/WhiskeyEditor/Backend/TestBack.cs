@@ -65,11 +65,11 @@ namespace WhiskeyEditor.Backend
             //t2Instance.addScript("RunMe");
 
             //compile all sources
-            string dllPath = CompileManager.Instance.compile();
-            InstanceManager.Instance.convertToGobs(dllPath, "default");
+           // string dllPath = CompileManager.Instance.compile();
+          //  InstanceManager.Instance.convertToGobs(dllPath, "default");
 
             //build exe
-            ProjectManager.Instance.ActiveProject.buildExecutable();
+           // ProjectManager.Instance.ActiveProject.buildExecutable();
 
 
             //setup UI for testing

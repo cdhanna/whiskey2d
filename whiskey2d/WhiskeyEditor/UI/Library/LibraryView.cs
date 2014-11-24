@@ -13,12 +13,22 @@ using WhiskeyEditor.UI.Assets;
 namespace WhiskeyEditor.UI.Library
 {
 
+    public delegate void LibrarySelectionEventHandler (object sender, LibrarySelectionEventArgs args);
+    public class LibrarySelectionEventArgs : EventArgs
+    {
+        public LibraryTreeNode Selected { get; private set; }
+        public LibrarySelectionEventArgs(LibraryTreeNode node)
+        {
+            Selected = node;
+        }
+    }
 
-
-    class LibraryView : Control
+    public class LibraryView : Control
     {
 
         private TreeView fileTree;
+
+        public event LibrarySelectionEventHandler SelectionChanged = new LibrarySelectionEventHandler((s, a) => { });
 
         public LibraryView()
         {
@@ -74,7 +84,7 @@ namespace WhiskeyEditor.UI.Library
                 LibraryTreeNode node = (LibraryTreeNode)a.Node;
                 if (node.IsFile)
                 {
-                    Console.WriteLine(node.FilePath);
+                    SelectionChanged(this, new LibrarySelectionEventArgs(node));
                 }
 
             };

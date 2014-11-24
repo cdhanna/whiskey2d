@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using WhiskeyEditor.Project;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Output;
+using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Menu;
 using WhiskeyEditor.UI.Toolbar;
@@ -20,9 +22,12 @@ namespace WhiskeyEditor.UI
 
         private OutputView outputView;
         private LibraryView libraryView;
+        private DocumentView docView;
+
 
         private DockControl outputViewDock;
         private DockControl libraryViewDock;
+        private DockControl docViewDock;
 
         private WhiskeyMenu menu;
         private ToolBarStrip toolBar;
@@ -47,24 +52,27 @@ namespace WhiskeyEditor.UI
                     return outputViewDock;
                 case UIManager.VIEW_NAME_LIBRARY:
                     return libraryViewDock;
+                case UIManager.VIEW_NAME_DOCUMENTS:
+                    return docViewDock;
                 default:
                     throw new WhiskeyException("Dockable : " + name + " could not be found");
             }
         }
 
+        
+
         private void configureControls()
         {
-         
 
-            outputViewDock.DockedChanged += (s, args) =>
-                {
-                    menu.setViewViewable(args.DockControl.Name, args.DockControl.Viewable);
-                };
-
-            libraryViewDock.DockedChanged += (s, args) =>
+            DockControlDockChangedEventHandler dockChangedHandler = new DockControlDockChangedEventHandler((s, args) =>
             {
                 menu.setViewViewable(args.DockControl.Name, args.DockControl.Viewable);
-            };
+            });
+
+            outputViewDock.DockedChanged += dockChangedHandler;
+            libraryViewDock.DockedChanged += dockChangedHandler;
+            docViewDock.DockedChanged += dockChangedHandler;
+
 
             menu.ViewToggled += (s, args) =>
             {
@@ -73,6 +81,44 @@ namespace WhiskeyEditor.UI
                     dockControl.undock();
                 else dockControl.dock();
 
+            };
+
+            toolBar.ButtonPressed += (s, args) =>
+            {
+                switch (args.ButtonName)
+                {
+                    case UIManager.COMMAND_PLAY:
+
+                        UIManager.Instance.Compiler.compile();
+                        ProjectManager.Instance.ActiveProject.buildExecutable();
+                        ProjectManager.Instance.ActiveProject.runGame();
+
+                        break;
+                    case UIManager.COMMAND_SAVE:
+                        docView.saveCurrent();
+                        break;
+                    default:
+                        break;
+                }
+
+                
+            };
+
+            this.KeyPreview = true;
+            this.KeyDown += (s, a) =>
+            {
+                if (a.Control && a.KeyCode == Keys.S)
+                {
+                    docView.saveCurrent();
+                }
+            };
+
+
+            libraryView.SelectionChanged += (s, args) =>
+            {
+
+                
+                docView.openDocument(args.Selected.FilePath);
             };
 
         }
@@ -104,6 +150,12 @@ namespace WhiskeyEditor.UI
             libraryViewDock.PrimaryView = libraryView;
 
 
+            docView = new DocumentView();
+            docView.Name = "Documents";
+            docViewDock = new DockControl(mainPanel, DockStyle.Fill);
+            docViewDock.Name = UIManager.VIEW_NAME_DOCUMENTS;
+            docViewDock.PrimaryView = docView;
+
         }
 
         private void addControls()
@@ -116,6 +168,7 @@ namespace WhiskeyEditor.UI
             mainPanel.Dock = DockStyle.Fill;
             Controls.Add(mainPanel);
 
+            docViewDock.dock();
             libraryViewDock.dock();
             outputViewDock.dock();
 

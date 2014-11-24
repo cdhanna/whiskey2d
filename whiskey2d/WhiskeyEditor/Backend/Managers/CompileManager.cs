@@ -105,7 +105,7 @@ namespace WhiskeyEditor.Backend.Managers
             }
             catch (Exception e)
             {
-                throw new WhiskeyException("Could not compile:: " + e.Message);
+                throw new WhiskeyException("Compiler Error " + e.Message);
                 //return "CouldNotBuild";
             }
 
