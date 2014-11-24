@@ -20,6 +20,7 @@ namespace Whiskey2D.Core
 
         public State()
         {
+            GameObjects = new List<GameObject>();
             Name = "unnamed";
         }
 
@@ -59,10 +60,10 @@ namespace Whiskey2D.Core
         public static State deserialize(string fileName)
         {
             fileName += ".state";
-            GameManager.Log.debug("State loading : " + fileName);
+           // GameManager.Log.debug("State loading : " + fileName);
             if (!File.Exists(fileName))
             {
-                return null;
+                throw new WhiskeyRunTimeException("State does not exist : " + fileName);
             }
 
             // Open the file containing the data that you want to deserialize.
@@ -75,15 +76,14 @@ namespace Whiskey2D.Core
             }
             catch (SerializationException e)
             {
-                GameManager.Log.error("Cannot deserialize");
-                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
-                throw;
+             //   GameManager.Log.error("Cannot deserialize");
+                throw new WhiskeyRunTimeException("Failed to deserialize. Reason: " + e.Message);
+                
             }
             finally
             {
                 fs.Close();
             }
-            GameManager.Log.debug("State has  " + state.GameObjects.Count);
             return state;
             //return (State)s.Deserialize(fileName);
         }

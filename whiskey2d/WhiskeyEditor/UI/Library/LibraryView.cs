@@ -36,7 +36,10 @@ namespace WhiskeyEditor.UI.Library
             this.Size = new Size(100, 50);
             this.BackColor = Color.Gray;
 
-            
+            ProjectManager.Instance.ProjectChanged += (s, a) =>
+            {
+                refreshContent();
+            };
 
             initControls();
             configureControls();
@@ -52,8 +55,9 @@ namespace WhiskeyEditor.UI.Library
 
             Project p = ProjectManager.Instance.ActiveProject;
 
-            TreeNode root = new TreeNode(p.Name);
+            LibraryTreeNode root = new LibraryTreeNode(p.Name, p.PathBase);
 
+           // root.populate();
             LibraryTreeNode nodeSrc = new LibraryTreeNode("Source", p.PathSrc);
             nodeSrc.populate();
             root.Nodes.Add(nodeSrc);

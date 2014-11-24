@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Documents;
+using System.Windows.Forms;
 using System.Drawing;
 
 namespace WhiskeyEditor.UI
@@ -29,10 +30,13 @@ namespace WhiskeyEditor.UI
             WarningColor = Color.LightSalmon;
         }
 
+
         public CompileManager Compiler { get { return CompileManager.Instance; } }
         public FileManager Files { get { return FileManager.Instance; } }
         public InstanceManager GobInstances { get { return InstanceManager.Instance; } }
 
+
+        public TopView TopView { get; private set; }
 
 
         private Color flairColor;
@@ -64,8 +68,23 @@ namespace WhiskeyEditor.UI
                 return new CodeDocument( (CodeDescriptor) file, parent);
             }
             else return new DocumentTab(file.FilePath, parent);
-
         }
+
+        public void startup()
+        {
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            TopView = new TopView();
+            Application.Run(TopView);
+        }
+
+        public void requestClose()
+        {
+            TopView.Close();
+        }
+
 
     }
 }

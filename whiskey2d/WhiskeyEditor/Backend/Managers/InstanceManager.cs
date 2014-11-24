@@ -34,7 +34,26 @@ namespace WhiskeyEditor.Backend.Managers
             iDescs.Add(iDesc);
         }
 
-        
+        public State getState()
+        {
+            State state = new State();
+            state.Name = "test";
+
+            foreach (InstanceDescriptor inst in iDescs)
+            {
+                state.GameObjects.Add(inst);
+            }
+            
+            return state;
+        }
+
+        public void setState(State state)
+        {
+            foreach (GameObject gob in state.GameObjects)
+            {
+                addInstance((InstanceDescriptor)gob);
+            }
+        }
 
         public string convertToGobs(string dllPathIn, string stateNameIn)
         {

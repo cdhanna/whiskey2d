@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\CodeDescriptor.cs" />
+    <Compile Include="Backend\GameData.cs" />
+    <Compile Include="Backend\LevelDescriptor.cs" />
     <Compile Include="Backend\Managers\CompileManager.cs" />
     <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />

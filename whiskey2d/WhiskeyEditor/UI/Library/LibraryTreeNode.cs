@@ -17,7 +17,7 @@ namespace WhiskeyEditor.UI.Library
         public LibraryTreeNode(string text, string filePath)
             : base(text)
         {
-            FilePath = filePath;
+            FilePath = clearLeadingSlashes(filePath) ;
             IsFile = false;
         }
 
@@ -29,7 +29,7 @@ namespace WhiskeyEditor.UI.Library
             string[] filePaths = Directory.GetFiles(FilePath);
             foreach (string path in filePaths)
             {
-                LibraryTreeNode node = new LibraryTreeNode(getFileNameWithoutExtension(path), path);
+                LibraryTreeNode node = new LibraryTreeNode(getFileNameWithoutExtension(path), clearLeadingSlashes(path));
                 node.ImageIndex = 1;
                 node.SelectedImageIndex = 1;
                 node.IsFile = true;
@@ -46,6 +46,14 @@ namespace WhiskeyEditor.UI.Library
 
             }
             
+        }
+
+        private string clearLeadingSlashes(string path)
+        {
+            if (path.Length > 0 && path[0] == '\\')
+            {
+                return clearLeadingSlashes(path.Substring(1));
+            } return path;
         }
 
         private string getFileName(string filePath)

@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace WhiskeyEditor.Backend.Managers
 {
-    class ProjectManager
+    public delegate void ProjectChangedEventHandler (object sender, ProjectChangedEventArgs args);
+    public class ProjectChangedEventArgs : EventArgs
+    {
+        public Project OldProject { get; private set; }
+        public Project NewProject { get; private set; }
+        public ProjectChangedEventArgs(Project oldProject, Project newProject)
+        {
+            OldProject = oldProject;
+            NewProject = newProject;
+        }
+    }
+
+    public class ProjectManager
     {
         private static ProjectManager instance = new ProjectManager();
         public static ProjectManager Instance
@@ -14,6 +26,8 @@ namespace WhiskeyEditor.Backend.Managers
             get { return instance; }
         }
 
+
+        public event ProjectChangedEventHandler ProjectChanged = new ProjectChangedEventHandler((s, a) => { });
 
         private Project active;
 
@@ -31,8 +45,11 @@ namespace WhiskeyEditor.Backend.Managers
             }
             set
             {
+                Project old = active;
                 active = value;
                 Settings.CurrentProject = active.PathBase;
+               
+                ProjectChanged(this, new ProjectChangedEventArgs(old, active));
             }
         }
 

@@ -25,13 +25,14 @@ namespace WhiskeyEditor.UI.Menu
     class WhiskeyMenu : MenuStrip
     {
 
-        private OpenFileDialog newFileDialog;
+        private OpenFileDialog openProjDialog;
 
         #region file
         private ToolStripItem fileItem;
         private ToolStripMenuItem fileNew;
         private ToolStripMenuItem fileNewProject;
         private ToolStripMenuItem fileOpen;
+        private ToolStripMenuItem fileOpenProject;
         private ToolStripMenuItem fileSave;
         private ToolStripMenuItem fileSaveAll;
         private ToolStripMenuItem fileExit;
@@ -91,6 +92,7 @@ namespace WhiskeyEditor.UI.Menu
 
         public void configureControls()
         {
+            #region VIEW
             viewOutput.Click += (s, a) => {
                 fireViewToggleEvt(new ViewChangedEventArgs(UIManager.VIEW_NAME_OUTPUT));
             };
@@ -104,15 +106,23 @@ namespace WhiskeyEditor.UI.Menu
             {
                 fireViewToggleEvt(new ViewChangedEventArgs(UIManager.VIEW_NAME_DOCUMENTS));
             };
+            #endregion
 
+            #region FILE
+
+            fileSaveAll.Click += (s, a) =>
+            {
+                ProjectManager.Instance.ActiveProject.saveGameData();
+            };
 
             fileNewProject.Click += (s, a) =>
             {
-                DialogResult result = newFileDialog.ShowDialog(this);
+                openProjDialog.CheckFileExists = false;
+                DialogResult result = openProjDialog.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {
-                    Console.WriteLine(newFileDialog.FileName);
-                    string projPath = newFileDialog.FileName.Replace(".whiskeyproj", "");
+                    Console.WriteLine(openProjDialog.FileName);
+                    string projPath = openProjDialog.FileName.Replace(".whiskeyproj", "");
                     string projName = projPath.Substring( projPath.LastIndexOf(Path.DirectorySeparatorChar) +1);
                     
                     Project proj = ProjectManager.Instance.createNewProject(projPath, projName);
@@ -120,23 +130,57 @@ namespace WhiskeyEditor.UI.Menu
                 }
             };
 
+            fileOpenProject.Click += (s, a) =>
+            {
+                openProjDialog.CheckFileExists = true;
+                DialogResult result = openProjDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Console.WriteLine(openProjDialog.FileName);
+                    string projPath = openProjDialog.FileName.Replace(".whiskeyproj", "");
+                    string projName = projPath.Substring(projPath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+
+                    Project proj = ProjectManager.Instance.openProject(projPath);
+                   
+                    ProjectManager.Instance.ActiveProject = proj;
+                    ProjectManager.Instance.ActiveProject.loadGameData();
+                }
+            };
+
+            fileExit.Click += (s, a) =>
+            {
+                UIManager.Instance.requestClose();
+            };
+
+            #endregion
         }
 
         private void initControls()
         {
-            newFileDialog = new OpenFileDialog();
-            newFileDialog.DefaultExt = ".whiskeyproj";
-            newFileDialog.Filter = "WhiskeyProjects|*.whiskeyproj";
-            newFileDialog.CheckPathExists = false;
-            newFileDialog.CheckFileExists = false;
-
+            openProjDialog = new OpenFileDialog();
+            openProjDialog.DefaultExt = ".whiskeyproj";
+            openProjDialog.Filter = "WhiskeyProjects|*.whiskeyproj";
+            openProjDialog.CheckPathExists = false;
+            openProjDialog.CheckFileExists = false;
 
             fileNewProject = new ToolStripMenuItem("Project");
             fileNew = new ToolStripMenuItem("New");
             fileNew.DropDown.Items.Add(fileNewProject);
+
+            fileOpenProject = new ToolStripMenuItem("Project");
+            fileOpen = new ToolStripMenuItem("Open");
+            fileOpen.DropDown.Items.Add(fileOpenProject);
+
+            fileSaveAll = new ToolStripMenuItem("Save All");
+            
+
             fileExit = new ToolStripMenuItem("Exit");
+
+            
             fileItem = new ToolStripMenuItem("File", null, 
                 fileNew,
+                fileOpen,
+                fileSaveAll,
                 fileExit);
 
 

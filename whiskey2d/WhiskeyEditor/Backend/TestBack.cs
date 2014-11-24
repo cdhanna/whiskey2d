@@ -21,6 +21,8 @@ namespace WhiskeyEditor.Backend
         public static void Main()
         {
 
+       
+
             //set active project
             Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
             ProjectManager.Instance.ActiveProject = proj;
@@ -28,10 +30,10 @@ namespace WhiskeyEditor.Backend
            // CompileManager.Instance.startBackBuild();
 
 
-
+            
             //create a type
             TypeDescriptor t2 = new TypeDescriptor("TestMeAgain");
-            
+
             t2.addPropertyDescriptor(new PropertyDescriptor("Injected", new RealType(typeof(String), "GoodBye")));
 
             //set default value for sprite
@@ -42,15 +44,16 @@ namespace WhiskeyEditor.Backend
             //create a script
             ScriptDescriptor s = new ScriptDescriptor("RunMe", t2.Name);
             s.ensureFileExists();
-            
-            
+
+
             //create an instance
-            InstanceDescriptor t2Instance = new InstanceDescriptor(t2);
-            t2Instance.getTypeValOfName("X").value = (Single) 100;
+            //InstanceDescriptor t2Instance = new InstanceDescriptor(t2);
+            //t2Instance.getTypeValOfName("X").value = (Single)100;
 
-            t2.addScript(s.Name);
+            //t2.addScript(s.Name);
 
-
+            State state = State.deserialize("testInstData");
+            InstanceManager.Instance.setState(state);
 
             CompileManager.Instance.Compiled += (sender, args) =>
             {
@@ -60,22 +63,26 @@ namespace WhiskeyEditor.Backend
                 }
             };
 
+            //State instState = InstanceManager.Instance.getState();
+            //State.serialize(instState, "testInstData.state");
+
             //add the script to an instance
             //t2Instance.addScript("RunMe");
 
             //compile all sources
-            string dllPath = CompileManager.Instance.compile();
-            InstanceManager.Instance.convertToGobs(dllPath, "default");
-            CompileManager.Instance.compile();
+           // string dllPath = CompileManager.Instance.compile();
+           // InstanceManager.Instance.convertToGobs(dllPath, "default");
+
+
+            //GameData data = FileManager.Instance.getGameData();
+            //GameData.serialize(data, "testdata.txt");
+            
             //build exe
            // ProjectManager.Instance.ActiveProject.buildExecutable();
-
+    
 
             //setup UI for testing
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TopView());
-
+           
             //Thread t = new Thread(() =>
             //{
 
@@ -88,6 +95,11 @@ namespace WhiskeyEditor.Backend
 
             //});
             //t.Start();
+
+            UIManager.Instance.startup();
+
+            return;
+
 
         }
 

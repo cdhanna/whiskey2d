@@ -10,11 +10,11 @@ using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using Whiskey2D.Core;
 using System.Diagnostics;
-
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
-    class Project
+    public class Project
     {
         public const string PROP_NAME = "Name";
         public const string PROP_LAST_EDITING_SCENE = "LastEditingScene";
@@ -68,7 +68,7 @@ namespace WhiskeyEditor.Backend
         public string FileBuildGameExePath { get { return PathBuild + Path.DirectorySeparatorChar + Name + ".exe"; } }
         public string FileBuildGameConfigPath { get { return FileBuildGameExePath + ".config"; } }
 
-
+        public string FileGameDataPath { get { return PathBase + Path.DirectorySeparatorChar + ".gamedata";  } }
 
         /// <summary>
         /// The path of the .project file
@@ -84,6 +84,9 @@ namespace WhiskeyEditor.Backend
         /// the settings file that will be genererated when a game is built
         /// </summary>
         private PropertiesFiles GameSettings { get { return gameSettings; } }
+
+
+        
 
         /// <summary>
         /// Get/Set the name of the project. 
@@ -211,6 +214,27 @@ namespace WhiskeyEditor.Backend
 
             GameStartScene = stateName; // hardcoded. Fix.
 
+        }
+
+
+
+        public void saveGameData()
+        {
+            GameData data = FileManager.Instance.getGameData();
+            GameData.serialize(data, FileGameDataPath);
+        }
+
+        public void loadGameData()
+        {
+            try
+            {
+                GameData data = GameData.deserialize(FileGameDataPath);
+                FileManager.Instance.setGameData(data);
+            }
+            catch (WhiskeyException e)
+            {
+                //???
+            }
         }
 
         /// <summary>

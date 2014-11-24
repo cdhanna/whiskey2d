@@ -36,6 +36,11 @@ namespace WhiskeyEditor.UI
         {
 
             this.Size = new Size(600, 400);
+            Text = ProjectManager.Instance.ActiveProject.Name;
+            ProjectManager.Instance.ProjectChanged += (s, a) =>
+            {
+                Text = a.NewProject.Name;
+            };
 
 
             initControls();
@@ -43,6 +48,19 @@ namespace WhiskeyEditor.UI
             addControls();
             
         }
+
+        public override string Text
+        {
+            get
+            {
+                return base.Text;
+            }
+            set
+            {
+                base.Text = "Whiskey2D - " + value;
+            }
+        }
+
 
         public DockControl lookUpDockControl(string name)
         {
@@ -169,10 +187,10 @@ namespace WhiskeyEditor.UI
             mainPanel.Dock = DockStyle.Fill;
             Controls.Add(mainPanel);
 
-            docViewDock.dock();
             libraryViewDock.dock();
             outputViewDock.dock();
-
+            docViewDock.dock();
+            
             //outputViewDock.dock(DockStyle.Bottom);
 
         }

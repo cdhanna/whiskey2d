@@ -115,7 +115,7 @@ namespace WhiskeyEditor.Backend.Managers
         public void addFileDescriptor(FileDescriptor fileDesc)
         {
             fileDescs.Add(fileDesc);
-            fileDescMap.Add(fileDesc.FilePath, fileDesc);
+            fileDescMap.Add(fileDesc.FilePath , fileDesc);
             fireFileAdded(new FileEventArgs(fileDesc));
         }
         public void removeFileDescriptor(FileDescriptor fileDesc)
@@ -135,13 +135,48 @@ namespace WhiskeyEditor.Backend.Managers
 
         public FileDescriptor lookUp(string name)
         {
+
+          //  name = Path.GetFullPath(name);
+            
             if (fileDescMap.ContainsKey(name))
             {
                 return fileDescMap[name];
             }
-            else return null;
+            else throw new WhiskeyException("File could not be found : " + name);
         }
 
+
+        public virtual GameData getGameData()
+        {
+            GameData data = new GameData();
+            FileDescriptor[] files = new FileDescriptor[fileDescs.Count];
+            fileDescs.CopyTo(files);
+            data.Files = files.ToList();
+            return data;
+        }
+
+        public virtual void setGameData(GameData data)
+        {
+
+            if (data == null)
+            {
+                return;
+            }
+
+            //TODO notify someone that everything is gone
+            fileDescs.Clear();
+            fileDescMap.Clear();
+
+            FileDescriptor[] files = new FileDescriptor[data.Files.Count];
+            data.Files.CopyTo(files);
+            // = objs.ToList();
+
+            foreach (FileDescriptor f in files)
+            {
+                addFileDescriptor(f);
+            }
+
+        }
 
     }
 }
