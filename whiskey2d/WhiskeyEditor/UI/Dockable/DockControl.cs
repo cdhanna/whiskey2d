@@ -153,21 +153,18 @@ namespace WhiskeyEditor.UI.Dockable
 
         private void configureControls()
         {
+
+            //close button control
             closeBtn.Click += (s, args) => {
                 undock();
             };
 
 
-            //resizeStrip.MouseLeave += (s, a) =>
-            //{
-            //    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            //};
-
+            //resize control
             resizeStrip.MouseDown += (s, a) =>
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.HSplit;
-                                
-
+                
                 Boolean abort = true;
                 Thread resizeThread = new Thread(() =>
                 {

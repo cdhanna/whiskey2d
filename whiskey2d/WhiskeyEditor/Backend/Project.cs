@@ -12,7 +12,7 @@ using Whiskey2D.Core;
 using System.Diagnostics;
 
 
-namespace WhiskeyEditor.Project
+namespace WhiskeyEditor.Backend
 {
     class Project
     {

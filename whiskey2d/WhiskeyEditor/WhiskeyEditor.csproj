@@ -118,8 +118,8 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="NoArgFunction.cs" />
-    <Compile Include="Project\Project.cs" />
-    <Compile Include="Project\ProjectManager.cs" />
+    <Compile Include="Backend\Project.cs" />
+    <Compile Include="Backend\Managers\ProjectManager.cs" />
     <Compile Include="MonoHelp\ServiceContainer.cs" />
     <Compile Include="ResourceFiles.cs" />
     <Compile Include="Settings.cs" />
@@ -167,7 +167,10 @@
     <Content Include="UI\Assets\folderIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Assets\testIcon.png">
+    <Content Include="UI\Assets\playIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\saveIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">

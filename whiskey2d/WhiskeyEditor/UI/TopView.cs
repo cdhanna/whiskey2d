@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
-using WhiskeyEditor.Project;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Output;
 using WhiskeyEditor.UI.Documents;
@@ -89,7 +89,8 @@ namespace WhiskeyEditor.UI
                 {
                     case UIManager.COMMAND_PLAY:
 
-                        UIManager.Instance.Compiler.compile();
+                        string dll = UIManager.Instance.Compiler.compile();
+                        UIManager.Instance.GobInstances.convertToGobs(dll, "default");
                         ProjectManager.Instance.ActiveProject.buildExecutable();
                         ProjectManager.Instance.ActiveProject.runGame();
 

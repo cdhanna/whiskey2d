@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
-using WhiskeyEditor.Project;
 using SmallMVC;
 
 namespace WhiskeyEditor.Backend
 {
-
+    [Serializable]
     public class FileDescriptor
     {
 

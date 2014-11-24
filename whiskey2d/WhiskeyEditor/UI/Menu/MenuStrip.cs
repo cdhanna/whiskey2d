@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace WhiskeyEditor.UI.Menu
 {
@@ -23,11 +25,19 @@ namespace WhiskeyEditor.UI.Menu
     class WhiskeyMenu : MenuStrip
     {
 
+        private OpenFileDialog newFileDialog;
+
         #region file
         private ToolStripItem fileItem;
-
+        private ToolStripMenuItem fileNew;
+        private ToolStripMenuItem fileNewProject;
+        private ToolStripMenuItem fileOpen;
+        private ToolStripMenuItem fileSave;
+        private ToolStripMenuItem fileSaveAll;
+        private ToolStripMenuItem fileExit;
         #endregion
 
+        
         #region view
         private ToolStripMenuItem viewItem;
         private ToolStripMenuItem viewOutput;
@@ -37,7 +47,7 @@ namespace WhiskeyEditor.UI.Menu
 
         public WhiskeyMenu()
         {
-            BackColor = UIManager.Instance.PaleFlairColor;
+            BackColor = Color.LightGray;//UIManager.Instance.PaleFlairColor;
 
             initControls();
             addControls();
@@ -95,11 +105,39 @@ namespace WhiskeyEditor.UI.Menu
                 fireViewToggleEvt(new ViewChangedEventArgs(UIManager.VIEW_NAME_DOCUMENTS));
             };
 
+
+            fileNewProject.Click += (s, a) =>
+            {
+                DialogResult result = newFileDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    Console.WriteLine(newFileDialog.FileName);
+                    string projPath = newFileDialog.FileName.Replace(".whiskeyproj", "");
+                    string projName = projPath.Substring( projPath.LastIndexOf(Path.DirectorySeparatorChar) +1);
+                    
+                    Project proj = ProjectManager.Instance.createNewProject(projPath, projName);
+                    ProjectManager.Instance.ActiveProject = proj;
+                }
+            };
+
         }
 
         private void initControls()
         {
-            fileItem = new ToolStripMenuItem("File");
+            newFileDialog = new OpenFileDialog();
+            newFileDialog.DefaultExt = ".whiskeyproj";
+            newFileDialog.Filter = "WhiskeyProjects|*.whiskeyproj";
+            newFileDialog.CheckPathExists = false;
+            newFileDialog.CheckFileExists = false;
+
+
+            fileNewProject = new ToolStripMenuItem("Project");
+            fileNew = new ToolStripMenuItem("New");
+            fileNew.DropDown.Items.Add(fileNewProject);
+            fileExit = new ToolStripMenuItem("Exit");
+            fileItem = new ToolStripMenuItem("File", null, 
+                fileNew,
+                fileExit);
 
 
             viewOutput = new ToolStripMenuItem("Output");

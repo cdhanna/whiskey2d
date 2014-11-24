@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
-using WhiskeyEditor.Project;
 using WhiskeyEditor.Backend.Managers;
+using WhiskeyEditor.Backend;
 using WhiskeyEditor.UI.Assets;
 
 
@@ -50,7 +50,7 @@ namespace WhiskeyEditor.UI.Library
         {
             fileTree.Nodes.Clear();
 
-            Project.Project p = ProjectManager.Instance.ActiveProject;
+            Project p = ProjectManager.Instance.ActiveProject;
 
             TreeNode root = new TreeNode(p.Name);
 

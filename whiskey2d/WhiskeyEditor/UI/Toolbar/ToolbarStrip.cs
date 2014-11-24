@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using WhiskeyEditor.UI.Assets;
 
 using WhiskeyEditor.Backend;
 
@@ -31,12 +32,16 @@ namespace WhiskeyEditor.UI.Toolbar
         public ToolBarStrip()
         {
             
-            BackColor = UIManager.Instance.FlairColor;
+            BackColor = UIManager.Instance.PaleFlairColor;
 
             this.GripStyle = ToolStripGripStyle.Hidden;
             this.GripMargin = new Padding(0);
             this.Padding = new Padding(0);
-            
+
+
+            this.ImageList = new ImageList();
+            this.ImageList.Images.Add(AssetManager.ICON_SAVE);
+            this.ImageList.Images.Add(AssetManager.ICON_PLAY);
 
             initControls();
             configureControls();
@@ -47,7 +52,13 @@ namespace WhiskeyEditor.UI.Toolbar
         private void initControls()
         {
             btnCompile = new ToolStripButton("Play");
+            btnCompile.ImageIndex = 1;
+
+
             btnSave = new ToolStripButton("Save");
+            btnSave.ImageIndex = 0;
+
+
         }
         private void configureControls()
         {

@@ -6,6 +6,7 @@ using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
+    [Serializable]
     class InstanceDescriptor : GameObject
     {
         public const string PROP_X = "X";

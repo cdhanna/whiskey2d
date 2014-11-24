@@ -7,11 +7,15 @@ using Whiskey2D.Core;
 using System.Reflection;
 using Whiskey2D.Core.Managers;
 using Whiskey2D.Core.Managers.Impl;
-using WhiskeyEditor.Project;
 using System.IO;
+using System.Reflection;
+using System.Reflection.Emit;
+
 
 namespace WhiskeyEditor.Backend.Managers
 {
+
+    [Serializable]
     class InstanceManager
     {
         private static InstanceManager instance = new InstanceManager();
@@ -30,50 +34,85 @@ namespace WhiskeyEditor.Backend.Managers
             iDescs.Add(iDesc);
         }
 
-        public string convertToGobs(string dllPath, string stateName)
+        
+
+        public string convertToGobs(string dllPathIn, string stateNameIn)
         {
 
-            Assembly gameData = Assembly.LoadFrom(dllPath);
 
-            List<GameObject> lGobs = new List<GameObject>();            
-            foreach (InstanceDescriptor iDesc in iDescs)
+            AppDomain buildDomain = AppDomain.CreateDomain("BuildDomain");
+
+            
+            string statePath = ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + stateNameIn + ".state";
+
+            buildDomain.SetData("dllPath", dllPathIn);
+            buildDomain.SetData("stateName", stateNameIn);
+            buildDomain.SetData("statePath", statePath);
+            buildDomain.SetData("iDescs", iDescs);
+            buildDomain.SetData("scriptTable", ScriptManager.Instance.getScriptTable());
+
+            buildDomain.DoCallBack(new CrossAppDomainDelegate(() =>
             {
 
-                string typeName = iDesc.TypeDescriptor.QualifiedName;
-                Type type = gameData.GetType(typeName, true, false);
+                string appDllPath = (string)AppDomain.CurrentDomain.GetData("dllPath");
+                string appStateName = (string)AppDomain.CurrentDomain.GetData("stateName");
+                string appStatePath = (string)AppDomain.CurrentDomain.GetData("statePath");
 
-                GameObject gob = (GameObject)type.GetConstructor
-                    (new Type[] { }).Invoke
-                    (new object[] { });
+                List<InstanceDescriptor> appIDescs = (List<InstanceDescriptor>)AppDomain.CurrentDomain.GetData("iDescs");
+                Dictionary<String, ScriptDescriptor> appScriptTable = (Dictionary<String, ScriptDescriptor>)AppDomain.CurrentDomain.GetData("scriptTable");
 
-                foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptor.getPropertySetClone())
+
+                Assembly gameData = Assembly.LoadFrom(appDllPath);
+            
+                List<GameObject> lGobs = new List<GameObject>();
+                foreach (InstanceDescriptor iDesc in appIDescs)
                 {
-                    PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
-                    if (propInfo.SetMethod != null)
+
+                    string typeName = iDesc.TypeDescriptor.QualifiedName;
+                    Type type = gameData.GetType(typeName, true, false);
+
+                    GameObject gob = (GameObject)type.GetConstructor
+                        (new Type[] { }).Invoke
+                        (new object[] { });
+
+                    foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptor.getPropertySetClone())
                     {
-                        propInfo.GetSetMethod().Invoke(gob, new object[]{iDesc.getTypeValOfName(typeProp.Name).value});
+                        PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
+                        if (propInfo.SetMethod != null)
+                        {
+                            propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).value });
+                        }
                     }
+
+                    gob.clearScripts();
+
+                    foreach (String scriptName in iDesc.getScriptNames())
+                    {
+                        Type scriptType = gameData.GetType(appScriptTable[scriptName].QualifiedName, false);
+                        object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                        gob.addScript((Script)script);
+                    }
+
+
+                    lGobs.Add(gob);
                 }
+                State state = new State();
+                state.GameObjects = lGobs;
+                state.Name = appStateName;
+                string filename = State.serialize(
+                                    state,
+                                    appStatePath);
+                //TempFilePath = filename;
 
-                gob.clearScripts();
+                AppDomain.CurrentDomain.SetData("fileName", filename);
 
-                foreach (String scriptName in iDesc.getScriptNames())
-                {
-                    Type scriptType = gameData.GetType(ScriptManager.Instance.lookUpScript(scriptName).QualifiedName, false);
-                    object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-                    gob.addScript((Script)script);
-                }
+            }));
 
+            string fileName = (string)buildDomain.GetData("fileName");
 
-                lGobs.Add(gob);
-            }
-            State state = new State();
-            state.GameObjects = lGobs;
-            state.Name = stateName;
-            string filename = State.serialize(
-                                state,
-                                ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + state.Name + ".state");
-            return filename;
+            AppDomain.Unload(buildDomain);
+
+            return fileName;
         }
 
     }

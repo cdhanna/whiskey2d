@@ -24,6 +24,11 @@ namespace WhiskeyEditor.Backend.Managers
             scriptTable.Add(sDesc.Name, sDesc);
         }
 
+        public Dictionary<String, ScriptDescriptor> getScriptTable()
+        {
+            return scriptTable;
+        }
+
         public ScriptDescriptor lookUpScript(string name)
         {
             return scriptTable[name];

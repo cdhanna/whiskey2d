@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
 using System.IO;
-using WhiskeyEditor.Project;
-using WhiskeyEditor.Backend;
 
 
 namespace WhiskeyEditor.Backend
 {
+    [Serializable]
     class TypeDescriptor : CodeDescriptor 
     {
 

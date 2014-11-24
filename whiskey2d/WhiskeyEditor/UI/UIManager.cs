@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WhiskeyEditor.Project;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Documents;
@@ -32,7 +31,7 @@ namespace WhiskeyEditor.UI
 
         public CompileManager Compiler { get { return CompileManager.Instance; } }
         public FileManager Files { get { return FileManager.Instance; } }
-
+        public InstanceManager GobInstances { get { return InstanceManager.Instance; } }
 
 
 

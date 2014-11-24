@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using WhiskeyEditor.Project;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
+    [Serializable]
     public class CodeDescriptor : FileDescriptor
     {
 

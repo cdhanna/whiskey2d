@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
-using WhiskeyEditor.Project;
 using System.Threading;
 using SmallMVC;
 using System.Threading.Tasks;

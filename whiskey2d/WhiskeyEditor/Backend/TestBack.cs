@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend.Managers;
-using WhiskeyEditor.Project;
 using Whiskey2D.Core;
 using System.CodeDom.Compiler;
 using WhiskeyEditor.UI;
@@ -23,7 +22,7 @@ namespace WhiskeyEditor.Backend
         {
 
             //set active project
-            Project.Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
+            Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
             ProjectManager.Instance.ActiveProject = proj;
         //    CompileManager.Instance.addListener<CompilerErrorEvent>(compilerErrorHandler);
            // CompileManager.Instance.startBackBuild();
@@ -65,9 +64,9 @@ namespace WhiskeyEditor.Backend
             //t2Instance.addScript("RunMe");
 
             //compile all sources
-           // string dllPath = CompileManager.Instance.compile();
-          //  InstanceManager.Instance.convertToGobs(dllPath, "default");
-
+            string dllPath = CompileManager.Instance.compile();
+            InstanceManager.Instance.convertToGobs(dllPath, "default");
+            CompileManager.Instance.compile();
             //build exe
            // ProjectManager.Instance.ActiveProject.buildExecutable();
 

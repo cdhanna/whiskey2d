@@ -23,6 +23,7 @@ namespace WhiskeyEditor.Backend
         }
     }
 
+    [Serializable]
     public class PropertyDescriptor 
     {
 

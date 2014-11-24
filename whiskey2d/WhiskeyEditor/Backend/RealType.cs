@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace WhiskeyEditor.Backend
 {
+    [Serializable]
     class RealType : TypeVal
     {
 

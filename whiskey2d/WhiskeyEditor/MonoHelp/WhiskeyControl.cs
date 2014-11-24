@@ -13,7 +13,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 using System.Drawing.Design;
-
+using WhiskeyEditor.Backend.Managers;
 using Whiskey2D.PourGames.Game3;
 namespace WhiskeyEditor.MonoHelp
 {
@@ -127,7 +127,7 @@ namespace WhiskeyEditor.MonoHelp
         {
             State state = GameManager.Objects.getState();
             state.Name = stateName;
-            Project.ProjectManager.Instance.ActiveProject.saveState(state);
+            ProjectManager.Instance.ActiveProject.saveState(state);
             //State.serialize(state, "game-state.txt");
         }
 
