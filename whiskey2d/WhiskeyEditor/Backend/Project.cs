@@ -202,19 +202,19 @@ namespace WhiskeyEditor.Backend
 
         }
 
-        /// <summary>
-        /// Save a state to the /states folder
-        /// </summary>
-        /// <param name="state">A valid and named State</param>
-        public void saveState(State state)
-        {
-            string stateName = state.Name + ".state";
-            string filePath = PathStates + Path.DirectorySeparatorChar + stateName;
-            State.serialize(state, filePath);
+        ///// <summary>
+        ///// Save a state to the /states folder
+        ///// </summary>
+        ///// <param name="state">A valid and named State</param>
+        //public void saveState(State state)
+        //{
+        //    string stateName = state.Name + ".state";
+        //    string filePath = PathStates + Path.DirectorySeparatorChar + stateName;
+        //    State.serialize(state, filePath);
 
-            GameStartScene = stateName; // hardcoded. Fix.
+        //    GameStartScene = stateName; // hardcoded. Fix.
 
-        }
+        //}
 
 
 
@@ -233,7 +233,9 @@ namespace WhiskeyEditor.Backend
             }
             catch (WhiskeyException e)
             {
-                //???
+                GameData data = new GameData();
+                FileManager.Instance.setGameData(data);
+                saveGameData();
             }
         }
 
@@ -266,7 +268,24 @@ namespace WhiskeyEditor.Backend
 
             DirectoryCopy(PathLib, PathBuildLib, true);
             DirectoryCopy(PathMedia, PathBuildMedia, true);
-            DirectoryCopy(PathStates, PathBuildStates, true);
+            
+            //build states 
+            
+            string dll = PathLib + Path.DirectorySeparatorChar + "GameData.dll";
+
+            //InstanceManager.Instance.convertToGobs(dll, "default");
+
+            string[] states = Directory.GetFiles(PathStates);
+            foreach (string stateName in states)
+            {
+                State s = State.deserialize(stateName);
+                InstanceManager.Instance.setState(s);
+                InstanceManager.Instance.convertToGobs(dll, "default");
+            }
+           // DirectoryCopy(PathStates, PathBuildStates, true);
+            
+            
+            
             DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
             DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
             File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);

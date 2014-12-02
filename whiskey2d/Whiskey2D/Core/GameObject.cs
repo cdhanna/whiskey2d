@@ -37,6 +37,10 @@ namespace Whiskey2D.Core
         {
         }
 
+        public virtual void initializeObject()
+        {
+
+        }
 
         private Sprite sprite;
         private int id;

@@ -108,10 +108,13 @@ namespace WhiskeyEditor.UI
                     case UIManager.COMMAND_PLAY:
 
                         string dll = UIManager.Instance.Compiler.compile();
-                        UIManager.Instance.GobInstances.convertToGobs(dll, "default");
+                       //// UIManager.Instance.GobInstances.convertToGobs(dll, "default");
                         ProjectManager.Instance.ActiveProject.buildExecutable();
                         ProjectManager.Instance.ActiveProject.runGame();
 
+                        break;
+                    case UIManager.COMMAND_COMPILE:
+                        UIManager.Instance.Compiler.compile();
                         break;
                     case UIManager.COMMAND_SAVE:
                         docView.saveCurrent();
@@ -187,9 +190,10 @@ namespace WhiskeyEditor.UI
             mainPanel.Dock = DockStyle.Fill;
             Controls.Add(mainPanel);
 
+            docViewDock.dock();
             libraryViewDock.dock();
             outputViewDock.dock();
-            docViewDock.dock();
+           
             
             //outputViewDock.dock(DockStyle.Bottom);
 

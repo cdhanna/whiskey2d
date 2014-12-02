@@ -4,6 +4,7 @@ using System.Linq;
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
 using SmallMVC;
+using WhiskeyEditor.UI;
 
 namespace WhiskeyEditor.Backend
 {
@@ -16,7 +17,8 @@ namespace WhiskeyEditor.Backend
 
         public FileDescriptor(string filePath, string name)
         {
-            this.filePath = filePath;
+            this.filePath = UIManager.Instance.normalizePath(filePath);
+
             this.name = name;
             
             FileManager.Instance.addFileDescriptor(this);
@@ -30,7 +32,7 @@ namespace WhiskeyEditor.Backend
             }
             protected set
             {
-                this.filePath = value;
+                this.filePath = UIManager.Instance.normalizePath(value);
             }
         }
         public String Name
@@ -74,7 +76,6 @@ namespace WhiskeyEditor.Backend
 
         public virtual void ensureFileExists()
         {
-
             if (File.Exists(filePath))
             {
                 inspectFile();
@@ -83,7 +84,6 @@ namespace WhiskeyEditor.Backend
             {
                 createFile();
             }
-
         }
 
     }

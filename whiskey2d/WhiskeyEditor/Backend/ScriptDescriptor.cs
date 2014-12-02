@@ -33,6 +33,7 @@ namespace WhiskeyEditor.Backend
             ScriptManager.Instance.addScript(this);
         }
 
+
         protected override string CodeClassDef
         {
             get

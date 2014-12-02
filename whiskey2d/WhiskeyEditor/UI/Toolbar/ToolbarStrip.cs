@@ -24,6 +24,7 @@ namespace WhiskeyEditor.UI.Toolbar
     public class ToolBarStrip : ToolStrip
     {
 
+        private ToolStripButton btnPlay;
         private ToolStripButton btnCompile;
         private ToolStripButton btnSave;
 
@@ -51,30 +52,35 @@ namespace WhiskeyEditor.UI.Toolbar
 
         private void initControls()
         {
-            btnCompile = new ToolStripButton("Play");
-            btnCompile.ImageIndex = 1;
+            btnPlay = new ToolStripButton("Play");
+            btnPlay.ImageIndex = 1;
 
 
             btnSave = new ToolStripButton("Save");
             btnSave.ImageIndex = 0;
 
+            btnCompile = new ToolStripButton("Compile");
 
         }
         private void configureControls()
         {
-            btnCompile.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_PLAY)); };
+            btnPlay.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_PLAY)); };
 
             btnSave.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_SAVE)); };
 
-            
+            btnCompile.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_COMPILE)); };
 
         }
         private void addControls()
         {
             Items.Add(btnSave);
 
-            btnCompile.Dock = DockStyle.Right;
             Items.Add(btnCompile);
+
+            btnPlay.Dock = DockStyle.Right;
+            Items.Add(btnPlay);
+
+
            
         }
 

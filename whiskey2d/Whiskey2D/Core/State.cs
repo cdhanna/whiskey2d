@@ -59,7 +59,6 @@ namespace Whiskey2D.Core
 
         public static State deserialize(string fileName)
         {
-            fileName += ".state";
            // GameManager.Log.debug("State loading : " + fileName);
             if (!File.Exists(fileName))
             {

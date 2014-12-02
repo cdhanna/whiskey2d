@@ -10,7 +10,15 @@ namespace Whiskey2D.Core
         public WhiskeyRunTimeException(string msg)
             : base(msg)
         {
-            GameManager.Log.error(msg);
+            if (GameManager.Log != null)
+            {
+                GameManager.Log.error(msg);
+            }
+            else
+            {
+                Console.WriteLine("WHISKEYERR: " + msg);
+                throw new Exception(msg);
+            }
         }
 
     }

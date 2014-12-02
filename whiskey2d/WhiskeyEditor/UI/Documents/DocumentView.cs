@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
-
+using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Assets;
 
@@ -25,7 +25,10 @@ namespace WhiskeyEditor.UI.Documents
             BackColor = UIManager.Instance.DullFlairColor;
             Size = new Size(50, 50);
 
-            
+            ProjectManager.Instance.ProjectChanged += (s, a) =>
+            {
+                closeAll();
+            };
 
             initControls();
             configureControls();
@@ -79,6 +82,15 @@ namespace WhiskeyEditor.UI.Documents
 
 
         }
+
+        public void closeAll()
+        {
+            while (tabMap.Keys.Count > 0)
+            {
+                closeDocument(tabMap.Keys.ElementAt(0));
+            }
+        }
+
 
         public void refreshTabNumbers()
         {

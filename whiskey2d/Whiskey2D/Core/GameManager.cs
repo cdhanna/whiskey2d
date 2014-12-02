@@ -292,7 +292,7 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            Device.Clear(Color.LightGray);
+            Device.Clear(Color.DarkOrange);
 
             this.renMan.render();
             this.renMan.renderHud();

@@ -8,6 +8,7 @@ using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Documents;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace WhiskeyEditor.UI
 {
@@ -20,6 +21,7 @@ namespace WhiskeyEditor.UI
 
         public const string COMMAND_SAVE = "save";
         public const string COMMAND_PLAY = "play";
+        public const string COMMAND_COMPILE = "compile";
 
         private static UIManager instance = new UIManager();
         public static UIManager Instance { get { return instance; } }
@@ -67,7 +69,34 @@ namespace WhiskeyEditor.UI
             {
                 return new CodeDocument( (CodeDescriptor) file, parent);
             }
+            else if (file is LevelDescriptor)
+            {
+                return new LevelDocument((LevelDescriptor)file, parent);
+            }
             else return new DocumentTab(file.FilePath, parent);
+        }
+
+        public string normalizePath(string path)
+        {
+            path = Path.GetFullPath(path).ToLower();
+            if (path.Contains(Path.DirectorySeparatorChar))
+            {
+                int i = path.LastIndexOf(Path.DirectorySeparatorChar);
+                if (i == path.Length - 1)
+                {
+                    path = path.Substring(0, 1).ToUpper() + path.Substring(1);
+                }
+                else
+                {
+                    path = path.Substring(0, i + 1) + path.Substring(i + 1, 1).ToUpper() + path.Substring(i+2);
+                }
+            }
+            else if (path.Length > 0)
+            {
+                path = path.Substring(0, 1).ToUpper() + path.Substring(1);
+            }
+
+            return path;
         }
 
         public void startup()

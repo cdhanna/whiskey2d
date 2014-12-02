@@ -143,12 +143,18 @@
     <Compile Include="UI\Documents\DocumentView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\LevelDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Library\LibraryTreeNode.cs" />
     <Compile Include="UI\Library\LibraryView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Menu\MenuStrip.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Menu\NewForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Output\OutputView.cs">
       <SubType>Component</SubType>

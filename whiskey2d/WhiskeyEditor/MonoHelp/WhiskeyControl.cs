@@ -15,6 +15,8 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using WhiskeyEditor.Backend.Managers;
 using Whiskey2D.PourGames.Game3;
+
+
 namespace WhiskeyEditor.MonoHelp
 {
 
@@ -26,7 +28,7 @@ namespace WhiskeyEditor.MonoHelp
 
         Stopwatch timer;
 
-        GameManager gameMan = GameManager.getInstance();
+        //GameManager gameMan = GameManager.getInstance();
         ContentManager content;
         EditorInputSource inputSource;
 
@@ -52,16 +54,16 @@ namespace WhiskeyEditor.MonoHelp
             //    DefaultInputManager.getInstance(),
             //    DefaultInputSourceManager.getInstance(),
             //    DefaultLogManager.getInstance(),
-            //    new EditorObjectManager(),
+            //    new DefaultObjectManager(),
             //    DefaultRenderManager.getInstance(),
             //    DefaultResourceManager.getInstance()
             //    );
             //gameMan.LoadContent();
 
-            inputSource = new EditorInputSource(this);
+            //inputSource = new EditorInputSource(this);
 
-            DefaultInputSourceManager.getInstance().setRegularSource(inputSource);
-            DefaultInputSourceManager.getInstance().requestRegular();
+            //DefaultInputSourceManager.getInstance().setRegularSource(inputSource);
+            //DefaultInputSourceManager.getInstance().requestRegular();
             
 
             
@@ -73,7 +75,7 @@ namespace WhiskeyEditor.MonoHelp
             Application.Idle += delegate { update(); };
 
             //add editor objects
-            new EditorObjects.ObjectController();
+            ////new EditorObjects.ObjectController();
 
             //TypeDescriptor.AddAttributes(   typeof(Whiskey2D.Core.Vector),
             //                                new EditorAttribute(typeof(VectorEditor),
@@ -83,7 +85,7 @@ namespace WhiskeyEditor.MonoHelp
 
 
 
-            GameManager.Objects.getAllObjectsNotOfType<EditorObjects.EditorGameObject>().ForEach((g) => { g.close(); });
+            //GameManager.Objects.getAllObjectsNotOfType<EditorObjects.EditorGameObject>().ForEach((g) => { g.close(); });
 
             //new Whiskey2D.PourGames.Game3.Game3Launch().start();
             
@@ -97,7 +99,7 @@ namespace WhiskeyEditor.MonoHelp
             if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
             {
                 
-                gameMan.Update(null); //todo fix nullgametime
+                //gameMan.Update(null); //todo fix nullgametime
 
               
                 timer.Restart();
@@ -109,49 +111,61 @@ namespace WhiskeyEditor.MonoHelp
 
         protected override void Draw()
         {
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
-            gameMan.Draw(null); //todo fix null gametime
+            GraphicsDevice.Clear(Whiskey2D.Core.Color.CornflowerBlue);
+            //gameMan.Draw(null); //todo fix null gametime
         }
 
 
 
 
-        public void addNewGameObject(Type gameObjectType, int x, int y)
-        {
-            GameObject gob = (GameObject) gameObjectType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-            gob.Position = new Vector2(x, y);
+        //public void addNewGameObject(Type gameObjectType, int x, int y)
+        //{
+        //    GameObject gob = (GameObject) gameObjectType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+        //    gob.Position = new Vector2(x, y);
 
-        }
+        //}
 
-        public void save(string stateName)
-        {
-            State state = GameManager.Objects.getState();
-            state.Name = stateName;
-            ProjectManager.Instance.ActiveProject.saveState(state);
-            //State.serialize(state, "game-state.txt");
-        }
+        //public void save(string stateName)
+        //{
+        //    State state = GameManager.Objects.getState();
+        //    state.Name = stateName;
+        //    ProjectManager.Instance.ActiveProject.saveState(state);
+        //    //State.serialize(state, "game-state.txt");
+        //}
 
-        public void load()
-        {
-            State state = State.deserialize("game-state.txt");
-            GameManager.Objects.setState(state);
-        }
+        //public void load()
+        //{
+        //    State state = State.deserialize("game-state.txt");
+        //    GameManager.Objects.setState(state);
+        //}
 
-        GameObject GameController.SelectedGob
+        //GameObject GameController.SelectedGob
+        //{
+        //    get
+        //    {
+        //        return selectedGob;
+        //    }
+        //    set
+        //    {
+        //        selectedGob = value;
+        //        //GobGrid.SelectedObject = value;
+        //        //GobGrid.Refresh();
+
+        //        //GobScriptCollection.SelectedObject = value;
+        //        //GobScriptCollection.Refresh();
+
+        //    }
+        //}
+
+        public GameObject SelectedGob
         {
             get
             {
-                return selectedGob;
+                throw new NotImplementedException();
             }
             set
             {
-                selectedGob = value;
-                //GobGrid.SelectedObject = value;
-                //GobGrid.Refresh();
-
-                //GobScriptCollection.SelectedObject = value;
-                //GobScriptCollection.Refresh();
-
+                throw new NotImplementedException();
             }
         }
     }

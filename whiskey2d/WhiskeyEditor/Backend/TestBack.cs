@@ -24,12 +24,25 @@ namespace WhiskeyEditor.Backend
        
 
             //set active project
-            Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
-            ProjectManager.Instance.ActiveProject = proj;
+          //  Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
+          //  ProjectManager.Instance.ActiveProject = proj;
+          //  ProjectManager.Instance.ActiveProject.loadGameData();
         //    CompileManager.Instance.addListener<CompilerErrorEvent>(compilerErrorHandler);
            // CompileManager.Instance.startBackBuild();
+           // string cp = Settings.CurrentProject;
 
+            try
+            {
+                Project proj = ProjectManager.Instance.openProject(Settings.CurrentProject);
+                ProjectManager.Instance.ActiveProject = proj;
+            }
+            catch (Exception e)
+            {
+                ProjectManager.Instance.ActiveProject = new NoProject();
+            }
+            UIManager.Instance.startup();
 
+            return;
             
             //create a type
             TypeDescriptor t2 = new TypeDescriptor("TestMeAgain");
@@ -96,9 +109,7 @@ namespace WhiskeyEditor.Backend
             //});
             //t.Start();
 
-            UIManager.Instance.startup();
-
-            return;
+          
 
 
         }

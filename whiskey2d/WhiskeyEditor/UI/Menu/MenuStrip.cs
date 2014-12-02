@@ -26,11 +26,16 @@ namespace WhiskeyEditor.UI.Menu
     {
 
         private OpenFileDialog openProjDialog;
+        private NewForm newForm;
+
 
         #region file
         private ToolStripItem fileItem;
         private ToolStripMenuItem fileNew;
         private ToolStripMenuItem fileNewProject;
+        private ToolStripMenuItem fileNewType;
+        private ToolStripMenuItem fileNewScript;
+        private ToolStripMenuItem fileNewLevel;
         private ToolStripMenuItem fileOpen;
         private ToolStripMenuItem fileOpenProject;
         private ToolStripMenuItem fileSave;
@@ -89,6 +94,24 @@ namespace WhiskeyEditor.UI.Menu
             menuItem.Checked = viewable;
         }
 
+        private void createFile(String fileName, String fileType, String option)
+        {
+            switch (fileType)
+            {
+                case NewForm.NEW_TYPE:
+                    FileManager.Instance.createNewTypeDescriptor(fileName);
+                    break;
+                case NewForm.NEW_SCRIPT:
+                    FileManager.Instance.createNewScriptDescriptor(fileName, option);
+                    break;
+                case NewForm.NEW_LEVEL:
+                    FileManager.Instance.createNewLevelDescriptor(fileName);
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         public void configureControls()
         {
@@ -113,6 +136,38 @@ namespace WhiskeyEditor.UI.Menu
             fileSaveAll.Click += (s, a) =>
             {
                 ProjectManager.Instance.ActiveProject.saveGameData();
+            };
+
+            fileNewType.Click += (s, a) =>
+            {
+                newForm.setForType();
+                newForm.ShowDialog(this);
+
+                if (newForm.DialogResult == DialogResult.OK)
+                {
+                    createFile(newForm.SelectedText, newForm.SelectedType, newForm.SelectedOption);
+                }
+
+            };
+
+            fileNewScript.Click += (s, a) =>
+            {
+                newForm.setForScript();
+                newForm.ShowDialog(this);
+                if (newForm.DialogResult == DialogResult.OK)
+                {
+                    createFile(newForm.SelectedText, newForm.SelectedType, newForm.SelectedOption);
+                }
+            };
+
+            fileNewLevel.Click += (s, a) =>
+            {
+                newForm.setForLevel();
+                newForm.ShowDialog(this);
+                if (newForm.DialogResult == DialogResult.OK)
+                {
+                    createFile(newForm.SelectedText, newForm.SelectedType, newForm.SelectedOption);
+                }
             };
 
             fileNewProject.Click += (s, a) =>
@@ -157,6 +212,8 @@ namespace WhiskeyEditor.UI.Menu
 
         private void initControls()
         {
+            newForm = new NewForm();
+
             openProjDialog = new OpenFileDialog();
             openProjDialog.DefaultExt = ".whiskeyproj";
             openProjDialog.Filter = "WhiskeyProjects|*.whiskeyproj";
@@ -164,8 +221,14 @@ namespace WhiskeyEditor.UI.Menu
             openProjDialog.CheckFileExists = false;
 
             fileNewProject = new ToolStripMenuItem("Project");
+            fileNewType = new ToolStripMenuItem("Type");
+            fileNewScript = new ToolStripMenuItem("Script");
+            fileNewLevel = new ToolStripMenuItem("Level");
             fileNew = new ToolStripMenuItem("New");
             fileNew.DropDown.Items.Add(fileNewProject);
+            fileNew.DropDown.Items.Add(fileNewType);
+            fileNew.DropDown.Items.Add(fileNewScript);
+            fileNew.DropDown.Items.Add(fileNewLevel);
 
             fileOpenProject = new ToolStripMenuItem("Project");
             fileOpen = new ToolStripMenuItem("Open");

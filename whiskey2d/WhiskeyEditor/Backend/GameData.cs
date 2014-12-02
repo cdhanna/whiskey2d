@@ -18,7 +18,7 @@ namespace WhiskeyEditor.Backend
         public List<FileDescriptor> Files { get; set; }
         public GameData()
         {
-
+            Files = new List<FileDescriptor>();
         }
 
 
@@ -64,7 +64,7 @@ namespace WhiskeyEditor.Backend
             }
             catch (SerializationException e)
             {
-                throw new WhiskeyException("Could not deserialize " + filePath);
+                throw new WhiskeyException("Could not deserialize " + filePath + " :: " + e.Message);
             }
             finally
             {

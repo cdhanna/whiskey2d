@@ -18,6 +18,16 @@ namespace WhiskeyEditor.Backend.Managers
         }
     }
 
+
+    public class NoProject : Project
+    {
+        public NoProject()
+            : base("noproject")
+        {
+
+        }
+    }
+
     public class ProjectManager
     {
         private static ProjectManager instance = new ProjectManager();
@@ -31,9 +41,12 @@ namespace WhiskeyEditor.Backend.Managers
 
         private Project active;
 
+        
+
         private ProjectManager()
         {
-            active = null;
+            
+            active = new NoProject();
         }
 
 
@@ -45,10 +58,11 @@ namespace WhiskeyEditor.Backend.Managers
             }
             set
             {
+                InstanceManager.Instance.clear();
                 Project old = active;
                 active = value;
                 Settings.CurrentProject = active.PathBase;
-               
+                active.loadGameData();
                 ProjectChanged(this, new ProjectChangedEventArgs(old, active));
             }
         }

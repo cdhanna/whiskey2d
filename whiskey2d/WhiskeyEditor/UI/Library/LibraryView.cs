@@ -41,31 +41,58 @@ namespace WhiskeyEditor.UI.Library
                 refreshContent();
             };
 
+            FileManager.Instance.FileAdded += (s, a) =>
+            {
+                refreshContent();
+            };
+            
+
             initControls();
             configureControls();
             addControls();
 
             refreshContent();
 
+           
+            fileTree.ItemDrag += (s, a) =>
+            {
+                fileTree.DoDragDrop(a.Item, DragDropEffects.All);
+                
+            };
+
         }
 
         public void refreshContent()
         {
-            fileTree.Nodes.Clear();
+            if (this.IsHandleCreated)
+            {
+                this.Invoke(new NoArgFunction(() =>
+                {
+                    fileTree.Nodes.Clear();
 
-            Project p = ProjectManager.Instance.ActiveProject;
+                    Project p = ProjectManager.Instance.ActiveProject;
 
-            LibraryTreeNode root = new LibraryTreeNode(p.Name, p.PathBase);
+                    LibraryTreeNode root = new LibraryTreeNode(p.Name, p.PathBase);
 
-           // root.populate();
-            LibraryTreeNode nodeSrc = new LibraryTreeNode("Source", p.PathSrc);
-            nodeSrc.populate();
-            root.Nodes.Add(nodeSrc);
+                    //SOURCE
+                    LibraryTreeNode nodeSrc = new LibraryTreeNode("Source", p.PathSrc);
+                    nodeSrc.populate();
+                    root.Nodes.Add(nodeSrc);
 
-            fileTree.Nodes.Add(root);
-            root.ExpandAll();
-            //fileTree.Update();
+                    //LEVELS
+                    LibraryTreeNode nodeLvl = new LibraryTreeNode("Levels", p.PathStates);
+                    nodeLvl.populate();
+                    root.Nodes.Add(nodeLvl);
 
+                    fileTree.Nodes.Add(root);
+                    root.ExpandAll();
+                    //fileTree.Update();
+                }));
+            }
+            else
+            {
+                this.HandleCreated += (s, a) => { refreshContent(); };
+            }
         }
 
        

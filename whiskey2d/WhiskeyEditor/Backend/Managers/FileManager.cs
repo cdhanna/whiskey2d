@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using WhiskeyEditor.UI;
 
 namespace WhiskeyEditor.Backend.Managers
 {
 
     #region Event Setup
     public delegate void FileChangedEventHandler(object sender, FileEventArgs args);
-    public delegate void FileAddedEventHandler(object sender, FileEventArgs args);
-    public delegate void FileRemovedEventHandler(object sender, FileEventArgs args);
     public class FileEventArgs : EventArgs
     {
         private FileDescriptor fDesc;
@@ -37,32 +36,23 @@ namespace WhiskeyEditor.Backend.Managers
 
         #region events
 
-        public event FileAddedEventHandler FileAdded;
-        public event FileRemovedEventHandler FileRemoved;
-        public event FileChangedEventHandler FileChanged;
+        public event FileChangedEventHandler FileAdded = new FileChangedEventHandler( (s, a) => {});
+        public event FileChangedEventHandler FileRemoved = new FileChangedEventHandler( (x, y) => {});
+        public event FileChangedEventHandler FileChanged = new FileChangedEventHandler( (s, a) => {});
 
         private void fireFileAdded(FileEventArgs args)
         {
-            if (FileAdded != null)
-            {
-                FileAdded(this, args);
-            }
+            FileAdded(this, args);
         }
 
         private void fireFileRemoved(FileEventArgs args)
         {
-            if (FileRemoved != null)
-            {
-                FileRemoved(this, args);
-            }
+            FileRemoved(this, args);
         }
 
         private void fireFileChanged(FileEventArgs args)
         {
-            if (FileChanged != null)
-            {
-                FileChanged(this, args);
-            }
+            FileChanged(this, args);
         }
 
         #endregion
@@ -73,51 +63,56 @@ namespace WhiskeyEditor.Backend.Managers
 
         public List<FileDescriptor> FileDescriptors { get { return fileDescs; } }
 
+
         private void createFileWatcher()
         {
             fileWatcher = new FileSystemWatcher(ProjectManager.Instance.ActiveProject.PathSrc);
             fileWatcher.Filter = "*.cs";
-            //fileWatcher.NotifyFilter =  NotifyFilters.LastWrite
-            //                            | NotifyFilters.FileName | NotifyFilters.DirectoryName;
             fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
             fileWatcher.Changed += new FileSystemEventHandler(onFileChanged);
-            fileWatcher.Created += new FileSystemEventHandler(onFileCreated);
-            fileWatcher.Deleted += new FileSystemEventHandler(onFileDeleted);
             fileWatcher.EnableRaisingEvents = true;
         }
 
 
 
-        private void onFileCreated(object sender, FileSystemEventArgs args)
-        {
-            //decide the file is already being tracked
-            //if so, do nothing
-            //if not, create the appropriate fileDescriptor. TypeDesc or ScriptDesc or nothing?
+        //private void onFileCreated(object sender, FileSystemEventArgs args)
+        //{
+        //    //decide the file is already being tracked
+        //    //if so, do nothing
+        //    //if not, create the appropriate fileDescriptor. TypeDesc or ScriptDesc or nothing?
+            
+        //    //FileDescriptor fDesc = new FileDescriptor(args.FullPath, args.Name);
+        //}
 
-            //FileDescriptor fDesc = new FileDescriptor(args.FullPath, args.Name);
-        }
-
-        private void onFileDeleted(object sender, FileSystemEventArgs args)
-        {
-            //decide if the file is still be tracked
-            //if so, delete it
-            //if not, do nothing
-        }
+        //private void onFileDeleted(object sender, FileSystemEventArgs args)
+        //{
+        //    //decide if the file is still be tracked
+        //    //if so, delete it
+        //    //if not, do nothing
+        //}
 
         private void onFileChanged(object sender, FileSystemEventArgs args)
         {
             //validate that this is a file desc
-            
-            fireFileChanged( new FileEventArgs(lookUp(args.Name))); //may be broken
+            fireFileChanged( new FileEventArgs(lookUp(args.FullPath))); //may be broken
         }
 
 
         public void addFileDescriptor(FileDescriptor fileDesc)
         {
             fileDescs.Add(fileDesc);
-            fileDescMap.Add(fileDesc.FilePath , fileDesc);
+            fileDescMap.Add(UIManager.Instance.normalizePath( fileDesc.FilePath ), fileDesc);
+            
+            
+            fileDesc.ensureFileExists();
+            ProjectManager.Instance.ActiveProject.saveGameData();
+
+
+
             fireFileAdded(new FileEventArgs(fileDesc));
+          //  ProjectManager.Instance.ActiveProject.loadGameData();
         }
+
         public void removeFileDescriptor(FileDescriptor fileDesc)
         {
             if (File.Exists(fileDesc.FilePath))
@@ -126,25 +121,53 @@ namespace WhiskeyEditor.Backend.Managers
             }
             else
             {
-                fileDescMap.Remove(fileDesc.Name);
+                fileDescMap.Remove(UIManager.Instance.normalizePath( fileDesc.FilePath) );
                 fileDescs.Remove(fileDesc);
                 fireFileRemoved(new FileEventArgs(fileDesc));
             }
         }
 
 
-        public FileDescriptor lookUp(string name)
+        /// <summary>
+        /// Gets a file descriptor out of the file manager. 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public FileDescriptor lookUp(string filePath)
         {
 
           //  name = Path.GetFullPath(name);
-            
-            if (fileDescMap.ContainsKey(name))
+            //ProjectManager.Instance.ActiveProject.loadGameData();
+            filePath = UIManager.Instance.normalizePath(filePath);
+
+            if (fileDescMap.ContainsKey(filePath))
             {
-                return fileDescMap[name];
+                return fileDescMap[filePath];
             }
-            else throw new WhiskeyException("File could not be found : " + name);
+            else throw new WhiskeyException("File could not be found : " + filePath);
         }
 
+
+        public TypeDescriptor createNewTypeDescriptor(string name)
+        {
+            TypeDescriptor tDesc = new TypeDescriptor(name);
+            tDesc.ensureFileExists();
+            return tDesc;
+        }
+
+        public ScriptDescriptor createNewScriptDescriptor(string name, string typeName)
+        {
+            ScriptDescriptor sDesc = new ScriptDescriptor(name, typeName);
+            sDesc.ensureFileExists();
+            return sDesc;
+        }
+
+        public LevelDescriptor createNewLevelDescriptor(string name)
+        {
+            LevelDescriptor lDesc = new LevelDescriptor(name);
+            lDesc.ensureFileExists();
+            return lDesc;
+        }
 
         public virtual GameData getGameData()
         {
