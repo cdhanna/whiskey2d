@@ -174,7 +174,7 @@ namespace WinFormsGraphicsDevice
             Viewport viewport = new Viewport();
 
             viewport.X = 0;
-            viewport.Y = 0;
+            viewport.Y = -ClientSize.Height + graphicsDeviceService.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
             viewport.Width = ClientSize.Width;
             viewport.Height = ClientSize.Height;

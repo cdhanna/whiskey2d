@@ -7,7 +7,7 @@ using WhiskeyEditor.Backend.Managers;
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    class InstanceDescriptor : GameObject
+    public class InstanceDescriptor : GameObject
     {
         public const string PROP_X = "X";
         public const string PROP_Y = "Y";
@@ -42,7 +42,7 @@ namespace WhiskeyEditor.Backend
         {
             initialized = true;
             this.typeDesc = typeDesc;
-            InstanceManager.Instance.addInstance(this);
+            
             propDescs = typeDesc.getPropertySetClone();
             scriptNames = typeDesc.getScriptNamesClone();
 

@@ -197,7 +197,16 @@ namespace WhiskeyEditor.Backend.Managers
             foreach (FileDescriptor f in files)
             {
                 addFileDescriptor(f);
+
+                if (f is LevelDescriptor)
+                {
+                    LevelDescriptor l = (LevelDescriptor)f;
+                    InstanceManager.Instance.addLevel(l.Level);
+                }
+
             }
+
+            
 
         }
 

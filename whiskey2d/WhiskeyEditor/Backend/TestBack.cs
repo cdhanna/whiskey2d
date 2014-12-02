@@ -66,7 +66,7 @@ namespace WhiskeyEditor.Backend
             //t2.addScript(s.Name);
 
             State state = State.deserialize("testInstData");
-            InstanceManager.Instance.setState(state);
+            //InstanceManager.Instance.setState(state);
 
             CompileManager.Instance.Compiled += (sender, args) =>
             {

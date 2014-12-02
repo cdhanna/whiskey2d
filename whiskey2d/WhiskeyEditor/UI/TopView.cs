@@ -13,6 +13,7 @@ using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Menu;
 using WhiskeyEditor.UI.Toolbar;
+using WhiskeyEditor.UI.Status;
 
 namespace WhiskeyEditor.UI
 {
@@ -31,6 +32,7 @@ namespace WhiskeyEditor.UI
 
         private WhiskeyMenu menu;
         private ToolBarStrip toolBar;
+        private WhiskeyStatusBar statBar;
 
         public TopView()
         {
@@ -101,30 +103,30 @@ namespace WhiskeyEditor.UI
 
             };
 
-            toolBar.ButtonPressed += (s, args) =>
-            {
-                switch (args.ButtonName)
-                {
-                    case UIManager.COMMAND_PLAY:
+            //toolBar.ButtonPressed += (s, args) =>
+            //{
+            //    switch (args.ButtonName)
+            //    {
+            //        case UIManager.COMMAND_PLAY:
 
-                        string dll = UIManager.Instance.Compiler.compile();
-                       //// UIManager.Instance.GobInstances.convertToGobs(dll, "default");
-                        ProjectManager.Instance.ActiveProject.buildExecutable();
-                        ProjectManager.Instance.ActiveProject.runGame();
+            //            string dll = UIManager.Instance.Compiler.compile();
+            //           //// UIManager.Instance.GobInstances.convertToGobs(dll, "default");
+            //            ProjectManager.Instance.ActiveProject.buildExecutable();
+            //            ProjectManager.Instance.ActiveProject.runGame();
 
-                        break;
-                    case UIManager.COMMAND_COMPILE:
-                        UIManager.Instance.Compiler.compile();
-                        break;
-                    case UIManager.COMMAND_SAVE:
-                        docView.saveCurrent();
-                        break;
-                    default:
-                        break;
-                }
+            //            break;
+            //        case UIManager.COMMAND_COMPILE:
+            //            UIManager.Instance.Compiler.compile();
+            //            break;
+            //        case UIManager.COMMAND_SAVE:
+            //            docView.saveCurrent();
+            //            break;
+            //        default:
+            //            break;
+            //    }
 
                 
-            };
+            //};
 
             this.KeyPreview = true;
             this.KeyDown += (s, a) =>
@@ -138,8 +140,6 @@ namespace WhiskeyEditor.UI
 
             libraryView.SelectionChanged += (s, args) =>
             {
-
-                
                 docView.openDocument(args.Selected.FilePath);
             };
 
@@ -148,10 +148,10 @@ namespace WhiskeyEditor.UI
         private void initControls()
         {
             toolBar = new ToolBarStrip();
-
+            statBar = new WhiskeyStatusBar();
             menu = new WhiskeyMenu();
             mainPanel = new Panel();
-            mainPanel.Padding = new Padding(0, menu.Height + toolBar.Height, 0, 0);
+            mainPanel.Padding = new Padding(0, menu.Height + toolBar.Height, 0, statBar.Height);
 
            
 
@@ -185,6 +185,8 @@ namespace WhiskeyEditor.UI
             Controls.Add(toolBar);
             Controls.Add(menu);
 
+            statBar.Dock = DockStyle.Bottom;
+            Controls.Add(statBar);
             
 
             mainPanel.Dock = DockStyle.Fill;

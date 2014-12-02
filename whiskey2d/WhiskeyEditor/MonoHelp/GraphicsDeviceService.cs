@@ -127,18 +127,28 @@ namespace WinFormsGraphicsDevice
         /// </summary>
         public void ResetDevice(int width, int height)
         {
-            //if (DeviceResetting != null)
-            //    DeviceResetting(this, EventArgs.Empty);
+            if (DeviceResetting != null)
+                DeviceResetting(this, EventArgs.Empty);
+
             //graphicsDevice.PresentationParameters.BackBufferHeight = height;
             //graphicsDevice.PresentationParameters.BackBufferHeight = width;
-            
-            //parameters.BackBufferWidth = Math.Max(parameters.BackBufferWidth, width);
-            //parameters.BackBufferHeight = Math.Max(parameters.BackBufferHeight, height);
+
+            PresentationParameters parameters = graphicsDevice.PresentationParameters;
+            // parameters.BackBufferWidth = Math.Max(parameters.BackBufferWidth, width);
+            // parameters.BackBufferHeight = Math.Max(parameters.BackBufferHeight, height);
+            parameters.BackBufferWidth = width;
+            parameters.BackBufferHeight = height;
+
+            //int nw = Math.Max(graphicsDevice.PresentationParameters.BackBufferWidth, width);
+            //int nh = Math.Max(GraphicsDevice.PresentationParameters.BackBufferHeight, height);
+
+            //graphicsDevice.PresentationParameters.BackBufferWidth = nw;
+            //graphicsDevice.PresentationParameters.BackBufferHeight = nh;
 
             //graphicsDevice.Reset(parameters);
 
-            //if (DeviceReset != null)
-            //    DeviceReset(this, EventArgs.Empty);
+            if (DeviceReset != null)
+                DeviceReset(this, EventArgs.Empty);
         }
 
         

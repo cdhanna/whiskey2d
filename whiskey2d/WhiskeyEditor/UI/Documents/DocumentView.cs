@@ -24,7 +24,6 @@ namespace WhiskeyEditor.UI.Documents
 
             BackColor = UIManager.Instance.DullFlairColor;
             Size = new Size(50, 50);
-
             ProjectManager.Instance.ProjectChanged += (s, a) =>
             {
                 closeAll();
@@ -52,6 +51,7 @@ namespace WhiskeyEditor.UI.Documents
                 //DocumentTab dt = new DocumentTab(title, this);
                 tabMap.Add(fileName, dt);
                 dt.open();
+              //  dt.Font = new Font(Font, FontStyle.Bold);
             }
             focusDocument(fileName);
             
@@ -108,7 +108,8 @@ namespace WhiskeyEditor.UI.Documents
             Tabs.ImageList = new ImageList();
             Tabs.ImageList.Images.Add(AssetManager.ICON_FILE);
             Tabs.ImageList.Images.Add(AssetManager.ICON_CLOSE);
-
+            Tabs.SizeMode = TabSizeMode.Normal;
+            
             Tabs.Click += (s, a) =>
             {
                 DocumentTab closed = null;

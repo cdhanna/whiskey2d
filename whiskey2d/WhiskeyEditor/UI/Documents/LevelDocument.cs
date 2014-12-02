@@ -30,7 +30,7 @@ namespace WhiskeyEditor.UI.Documents
             desc = lDesc;
             initControls();
             addControls();
-
+            
             whiskey.AllowDrop = true;
             dragEnterHandler = new DragEventHandler(dragEnter);
             dragDropHandler = new DragEventHandler(dragDrop);
@@ -44,12 +44,13 @@ namespace WhiskeyEditor.UI.Documents
         private void initControls()
         {
             whiskey = new WhiskeyControl();
+            whiskey.Level = desc.Level;
         }
 
         private void addControls()
         {
             whiskey.Dock = DockStyle.Fill;
-            Controls.Add(whiskey);
+            ContentPanel.Controls.Add(whiskey);
         }
 
 
@@ -67,13 +68,19 @@ namespace WhiskeyEditor.UI.Documents
                 TypeDescriptor tDesc = (TypeDescriptor)fDesc;
 
                 InstanceDescriptor inst = new InstanceDescriptor(tDesc);
-                
+                inst.Sprite.Scale *= 50;
+                Point p = PointToClient(new Point(args.X, args.Y));
+                inst.Position = new Vector(p.X, p.Y);
+                inst.X = p.X;
+                inst.Y = p.Y;
+                desc.Level.Descriptors.Add(inst);
+                Dirty = true;
             }
         }
 
         public override void save()
         {
-            State state = InstanceManager.Instance.getState();
+            State state = desc.Level.getInstanceLevelState();
             State.serialize(state, desc.FilePath);
             base.save();
         }

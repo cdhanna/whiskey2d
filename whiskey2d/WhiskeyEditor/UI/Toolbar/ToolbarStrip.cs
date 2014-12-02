@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.UI.Assets;
-
+using WhiskeyEditor.Backend.Actions.Impl;
 using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.UI.Toolbar
@@ -23,6 +23,8 @@ namespace WhiskeyEditor.UI.Toolbar
 
     public class ToolBarStrip : ToolStrip
     {
+        private PlayAction playAction;
+        private CompileAction compileAction;
 
         private ToolStripButton btnPlay;
         private ToolStripButton btnCompile;
@@ -52,28 +54,32 @@ namespace WhiskeyEditor.UI.Toolbar
 
         private void initControls()
         {
-            btnPlay = new ToolStripButton("Play");
-            btnPlay.ImageIndex = 1;
+           // btnPlay = new ToolStripButton("Play");
+            //btnPlay.ImageIndex = 1;
+           // btnPlay.Image = AssetManager.ICON_PLAY;
 
+            playAction = new PlayAction();
+            btnPlay = playAction.generateControl<ToolStripButton>();
 
             btnSave = new ToolStripButton("Save");
             btnSave.ImageIndex = 0;
 
-            btnCompile = new ToolStripButton("Compile");
+            compileAction = new CompileAction();
+            btnCompile = compileAction.generateControl<ToolStripButton>();
 
         }
         private void configureControls()
         {
-            btnPlay.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_PLAY)); };
+           // btnPlay.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_PLAY)); };
 
             btnSave.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_SAVE)); };
 
-            btnCompile.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_COMPILE)); };
+//            btnCompile.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_COMPILE)); };
 
         }
         private void addControls()
         {
-            Items.Add(btnSave);
+           // Items.Add(btnSave);
 
             Items.Add(btnCompile);
 

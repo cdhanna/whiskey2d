@@ -196,7 +196,7 @@ namespace WhiskeyEditor.Backend
         {
             gameSettings = new PropertiesFiles(FileBuildGamePropPath);
             
-            gameSettings.set(GameProperties.START_SCENE, GameStartScene);
+            gameSettings.set(GameProperties.START_SCENE, GameStartScene + ".state");
 
             gameSettings.Save();
 
@@ -264,8 +264,7 @@ namespace WhiskeyEditor.Backend
         public void buildExecutable()
         {
             cleanProject();
-            createGameSettings();
-
+            
             DirectoryCopy(PathLib, PathBuildLib, true);
             DirectoryCopy(PathMedia, PathBuildMedia, true);
             
@@ -275,12 +274,18 @@ namespace WhiskeyEditor.Backend
 
             //InstanceManager.Instance.convertToGobs(dll, "default");
 
+            foreach (Level level in InstanceManager.Instance.Levels)
+            {
+                string statePath = InstanceManager.Instance.convertToGobs(dll, level);
+                GameStartScene = level.LevelName;
+            }
+
             string[] states = Directory.GetFiles(PathStates);
             foreach (string stateName in states)
             {
                 State s = State.deserialize(stateName);
-                InstanceManager.Instance.setState(s);
-                InstanceManager.Instance.convertToGobs(dll, "default");
+              //  InstanceManager.Instance.setState(s);
+              //  InstanceManager.Instance.convertToGobs(dll, "default");
             }
            // DirectoryCopy(PathStates, PathBuildStates, true);
             
@@ -290,6 +295,8 @@ namespace WhiskeyEditor.Backend
             DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
             File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
             File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+            createGameSettings();
+
         }
 
         public void runGame()

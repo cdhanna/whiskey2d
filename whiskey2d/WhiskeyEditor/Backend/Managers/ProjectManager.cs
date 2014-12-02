@@ -58,7 +58,7 @@ namespace WhiskeyEditor.Backend.Managers
             }
             set
             {
-                InstanceManager.Instance.clear();
+               // InstanceManager.Instance.clear();
                 Project old = active;
                 active = value;
                 Settings.CurrentProject = active.PathBase;

@@ -12,25 +12,29 @@ namespace WhiskeyEditor.Backend
     [Serializable]
     class LevelDescriptor : FileDescriptor
     {
+        public Level Level { get; private set; }
+        //private State state;
 
-        private State state;
-
-        public State State { get { return state; } }
+        //public State State { get { return state; } }
 
         public LevelDescriptor(string name)
             : base(ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + name + ".state", name)
         {
+            Level = new Level(name);
 
+            FileManager.Instance.addFileDescriptor(this);
         }
+
 
         public override void inspectFile()
         {
-            state = State.deserialize(FilePath);
+            Level.setInstanceLevelState(State.deserialize(FilePath));
+            //state = State.deserialize(FilePath);
         }
 
         public override void createFile()
         {
-            state = new State();
+            State state = Level.getInstanceLevelState();
             State.serialize(state, FilePath);
         }
 

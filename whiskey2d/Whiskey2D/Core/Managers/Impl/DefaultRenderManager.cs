@@ -87,7 +87,6 @@ namespace Whiskey2D.Core.Managers.Impl
             spriteBatch.End();
         }
 
-
         /// <summary>
         /// Renders the HUD
         /// </summary>

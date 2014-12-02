@@ -146,7 +146,8 @@ namespace Whiskey2D.Core
 
 
             //RUN THE START CODE
-            GameManager.Objects.setState(State.deserialize(CurrentScenePath));
+            if (CurrentScene != null)
+                GameManager.Objects.setState(State.deserialize(CurrentScenePath));
         }
 
         private void start()

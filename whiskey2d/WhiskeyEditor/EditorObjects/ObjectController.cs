@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
+using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.EditorObjects
 {
@@ -13,6 +14,7 @@ namespace WhiskeyEditor.EditorObjects
         public GameObject Dragging { get; set; }
         public GameObject Selected { get; set; }
 
+        public Level CurrentLevel { get; set; }
 
         public ObjectController()
         {

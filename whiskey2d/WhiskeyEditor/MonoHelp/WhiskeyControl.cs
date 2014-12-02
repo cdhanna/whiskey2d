@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using WhiskeyEditor.Backend.Managers;
 using Whiskey2D.PourGames.Game3;
-
+using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.MonoHelp
 {
@@ -28,15 +28,30 @@ namespace WhiskeyEditor.MonoHelp
 
         Stopwatch timer;
 
-        //GameManager gameMan = GameManager.getInstance();
+        GameManager gameMan = GameManager.getInstance();
+        
         ContentManager content;
         EditorInputSource inputSource;
 
+        EditorRenderManager renderer;
 
         TimeSpan TargetElapsedTime;
 
 
         GameObject selectedGob;
+        EditorObjects.ObjectController oc;
+
+        private Level level;
+        public Level Level
+        {
+            get { return level; }
+            set
+            {
+                level = value;
+                if (oc != null)
+                    oc.CurrentLevel = level;
+            }
+        }
       //  public WhiskeyPropertyGrid GobGrid{get;set;}
       //  public ScriptCollection GobScriptCollection { get; set; }
 
@@ -50,23 +65,25 @@ namespace WhiskeyEditor.MonoHelp
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
             content = new ContentManager(Services);
 
-            //gameMan.Initialize(this, content, GraphicsDevice,
-            //    DefaultInputManager.getInstance(),
-            //    DefaultInputSourceManager.getInstance(),
-            //    DefaultLogManager.getInstance(),
-            //    new DefaultObjectManager(),
-            //    DefaultRenderManager.getInstance(),
-            //    DefaultResourceManager.getInstance()
-            //    );
+            gameMan.Initialize(this, content, GraphicsDevice,
+                DefaultInputManager.getInstance(),
+                DefaultInputSourceManager.getInstance(),
+                DefaultLogManager.getInstance(),
+                new DefaultObjectManager(),
+                DefaultRenderManager.getInstance(),
+                DefaultResourceManager.getInstance()
+                );
+            gameMan.CurrentScene = null;
             //gameMan.LoadContent();
 
-            //inputSource = new EditorInputSource(this);
+            inputSource = new EditorInputSource(this);
 
-            //DefaultInputSourceManager.getInstance().setRegularSource(inputSource);
-            //DefaultInputSourceManager.getInstance().requestRegular();
-            
+            DefaultInputSourceManager.getInstance().setRegularSource(inputSource);
+            DefaultInputSourceManager.getInstance().requestRegular();
 
-            
+
+            renderer = new EditorRenderManager();
+            renderer.init(GraphicsDevice);
 
             // Start the animation timer.
             timer = Stopwatch.StartNew();
@@ -75,8 +92,8 @@ namespace WhiskeyEditor.MonoHelp
             Application.Idle += delegate { update(); };
 
             //add editor objects
-            ////new EditorObjects.ObjectController();
-
+            oc = new EditorObjects.ObjectController();
+            oc.CurrentLevel = Level;
             //TypeDescriptor.AddAttributes(   typeof(Whiskey2D.Core.Vector),
             //                                new EditorAttribute(typeof(VectorEditor),
             //                                typeof(UITypeEditor)));
@@ -99,7 +116,7 @@ namespace WhiskeyEditor.MonoHelp
             if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
             {
                 
-                //gameMan.Update(null); //todo fix nullgametime
+                gameMan.Update(null); //todo fix nullgametime
 
               
                 timer.Restart();
@@ -112,6 +129,16 @@ namespace WhiskeyEditor.MonoHelp
         protected override void Draw()
         {
             GraphicsDevice.Clear(Whiskey2D.Core.Color.CornflowerBlue);
+            gameMan.Draw(null);
+            if (Level != null)
+            {
+                renderer.render(Level.Descriptors);
+            }
+            else
+            {
+                GraphicsDevice.Clear(Whiskey2D.Core.Color.Red);
+
+            }
             //gameMan.Draw(null); //todo fix null gametime
         }
 
@@ -139,35 +166,35 @@ namespace WhiskeyEditor.MonoHelp
         //    GameManager.Objects.setState(state);
         //}
 
-        //GameObject GameController.SelectedGob
-        //{
-        //    get
-        //    {
-        //        return selectedGob;
-        //    }
-        //    set
-        //    {
-        //        selectedGob = value;
-        //        //GobGrid.SelectedObject = value;
-        //        //GobGrid.Refresh();
-
-        //        //GobScriptCollection.SelectedObject = value;
-        //        //GobScriptCollection.Refresh();
-
-        //    }
-        //}
-
-        public GameObject SelectedGob
+        GameObject GameController.SelectedGob
         {
             get
             {
-                throw new NotImplementedException();
+                return selectedGob;
             }
             set
             {
-                throw new NotImplementedException();
+                selectedGob = value;
+                //GobGrid.SelectedObject = value;
+                //GobGrid.Refresh();
+
+                //GobScriptCollection.SelectedObject = value;
+                //GobScriptCollection.Refresh();
+
             }
         }
+
+        //public GameObject SelectedGob
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
     }
 
 }

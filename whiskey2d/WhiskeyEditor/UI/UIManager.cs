@@ -27,7 +27,7 @@ namespace WhiskeyEditor.UI
         public static UIManager Instance { get { return instance; } }
         private UIManager()
         {
-            FlairColor = Color.FromArgb(128, 200, 255);
+            FlairColor = Color.Orange;//Color.FromArgb(128, 200, 255);
             ErrorColor = Color.LightPink;
             WarningColor = Color.LightSalmon;
         }

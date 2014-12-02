@@ -89,6 +89,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\Actions\AbstractAction.cs" />
+    <Compile Include="Backend\Actions\Action.cs" />
+    <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
+    <Compile Include="Backend\Actions\Impl\PlayAction.cs" />
+    <Compile Include="Backend\Level.cs" />
+    <Compile Include="Backend\Managers\ActionManager.cs" />
     <Compile Include="Backend\CodeDescriptor.cs" />
     <Compile Include="Backend\GameData.cs" />
     <Compile Include="Backend\LevelDescriptor.cs" />
@@ -112,6 +118,7 @@
     <Compile Include="EditorObjects\SelectScript.cs" />
     <Compile Include="MonoHelp\EditorGameManager.cs" />
     <Compile Include="MonoHelp\EditorInputSource.cs" />
+    <Compile Include="MonoHelp\EditorRenderManager.cs" />
     <Compile Include="MonoHelp\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +141,7 @@
     <Compile Include="UI\Dockable\DockControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\Actions\SaveAction.cs" />
     <Compile Include="UI\Documents\CodeDocument.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -159,6 +167,9 @@
     <Compile Include="UI\Output\OutputView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Status\StatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Toolbar\ToolbarStrip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -167,6 +178,9 @@
     </Compile>
     <Compile Include="UI\UIManager.cs" />
     <Content Include="UI\Assets\closeIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\compileIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Assets\fileIcon.png">

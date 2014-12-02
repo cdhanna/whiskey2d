@@ -27,5 +27,6 @@ namespace Whiskey2D.Core.Inputs
 
         MouseState getMouseState();
 
+
     }
 }

@@ -9,7 +9,7 @@ using WhiskeyEditor.Backend.Managers;
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    public class CodeDescriptor : FileDescriptor
+    public abstract class CodeDescriptor : FileDescriptor
     {
 
         public CodeDescriptor(string name)

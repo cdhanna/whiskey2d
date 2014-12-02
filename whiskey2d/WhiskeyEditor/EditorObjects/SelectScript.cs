@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
+using WhiskeyEditor.Backend;
 
 
 namespace WhiskeyEditor.EditorObjects
@@ -23,10 +24,11 @@ namespace WhiskeyEditor.EditorObjects
                 Gob.Selected = null;
                 Gob.Sprite.Color = Color.Transparent;
                 //GameManager.Controller.SelectedGob = null;
-                List<GameObject> objs = GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
+                List<InstanceDescriptor> objs = Gob.CurrentLevel.Descriptors;//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
 
                 foreach (GameObject obj in objs)
                 {
+                    Vector v = GameManager.Input.getMousePosition();
                     if (obj.Sprite != null && obj.Bounds.vectorWithin(GameManager.Input.getMousePosition()))
                     {
                         Gob.Selected = obj;
@@ -44,7 +46,7 @@ namespace WhiskeyEditor.EditorObjects
             if (Gob.Selected != null)
             {
 
-                Gob.Sprite.Color = Color.Blue;
+                Gob.Sprite.Color = Color.Orange;
                 Gob.Position = Gob.Selected.Bounds.Position - new Vector(5, 5);
                 Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(10, 10);
             }

@@ -20,6 +20,7 @@ namespace WhiskeyEditor.UI.Documents
         private TextEditorControl editor;
         private CodeDescriptor desc;
         private FileChangedEventHandler discHandler;
+        private string lastText;
 
         public CodeDocument(CodeDescriptor desc, DocumentView parent)
             : base(desc.FilePath, parent)
@@ -35,13 +36,14 @@ namespace WhiskeyEditor.UI.Documents
             addControls();
 
             discHandler = new FileChangedEventHandler(discListener);
-
+            Dirty = false;
         }
 
         public override void open()
         {
             refreshFromDisc(desc);
             UIManager.Instance.Files.FileChanged += discHandler;
+            lastText = editor.Text;
             base.open();
         }
 
@@ -54,8 +56,8 @@ namespace WhiskeyEditor.UI.Documents
             writer.Flush();
             writer.Close();
             fileStream.Close();
-            
-            
+
+            lastText = editor.Text;
 
             base.save();
         }
@@ -77,7 +79,7 @@ namespace WhiskeyEditor.UI.Documents
             {
                 TextLocation l = editor.ActiveTextAreaControl.Caret.Position;
 
-
+                Dirty = false;
                 string code = "";
                 foreach (string line in desc.readAllLines())
                 {
@@ -85,7 +87,9 @@ namespace WhiskeyEditor.UI.Documents
                 }
                 editor.Text = code;
                 editor.ActiveTextAreaControl.Caret.Position = l;
+                Dirty = false;
             }));
+            
         }
 
         private void initControls()
@@ -99,13 +103,17 @@ namespace WhiskeyEditor.UI.Documents
 
         private void configureControls()
         {
-
+            editor.TextChanged += (s, a) =>
+            {
+                Dirty = (editor.Text != lastText);
+            };
         }
 
         private void addControls()
         {
             editor.Dock = DockStyle.Fill;
-            Controls.Add(editor);
+            
+            ContentPanel.Controls.Add(editor);
         }
 
     }

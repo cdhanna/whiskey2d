@@ -21,7 +21,7 @@ namespace WhiskeyEditor.Backend
 
             this.name = name;
             
-            FileManager.Instance.addFileDescriptor(this);
+           
         }
 
         public String FilePath

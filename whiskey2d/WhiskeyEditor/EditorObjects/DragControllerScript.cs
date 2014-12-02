@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
+using WhiskeyEditor.Backend;
+
 namespace WhiskeyEditor.EditorObjects
 {
     class DragControllerScript : Script<ObjectController>
@@ -24,7 +26,7 @@ namespace WhiskeyEditor.EditorObjects
             if (GameManager.Input.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
 
-                List<GameObject> objs = GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
+                List<InstanceDescriptor> objs = Gob.CurrentLevel.Descriptors;
 
                 foreach (GameObject obj in objs)
                 {

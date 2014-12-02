@@ -31,6 +31,7 @@ namespace WhiskeyEditor.Backend
         {
             this.typeName = typeName;
             ScriptManager.Instance.addScript(this);
+            FileManager.Instance.addFileDescriptor(this);
         }
 
 

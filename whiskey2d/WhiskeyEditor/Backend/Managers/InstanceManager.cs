@@ -21,49 +21,161 @@ namespace WhiskeyEditor.Backend.Managers
         private static InstanceManager instance = new InstanceManager();
         public static InstanceManager Instance { get { return instance; } }
 
-        private List<InstanceDescriptor> iDescs;
-        
+        //private List<InstanceDescriptor> iDescs;
+        public List<Level> Levels { get; private set; }
+
+
         private InstanceManager()
         {
-            iDescs = new List<InstanceDescriptor>();
-
+           // iDescs = new List<InstanceDescriptor>();
+            Levels = new List<Level>();
           
 
         }
-
-
-        public void addInstance(InstanceDescriptor iDesc)
+        public void clearLevels()
         {
-            iDescs.Add(iDesc);
+            Levels.Clear();
         }
-
-        public void clear()
+        public void addLevel(Level level)
         {
-            iDescs.Clear();
+            Levels.Add(level);
         }
 
 
-        public State getState()
-        {
-            State state = new State();
-            state.Name = "test";
+        //public void addInstance(InstanceDescriptor iDesc)
+        //{
+        //    iDescs.Add(iDesc);
+        //}
 
-            foreach (InstanceDescriptor inst in iDescs)
+        //public void clear()
+        //{
+        //    iDescs.Clear();
+        //}
+
+
+        //public State getState()
+        //{
+        //    State state = new State();
+        //    state.Name = "test";
+
+        //    foreach (InstanceDescriptor inst in iDescs)
+        //    {
+        //        state.GameObjects.Add(inst);
+        //    }
+            
+        //    return state;
+        //}
+
+        //public void setState(State state)
+        //{
+        //    foreach (GameObject gob in state.GameObjects)
+        //    {
+        //        addInstance((InstanceDescriptor)gob);
+        //    }
+        //}
+
+        /// <summary>
+        /// Convert a level that is used in the editor, to a level that can be used
+        /// by Whiskey.Core. 
+        /// </summary>
+        /// <param name="dllPathIn">The path to the GameData.dll, that contains the type information</param>
+        /// <param name="level">Some level that contains a set of instance descriptors</param>
+        /// <returns>The path to the state file that Whiskey.Core will load</returns>
+        public string convertToGobs(string dllPathIn, Level level)
+        {
+            AppDomain buildDomain = AppDomain.CreateDomain("BuildDomain");
+
+
+            string statePath = ProjectManager.Instance.ActiveProject.PathBuildStates + Path.DirectorySeparatorChar + level.LevelName + ".state";
+
+            buildDomain.SetData("dllPath", dllPathIn);
+            buildDomain.SetData("statePath", statePath);
+            buildDomain.SetData("iDescs", level.Descriptors);
+            buildDomain.SetData("scriptTable", ScriptManager.Instance.getScriptTable());
+
+            try
             {
-                state.GameObjects.Add(inst);
+
+                buildDomain.DoCallBack(new CrossAppDomainDelegate(() =>
+                {
+                    try
+                    {
+                        string appDllPath = (string)AppDomain.CurrentDomain.GetData("dllPath");
+                        string appStateName = (string)AppDomain.CurrentDomain.GetData("stateName");
+                        string appStatePath = (string)AppDomain.CurrentDomain.GetData("statePath");
+
+                        List<InstanceDescriptor> appIDescs = (List<InstanceDescriptor>)AppDomain.CurrentDomain.GetData("iDescs");
+                        Dictionary<String, ScriptDescriptor> appScriptTable = (Dictionary<String, ScriptDescriptor>)AppDomain.CurrentDomain.GetData("scriptTable");
+
+
+                        Assembly gameData = Assembly.LoadFrom(appDllPath);
+
+                        List<GameObject> lGobs = new List<GameObject>();
+                        foreach (InstanceDescriptor iDesc in appIDescs)
+                        {
+                            iDesc.X = iDesc.Position.X;
+                            iDesc.Y = iDesc.Position.Y;
+
+                            string typeName = iDesc.TypeDescriptor.QualifiedName;
+                            Type type = gameData.GetType(typeName, true, false);
+
+                            GameObject gob = (GameObject)type.GetConstructor
+                                (new Type[] { }).Invoke
+                                (new object[] { });
+
+                            foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptor.getPropertySetClone())
+                            {
+                                PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
+                                if (propInfo.SetMethod != null)
+                                {
+                                    propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).value });
+                                }
+                            }
+
+                            gob.clearScripts();
+
+                            foreach (String scriptName in iDesc.getScriptNames())
+                            {
+                                Type scriptType = gameData.GetType(appScriptTable[scriptName].QualifiedName, false);
+                                object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                                gob.addScript((Script)script);
+                            }
+
+
+                            //TODO THIS IS A TEMPORARY WORK AROUND
+                            gob.initializeObject();
+
+                            lGobs.Add(gob);
+                        }
+                        State state = new State();
+                        state.GameObjects = lGobs;
+                        state.Name = appStateName;
+                        string filename = State.serialize(
+                                            state,
+                                            appStatePath);
+                        //TempFilePath = filename;
+
+                        //AppDomain.CurrentDomain.SetData("fileName", filename);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        throw e;
+                    }
+                }));
+            
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("broken");
             }
             
-            return state;
+            AppDomain.Unload(buildDomain);
+
+            return statePath;
         }
 
-        public void setState(State state)
-        {
-            foreach (GameObject gob in state.GameObjects)
-            {
-                addInstance((InstanceDescriptor)gob);
-            }
-        }
-
+        /*
         public string convertToGobs(string dllPathIn, string stateNameIn)
         {
 
@@ -159,6 +271,7 @@ namespace WhiskeyEditor.Backend.Managers
 
             return fileName;
         }
+         * */
 
     }
 }
