@@ -29,20 +29,20 @@ namespace WhiskeyEditor.MonoHelp
     public class WhiskeyControl : GraphicsDeviceControl, GameController
     {
 
-        
-        protected bool ActiveControl { get; set; }
-        protected bool Working { get; set; }
-        protected static List<WhiskeyControl> allControls = new List<WhiskeyControl>();
 
-        protected static GameManager gameMan = GameManager.getInstance();
-        protected static ContentManager content;
-        protected static bool gameManInitialized = false;
-        protected static Thread whiskeyThread;
-        protected static bool whiskeyThreadRunKey = true;
-        static Stopwatch timer;
-        static TimeSpan TargetElapsedTime;
-        static InputSource whiskeyInput = null;
-        static InputSource requestedWhiskeyInput = null;
+       
+        private static List<WhiskeyControl> allControls = new List<WhiskeyControl>();
+
+        private static GameManager gameMan = GameManager.getInstance();     //The game manager
+        private static ContentManager content;                              //A content manager
+        private static bool gameManInitialized = false;                     //true once the game manager has initialized, false until then
+        private static Thread whiskeyThread;                                //the thread that represents the main ticking of the whiskey engine
+        private static bool whiskeyThreadRunKey = true;                     //true for as long as the whiskey engine should tick. set to false to turn it off
+        private static Stopwatch timer;                                     //a time to use to make sure the game doesn't run too fast
+        private static TimeSpan TargetElapsedTime;                          //target time per tick
+        private static InputSource whiskeyInput = null;                     //the latest input system
+        private static InputSource requestedWhiskeyInput = null;            //the desired input system. Set this one to change the real input system
+
         protected static void launchWhiskeyThread()
         {
             // Start the animation timer.
@@ -58,8 +58,6 @@ namespace WhiskeyEditor.MonoHelp
                         if (whiskeyInput != requestedWhiskeyInput)
                         {
                             gameMan.InputSourceManager.hotSwapInput(requestedWhiskeyInput);
-                           // gameMan.InputSourceManager.setRegularSource(requestedWhiskeyInput);
-                           // gameMan.InputSourceManager.requestRegular();
                             whiskeyInput = requestedWhiskeyInput;
                         }
 
@@ -74,21 +72,34 @@ namespace WhiskeyEditor.MonoHelp
         }
 
 
-        protected EditorInputSource inputSource;
-        protected ObjectController oc;
-        protected DefaultObjectManager editorObjects;
-        protected static int idc;
+        private EditorInputSource inputSource;
+        private ObjectController oc;
+        private DefaultObjectManager editorObjects;
+        private static int idc;
 
 
-        EditorRenderManager renderer;
+        private EditorRenderManager renderer;
 
-        GameObject selectedGob;
-        protected int id;
-        private EventHandler updateHandler;
+        private GameObject selectedGob;
+        private int id;
         private Thread backThread;
         private bool backThreadRunKey = true;
 
-        private Level level;
+
+        /// <summary>
+        /// True if this Control should be getting input and running.
+        /// </summary>
+        private bool ViewedControl { get; set; }
+
+        /// <summary>
+        /// True while the update/draw loop is occuring. This is useful for other threads checking in
+        /// </summary>
+        private bool Working { get; set; }
+        
+        
+        /// <summary>
+        /// Set the level that the WhiskeyControl is rendering
+        /// </summary>
         public Level Level
         {
             get { return level; }
@@ -99,26 +110,26 @@ namespace WhiskeyEditor.MonoHelp
                     oc.CurrentLevel = level;
             }
         }
+        private Level level;
 
+
+
+        /// <summary>
+        /// Creates a WhiskeyControl
+        /// </summary>
         public WhiskeyControl()
         {
             id = idc++;
             allControls.Add(this);
         }
 
-      //  public WhiskeyPropertyGrid GobGrid{get;set;}
-      //  public ScriptCollection GobScriptCollection { get; set; }
-
-        //protected override void OnResize(EventArgs e)
-        //{
-        //    base.OnResize(e);
-        //}
-
+        /// <summary>
+        /// Make sure that the game manager has been initialized to at least one control. 
+        /// </summary>
         private void ensureGameManInitialized()
         {
             if (!gameManInitialized)
             {
-                //updateHandler = new EventHandler((s, a) => { update(); });
                 content = new ContentManager(Services, "media");
                 gameMan.Initialize(this, content, GraphicsDevice,
                     new DefaultInputManager(),
@@ -136,6 +147,9 @@ namespace WhiskeyEditor.MonoHelp
 
         }
 
+        /// <summary>
+        /// called to set this control as the one that recieves input and updates objects
+        /// </summary>
         public void setAsActive()
         {
             inputSource = new EditorInputSource(this);
@@ -145,67 +159,69 @@ namespace WhiskeyEditor.MonoHelp
                 oc.Selected = null;
                 oc.Unselect = true;
                 oc.update();
-                allControls.ForEach((w) => { w.ActiveControl = false; });
-                ActiveControl = true;
+                allControls.ForEach((w) => { w.ViewedControl = false; });
+                ViewedControl = true;
             }
         }
 
+        /// <summary>
+        /// called just after creation.
+        /// </summary>
         protected override void Initialize()
         {
-            
+            //make sure GameManager exists
             ensureGameManInitialized();
+
+            //create a new object manager, just for our control objects
             editorObjects = new DefaultObjectManager();
             editorObjects.init();
+
+            //mark this control as the active one
             setAsActive();
 
+            //construct the object controller, and make sure it resides in the correct object managers
             oc = new ObjectController();
             editorObjects.addObject(oc);
             gameMan.ObjectManager.removeObject(oc);
 
+            //construct the special renderer for this scene
             renderer = new EditorRenderManager();
             renderer.init(base.GraphicsDevice);
 
             
-
+            //create the backthread that will do the updating for us
             backThread = new Thread(() =>
             {
                 while (backThreadRunKey)
                 {
                     update();
                     Thread.Sleep(2);
-                    //while (backThreadRunKey && Working)
-                    //{
-                    //}
+                    while (backThreadRunKey && Working)
+                    {
+                        //waiting for the update loop to finish (it causes some other side affects that need to finish)
+                    }
                 }
             });
             backThread.Name = "WHISKEYVIEW_BACK: " + id;
             backThread.Start();
-            // Hook the idle event to constantly redraw our animation.
-           // Application.Idle += updateHandler; 
+ 
 
 
-
-            //add editor objects
+            //set the current level of the object controller
             if (oc != null)
                 oc.CurrentLevel = Level;
-            //TypeDescriptor.AddAttributes(   typeof(Whiskey2D.Core.Vector),
-            //                                new EditorAttribute(typeof(VectorEditor),
-            //                                typeof(UITypeEditor)));
-            ////TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector),
-            //                                new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
-
-
-
-            //GameManager.Objects.getAllObjectsNotOfType<EditorObjects.EditorGameObject>().ForEach((g) => { g.close(); });
-
-            //new Whiskey2D.PourGames.Game3.Game3Launch().start();
+         
             
         }
 
+
+        /// <summary>
+        /// Destroys most of the object. If this is the last WhiskeyControl around, the gamemanager will be terminated
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             backThreadRunKey = false;
-           // whiskeyThreadRunKey = false;
             editorObjects.close();
             renderer.close();
             allControls.Remove(this);
@@ -215,54 +231,45 @@ namespace WhiskeyEditor.MonoHelp
                 gameManInitialized = false;
                 whiskeyThreadRunKey = false;
             }
-           // base.Dispose(disposing);
+           // base.Dispose(disposing); <-calling this does bad things
         }
 
         protected void update()
         {
-            if (ActiveControl)
+            if (ViewedControl)
             {
-                Working = true;
+                Working = true; //start working...
                 editorObjects.updateAll();
-                //if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
-                //{
-                    Console.WriteLine("update: " + id);
-                //    gameMan.Update(null); //todo fix nullgametime
-
-
-                //    timer.Restart();
-                //}
-
-                Invalidate();   //signals draw
+                Invalidate(); 
             }
         }
 
-        //public void close()
-        //{
-        //    Application.Idle -= updateHandler;
-
-        //}
-
+ 
+        /// <summary>
+        /// Draw the scene
+        /// </summary>
         protected override void Draw()
         {
-
-          //  Console.WriteLine("draw: " + id);
-            
+            //clear
             GraphicsDevice.Clear(Whiskey2D.Core.Color.Green);
+            
+            //draw things from the game manager
             gameMan.Draw(null);
 
+            //draw our control stuff
             renderer.render(editorObjects.getAllObjects());
 
+            //draw our instances
             if (Level != null)
-            {
                 renderer.render(Level.Descriptors);
-            }
             else
-            {
                 GraphicsDevice.Clear(Whiskey2D.Core.Color.Red);
 
-            }
-            Working = false;
+
+
+            Working = false; //done working...
+
+
         }
 
        
