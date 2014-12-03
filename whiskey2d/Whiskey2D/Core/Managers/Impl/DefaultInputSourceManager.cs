@@ -13,11 +13,11 @@ namespace Whiskey2D.Core.Managers.Impl
     public class DefaultInputSourceManager : InputSourceManager
     {
 
-        private static DefaultInputSourceManager instance = new DefaultInputSourceManager();
-        public static DefaultInputSourceManager getInstance()
-        {
-            return instance;
-        }
+        //private static DefaultInputSourceManager instance = new DefaultInputSourceManager();
+        //public static DefaultInputSourceManager getInstance()
+        //{
+        //    return instance;
+        //}
 
 
         private RealKeyBoard keyboardSource;
@@ -26,7 +26,7 @@ namespace Whiskey2D.Core.Managers.Impl
         private InputSource activeSource;
         private InputSource defaultSource;
 
-        private DefaultInputSourceManager()
+        public DefaultInputSourceManager()
         {
             keyboardSource = new RealKeyBoard();
             activeSource = keyboardSource;
@@ -70,6 +70,12 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             activeSource = defaultSource;
             GameManager.getInstance().reset();
+        }
+
+        public void hotSwapInput(InputSource source)
+        {
+            
+            activeSource = source;
         }
 
         /// <summary>

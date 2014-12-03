@@ -85,7 +85,7 @@ namespace WinFormsGraphicsDevice
                                                    int width, int height)
         {
             // Increment the "how many controls sharing the device" reference count.
-            if (Interlocked.Increment(ref referenceCount) == 1)
+            if (Interlocked.Increment(ref referenceCount) == 1 && singletonInstance == null)
             {
                 // If this is the first control to start using the
                 // device, we must create the singleton instance.
@@ -105,17 +105,17 @@ namespace WinFormsGraphicsDevice
             // Decrement the "how many controls sharing the device" reference count.
             if (Interlocked.Decrement(ref referenceCount) == 0)
             {
-                // If this is the last control to finish using the
-                // device, we should dispose the singleton instance.
-                if (disposing)
-                {
-                    if (DeviceDisposing != null)
-                        DeviceDisposing(this, EventArgs.Empty);
+                // //If this is the last control to finish using the
+                // //device, we should dispose the singleton instance.
+                //if (disposing)
+                //{
+                //    if (DeviceDisposing != null)
+                //        DeviceDisposing(this, EventArgs.Empty);
 
-                    graphicsDevice.Dispose();
-                }
+                //    graphicsDevice.Dispose();
+                //}
 
-                graphicsDevice = null;
+                //graphicsDevice = null;
             }
         }
 
@@ -127,28 +127,28 @@ namespace WinFormsGraphicsDevice
         /// </summary>
         public void ResetDevice(int width, int height)
         {
-            if (DeviceResetting != null)
-                DeviceResetting(this, EventArgs.Empty);
+            //if (DeviceResetting != null)
+            //    DeviceResetting(this, EventArgs.Empty);
 
-            //graphicsDevice.PresentationParameters.BackBufferHeight = height;
-            //graphicsDevice.PresentationParameters.BackBufferHeight = width;
+            ////graphicsDevice.PresentationParameters.BackBufferHeight = height;
+            ////graphicsDevice.PresentationParameters.BackBufferHeight = width;
 
-            PresentationParameters parameters = graphicsDevice.PresentationParameters;
-            // parameters.BackBufferWidth = Math.Max(parameters.BackBufferWidth, width);
-            // parameters.BackBufferHeight = Math.Max(parameters.BackBufferHeight, height);
-            parameters.BackBufferWidth = width;
-            parameters.BackBufferHeight = height;
+            //PresentationParameters parameters = graphicsDevice.PresentationParameters;
+            //parameters.BackBufferWidth = Math.Max(parameters.BackBufferWidth, width);
+            //parameters.BackBufferHeight = Math.Max(parameters.BackBufferHeight, height);
+            //// parameters.BackBufferWidth = width;
+            //// parameters.BackBufferHeight = height;
 
-            //int nw = Math.Max(graphicsDevice.PresentationParameters.BackBufferWidth, width);
-            //int nh = Math.Max(GraphicsDevice.PresentationParameters.BackBufferHeight, height);
+            ////int nw = Math.Max(graphicsDevice.PresentationParameters.BackBufferWidth, width);
+            ////int nh = Math.Max(GraphicsDevice.PresentationParameters.BackBufferHeight, height);
 
-            //graphicsDevice.PresentationParameters.BackBufferWidth = nw;
-            //graphicsDevice.PresentationParameters.BackBufferHeight = nh;
+            ////graphicsDevice.PresentationParameters.BackBufferWidth = nw;
+            ////graphicsDevice.PresentationParameters.BackBufferHeight = nh;
 
-            //graphicsDevice.Reset(parameters);
+            ////graphicsDevice.Reset(parameters);
 
-            if (DeviceReset != null)
-                DeviceReset(this, EventArgs.Empty);
+            //if (DeviceReset != null)
+            //    DeviceReset(this, EventArgs.Empty);
         }
 
         

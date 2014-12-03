@@ -157,7 +157,7 @@ namespace WinFormsGraphicsDevice
 
 
             GLControl control = GLControl.FromHandle(graphicsDeviceService.GraphicsDevice.PresentationParameters.DeviceWindowHandle) as GLControl;
-            if (control == null)
+            if (control != null)
             {
                 control.Context.MakeCurrent(WindowInfo);
                 graphicsDeviceService.GraphicsDevice.PresentationParameters.BackBufferHeight = ClientSize.Height;

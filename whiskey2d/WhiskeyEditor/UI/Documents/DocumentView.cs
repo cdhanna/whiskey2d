@@ -40,6 +40,8 @@ namespace WhiskeyEditor.UI.Documents
             if (tabMap.ContainsKey(fileName))
             {
                 Tabs.SelectedTab = tabMap[fileName];
+                Tabs.SelectedTab.Refresh();
+                
             }
         }
 
@@ -51,6 +53,7 @@ namespace WhiskeyEditor.UI.Documents
                 //DocumentTab dt = new DocumentTab(title, this);
                 tabMap.Add(fileName, dt);
                 dt.open();
+                dt.Refresh();
               //  dt.Font = new Font(Font, FontStyle.Bold);
             }
             focusDocument(fileName);
@@ -128,6 +131,11 @@ namespace WhiskeyEditor.UI.Documents
 
             };
 
+            Tabs.SelectedIndexChanged += (s, a) =>
+            {
+                if (Tabs.SelectedTab != null)
+                    Tabs.SelectedTab.Refresh();
+            };
 
            
         }

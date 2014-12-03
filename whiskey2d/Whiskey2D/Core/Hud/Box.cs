@@ -9,7 +9,7 @@ namespace Whiskey2D.Core.Hud
     /// <summary>
     /// A box is just a box that is drawn for hud purposes
     /// </summary>
-    class Box
+    public class Box
     {
 
         /// <summary>

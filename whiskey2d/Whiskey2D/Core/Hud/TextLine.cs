@@ -11,7 +11,7 @@ namespace Whiskey2D.Core.Hud
     /// <summary>
     /// A TextLine is a line of text that will be written to the screen
     /// </summary>
-    class TextLine
+    public class TextLine
     {
 
         

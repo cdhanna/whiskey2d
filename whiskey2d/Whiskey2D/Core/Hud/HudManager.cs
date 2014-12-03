@@ -13,7 +13,7 @@ namespace Whiskey2D.Core.Hud
     /// <summary>
     /// The HudManager is responsible for keeping track of all HUD state, including the debug window and the console
     /// </summary>
-    class HudManager
+    public class HudManager
     {
         private static HudManager instance = new HudManager();
         public static HudManager getInstance()

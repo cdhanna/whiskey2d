@@ -47,7 +47,8 @@ namespace Whiskey2D.Core.Managers.Impl
         public void init(ContentManager content)
         {
             this.content = content;
-            this.defaultFont = content.Load<SpriteFont>("font");
+            if (content != null)
+             this.defaultFont = content.Load<SpriteFont>("font");
 
         }
 

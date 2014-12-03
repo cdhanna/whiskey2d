@@ -15,20 +15,20 @@ namespace Whiskey2D.Core.Managers.Impl
     public class DefaultInputManager : InputManager
     {
 
-        private static DefaultInputManager instance;
+        //private static DefaultInputManager instance;
 
-        /// <summary>
-        /// retrieves the InputManager
-        /// </summary>
-        /// <returns>The InputManager</returns>
-        public static DefaultInputManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DefaultInputManager();
-            }
-            return instance;
-        }
+        ///// <summary>
+        ///// retrieves the InputManager
+        ///// </summary>
+        ///// <returns>The InputManager</returns>
+        //public static DefaultInputManager getInstance()
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = new DefaultInputManager();
+        //    }
+        //    return instance;
+        //}
 
 
         private InputSourceManager sourceMan;
@@ -37,7 +37,7 @@ namespace Whiskey2D.Core.Managers.Impl
         private MouseState currentMouse, oldMouse;
 
 
-        private DefaultInputManager()
+        public DefaultInputManager()
         {
         }
 

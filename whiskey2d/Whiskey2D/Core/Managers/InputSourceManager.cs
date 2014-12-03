@@ -24,6 +24,9 @@ namespace Whiskey2D.Core.Managers
         /// Ask the InputSource Manager to switch the input source to the default one (the keyboard)
         /// </summary>
         void requestRegular();
+
+        void hotSwapInput(InputSource inputSource);
+
         /// <summary>
         /// Update the InputSource manager
         /// </summary>

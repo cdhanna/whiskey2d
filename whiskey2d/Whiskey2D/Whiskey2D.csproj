@@ -75,6 +75,7 @@
     <Compile Include="Core\Rand.cs" />
     <Compile Include="Core\Inputs\RealKeyBoard.cs" />
     <Compile Include="Core\Inputs\ReplayService.cs" />
+    <Compile Include="Core\ServiceContainer.cs" />
     <Compile Include="Core\SimpleGameObject.cs" />
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />

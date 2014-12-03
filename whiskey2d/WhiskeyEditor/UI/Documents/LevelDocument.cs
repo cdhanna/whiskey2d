@@ -78,6 +78,12 @@ namespace WhiskeyEditor.UI.Documents
             }
         }
 
+        public override void Refresh()
+        {
+            whiskey.setAsActive();
+            base.Refresh();
+        }
+
         public override void save()
         {
             State state = desc.Level.getInstanceLevelState();

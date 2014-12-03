@@ -60,13 +60,18 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public virtual void updateAll()
         {
+            List<GameObject> didntDie = new List<GameObject>();
+
             foreach (GameObject gob in gameObjects)
             {
                 gob.update();
             }
             foreach (GameObject gob in deadObjects)
             {
-                gameObjects.Remove(gob);
+                if (!gameObjects.Remove(gob))
+                {
+                    didntDie.Add(gob);
+                }
             }
             foreach (GameObject gob in newObjects)
             {
@@ -76,6 +81,9 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
             deadObjects.Clear();
+            deadObjects.AddRange(didntDie);
+            didntDie.Clear();
+
             newObjects.Clear();
 
         }

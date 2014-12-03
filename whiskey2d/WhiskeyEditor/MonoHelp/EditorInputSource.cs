@@ -9,7 +9,7 @@ namespace WhiskeyEditor.MonoHelp
     using MonoMouse = Microsoft.Xna.Framework.Input.MouseState;
     using MonoKeys = Microsoft.Xna.Framework.Input.Keys; //typedef
     
-    class EditorInputSource : InputSource
+    public class EditorInputSource : InputSource
     {
 
         

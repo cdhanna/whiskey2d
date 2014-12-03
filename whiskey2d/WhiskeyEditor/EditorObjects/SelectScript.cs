@@ -50,6 +50,11 @@ namespace WhiskeyEditor.EditorObjects
                 Gob.Position = Gob.Selected.Bounds.Position - new Vector(5, 5);
                 Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(10, 10);
             }
+            else if (Gob.Unselect)
+            {
+                Gob.Unselect = false;
+                Gob.Sprite.Color = Color.Transparent;
+            }
 
         }
     }

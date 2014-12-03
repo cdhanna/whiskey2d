@@ -9,6 +9,6 @@ namespace Whiskey2D.Core
     {
 
         GameObject SelectedGob { get; set; }
-
+        void Exit();
     }
 }

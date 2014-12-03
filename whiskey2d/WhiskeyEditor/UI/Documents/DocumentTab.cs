@@ -60,6 +60,8 @@ namespace WhiskeyEditor.UI.Documents
 
         }
 
+
+
         private bool dirty = false;
         protected bool Dirty
         {
@@ -80,7 +82,14 @@ namespace WhiskeyEditor.UI.Documents
                
             }
         }
+
         
+
+        public override void Refresh()
+        {
+           // ContentPanel.Refresh();
+            base.Refresh();
+        }
 
         protected void addAction(WhiskeyAction action)
         {

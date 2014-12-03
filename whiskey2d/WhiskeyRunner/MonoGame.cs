@@ -44,11 +44,11 @@ namespace WhiskeyRunner
             gameMan = GameManager.getInstance();
 
             gameMan.Initialize(this, Content, GraphicsDevice,
-                DefaultInputManager.getInstance(),
-                DefaultInputSourceManager.getInstance(),
+                new DefaultInputManager(),
+                new DefaultInputSourceManager(),
                 DefaultLogManager.getInstance(),
                 new DefaultObjectManager(),
-                DefaultRenderManager.getInstance(),
+                new DefaultRenderManager(),
                 DefaultResourceManager.getInstance()
             );
             base.Initialize();

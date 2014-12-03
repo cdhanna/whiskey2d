@@ -9,7 +9,7 @@ namespace Whiskey2D.Core.LogCommands
     /// <summary>
     /// The LogMessage writes Designer messages to the log file
     /// </summary>
-    class LogMessage : LogCommand
+    public class LogMessage : LogCommand
     {
         private static LogMessage instance = new LogMessage();
 

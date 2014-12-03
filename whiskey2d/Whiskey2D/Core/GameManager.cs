@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using System.Reflection;
 using Whiskey2D.Core.Hud;
 using Whiskey2D.Core.Managers;
+using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.PourGames.TestImpl;
 using Whiskey2D.PourGames.Game2;
 using Whiskey2D.PourGames.Game3;
@@ -26,6 +27,7 @@ namespace Whiskey2D.Core
     {
 
         private static GameManager instance;
+        public static GameManager Instance { get { return instance; } }
         public static GameManager getInstance()
         {
             if (instance == null)
@@ -65,85 +67,99 @@ namespace Whiskey2D.Core
             }
         }
 
+        //Core pieces of MonoGame
+        public ContentManager Content { get; private set; }
+        public GraphicsDevice GraphicsDevice { get; private set; }
 
-        ContentManager Content;
-        GraphicsDevice Device;
+        //non static manager properties
+        public InputManager InputManager { get; protected set; }
+        public InputSourceManager InputSourceManager { get; protected set; }
+        public LogManager LogManager { get; protected set; }
+        public ObjectManager ObjectManager { get; protected set; }
+        public RenderManager RenderManager { get; protected set; }
+        public ResourceManager ResourceManager { get; protected set; }
+        public GameController GameController { get; protected set; }
+        public HudManager HudManager { get; protected set; }
 
-        GameController controller;
+         //static accessors
+        public static InputManager Input { get { return Instance.InputManager; } }
+        public static InputSourceManager InputSource { get { return Instance.InputSourceManager; } }
+        public static LogManager Log { get { return Instance.LogManager; } }
+        public static ObjectManager Objects { get { return Instance.ObjectManager; } }
+        public static RenderManager Renderer { get { return Instance.RenderManager; } }
+        public static ResourceManager Resources { get { return Instance.ResourceManager; } }
+        public static GameController Controller { get { return Instance.GameController; } }
 
-        RenderManager renMan;
-        ObjectManager objMan = new Managers.Impl.DefaultObjectManager();
-        ResourceManager resMan;
-        InputManager inMan;
-        LogManager logMan;
-        InputSourceManager sourceMan;
-        HudManager hudMan;
-
-        int width;
-        int height;
-
-        Starter starter;
-
-
-        //MANAGER PROPERTIES : TODO not all should be public
-        public static InputManager Input { get { return getInstance().inMan; } }
-        public static InputSourceManager InputSource { get { return getInstance().sourceMan; } }
-        public static LogManager Log { get { return getInstance().logMan; } }
-        public static ObjectManager Objects { get { return getInstance().objMan; } }
-        public static RenderManager Renderer { get { return getInstance().renMan; } }
-        public static ResourceManager Resources { get { return getInstance().resMan; } }
-        public static GameController Controller { get { return getInstance().controller; } }
-
+        /// <summary>
+        /// Create singleton instance.
+        /// Auto sets up basic managers
+        /// </summary>
         protected GameManager()
         {
             settings = new PropertiesFiles(".gameprops");
-            this.objMan.init();
             instance = this;
 
+            //create all default managers
+            ObjectManager = new DefaultObjectManager();
+            RenderManager = new DefaultRenderManager();
+            InputManager = new DefaultInputManager();
+            InputSourceManager = new DefaultInputSourceManager();
+            LogManager = DefaultLogManager.getInstance();
+            ResourceManager = DefaultResourceManager.getInstance();
+            HudManager = HudManager.getInstance();
+
+            LogManager.init();
+            ObjectManager.init();
+            InputManager.init();
+
+            //HudManager.init();
 
         }
 
         /// <summary>
-        /// The width of the window
+        /// The width of the window, or -1 if the graphics device is null
         /// </summary>
-        public int ScreenWidth { get { return width; } }
+        public int ScreenWidth { get { return (GraphicsDevice!=null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferWidth : -1; } }
 
         /// <summary>
-        /// The height of the window
+        /// The height of the window, or -1 if the graphics device is null
         /// </summary>
-        public int ScreenHeight { get { return height; } }
+        public int ScreenHeight { get { return (GraphicsDevice != null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferHeight : -1; } }
 
         public TimeSpan TargetElapsedTime { get; set; }
 
-        ///// <summary>
-        ///// Launch the game
-        ///// </summary>
-        //public void go()
-        //{
-        //    this.Run();
-        //}
+        /// <summary>
+        /// Shuts down all managers
+        /// </summary>
+        public virtual void close()
+        {
+            if (RenderManager != null)
+                RenderManager.close();
+            if (ObjectManager != null)
+                ObjectManager.close();
+            if (ResourceManager != null)
+                ResourceManager.close();
+            if (InputManager != null)
+                InputManager.close();
+            if (LogManager != null)
+                LogManager.close();
+        }
 
         /// <summary>
         /// Closes all managers, and re-inits them
         /// </summary>
         public virtual void reset()
         {
-            renMan.close();
-            objMan.close();
-            resMan.close();
-            inMan.close();
-            logMan.close();
+            close();
 
             Rand.getInstance().reSeed();
 
-            sourceMan.getSource().init();
-
-            renMan.init(Device);
-            objMan.init();
-            resMan.init(Content);
-            inMan.init();
-            logMan.init();
-
+            InputSourceManager.getSource().init();
+            RenderManager.init(GraphicsDevice);
+            ObjectManager.init();
+            ResourceManager.init(Content);
+            InputManager.init();
+            LogManager.init();
 
             //RUN THE START CODE
             if (CurrentScene != null)
@@ -152,7 +168,8 @@ namespace Whiskey2D.Core
 
         private void start()
         {
-            GameManager.Objects.setState(State.deserialize(StartScenePath));
+            if (StartScene != null)
+                GameManager.Objects.setState(State.deserialize(StartScenePath));
             CurrentScene = StartScene;
         }
 
@@ -164,8 +181,8 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual void Initialize(
             GameController controller,
-            ContentManager Content,
-            GraphicsDevice Device,
+            ContentManager content,
+            GraphicsDevice graphicsDevice,
             InputManager inputMan,
             InputSourceManager inputSourceMan,
             LogManager logger,
@@ -174,61 +191,30 @@ namespace Whiskey2D.Core
             ResourceManager resourceMan
             )
         {
-            this.Device = Device;
-            this.Content = Content;
+            //set the basic components
+            GraphicsDevice = graphicsDevice;
+            Content = content;
+            GameController = controller;
 
-            this.controller = controller;
-
-            Content.RootDirectory = "media";
-
-
-            width = Device.PresentationParameters.BackBufferWidth;
-            height = Device.PresentationParameters.BackBufferHeight;
-
-            inMan = inputMan;
-            sourceMan = inputSourceMan;
-            logMan = logger;
-
-
-            if (objMan != null)
-            {
-                objMan.close();
-            }
-            objMan = objectMan;
+            //close any previous managers
+            close();
             
-            
-            
-            renMan = renderMan;
-            resMan = resourceMan;
-            //inMan = InputManager.getInstance();
-           
-            
-            hudMan = HudManager.getInstance();
-           // hudMan.DebugColor = Color.White;
+            //assign new managers
+            InputManager = inputMan;
+            InputSourceManager = inputSourceMan;
+            LogManager = logger;
+            ObjectManager = objectMan;
+            RenderManager = renderMan;
+            ResourceManager = resourceMan;
+            HudManager = HudManager.getInstance();
 
-            //find gameData assmebly
-            //Type[] allGameTypes = gameAssmebly.GetTypes();
-            //foreach (Type gt in allGameTypes)
-            //{
-            //    if (gt.IsSubclassOf(typeof(Starter)))
-            //    {
-            //        starter = (Starter)Activator.CreateInstance(gt);
-            //    }
-            //}
-        
-            
-            
-           // starter = new Game3Launch();
-
-           // starter = new PourGames.TestImpl.Launch();
-
-
-            renMan.init(Device);
-            objMan.init();
-            resMan.init(Content);
-            inMan.init();
-            logMan.init();
-            hudMan.init();
+            //initialize
+            RenderManager.init(graphicsDevice);
+            ObjectManager.init();
+            ResourceManager.init(content);
+            InputManager.init();
+            LogManager.init();
+            HudManager.init();
         }
 
         /// <summary>
@@ -237,9 +223,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual void LoadContent()
         {
-
             HudManager.getInstance().DebugColor = Color.RoyalBlue;
-
             start();
         }
 
@@ -249,21 +233,21 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual void UnloadContent()
         {
-            renMan.close();
-            objMan.close();
-            resMan.close();
-            inMan.close();
-            logMan.close();
-            hudMan.close();
-            Console.WriteLine("CLOSING");
+            LogManager.debug("SHUTTING DOWN MANAGERS");
+            RenderManager.close();
+            ObjectManager.close();
+            ResourceManager.close();
+            InputManager.close();
+            HudManager.close();
+            LogManager.debug("CLOSING");
+            LogManager.close();
 
         }
 
         public virtual void Exit()
         {
             UnloadContent();
-            //TODO signal for close
-            //Exit();
+            GameController.Exit();
         }
 
         /// <summary>
@@ -275,14 +259,14 @@ namespace Whiskey2D.Core
         {
             
 
-            hudMan.update();
+            HudManager.update();
 
-            if (!hudMan.ConsoleMode)
+            if (!HudManager.ConsoleMode)
             {
-                inMan.update();
-                sourceMan.update();
-                logMan.update();
-                objMan.updateAll();
+                InputManager.update();
+                InputSourceManager.update();
+                LogManager.update();
+                ObjectManager.updateAll();
             }
             
         }
@@ -293,10 +277,10 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            Device.Clear(Color.DarkOrange);
+            GraphicsDevice.Clear(Color.Tomato);
 
-            this.renMan.render();
-            this.renMan.renderHud();
+            this.RenderManager.render();
+            this.RenderManager.renderHud();
         }
     }
 }

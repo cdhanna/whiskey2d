@@ -16,20 +16,20 @@ namespace Whiskey2D.Core.Managers.Impl
     /// </summary>
     public class DefaultRenderManager : RenderManager
     {
-        private static DefaultRenderManager instance;
+        //private static DefaultRenderManager instance;
 
-        /// <summary>
-        /// Retrieves the RenderManager
-        /// </summary>
-        /// <returns>The RenderManager</returns>
-        public static DefaultRenderManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DefaultRenderManager();
-            }
-            return instance;
-        }
+        ///// <summary>
+        ///// Retrieves the RenderManager
+        ///// </summary>
+        ///// <returns>The RenderManager</returns>
+        //public static DefaultRenderManager getInstance()
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = new DefaultRenderManager();
+        //    }
+        //    return instance;
+        //}
         
       
         private GraphicsDevice graphicsDevice;
@@ -38,7 +38,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <summary>
         /// Creates a new RenderManager
         /// </summary>
-        private DefaultRenderManager()
+        public DefaultRenderManager()
         {
             
         }
@@ -50,7 +50,8 @@ namespace Whiskey2D.Core.Managers.Impl
         public void init(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
-            this.spriteBatch = new SpriteBatch(this.graphicsDevice);
+            if (graphicsDevice != null)
+                this.spriteBatch = new SpriteBatch(this.graphicsDevice);
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ namespace WhiskeyEditor.MonoHelp
         {
             this.GraphicsDevice = graphicsDevice;
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            
         }
 
         /// <summary>
@@ -35,15 +36,32 @@ namespace WhiskeyEditor.MonoHelp
         /// </summary>
         public void close()
         {
-
+            this.spriteBatch.Dispose();
         }
 
         /// <summary>
         /// Renders the Game
         /// </summary>
-        public void render(List<InstanceDescriptor> descs)
+        public void render(List<GameObject> descs)
         {
            
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+
+            foreach (GameObject gob in descs)
+            {
+                Sprite spr = gob.Sprite;
+                if (spr != null)
+                {
+                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+                }
+            }
+
+            spriteBatch.End();
+        }
+
+        public void render(List<InstanceDescriptor> descs)
+        {
+
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
             foreach (InstanceDescriptor gob in descs)
@@ -51,9 +69,7 @@ namespace WhiskeyEditor.MonoHelp
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-
-                    
-                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
                 }
             }
 
