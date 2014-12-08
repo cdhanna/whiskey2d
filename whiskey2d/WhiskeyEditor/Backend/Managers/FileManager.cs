@@ -31,7 +31,8 @@ namespace WhiskeyEditor.Backend.Managers
         {
             fileDescs = new List<FileDescriptor>();
             fileDescMap = new Dictionary<string, FileDescriptor>();
-            createFileWatcher();
+            fileWatcherHandler = new FileSystemEventHandler(onFileChanged);
+            
         }
 
         #region events
@@ -63,13 +64,21 @@ namespace WhiskeyEditor.Backend.Managers
 
         public List<FileDescriptor> FileDescriptors { get { return fileDescs; } }
 
+        private FileSystemEventHandler fileWatcherHandler;
 
-        private void createFileWatcher()
+        public void refreshFileWatch()
         {
+
+            if (fileWatcher != null)
+            {
+                fileWatcher.Changed -= fileWatcherHandler;
+                fileWatcher = null;
+            }
+
             fileWatcher = new FileSystemWatcher(ProjectManager.Instance.ActiveProject.PathSrc);
             fileWatcher.Filter = "*.cs";
             fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
-            fileWatcher.Changed += new FileSystemEventHandler(onFileChanged);
+            fileWatcher.Changed += fileWatcherHandler;
             fileWatcher.EnableRaisingEvents = true;
         }
 

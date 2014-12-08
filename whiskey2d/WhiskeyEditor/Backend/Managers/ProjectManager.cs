@@ -61,6 +61,7 @@ namespace WhiskeyEditor.Backend.Managers
                // InstanceManager.Instance.clear();
                 Project old = active;
                 active = value;
+                FileManager.Instance.refreshFileWatch();
                 Settings.CurrentProject = active.PathBase;
                 active.loadGameData();
                 ProjectChanged(this, new ProjectChangedEventArgs(old, active));
