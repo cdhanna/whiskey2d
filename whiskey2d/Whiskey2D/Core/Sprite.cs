@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Whiskey2D.Core.Managers;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.Core
@@ -22,9 +23,27 @@ namespace Whiskey2D.Core
         [NonSerialized]
         private Texture2D image;
         
+
+        [NonSerialized]
+        private RenderManager renderer;
+
+        public RenderManager getRenderer()
+        {
+            if (renderer == null){
+                renderer = GameManager.Renderer;
+            }
+
+            return renderer;
+        }
+        public void setRender(RenderManager renderer)
+        {
+            this.renderer = renderer;
+        }
+
+
         public Texture2D getImage()
         {
-            if (GameManager.Renderer == null)
+            if (getRenderer() == null)
             {
                 return null;
             }
@@ -34,7 +53,7 @@ namespace Whiskey2D.Core
                 if (imagePath.Equals(PIXEL))
                 {
                     
-                    image = GameManager.Renderer.getPixel();
+                    image = getRenderer().getPixel();
                 }
                 else
                 {
@@ -127,6 +146,32 @@ namespace Whiskey2D.Core
             Rotation = 0;
         }
 
+        public Sprite(RenderManager renderer)
+        {
+            setRender(renderer);
+
+            this.imagePath = PIXEL;
+            image = getImage();
+            Scale = Vector.One;
+            Offset = Vector.Zero;
+            Depth = .5f;
+            Color = Microsoft.Xna.Framework.Color.White;
+            Rotation = 0;
+        }
+
+        public Sprite(RenderManager renderer, Sprite other)
+        {
+            setRender(renderer);
+
+            this.imagePath = other.ImagePath;
+            image = other.getImage();
+            Scale = other.Scale;
+            Offset = other.Offset;
+            Depth = other.Depth;
+            Color = other.Color;
+            Rotation = other.Rotation;
+        }
+
         public Sprite(string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
         {
             this.imagePath = imagePath;
@@ -138,6 +183,17 @@ namespace Whiskey2D.Core
             Rotation = rotation;
         }
 
+        public Sprite(RenderManager renderer, string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
+        {
+            setRender(renderer);
+            this.imagePath = imagePath;
+            image = getImage();
+            Scale = scale;
+            Offset = offset;
+            Depth = depth;
+            Color = color;
+            Rotation = rotation;
+        }
 
         /// <summary>
         /// Centers the offset of a sprite. 

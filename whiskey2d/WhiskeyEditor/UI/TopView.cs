@@ -10,6 +10,8 @@ using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Output;
 using WhiskeyEditor.UI.Documents;
+using WhiskeyEditor.UI.Properties;
+using WhiskeyEditor.UI.Properties.Editors;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Menu;
 using WhiskeyEditor.UI.Toolbar;
@@ -24,11 +26,12 @@ namespace WhiskeyEditor.UI
         private OutputView outputView;
         private LibraryView libraryView;
         private DocumentView docView;
-
+        private PropertyView propView;
 
         private DockControl outputViewDock;
         private DockControl libraryViewDock;
         private DockControl docViewDock;
+        private DockControl propViewDock;
 
         private WhiskeyMenu menu;
         private ToolBarStrip toolBar;
@@ -37,7 +40,7 @@ namespace WhiskeyEditor.UI
         public TopView()
         {
 
-            this.Size = new Size(600, 400);
+            this.Size = new Size(1440, 900);
             Text = ProjectManager.Instance.ActiveProject.Name;
             ProjectManager.Instance.ProjectChanged += (s, a) =>
             {
@@ -74,12 +77,14 @@ namespace WhiskeyEditor.UI
                     return libraryViewDock;
                 case UIManager.VIEW_NAME_DOCUMENTS:
                     return docViewDock;
+                case UIManager.VIEW_NAME_PROPERTIES:
+                    return propViewDock;
                 default:
                     throw new WhiskeyException("Dockable : " + name + " could not be found");
             }
         }
 
-        
+
 
         private void configureControls()
         {
@@ -92,7 +97,7 @@ namespace WhiskeyEditor.UI
             outputViewDock.DockedChanged += dockChangedHandler;
             libraryViewDock.DockedChanged += dockChangedHandler;
             docViewDock.DockedChanged += dockChangedHandler;
-
+            propViewDock.DockedChanged += dockChangedHandler;
 
             menu.ViewToggled += (s, args) =>
             {
@@ -125,7 +130,7 @@ namespace WhiskeyEditor.UI
             //            break;
             //    }
 
-                
+
             //};
 
             this.KeyPreview = true;
@@ -143,6 +148,21 @@ namespace WhiskeyEditor.UI
                 docView.openDocument(args.Selected.FilePath);
             };
 
+            libraryView.SelectionChanged += (s, args) =>
+            {
+                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
+                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+
+            };
+
+            docView.PropertyChangeRequested += (s, args) =>
+            {
+
+                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(args.PropertyObject));
+            };
+
+
+           
         }
 
         private void initControls()
@@ -153,9 +173,13 @@ namespace WhiskeyEditor.UI
             mainPanel = new Panel();
             mainPanel.Padding = new Padding(0, menu.Height + toolBar.Height, 0, statBar.Height);
 
-           
 
 
+            propView = new PropertyView();
+            propView.Name = "Properties";
+            propViewDock = new DockControl(mainPanel, DockStyle.Right);
+            propViewDock.Name = UIManager.VIEW_NAME_PROPERTIES;
+            propViewDock.PrimaryView = propView;
 
             outputView = new OutputView();
             outputView.Name = "Output";
@@ -194,9 +218,10 @@ namespace WhiskeyEditor.UI
 
             docViewDock.dock();
             libraryViewDock.dock();
+            propViewDock.dock();
             outputViewDock.dock();
-           
-            
+
+            propViewDock.Size = new Size(300, 100);
             //outputViewDock.dock(DockStyle.Bottom);
 
         }

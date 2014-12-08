@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using WhiskeyEditor.UI.Assets;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend.Actions
 {
@@ -19,6 +20,7 @@ namespace WhiskeyEditor.Backend.Actions
         protected string text;
         protected Image image;
         protected NoArgFunction effect;
+        private float progress;
 
         public AbstractAction(string text)
             : this(text, null) { }
@@ -34,12 +36,14 @@ namespace WhiskeyEditor.Backend.Actions
             this.text = text;
             this.image = image;
             this.effect = effect;
+            this.progress = 0;
         }
-        
-     
+
+        public event ActionChangedEventHandler Changed = new ActionChangedEventHandler((s, a) => { });
 
         public string Name { get { return text; } }
         public Image Image { get { return image; } }
+        public float Progress { get { return progress; } set { progress = value; Changed(this, new ActionChangedEventArgs(this)); } }
         public NoArgFunction Effect { get { return effect; } }
 
         /// <summary>
@@ -47,19 +51,8 @@ namespace WhiskeyEditor.Backend.Actions
         /// </summary>
         protected abstract void run();
 
-        /// <summary>
-        /// Generate a button from the Action. The button's text, image, and click event
-        /// will all be set to correspond to this Action.
-        /// </summary>
-        /// <returns>a new button created from the Action</returns>
-        public Button generateButton()
-        {
-            Button button = new Button();
-            button.Text = Name;
-            button.Image = Image;
-            button.Click += new EventHandler((s, a) => { Effect(); });
-            return button;
-        }
+        
+
 
         public C generateControl<C>() 
         {
@@ -79,13 +72,8 @@ namespace WhiskeyEditor.Backend.Actions
             
             try
             {
-                //System.Reflection.MethodInfo m = control.GetType().GetMethod("Invoke");
-                //System.Reflection.MemberInfo[] mi = control.GetType().GetMember("Invoke");
                 controlType.GetEvent("Click").AddEventHandler(control, new EventHandler((s, a) => {
-                    //System.Reflection.MethodInfo[] ma = control.GetType().GetMethods();
-                    //m = controlType.GetMethod("Invoke");
-                    effect();
-                    //controlType.GetMethod("Invoke").Invoke(control, new object[] { effect }); 
+                    ActionManager.Instance.run(this);
                 }));
             }
             catch (Exception e)

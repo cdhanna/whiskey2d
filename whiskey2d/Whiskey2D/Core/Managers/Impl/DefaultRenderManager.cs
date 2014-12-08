@@ -123,7 +123,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns></returns>
         public Texture2D getPixel()
         {
-            if (pixel == null)
+            if (pixel == null && graphicsDevice != null)
             {
                 pixel = new Texture2D(this.graphicsDevice, 1, 1, false, SurfaceFormat.Color);
                 pixel.SetData<XnaColor>(new XnaColor[] { XnaColor.White });

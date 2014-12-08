@@ -49,6 +49,7 @@ namespace WhiskeyEditor.UI.Menu
         private ToolStripMenuItem viewOutput;
         private ToolStripMenuItem viewLibrary;
         private ToolStripMenuItem viewDocuments;
+        private ToolStripMenuItem viewProps;
         #endregion
 
         public WhiskeyMenu()
@@ -83,6 +84,8 @@ namespace WhiskeyEditor.UI.Menu
                     return viewLibrary;
                 case UIManager.VIEW_NAME_DOCUMENTS:
                     return viewDocuments;
+                case UIManager.VIEW_NAME_PROPERTIES:
+                    return viewProps;
                 default:
                     throw new WhiskeyException("Menu Item of name : " + name + " could not be found");
             }
@@ -128,6 +131,11 @@ namespace WhiskeyEditor.UI.Menu
             viewDocuments.Click += (s, a) =>
             {
                 fireViewToggleEvt(new ViewChangedEventArgs(UIManager.VIEW_NAME_DOCUMENTS));
+            };
+
+            viewProps.Click += (s, a) =>
+            {
+                fireViewToggleEvt(new ViewChangedEventArgs(UIManager.VIEW_NAME_PROPERTIES));
             };
             #endregion
 
@@ -250,9 +258,11 @@ namespace WhiskeyEditor.UI.Menu
             viewOutput = new ToolStripMenuItem("Output");
             viewLibrary = new ToolStripMenuItem("Library");
             viewDocuments = new ToolStripMenuItem("Documents");
+            viewProps = new ToolStripMenuItem("Properties");
             viewItem = new ToolStripMenuItem("View", null,
                 viewOutput,
                 viewLibrary,
+                viewProps,
                 viewDocuments);
             
 

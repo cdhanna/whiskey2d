@@ -88,9 +88,10 @@ namespace WhiskeyEditor.Backend.Managers
 
             string statePath = ProjectManager.Instance.ActiveProject.PathBuildStates + Path.DirectorySeparatorChar + level.LevelName + ".state";
 
+            buildDomain.SetData("color", level.BackgroundColor);
             buildDomain.SetData("dllPath", dllPathIn);
             buildDomain.SetData("statePath", statePath);
-            buildDomain.SetData("iDescs", level.Descriptors);
+            buildDomain.SetData("iDescs", level.getInstances());
             buildDomain.SetData("scriptTable", ScriptManager.Instance.getScriptTable());
 
             try
@@ -103,7 +104,7 @@ namespace WhiskeyEditor.Backend.Managers
                         string appDllPath = (string)AppDomain.CurrentDomain.GetData("dllPath");
                         string appStateName = (string)AppDomain.CurrentDomain.GetData("stateName");
                         string appStatePath = (string)AppDomain.CurrentDomain.GetData("statePath");
-
+                        Color backGroundColor = (Color)AppDomain.CurrentDomain.GetData("color");
                         List<InstanceDescriptor> appIDescs = (List<InstanceDescriptor>)AppDomain.CurrentDomain.GetData("iDescs");
                         Dictionary<String, ScriptDescriptor> appScriptTable = (Dictionary<String, ScriptDescriptor>)AppDomain.CurrentDomain.GetData("scriptTable");
 
@@ -128,7 +129,7 @@ namespace WhiskeyEditor.Backend.Managers
                                 PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
                                 if (propInfo.SetMethod != null)
                                 {
-                                    propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).value });
+                                    propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).Value });
                                 }
                             }
 
@@ -149,6 +150,7 @@ namespace WhiskeyEditor.Backend.Managers
                         }
                         State state = new State();
                         state.GameObjects = lGobs;
+                        state.BackgroundColor = backGroundColor;
                         state.Name = appStateName;
                         string filename = State.serialize(
                                             state,

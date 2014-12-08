@@ -20,7 +20,7 @@ namespace WhiskeyEditor.UI.Documents.Actions
 
         protected override void run()
         {
-            tab.save();
+            tab.save(this);
         }
     }
 }

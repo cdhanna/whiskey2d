@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using WhiskeyEditor.Backend.Managers;
-using Whiskey2D.Core;
+//using Whiskey2D.Core;
 using System.CodeDom.Compiler;
 using WhiskeyEditor.UI;
 using System.Windows.Forms;
 using System.Threading;
+using System.Dynamic;
+using WhiskeyEditor.UI.Properties;
+using System.Drawing;
+using System.ComponentModel;
+using Whiskey2D.Core;
+using WhiskeyEditor.UI.Properties.Converters;
+using WhiskeyEditor.UI.Properties.TypeConverters;
 
 namespace WhiskeyEditor.Backend
 {
@@ -16,20 +25,76 @@ namespace WhiskeyEditor.Backend
     {
 
         
+       
+
+        class House
+        {
+            public System.Drawing.Color Color { get; set; }
+        }
 
         [STAThread]
         public static void Main()
         {
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(InstanceDescriptor), new TypeConverterAttribute(typeof(WhiskeyInstanceTypeConverter)));
+            
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color),
+                new TypeConverterAttribute(typeof(StructTypeConverter<Whiskey2D.Core.Color>)),
+                new EditorAttribute(typeof(ColorPicker), typeof(System.Drawing.Design.UITypeEditor)));
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector), new TypeConverterAttribute(typeof(StructTypeConverter<Vector>)));
+           // System.ComponentModel.TypeDescriptor.AddAttributes(typeof(WhiskeyPropertyContainer), new TypeConverterAttribute(typeof(Whiskey)));
+            //System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color), new TypeConverterAttribute(typeof(ColorTypeConverter)));
 
-       
+          //  Application.EnableVisualStyles();
+          //  Application.SetCompatibleTextRenderingDefault(false);
 
-            //set active project
-          //  Project proj = ProjectManager.Instance.createNewProject("RedoProject", "RedoProjet");
-          //  ProjectManager.Instance.ActiveProject = proj;
-          //  ProjectManager.Instance.ActiveProject.loadGameData();
-        //    CompileManager.Instance.addListener<CompilerErrorEvent>(compilerErrorHandler);
-           // CompileManager.Instance.startBackBuild();
-           // string cp = Settings.CurrentProject;
+
+          //  Form f = new Form();
+
+          //  PropertyDescriptor pd = new PropertyDescriptor(false, "Var", new RealType(typeof(Whiskey2D.Core.Color), Whiskey2D.Core.Color.Red));
+          //  PropertyDescriptor pd2 = new PropertyDescriptor(true, "Prim", new RealType(typeof(int), 32));
+          //  PropertyDescriptor pd3 = new PropertyDescriptor("Boo", new RealType(typeof(Vector), Vector.One));
+
+          // // TypeDescriptor t = new TypeDescriptor("GOBMAN");
+
+          ////  PropertyDescriptor pd4 = new PropertyDescriptor("Inst", new InstanceType(t, new InstanceDescriptor(t)));
+
+
+          //  //PropertyDescriptor pd2 = new PropertyDescriptor("Foo", new RealType(typeof(Vector), new Vector(32, 64)));
+          //  List<PropertyDescriptor> pdList = new List<PropertyDescriptor>();
+          //  pdList.Add(pd);
+          //  pdList.Add(pd2);
+          //  pdList.Add(pd3);
+          ////  pdList.Add(pd4);
+
+            
+
+         
+            
+            
+          //  PropertyDescriptorEditor pEditor = new PropertyDescriptorEditor();
+          //  pEditor.PropertyList = pdList;
+          //  //PropertyGrid pg = new PropertyGrid();
+          //  //pg.PropertySort = PropertySort.NoSort;
+          //  //pg.ToolbarVisible = false;
+          //  //pg.PropertyValueChanged += (s, a) =>
+          //  //{
+          //  //    pg.Refresh();
+          //  //};
+          //  //PropertyAdapter ap = new PropertyAdapter(t.getPropertySetClone(), pg);
+
+
+          //  //pg.SelectedObject = ap;
+
+          //  pEditor.Dock = DockStyle.Fill;
+          //  f.Controls.Add(pEditor);
+
+
+
+          //  Application.Run(f);
+
+
+
 
             try
             {
@@ -44,74 +109,6 @@ namespace WhiskeyEditor.Backend
 
             return;
             
-            //create a type
-            TypeDescriptor t2 = new TypeDescriptor("TestMeAgain");
-
-            t2.addPropertyDescriptor(new PropertyDescriptor("Injected", new RealType(typeof(String), "GoodBye")));
-
-            //set default value for sprite
-            Sprite spr = (Sprite)t2.getTypeValOfName("Sprite").value;
-            spr.Scale = new Vector(100, 100);
-            spr.Color = Color.Turquoise;
-
-            //create a script
-            ScriptDescriptor s = new ScriptDescriptor("RunMe", t2.Name);
-            s.ensureFileExists();
-
-
-            //create an instance
-            //InstanceDescriptor t2Instance = new InstanceDescriptor(t2);
-            //t2Instance.getTypeValOfName("X").value = (Single)100;
-
-            //t2.addScript(s.Name);
-
-            State state = State.deserialize("testInstData");
-            //InstanceManager.Instance.setState(state);
-
-            CompileManager.Instance.Compiled += (sender, args) =>
-            {
-                foreach (CompilerError err in args.Errors)
-                {
-                    Console.WriteLine(err.ErrorText);
-                }
-            };
-
-            //State instState = InstanceManager.Instance.getState();
-            //State.serialize(instState, "testInstData.state");
-
-            //add the script to an instance
-            //t2Instance.addScript("RunMe");
-
-            //compile all sources
-           // string dllPath = CompileManager.Instance.compile();
-           // InstanceManager.Instance.convertToGobs(dllPath, "default");
-
-
-            //GameData data = FileManager.Instance.getGameData();
-            //GameData.serialize(data, "testdata.txt");
-            
-            //build exe
-           // ProjectManager.Instance.ActiveProject.buildExecutable();
-    
-
-            //setup UI for testing
-           
-            //Thread t = new Thread(() =>
-            //{
-
-
-            //    while (true)
-            //    {
-            //        Thread.Sleep(10);
-            //    }
-
-
-            //});
-            //t.Start();
-
-          
-
-
         }
 
         

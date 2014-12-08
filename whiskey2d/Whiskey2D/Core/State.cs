@@ -17,10 +17,12 @@ namespace Whiskey2D.Core
         public List<GameObject> GameObjects { get; set; }
 
         public string Name { get; set; }
+        public Color BackgroundColor { get; set; }
 
         public State()
         {
             GameObjects = new List<GameObject>();
+            BackgroundColor = Color.Orange;
             Name = "unnamed";
         }
 

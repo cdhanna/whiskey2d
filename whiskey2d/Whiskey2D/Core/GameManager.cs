@@ -27,7 +27,7 @@ namespace Whiskey2D.Core
     {
 
         private static GameManager instance;
-        public static GameManager Instance { get { return instance; } }
+        public static GameManager Instance { get { if (instance == null) instance = new GameManager(); return instance; } }
         public static GameManager getInstance()
         {
             if (instance == null)
@@ -67,6 +67,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        private Color BackgroundColor { get; set; }
+
+
         //Core pieces of MonoGame
         public ContentManager Content { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
@@ -98,7 +101,7 @@ namespace Whiskey2D.Core
         {
             settings = new PropertiesFiles(".gameprops");
             instance = this;
-
+            BackgroundColor = Color.SkyBlue;
             //create all default managers
             ObjectManager = new DefaultObjectManager();
             RenderManager = new DefaultRenderManager();
@@ -108,7 +111,7 @@ namespace Whiskey2D.Core
             ResourceManager = DefaultResourceManager.getInstance();
             HudManager = HudManager.getInstance();
 
-            LogManager.init();
+            //LogManager.init();
             ObjectManager.init();
             InputManager.init();
 
@@ -163,13 +166,21 @@ namespace Whiskey2D.Core
 
             //RUN THE START CODE
             if (CurrentScene != null)
-                GameManager.Objects.setState(State.deserialize(CurrentScenePath));
+            {
+                State RunningState = State.deserialize(CurrentScenePath);
+                BackgroundColor = RunningState.BackgroundColor;
+                GameManager.Objects.setState(RunningState);
+            }
         }
 
         private void start()
         {
             if (StartScene != null)
-                GameManager.Objects.setState(State.deserialize(StartScenePath));
+            {
+                State RunningState = State.deserialize(StartScenePath);
+                BackgroundColor = RunningState.BackgroundColor;
+                GameManager.Objects.setState(RunningState);
+            }
             CurrentScene = StartScene;
         }
 
@@ -241,7 +252,7 @@ namespace Whiskey2D.Core
             HudManager.close();
             LogManager.debug("CLOSING");
             LogManager.close();
-
+           
         }
 
         public virtual void Exit()
@@ -277,7 +288,8 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Tomato);
+            
+           GraphicsDevice.Clear(BackgroundColor);
 
             this.RenderManager.render();
             this.RenderManager.renderHud();

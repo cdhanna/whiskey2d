@@ -159,6 +159,16 @@ namespace WhiskeyEditor.UI.Dockable
                 undock();
             };
 
+            resizeStrip.MouseMove += (s, a) =>
+            {
+                if (resizeStrip.Dock == DockStyle.Top || resizeStrip.Dock == DockStyle.Bottom)
+                    Cursor.Current = Cursors.HSplit;
+                else Cursor.Current = Cursors.VSplit;
+            };
+            resizeStrip.MouseLeave += (s, a) =>
+            {
+                Cursor.Current = Cursors.Default;
+            };
 
             //resize control
             resizeStrip.MouseDown += (s, a) =>
@@ -194,9 +204,14 @@ namespace WhiskeyEditor.UI.Dockable
                                     Size = new Size(Width + xDelta, Height);
                                 }));
                             }
-                            else if (resizeStrip.Dock == DockStyle.Right)
+                            else if (resizeStrip.Dock == DockStyle.Left)
                             {
-                                throw new NotImplementedException("HELP");
+                                Invoke(new NoArgFunction(() =>
+                                {
+                                    int xDelta = Cursor.Position.X - resizeStrip.PointToScreen(resizeStrip.Location).X;// +Width - resizeStrip.Width;
+                                    Console.WriteLine(xDelta);
+                                     Size = new Size(Width - xDelta, Height);
+                                }));
                             }
                             else if (resizeStrip.Dock == DockStyle.Bottom)
                             {
@@ -209,7 +224,11 @@ namespace WhiskeyEditor.UI.Dockable
                         {
                             
                         }
+
+
                     }
+
+                    Invalidate();
                 });
 
 

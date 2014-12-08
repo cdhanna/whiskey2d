@@ -18,6 +18,9 @@ namespace WhiskeyEditor.UI.Documents
 
         private Dictionary<string, DocumentTab> tabMap;
 
+
+        public event PropertyChangeRequestEventHandler PropertyChangeRequested = new PropertyChangeRequestEventHandler( (s, a) => {});
+
         public DocumentView()
         {
             tabMap = new Dictionary<string, DocumentTab>();
@@ -52,6 +55,12 @@ namespace WhiskeyEditor.UI.Documents
                 DocumentTab dt = UIManager.Instance.getDocumentTabFor(this, UIManager.Instance.Files.lookUp(fileName));
                 //DocumentTab dt = new DocumentTab(title, this);
                 tabMap.Add(fileName, dt);
+
+                dt.PropertyChangeRequested += (s, a) =>
+                {
+                    PropertyChangeRequested(s, a);
+                };
+
                 dt.open();
                 dt.Refresh();
               //  dt.Font = new Font(Font, FontStyle.Bold);

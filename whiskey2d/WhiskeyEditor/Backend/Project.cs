@@ -67,6 +67,9 @@ namespace WhiskeyEditor.Backend
         public string FileBuildGamePropPath { get { return PathBuild + Path.DirectorySeparatorChar + ".gameprops"; } }
         public string FileBuildGameExePath { get { return PathBuild + Path.DirectorySeparatorChar + Name + ".exe"; } }
         public string FileBuildGameConfigPath { get { return FileBuildGameExePath + ".config"; } }
+        
+        public string FileGameDataLibrary { get { return PathLib + Path.DirectorySeparatorChar + "GameData.dll"; } }
+
 
         public string FileGameDataPath { get { return PathBase + Path.DirectorySeparatorChar + ".gamedata";  } }
 
@@ -257,6 +260,41 @@ namespace WhiskeyEditor.Backend
             Directory.CreateDirectory(PathBuildStates);
         }
 
+        public void testLevel(LevelDescriptor level)
+        {
+            testLevel(level, new DefaultProgressNotifier());
+        }
+        public void testLevel(LevelDescriptor level, ProgressNotifier pn)
+        {
+            string origStartScene = GameStartScene;
+            pn.Progress = .2f;
+
+            cleanProject();
+            pn.Progress = .3f;
+
+            DirectoryCopy(PathLib, PathBuildLib, true);
+            DirectoryCopy(PathMedia, PathBuildMedia, true);
+            CompileManager.Instance.compile();
+            pn.Progress = .6f;
+
+            string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level.Level);
+            GameStartScene = level.Name;
+
+            pn.Progress = .7f;
+
+            DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+            DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
+            File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
+            File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+            createGameSettings();
+
+            pn.Progress = .8f;
+            runGame();
+            pn.Progress = 1;
+
+            GameStartScene = origStartScene;
+        }
+
         /// <summary>
         /// Clean the project
         /// Then build the project into the build directory
@@ -270,13 +308,12 @@ namespace WhiskeyEditor.Backend
             
             //build states 
             
-            string dll = PathLib + Path.DirectorySeparatorChar + "GameData.dll";
-
+            
             //InstanceManager.Instance.convertToGobs(dll, "default");
 
             foreach (Level level in InstanceManager.Instance.Levels)
             {
-                string statePath = InstanceManager.Instance.convertToGobs(dll, level);
+                string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level);
                 GameStartScene = level.LevelName;
             }
 

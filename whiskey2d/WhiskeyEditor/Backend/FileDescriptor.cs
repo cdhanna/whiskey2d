@@ -35,6 +35,8 @@ namespace WhiskeyEditor.Backend
                 this.filePath = UIManager.Instance.normalizePath(value);
             }
         }
+
+
         public String Name
         {
             get
@@ -84,6 +86,7 @@ namespace WhiskeyEditor.Backend
             {
                 createFile();
             }
+            ProjectManager.Instance.ActiveProject.saveGameData();
         }
 
     }

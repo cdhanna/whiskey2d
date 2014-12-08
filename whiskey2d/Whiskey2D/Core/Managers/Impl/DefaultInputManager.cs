@@ -12,6 +12,7 @@ namespace Whiskey2D.Core.Managers.Impl
     /// <summary>
     /// Manages all input for the game. Only keyboard input is supported
     /// </summary>
+    [Serializable]
     public class DefaultInputManager : InputManager
     {
 
@@ -46,7 +47,13 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void init()
         {
-            sourceMan = GameManager.InputSource;
+            init(GameManager.InputSource);
+
+           
+        }
+        public void init(InputSourceManager source)
+        {
+            sourceMan = source;
 
             currentMouse = sourceMan.getSource().getMouseState();
             currentState = sourceMan.getSource().getAllKeysDown();

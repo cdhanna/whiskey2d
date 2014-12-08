@@ -9,6 +9,8 @@ namespace WhiskeyEditor.Backend
         private TypeDescriptor descr;
         private InstanceDescriptor instance;
 
+        public event EventHandler ValueChanged = new EventHandler((s, a) => { });
+
         //private Insta
         public InstanceType(TypeDescriptor descr, InstanceDescriptor instance)
         {
@@ -22,7 +24,7 @@ namespace WhiskeyEditor.Backend
             get { return this.descr.ClassName; }
         }
 
-        public object value
+        public object Value
         {
             get
             {
@@ -36,6 +38,7 @@ namespace WhiskeyEditor.Backend
                     if (newVal.TypeDescriptor.ClassName.Equals(TypeName))
                     {
                         this.instance = newVal;
+
                     }
                     else throw new WhiskeyException("Given Instance is of incorrect type: " + newVal.TypeDescriptor.ClassName + " versus " + TypeName);
                 }

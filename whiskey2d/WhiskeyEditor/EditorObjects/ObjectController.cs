@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
+using Whiskey2D.Core.Managers;
 using Microsoft.Xna.Framework;
 using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.EditorObjects
 {
+    [Serializable]
     public class ObjectController : EditorGameObject
     {
-        public GameObject Dragging { get; set; }
-        public GameObject Selected { get; set; }
+        public InstanceDescriptor Dragging { get; set; }
+        public InstanceDescriptor Selected { get; set; }
         public bool Unselect { get; set; }
         public Level CurrentLevel { get; set; }
     
 
-        public ObjectController()
+        public ObjectController(ObjectManager manager) : base(manager)
         {
             Sprite = new Sprite();
             Unselect = false;

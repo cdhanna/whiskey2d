@@ -10,8 +10,11 @@ namespace WhiskeyEditor.Backend
     {
 
         private Type type;
+
+        
         private object value;
 
+        
         public RealType(Type type, object value)
         {
 
@@ -26,13 +29,14 @@ namespace WhiskeyEditor.Backend
             this.value = value;
         }
 
+        public Type Type { get { return type; } }
 
         public string TypeName
         {
             get { return type.Name; }
         }
 
-        object TypeVal.value
+        object TypeVal.Value
         {
             get
             {
@@ -47,6 +51,8 @@ namespace WhiskeyEditor.Backend
                 else
                 {
                     this.value = value;
+                    if (ValueChanged != null)
+                        ValueChanged(this, new EventArgs());
                 }
             }
         }
@@ -54,7 +60,12 @@ namespace WhiskeyEditor.Backend
 
         public TypeVal clone()
         {
-            return new RealType(type, Nuclex.Cloning.ReflectionCloner.ShallowFieldClone(value) );
+            
+            object clone = Nuclex.Cloning.ReflectionCloner.DeepPropertyClone(value);
+            return new RealType(type, clone);
         }
+
+
+        public event EventHandler ValueChanged = new EventHandler( (s, a) => {});
     }
 }

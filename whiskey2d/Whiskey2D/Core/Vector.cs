@@ -23,6 +23,12 @@ namespace Whiskey2D.Core
         public float X { get { return x; } set { x = value; } }
         public float Y { get { return y; } set { y = value; } }
 
+        public override string ToString()
+        {
+            return X + ", " + Y;
+            //return base.ToString();
+        }
+
         public Vector(float v)
         {
            

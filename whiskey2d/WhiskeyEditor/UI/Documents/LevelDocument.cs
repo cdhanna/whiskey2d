@@ -10,32 +10,66 @@ using WhiskeyEditor.Backend;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.MonoHelp;
 using WhiskeyEditor.UI.Library;
+using WhiskeyEditor.UI.Documents.Actions;
 
 namespace WhiskeyEditor.UI.Documents
 {
+
+    /// <summary>
+    /// provides a document for levels
+    /// </summary>
     class LevelDocument : DocumentTab
     {
 
+        /// <summary>
+        /// A control that exposes graphics and the whiskey game engine
+        /// </summary>
         private WhiskeyControl whiskey;
 
+        /// <summary>
+        /// A handler for drag drop
+        /// </summary>
         private DragEventHandler dragEnterHandler;
         private DragEventHandler dragDropHandler;
 
-        private LevelDescriptor desc;
+        /// <summary>
+        /// The level descriptor
+        /// </summary>
+        private LevelDescriptor Descriptor { get; set; }
 
-        public LevelDocument(LevelDescriptor lDesc, DocumentView parent)
-            : base(lDesc.FilePath, parent)
+        public LevelDocument(LevelDescriptor levelDescriptor, DocumentView parent)
+            : base(levelDescriptor.FilePath, parent)
         {
-            Text = lDesc.Name;
-            desc = lDesc;
+            Text = levelDescriptor.Name;
+            Descriptor = levelDescriptor;
             initControls();
             addControls();
             
             whiskey.AllowDrop = true;
+
+            //whiskey.BecameDirty += (s, a) =>
+            //{
+            //    Dirty = true;
+            //};
+
+            whiskey.SelectionChanged += (s, a) =>
+            {
+                requestPropertyChange(a.SelectedObject);
+            };
+
+            whiskey.MouseUp += (s, a) =>
+            {
+                if (whiskey.SelectedGob != null)
+                {
+                    requestPropertyChange(whiskey.SelectedGob);
+                }
+            };
+
+
             dragEnterHandler = new DragEventHandler(dragEnter);
             dragDropHandler = new DragEventHandler(dragDrop);
-            
 
+            base.addAction(new PlayLevelAction(levelDescriptor));
         }
 
 
@@ -44,7 +78,10 @@ namespace WhiskeyEditor.UI.Documents
         private void initControls()
         {
             whiskey = new WhiskeyControl();
-            whiskey.Level = desc.Level;
+            whiskey.Load += (s, a) =>
+            {
+                whiskey.Level = Descriptor.Level;
+            };
         }
 
         private void addControls()
@@ -67,15 +104,24 @@ namespace WhiskeyEditor.UI.Documents
             {
                 TypeDescriptor tDesc = (TypeDescriptor)fDesc;
 
-                InstanceDescriptor inst = new InstanceDescriptor(tDesc);
-                inst.Sprite.Scale *= 50;
-                Point p = PointToClient(new Point(args.X, args.Y));
-                inst.Position = new Vector(p.X, p.Y);
-                inst.X = p.X;
-                inst.Y = p.Y;
-                desc.Level.Descriptors.Add(inst);
+                InstanceDescriptor inst = new InstanceDescriptor(tDesc, Descriptor.Level);
+                inst.Sprite = new Sprite(WhiskeyControl.Renderer, inst.Sprite);
+
+
+                //inst.Sprite.Scale *= 50;
+                Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
+                
+                inst.Position = new Vector(p.X, p.Y) - inst.Bounds.Size/2;
+
+                inst.X = inst.Position.X;
+                inst.Y = inst.Position.Y;
+                
+                //Descriptor.Level.Descriptors.Add(inst);
                 Dirty = true;
             }
+
+           // save(new DefaultProgressNotifier());
+
         }
 
         public override void Refresh()
@@ -84,10 +130,14 @@ namespace WhiskeyEditor.UI.Documents
             base.Refresh();
         }
 
-        public override void save()
+        public override void save(ProgressNotifier pn)
         {
-            State state = desc.Level.getInstanceLevelState();
-            State.serialize(state, desc.FilePath);
+            pn.Progress = .3f;
+            State state = Descriptor.Level.getInstanceLevelState();
+            pn.Progress = .9f;
+            
+            State.serialize(state, Descriptor.FilePath);
+            pn.Progress = 1;
             base.save();
         }
 

@@ -75,6 +75,7 @@ namespace Whiskey2D.Core
         /// <summary>
         /// The unique ID of the GameObject
         /// </summary>
+        [System.ComponentModel.ReadOnly(true)]
         public int ID
         {
             get

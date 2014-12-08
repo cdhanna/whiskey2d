@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend;
-
+using WhiskeyEditor.MonoHelp;
 
 namespace WhiskeyEditor.EditorObjects
 {
+    [Serializable]
     class SelectScript : Script<ObjectController>
     {
 
@@ -19,21 +20,21 @@ namespace WhiskeyEditor.EditorObjects
 
         public override void onUpdate()
         {
-            if (GameManager.Input.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
+            if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
                 Gob.Selected = null;
                 Gob.Sprite.Color = Color.Transparent;
                 //GameManager.Controller.SelectedGob = null;
-                List<InstanceDescriptor> objs = Gob.CurrentLevel.Descriptors;//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
+                List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
 
-                foreach (GameObject obj in objs)
+                foreach (InstanceDescriptor obj in objs)
                 {
-                    Vector v = GameManager.Input.getMousePosition();
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(GameManager.Input.getMousePosition()))
+                    Vector v = WhiskeyControl.InputManager.getMousePosition();
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
                     {
                         Gob.Selected = obj;
 
-                        GameManager.Controller.SelectedGob = obj;
+                        WhiskeyControl.Controller.SelectedGob = obj;
 
                         break;
                     }

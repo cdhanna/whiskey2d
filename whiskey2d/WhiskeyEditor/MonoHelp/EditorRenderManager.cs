@@ -13,7 +13,7 @@ namespace WhiskeyEditor.MonoHelp
 {
     using XnaColor = Microsoft.Xna.Framework.Color;
 
-    class EditorRenderManager
+    public class EditorRenderManager : RenderManager
     {
 
         public GraphicsDevice GraphicsDevice { get; private set; }
@@ -67,6 +67,7 @@ namespace WhiskeyEditor.MonoHelp
             foreach (InstanceDescriptor gob in descs)
             {
                 Sprite spr = gob.Sprite;
+                spr.setRender(this);
                 if (spr != null)
                 {
                     spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
@@ -100,5 +101,11 @@ namespace WhiskeyEditor.MonoHelp
         }
 
 
+
+
+        public void render()
+        {
+            //do nothing
+        }
     }
 }

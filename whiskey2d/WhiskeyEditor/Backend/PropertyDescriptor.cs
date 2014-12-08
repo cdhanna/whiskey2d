@@ -9,6 +9,8 @@ namespace WhiskeyEditor.Backend
     public delegate void PropertyAddedEventHandler(object sender, PropertyChangeEventArgs args);
     public delegate void PropertyRemovedEventHandler(object sender, PropertyChangeEventArgs args);
     public delegate void PropertyChangedEventHandler(object sender, PropertyChangeEventArgs args);
+    public delegate void PropertyEventHandler(object sender, PropertyChangeEventArgs args);
+
     public class PropertyChangeEventArgs : EventArgs
     {
         private PropertyDescriptor prop;
@@ -31,6 +33,9 @@ namespace WhiskeyEditor.Backend
         private TypeVal typeVal;
         private bool secure;
 
+        public event PropertyChangedEventHandler TypeValChanged = new PropertyChangedEventHandler((s, a) => { });
+        
+
         public PropertyDescriptor(string name, TypeVal typeVal)
             : this(false, name, typeVal)
         {
@@ -38,7 +43,7 @@ namespace WhiskeyEditor.Backend
 
         public PropertyDescriptor(bool secure, string name, TypeVal typeVal){
             this.name = name;
-            this.typeVal = typeVal;
+            this.TypeVal = typeVal;
             this.secure = secure;
         }
 
@@ -50,13 +55,31 @@ namespace WhiskeyEditor.Backend
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set
+            {
+                name = value;
+                if (TypeValChanged != null)
+                    TypeValChanged(this, new PropertyChangeEventArgs(Name, this));
+            }
+
         }
 
+      
         public TypeVal TypeVal
         {
             get { return typeVal; }
+            set
+            {
+              
+
+                typeVal = value;
+                
+                if (TypeValChanged != null)
+                    TypeValChanged(this, new PropertyChangeEventArgs(Name, this));
+            }
         }
+
+       
 
         public PropertyDescriptor clone()
         {

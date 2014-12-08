@@ -16,6 +16,10 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly string FILE_ICON_SAVE = PATH_ASSETS + "saveIcon.png";
         public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "playIcon.png";
         public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "compileIcon.png";
+        public static readonly string FILE_ICON_PLUS = PATH_ASSETS + "plus.png";
+        public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
+
+
 
         public static readonly Image ICON_FILE;
         public static readonly Image ICON_FLDR;
@@ -23,6 +27,8 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly Image ICON_SAVE;
         public static readonly Image ICON_PLAY;
         public static readonly Image ICON_COMPILE;
+        public static readonly Image ICON_PLUS;
+        public static readonly Image ICON_MINUS;
 
         static AssetManager()
         {
@@ -32,6 +38,8 @@ namespace WhiskeyEditor.UI.Assets
             ICON_SAVE = loadImage(FILE_ICON_SAVE);
             ICON_PLAY = loadImage(FILE_ICON_PLAY);
             ICON_COMPILE = loadImage(FILE_ICON_COMPILE);
+            ICON_PLUS = loadImage(FILE_ICON_PLUS);
+            ICON_MINUS = loadImage(FILE_ICON_MINUS);
         }
 
         public static Image loadImage(string path)

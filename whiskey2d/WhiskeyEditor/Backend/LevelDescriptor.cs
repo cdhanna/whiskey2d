@@ -7,11 +7,30 @@ using WhiskeyEditor.Backend.Managers;
 using System.IO;
 using Whiskey2D.Core;
 
+using System.Reflection;
+
 namespace WhiskeyEditor.Backend
 {
+
+
     [Serializable]
-    class LevelDescriptor : FileDescriptor
+    public class LevelDescriptor : FileDescriptor
     {
+
+        private List<PropertyDescriptor> propDescs = new List<PropertyDescriptor>();
+
+        private Color color;
+        public Color Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                Level.BackgroundColor = color;
+                ProjectManager.Instance.ActiveProject.saveGameData();
+            }
+        }
+
         public Level Level { get; private set; }
         //private State state;
 
@@ -21,14 +40,32 @@ namespace WhiskeyEditor.Backend
             : base(ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + name + ".state", name)
         {
             Level = new Level(name);
+            Color = Level.BackgroundColor;
+           
+           
 
             FileManager.Instance.addFileDescriptor(this);
         }
 
+        private void addPropertyDescriptor(PropertyDescriptor prop)
+        {
+            propDescs.Add(prop);
+        }
+
+        public List<PropertyDescriptor> getPropertySet()
+        {
+            return propDescs;
+        }
+        
 
         public override void inspectFile()
         {
             Level.setInstanceLevelState(State.deserialize(FilePath));
+            
+            //colorProperty.TypeVal.Value = Level.BackgroundColor;
+            Level.BackgroundColor = Color;
+            //State.serialize(Level.getInstanceLevelState(), FilePath);
+
             //state = State.deserialize(FilePath);
         }
 

@@ -90,9 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\Actions\AbstractAction.cs" />
-    <Compile Include="Backend\Actions\Action.cs" />
+    <Compile Include="Backend\Actions\WhiskeyAction.cs" />
     <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
     <Compile Include="Backend\Actions\Impl\PlayAction.cs" />
+    <Compile Include="Backend\Expando.cs" />
     <Compile Include="Backend\Level.cs" />
     <Compile Include="Backend\Managers\ActionManager.cs" />
     <Compile Include="Backend\CodeDescriptor.cs" />
@@ -105,11 +106,14 @@
     <Compile Include="Backend\Managers\FileManager.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
     <Compile Include="Backend\Managers\ScriptManager.cs" />
+    <Compile Include="Backend\ProgressNotifier.cs" />
+    <Compile Include="Backend\PropertyContainer.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />
     <Compile Include="Backend\TestBack.cs" />
     <Compile Include="Backend\TypeDescriptor.cs" />
+    <Compile Include="Backend\TypeNameBank.cs" />
     <Compile Include="Backend\TypeVal.cs" />
     <Compile Include="Backend\WhiskeyException.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
@@ -141,10 +145,13 @@
     <Compile Include="UI\Dockable\DockControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\Actions\PlayLevelAction.cs" />
     <Compile Include="UI\Documents\Actions\SaveAction.cs" />
+    <Compile Include="UI\Documents\CodeCompletionHandler.cs" />
     <Compile Include="UI\Documents\CodeDocument.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\CodeProvider.cs" />
     <Compile Include="UI\Documents\DocumentTab.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -167,7 +174,49 @@
     <Compile Include="UI\Output\OutputView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Properties\ColorPicker.cs" />
+    <Compile Include="UI\Properties\Converters\ColorConverter.cs" />
+    <Compile Include="UI\Properties\Converters\ColorTypeConverter.cs" />
+    <Compile Include="UI\Properties\Converters\Converter.cs" />
+    <Compile Include="UI\Properties\Converters\ConvertManager.cs" />
+    <Compile Include="UI\Properties\Converters\VectorConverter.cs" />
+    <Compile Include="UI\Properties\Dictionary\DictionaryPropertyDescriptor.cs" />
+    <Compile Include="UI\Properties\Dictionary\DictionaryPropertyGridAdapter.cs" />
+    <Compile Include="UI\Properties\Editors\AddPropertyAction.cs" />
+    <Compile Include="UI\Properties\Editors\FileDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\InstanceDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\LevelDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\PropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\RemovePropertyAction.cs" />
+    <Compile Include="UI\Properties\Editors\TypeDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\PropertyAdapter.cs" />
+    <Compile Include="UI\Properties\PropertyDescriptorEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\PropertyView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\GeneralPropertyDescriptor.cs" />
+    <Compile Include="UI\Properties\TypeConverters\StructTypeConverter.cs" />
+    <Compile Include="UI\Properties\TypeConverters\WhiskeyInstanceTypeConverter.cs" />
+    <Compile Include="UI\Properties\TypePicker.cs" />
+    <Compile Include="UI\Properties\WhiskeyPropertyContainer.cs" />
+    <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyContainerTypeConverter.cs" />
+    <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyValueTypeConverter.cs" />
     <Compile Include="UI\Status\StatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Status\WhiskeyProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Toolbar\ToolbarStrip.cs">
@@ -189,7 +238,13 @@
     <Content Include="UI\Assets\folderIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Assets\minus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Assets\playIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\plus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Assets\saveIcon.png">

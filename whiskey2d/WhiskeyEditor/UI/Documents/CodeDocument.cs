@@ -9,6 +9,10 @@ using System.Windows.Forms;
 using WhiskeyEditor.Backend;
 
 using ICSharpCode.TextEditor;
+using ICSharpCode.TextEditor.Gui;
+using ICSharpCode.TextEditor.Gui.CompletionWindow;
+
+
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
 
@@ -16,7 +20,8 @@ namespace WhiskeyEditor.UI.Documents
 {
     class CodeDocument : DocumentTab
     {
-
+        private CodeCompletionWindow codeCompletionWindow;
+		
         private TextEditorControl editor;
         private CodeDescriptor desc;
         private FileChangedEventHandler discHandler;
@@ -47,7 +52,7 @@ namespace WhiskeyEditor.UI.Documents
             base.open();
         }
 
-        public override void save()
+        public override void save(ProgressNotifier pn)
         {
             string code = editor.Text;
             FileStream fileStream = File.Create(desc.FilePath);
@@ -99,6 +104,7 @@ namespace WhiskeyEditor.UI.Documents
 
             editor.ShowLineNumbers = true;
 
+            
         }
 
         private void configureControls()

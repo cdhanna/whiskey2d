@@ -23,10 +23,8 @@ namespace WhiskeyEditor.UI.Toolbar
 
     public class ToolBarStrip : ToolStrip
     {
-        private PlayAction playAction;
         private CompileAction compileAction;
 
-        private ToolStripButton btnPlay;
         private ToolStripButton btnCompile;
         private ToolStripButton btnSave;
 
@@ -58,9 +56,7 @@ namespace WhiskeyEditor.UI.Toolbar
             //btnPlay.ImageIndex = 1;
            // btnPlay.Image = AssetManager.ICON_PLAY;
 
-            playAction = new PlayAction();
-            btnPlay = playAction.generateControl<ToolStripButton>();
-
+       
             btnSave = new ToolStripButton("Save");
             btnSave.ImageIndex = 0;
 
@@ -83,8 +79,7 @@ namespace WhiskeyEditor.UI.Toolbar
 
             Items.Add(btnCompile);
 
-            btnPlay.Dock = DockStyle.Right;
-            Items.Add(btnPlay);
+          
 
 
            

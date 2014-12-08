@@ -17,6 +17,9 @@ namespace WhiskeyEditor.Backend
         private List<PropertyDescriptor> propDescs = new List<PropertyDescriptor>();
         private List<String> scriptNames = new List<string>();
 
+
+
+
         #region EventSetup
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyAddedEventHandler PropertyAdded;
@@ -92,6 +95,11 @@ namespace WhiskeyEditor.Backend
         {
             if (0 == propDescs.Where((p) => p.Name.Equals(propDesc.Name)).ToList().Count)
             {
+                propDesc.TypeValChanged += (s, a) =>
+                {
+                    firePropertyChangedEvent(a);
+                };
+
                 propDescs.Add(propDesc);
                 firePropertyAddedEvent(new PropertyChangeEventArgs(propDesc.Name, propDesc));
             }
@@ -122,6 +130,18 @@ namespace WhiskeyEditor.Backend
         {
             return lookUpPropertyDescriptor(name).TypeVal;
         }
+        public void setPropertyValue(string name, object value)
+        {
+            PropertyDescriptor pDesc = lookUpPropertyDescriptor(name);
+            try
+            {
+                pDesc.TypeVal.Value = value;
+            }
+            catch (Exception e)
+            {
+                throw new WhiskeyException("Cannot set type, " + name + " to given value, " + value);
+            }
+        }
 
         private PropertyDescriptor lookUpPropertyDescriptor(String name)
         {
@@ -149,7 +169,10 @@ namespace WhiskeyEditor.Backend
         }
 
 
-
+        public List<PropertyDescriptor> getPropertySet()
+        {
+            return propDescs;
+        }
         public List<PropertyDescriptor> getPropertySetClone()
         {
             List<PropertyDescriptor> props = new List<PropertyDescriptor>();
@@ -171,6 +194,7 @@ namespace WhiskeyEditor.Backend
             return names;
         }
 
+       
     
         protected override string CodeClassDef
         {
@@ -269,7 +293,7 @@ namespace WhiskeyEditor.Backend
             foreach (PropertyDescriptor prop in propDescs)
             {
 
-                writer.WriteLine("\t\t\t" + prop.Name + " = " + getCodeFor(prop.TypeVal.value) + ";");
+                writer.WriteLine("\t\t\t" + prop.Name + " = " + getCodeFor(prop.TypeVal.Value) + ";");
             }
 
             writer.WriteLine("\t\t}");

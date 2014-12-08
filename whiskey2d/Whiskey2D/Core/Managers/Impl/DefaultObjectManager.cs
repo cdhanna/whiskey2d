@@ -9,6 +9,7 @@ namespace Whiskey2D.Core.Managers.Impl
     /// <summary>
     /// Manages all GameObjects in the Whiskey Game. 
     /// </summary>
+    [Serializable]
     public class DefaultObjectManager : ObjectManager
     {
         //private static DefaultObjectManager instance;

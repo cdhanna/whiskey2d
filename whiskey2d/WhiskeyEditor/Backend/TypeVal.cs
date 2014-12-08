@@ -10,9 +10,12 @@ namespace WhiskeyEditor.Backend
     {
 
         string TypeName { get; }
-        object value { get; set; }
+        object Value { get; set; }
 
         TypeVal clone();
+
+
+        event EventHandler ValueChanged;
 
     }
 }

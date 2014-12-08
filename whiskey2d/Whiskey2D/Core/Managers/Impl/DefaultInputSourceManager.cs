@@ -10,6 +10,7 @@ namespace Whiskey2D.Core.Managers.Impl
     /// <summary>
     /// The inputSource Manager decides what kind of input source the game will be using
     /// </summary>
+    [Serializable]
     public class DefaultInputSourceManager : InputSourceManager
     {
 

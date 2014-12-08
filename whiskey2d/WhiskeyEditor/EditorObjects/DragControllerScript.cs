@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.MonoHelp;
 
 namespace WhiskeyEditor.EditorObjects
 {
+
+    [Serializable]
     class DragControllerScript : Script<ObjectController>
     {
 
@@ -22,18 +25,20 @@ namespace WhiskeyEditor.EditorObjects
 
         public override void onUpdate()
         {
+            
+            
 
-            if (GameManager.Input.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
+            if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
 
-                List<InstanceDescriptor> objs = Gob.CurrentLevel.Descriptors;
+                List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();
 
-                foreach (GameObject obj in objs)
+                foreach (InstanceDescriptor obj in objs)
                 {
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(GameManager.Input.getMousePosition()))
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
                     {
                         Gob.Dragging = obj;
-                        grabOffset = Gob.Dragging.Position - GameManager.Input.getMousePosition();
+                        grabOffset = Gob.Dragging.Position - WhiskeyControl.InputManager.getMousePosition();
                         break;
                     }
 
@@ -44,9 +49,12 @@ namespace WhiskeyEditor.EditorObjects
 
             if (Gob.Dragging != null)
             {
-                GameManager.Controller.SelectedGob = Gob.Dragging;
-                Gob.Dragging.Position = GameManager.Input.getMousePosition() + grabOffset;
-                if (!GameManager.Input.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
+                WhiskeyControl.Controller.SelectedGob = Gob.Dragging;
+                Gob.Dragging.Position = WhiskeyControl.InputManager.getMousePosition() + grabOffset;
+                Gob.Dragging.X = Gob.Dragging.Position.X;
+                Gob.Dragging.Y = Gob.Dragging.Position.Y;
+
+                if (!WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
                 {
                     Gob.Dragging = null;
                 }

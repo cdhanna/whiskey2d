@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Whiskey2D.Core;
+using Whiskey2D.Core.Managers;
 using WhiskeyEditor.Backend.Managers;
+using WhiskeyEditor;
+using WhiskeyEditor.EditorObjects;
 
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    public class InstanceDescriptor : GameObject
+    public class InstanceDescriptor : EditorGameObject
     {
         public const string PROP_X = "X";
         public const string PROP_Y = "Y";
@@ -19,7 +22,8 @@ namespace WhiskeyEditor.Backend
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
 
-        public InstanceDescriptor(TypeDescriptor typeDesc) : base()
+        public InstanceDescriptor(TypeDescriptor typeDesc, ObjectManager manager )
+            : base(manager)
         {
             propDescs = new List<PropertyDescriptor>();
             scriptNames = new List<string>();
@@ -27,7 +31,8 @@ namespace WhiskeyEditor.Backend
             initialize(typeDesc);
         }
 
-        public InstanceDescriptor() : base()
+        public InstanceDescriptor(ObjectManager manager)
+            : base(manager)
         {
             propDescs = new List<PropertyDescriptor>();
             scriptNames = new List<string>();
@@ -44,6 +49,9 @@ namespace WhiskeyEditor.Backend
             this.typeDesc = typeDesc;
             
             propDescs = typeDesc.getPropertySetClone();
+
+
+
             scriptNames = typeDesc.getScriptNamesClone();
 
             typeDesc.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
@@ -53,6 +61,15 @@ namespace WhiskeyEditor.Backend
             typeDesc.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
             typeDesc.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
 
+
+            lookUpPropertyDescriptor(PROP_X).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.X = (float) lookUpPropertyDescriptor(PROP_X).TypeVal.Value;
+            };
+            lookUpPropertyDescriptor(PROP_Y).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
+            };
         }
 
         #region Event Handler Code
@@ -70,8 +87,10 @@ namespace WhiskeyEditor.Backend
         {
             PropertyDescriptor prop = lookUpPropertyDescriptor(args.PropertyName);
             prop.Name = args.Property.Name;
-            propDescs.Remove(prop);
-            propDescs.Add(args.Property.clone());
+            
+            
+            //propDescs.Remove(prop);
+            //propDescs.Add(args.Property.clone());
             
         }
 
@@ -123,6 +142,7 @@ namespace WhiskeyEditor.Backend
             List<PropertyDescriptor> props = propDescs.Where(p => p.Name.Equals(name)).ToList();
             if (props.Count == 1)
             {
+                
                 return props[0];
             }
             else throw new WhiskeyException("Property Name : " + name + " had " + props.Count + " instances.");
@@ -142,14 +162,14 @@ namespace WhiskeyEditor.Backend
                 {
                     return base.X;
                 }
-                else return (float)getTypeValOfName(PROP_X).value;
+                else return (float)getTypeValOfName(PROP_X).Value;
             }
             set
             {
                 base.X = value;
                 if (initialized)
                 {
-                    getTypeValOfName(PROP_X).value = value;
+                    getTypeValOfName(PROP_X).Value = value;
                 }
             }
         }
@@ -162,14 +182,14 @@ namespace WhiskeyEditor.Backend
                 {
                     return base.Y;
                 }
-                else return (float)getTypeValOfName(PROP_Y).value;
+                else return (float)getTypeValOfName(PROP_Y).Value;
             }
             set
             {
                 base.Y = value;
                 if (initialized)
                 {
-                    getTypeValOfName(PROP_Y).value = value;
+                    getTypeValOfName(PROP_Y).Value = value;
                 }
             }
         }
@@ -182,16 +202,21 @@ namespace WhiskeyEditor.Backend
                 {
                     return base.Sprite;
                 }
-                else return (Sprite)getTypeValOfName(PROP_SPRITE).value;
+                else return (Sprite)getTypeValOfName(PROP_SPRITE).Value;
             }
             set
             {
                 base.Sprite = value;
                 if (initialized)
                 {
-                    getTypeValOfName(PROP_SPRITE).value = value;
+                    getTypeValOfName(PROP_SPRITE).Value = value;
                 }
             }
+        }
+
+        public List<PropertyDescriptor> getPropertySet()
+        {
+            return propDescs;
         }
 
         protected override void addInitialScripts()
