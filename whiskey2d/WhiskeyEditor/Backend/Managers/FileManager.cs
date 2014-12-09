@@ -215,7 +215,7 @@ namespace WhiskeyEditor.Backend.Managers
             FileDescriptor[] files = new FileDescriptor[data.Files.Count];
             data.Files.CopyTo(files);
             // = objs.ToList();
-
+            List<LevelDescriptor> levels = new List<LevelDescriptor>();
             foreach (FileDescriptor f in files)
             {
                 addFileDescriptor(f);
@@ -223,13 +223,16 @@ namespace WhiskeyEditor.Backend.Managers
                 if (f is LevelDescriptor)
                 {
                     LevelDescriptor l = (LevelDescriptor)f;
-                    l.Level.updateAll();
-                    l.Level.syncAllTypesToInstances();
+                    levels.Add(l);
                     InstanceManager.Instance.addLevel(l.Level);
                 }
 
             }
-
+            levels.ForEach((l) =>
+            {
+                l.Level.updateAll();
+                l.Level.syncAllTypesToInstances();
+            });
             
 
         }

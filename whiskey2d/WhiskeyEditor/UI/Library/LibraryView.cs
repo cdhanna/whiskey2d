@@ -29,6 +29,8 @@ namespace WhiskeyEditor.UI.Library
         private TreeView fileTree;
 
         public event LibrarySelectionEventHandler SelectionChanged = new LibrarySelectionEventHandler((s, a) => { });
+        public event LibrarySelectionEventHandler ClickedOnNode = new LibrarySelectionEventHandler((s, a) => { });
+        
 
         public LibraryView()
         {
@@ -59,6 +61,8 @@ namespace WhiskeyEditor.UI.Library
                 fileTree.DoDragDrop(a.Item, DragDropEffects.All);
                 
             };
+
+            
 
         }
 
@@ -119,6 +123,17 @@ namespace WhiskeyEditor.UI.Library
                 }
 
             };
+
+            fileTree.NodeMouseClick += (s, a) =>
+            {
+                LibraryTreeNode node = (LibraryTreeNode)a.Node;
+                if (node.IsFile)
+                {
+                    ClickedOnNode(this, new LibrarySelectionEventArgs(node));
+                }
+            };
+
+
         }
 
         private void addControls()

@@ -146,14 +146,22 @@ namespace WhiskeyEditor.UI
             libraryView.SelectionChanged += (s, args) =>
             {
                 docView.openDocument(args.Selected.FilePath);
+                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
+                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
             };
 
             libraryView.SelectionChanged += (s, args) =>
             {
-                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                
 
             };
+            libraryView.ClickedOnNode += (s, args) =>
+            {
+                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
+                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+            };
+
+
 
             docView.PropertyChangeRequested += (s, args) =>
             {

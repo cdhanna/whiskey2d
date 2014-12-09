@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
+
 using WhiskeyEditor.Backend.Actions;
 using WhiskeyEditor.UI.Properties;
 namespace WhiskeyEditor.UI.Properties.Editors
@@ -13,12 +15,13 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
         public TypeDescriptor Descriptor { get; private set; }
         public PropertyDescriptor Property { get; private set; }
+        public PropertyDescriptorListEditor Editor { get; private set; }
 
-        public RemovePropertyAction(TypeDescriptor tDesc, PropertyDescriptor pDesc) :
+        public RemovePropertyAction(TypeDescriptor tDesc, PropertyDescriptor pDesc, PropertyDescriptorListEditor editor) :
             base (pDesc.Name, Assets.AssetManager.ICON_MINUS)
         {
             Descriptor = tDesc;
-            
+            Editor = editor;
             Property = pDesc;
         }
 
@@ -27,6 +30,12 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
             Descriptor.removePropertyDescriptor(Property);
 
+            Editor.Invoke(new NoArgFunction(() =>
+            {
+                Editor.PropertyList = Descriptor.getPropertySet();
+                Descriptor.ensureFileExists();
+                InstanceManager.Instance.syncTypeToInstances(Descriptor);
+            }));
 
         }
     }

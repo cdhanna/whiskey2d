@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Backend.Actions;
 using WhiskeyEditor.UI.Properties;
 
@@ -33,6 +34,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
             {
                 editor.PropertyList = desc.getPropertySet();
                 desc.ensureFileExists();
+                InstanceManager.Instance.syncTypeToInstances(desc);
             }));
         }
     }

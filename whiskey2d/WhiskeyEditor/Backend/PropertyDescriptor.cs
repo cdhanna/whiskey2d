@@ -32,6 +32,7 @@ namespace WhiskeyEditor.Backend
         private string name;
         private TypeVal typeVal;
         private bool secure;
+        private Guid id;
 
         public event PropertyChangedEventHandler TypeValChanged = new PropertyChangedEventHandler((s, a) => { });
         
@@ -41,15 +42,28 @@ namespace WhiskeyEditor.Backend
         {
         }
 
-        public PropertyDescriptor(bool secure, string name, TypeVal typeVal){
+        public PropertyDescriptor(bool secure, string name, TypeVal typeVal)
+            : this(secure, name, typeVal, Guid.NewGuid())
+        {
+        }
+
+        private PropertyDescriptor(bool secure, string name, TypeVal typeVal, Guid id)
+        {
             this.name = name;
             this.TypeVal = typeVal;
             this.secure = secure;
+            this.id = id;
         }
 
         public bool Secure
         {
             get { return secure; }
+        }
+
+        public Guid Id
+        {
+            get { return id; }
+            
         }
 
         public string Name
@@ -83,11 +97,11 @@ namespace WhiskeyEditor.Backend
 
         public PropertyDescriptor clone()
         {
-            return new PropertyDescriptor(secure, name, typeVal.clone());
+            return new PropertyDescriptor(true, name, typeVal.clone(), id);
         }
         public PropertyDescriptor clone(bool secure)
         {
-            return new PropertyDescriptor(secure, name, typeVal.clone());
+            return new PropertyDescriptor(secure, name, typeVal.clone(), id);
         }
 
         public string toCodeDefinition()

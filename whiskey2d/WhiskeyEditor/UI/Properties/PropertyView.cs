@@ -83,16 +83,13 @@ namespace WhiskeyEditor.UI.Properties
             }
             else
             {
-
-                removePropertyContent();
+                
+                PropertyContent oldContent = PropertyContent;
+                //removePropertyContent();
                 pView = content;
                 // PropertyContent = content;
 
                 content.Dock = DockStyle.Fill;
-
-                Controls.Remove(panel);
-                Controls.Add(content);
-                Controls.Add(panel);
 
                 ToolStrip.Items.Clear();
                 ToolStripItemCollection items = content.getToolStripCollection(ToolStrip);
@@ -100,11 +97,22 @@ namespace WhiskeyEditor.UI.Properties
                 {
                     ToolStrip.Items.Add(item);
                 }
-
-                Refresh();
-
                 panel.BackColor = UIManager.Instance.DullFlairColor;
                 titleLabel.Text = content.Title;
+
+                content.Padding = new Padding(0, panel.Height, 0, 0);
+
+                this.SuspendLayout();
+                Visible = false;
+                Controls.Remove(panel);
+                Controls.Add(content);
+                Controls.Add(panel);
+                Controls.Remove(oldContent);
+                oldContent = null;
+
+                Visible = true;
+                this.ResumeLayout();
+                Refresh();
             }
             
         }

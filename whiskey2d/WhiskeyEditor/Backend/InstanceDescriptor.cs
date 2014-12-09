@@ -45,9 +45,9 @@ namespace WhiskeyEditor.Backend
 
         public void registerListeners()
         {
-            TypeDescriptor.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
-            TypeDescriptor.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
-            TypeDescriptor.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
+            //TypeDescriptor.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
+            //TypeDescriptor.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
+            //TypeDescriptor.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
 
             TypeDescriptor.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
             TypeDescriptor.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
@@ -72,7 +72,17 @@ namespace WhiskeyEditor.Backend
 
             scriptNames = typeDesc.getScriptNamesClone();
            // registerListeners();
-           
+
+
+            lookUpPropertyDescriptor(PROP_X).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.X = (float)lookUpPropertyDescriptor(PROP_X).TypeVal.Value;
+            };
+            lookUpPropertyDescriptor(PROP_Y).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
+            };
+
         }
 
         #region Event Handler Code
@@ -86,27 +96,27 @@ namespace WhiskeyEditor.Backend
             scriptNames.Remove(args.Script.Name);
         }
 
-        private void propertyChangedInType(object sender, PropertyChangeEventArgs args)
-        {
-            PropertyDescriptor prop = lookUpPropertyDescriptor(args.PropertyName);
-            prop.Name = args.Property.Name;
+        //private void propertyChangedInType(object sender, PropertyChangeEventArgs args)
+        //{
+        //    PropertyDescriptor prop = lookUpPropertyDescriptor(args.PropertyName);
+        //    prop.Name = args.Property.Name;
             
             
-            //propDescs.Remove(prop);
-            //propDescs.Add(args.Property.clone());
+        //    //propDescs.Remove(prop);
+        //    //propDescs.Add(args.Property.clone());
             
-        }
+        //}
 
-        private void propertyAddedToType(object sender, PropertyChangeEventArgs args)
-        {
-            propDescs.Add(args.Property.clone());
-        }
+        //private void propertyAddedToType(object sender, PropertyChangeEventArgs args)
+        //{
+        //    propDescs.Add(args.Property.clone());
+        //}
 
-        private void propertyRemovedFromType(object sender, PropertyChangeEventArgs args)
-        {
-            List<PropertyDescriptor> badProps = propDescs.Where(p => p.Name.Equals(args.Property.Name)).ToList();
-            badProps.ForEach((p) => { propDescs.Remove(p); });
-        }
+        //private void propertyRemovedFromType(object sender, PropertyChangeEventArgs args)
+        //{
+        //    List<PropertyDescriptor> badProps = propDescs.Where(p => p.Name.Equals(args.Property.Name)).ToList();
+        //    badProps.ForEach((p) => { propDescs.Remove(p); });
+        //}
 
         #endregion
 
@@ -122,17 +132,34 @@ namespace WhiskeyEditor.Backend
         public void syncType()
         {
             initCheck();
+
+            List<PropertyDescriptor> checkedSet = new List<PropertyDescriptor>();
+            propDescs.ForEach((p) => { checkedSet.Add(p); });
+
             foreach (PropertyDescriptor typeProperty in TypeDescriptor.getPropertySet())
             {
-                List<PropertyDescriptor> matches = propDescs.Where(s => s.Name.Equals(typeProperty.Name)).ToList();
+                List<PropertyDescriptor> matches = propDescs.Where(s => s.Id.Equals(typeProperty.Id)).ToList();
 
                 if (matches.Count == 0)
                 {
                     PropertyDescriptor newProp = typeProperty.clone(true);
                     propDescs.Add(newProp);
                 }
+                else if (matches.Count == 1)
+                {
+                    PropertyDescriptor prop = matches[0];
+                    prop.Name = typeProperty.Name;
+                    if (!prop.TypeVal.TypeName.Equals(typeProperty.TypeVal.TypeName))
+                    {
+                        prop.TypeVal = typeProperty.TypeVal.clone();
+                    }
+                    checkedSet.Remove(prop);
+                }
 
             }
+
+            checkedSet.ForEach((p) => { propDescs.Remove(p); });
+
 
             //get synced!
         }
