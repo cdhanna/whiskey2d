@@ -157,6 +157,19 @@ namespace WhiskeyEditor.Backend.Managers
         }
 
 
+        public T lookUpFileByName<T>(string name) where T : FileDescriptor
+        {
+            List<T> conv = new List<T>();
+
+            fileDescs.Where(f => (f is T && f.Name.Equals(name))).ToList().ForEach((f) => { conv.Add((T) f); });
+            if (conv.Count < 2)
+            {
+                return conv[0];
+            }
+            else throw new WhiskeyException("Too many");
+           
+        }
+
         public TypeDescriptor createNewTypeDescriptor(string name)
         {
             TypeDescriptor tDesc = new TypeDescriptor(name);
@@ -210,6 +223,8 @@ namespace WhiskeyEditor.Backend.Managers
                 if (f is LevelDescriptor)
                 {
                     LevelDescriptor l = (LevelDescriptor)f;
+                    l.Level.updateAll();
+                    l.Level.syncAllTypesToInstances();
                     InstanceManager.Instance.addLevel(l.Level);
                 }
 

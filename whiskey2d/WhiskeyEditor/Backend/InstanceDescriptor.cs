@@ -41,7 +41,27 @@ namespace WhiskeyEditor.Backend
         }
 
 
-        public TypeDescriptor TypeDescriptor { get { return typeDesc; } }
+        public TypeDescriptor TypeDescriptor { get { return FileManager.Instance.lookUpFileByName<TypeDescriptor>(typeDesc.Name); } }
+
+        public void registerListeners()
+        {
+            TypeDescriptor.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
+            TypeDescriptor.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
+            TypeDescriptor.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
+
+            TypeDescriptor.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
+            TypeDescriptor.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
+
+
+            lookUpPropertyDescriptor(PROP_X).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.X = (float)lookUpPropertyDescriptor(PROP_X).TypeVal.Value;
+            };
+            lookUpPropertyDescriptor(PROP_Y).TypeVal.ValueChanged += (s, a) =>
+            {
+                base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
+            };
+        }
 
         public void initialize(TypeDescriptor typeDesc)
         {
@@ -50,26 +70,9 @@ namespace WhiskeyEditor.Backend
             
             propDescs = typeDesc.getPropertySetClone();
 
-
-
             scriptNames = typeDesc.getScriptNamesClone();
-
-            typeDesc.PropertyAdded += new PropertyAddedEventHandler(propertyAddedToType);
-            typeDesc.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
-            typeDesc.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
-
-            typeDesc.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
-            typeDesc.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
-
-
-            lookUpPropertyDescriptor(PROP_X).TypeVal.ValueChanged += (s, a) =>
-            {
-                base.X = (float) lookUpPropertyDescriptor(PROP_X).TypeVal.Value;
-            };
-            lookUpPropertyDescriptor(PROP_Y).TypeVal.ValueChanged += (s, a) =>
-            {
-                base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
-            };
+           // registerListeners();
+           
         }
 
         #region Event Handler Code
@@ -114,6 +117,24 @@ namespace WhiskeyEditor.Backend
             {
                 throw new WhiskeyException("Instance not initialized ");
             }
+        }
+
+        public void syncType()
+        {
+            initCheck();
+            foreach (PropertyDescriptor typeProperty in TypeDescriptor.getPropertySet())
+            {
+                List<PropertyDescriptor> matches = propDescs.Where(s => s.Name.Equals(typeProperty.Name)).ToList();
+
+                if (matches.Count == 0)
+                {
+                    PropertyDescriptor newProp = typeProperty.clone(true);
+                    propDescs.Add(newProp);
+                }
+
+            }
+
+            //get synced!
         }
 
 

@@ -28,6 +28,10 @@ namespace WhiskeyEditor.UI.Properties.Converters
                 if (i == 1)
                     y = parseInt(parts[i]);
             }
+            if (parts.Length == 1)
+            {
+                y = x;
+            }
             return new Vector(x, y);
         }
     }

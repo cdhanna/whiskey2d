@@ -41,6 +41,14 @@ namespace WhiskeyEditor.Backend.Managers
             Levels.Add(level);
         }
 
+        public void syncTypeToInstances(TypeDescriptor typeDescriptor)
+        {
+            Levels.ForEach((l) => {
+                l.syncTypeToInstances(typeDescriptor);
+            });
+
+        }
+
 
         //public void addInstance(InstanceDescriptor iDesc)
         //{

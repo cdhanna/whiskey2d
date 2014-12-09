@@ -32,6 +32,28 @@ namespace WhiskeyEditor.Backend
             setInstanceLevelState(state);
         }
 
+        public void syncAllTypesToInstances()
+        {
+            getInstances().ForEach((i) =>
+            {
+                i.syncType();
+            });
+        }
+
+        public void syncTypeToInstances(TypeDescriptor typeDescriptor)
+        {
+            getInstances().ForEach((i) =>
+            {
+
+                if (i.TypeDescriptor.Name.Equals(typeDescriptor.Name))
+                {
+                    i.syncType();
+                }
+
+            });
+
+        }
+
         public State getInstanceLevelState()
         {
             //State state = new State();
@@ -56,6 +78,13 @@ namespace WhiskeyEditor.Backend
             //});
             BackgroundColor = state.BackgroundColor;
             base.setState(state);
+
+            //getInstances().ForEach((i) =>
+            //{
+            //    i.syncType();
+            // //   i.registerListeners();
+
+            //});
         }
 
         public void addObject(InstanceDescriptor gob)

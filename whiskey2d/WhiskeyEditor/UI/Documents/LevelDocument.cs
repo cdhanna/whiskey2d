@@ -42,6 +42,7 @@ namespace WhiskeyEditor.UI.Documents
         {
             Text = levelDescriptor.Name;
             Descriptor = levelDescriptor;
+            
             initControls();
             addControls();
             
@@ -127,6 +128,7 @@ namespace WhiskeyEditor.UI.Documents
         public override void Refresh()
         {
             whiskey.setAsActive();
+            
             base.Refresh();
         }
 

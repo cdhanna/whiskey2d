@@ -86,6 +86,7 @@ namespace WhiskeyEditor.Backend
             if (!prop.Secure)
             {
                 prop.Name = newPropName;
+                InstanceManager.Instance.syncTypeToInstances(this);
                 firePropertyChangedEvent( new PropertyChangeEventArgs(propName, prop ));
             }
             else throw new WhiskeyException("Property is secure : " + propName);
@@ -101,6 +102,7 @@ namespace WhiskeyEditor.Backend
                 };
 
                 propDescs.Add(propDesc);
+                InstanceManager.Instance.syncTypeToInstances(this);
                 firePropertyAddedEvent(new PropertyChangeEventArgs(propDesc.Name, propDesc));
             }
             else throw new WhiskeyException("Property Already Exists : " + propDesc.Name);
@@ -113,6 +115,7 @@ namespace WhiskeyEditor.Backend
                 if (!propDesc.Secure)
                 {
                     propDescs.Remove(propDesc);
+                    InstanceManager.Instance.syncTypeToInstances(this);
                     firePropertyRemovedEvent(new PropertyChangeEventArgs(propDesc.Name, propDesc));
                 }
                 else throw new WhiskeyException("Property Is Secure : " + propDesc.Name);

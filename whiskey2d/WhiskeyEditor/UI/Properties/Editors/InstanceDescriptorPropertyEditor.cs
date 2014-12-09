@@ -37,6 +37,9 @@ namespace WhiskeyEditor.UI.Properties.Editors
             List<PropertyDescriptor> pList = Descriptor.getPropertySet();
             PropertyGrid.PropertyList = pList;
 
+
+            PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptor.Name).PropIsReadOnly = true;
+
         }
 
         private void addControls()
