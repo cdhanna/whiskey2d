@@ -74,7 +74,7 @@ namespace WhiskeyEditor.UI.Documents
             DocumentTab tab = (DocumentTab) Tabs.SelectedTab;
             if (tab != null)
             {
-                tab.save();
+                tab.save(new WhiskeyEditor.Backend.DefaultProgressNotifier());
             }
         }
 

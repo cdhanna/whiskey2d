@@ -33,6 +33,9 @@ namespace WhiskeyEditor.Backend.Managers
         private static CompileManager instance = new CompileManager();
         public static CompileManager Instance { get { return instance; } }
 
+
+        private bool compiling = false;
+
         #region Events
 
         public event CompileEventHandler Compiled;

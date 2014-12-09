@@ -111,6 +111,7 @@
     <Compile Include="Backend\Managers\FileManager.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
     <Compile Include="Backend\Managers\ScriptManager.cs" />
+    <Compile Include="Backend\MediaDescriptor.cs" />
     <Compile Include="Backend\ProgressNotifier.cs" />
     <Compile Include="Backend\PropertyContainer.cs" />
     <Compile Include="Backend\PropertyDescriptor.cs" />

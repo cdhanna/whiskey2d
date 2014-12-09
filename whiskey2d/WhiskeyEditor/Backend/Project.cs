@@ -272,9 +272,10 @@ namespace WhiskeyEditor.Backend
             cleanProject();
             pn.Progress = .3f;
 
+            CompileManager.Instance.compile();
             DirectoryCopy(PathLib, PathBuildLib, true);
             DirectoryCopy(PathMedia, PathBuildMedia, true);
-            CompileManager.Instance.compile();
+            
             pn.Progress = .6f;
 
             string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level.Level);

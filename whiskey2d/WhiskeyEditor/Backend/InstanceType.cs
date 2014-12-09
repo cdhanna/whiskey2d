@@ -35,12 +35,12 @@ namespace WhiskeyEditor.Backend
                 if (value is InstanceDescriptor)
                 {
                     InstanceDescriptor newVal = (InstanceDescriptor)value;
-                    if (newVal.TypeDescriptor.ClassName.Equals(TypeName))
+                    if (newVal.TypeDescriptorInFileManager.ClassName.Equals(TypeName))
                     {
                         this.instance = newVal;
 
                     }
-                    else throw new WhiskeyException("Given Instance is of incorrect type: " + newVal.TypeDescriptor.ClassName + " versus " + TypeName);
+                    else throw new WhiskeyException("Given Instance is of incorrect type: " + newVal.TypeDescriptorInFileManager.ClassName + " versus " + TypeName);
                 }
                 else throw new WhiskeyException("Given value is not an Instance Descriptor");
 

@@ -41,7 +41,9 @@ namespace WhiskeyEditor.Backend
         }
 
 
-        public TypeDescriptor TypeDescriptor { get { return FileManager.Instance.lookUpFileByName<TypeDescriptor>(typeDesc.Name); } }
+        public TypeDescriptor TypeDescriptorInFileManager { get { return FileManager.Instance.lookUpFileByName<TypeDescriptor>(typeDesc.Name); } }
+        public TypeDescriptor TypeDescriptorCompile { get { return typeDesc; } }
+
 
         public void registerListeners()
         {
@@ -49,8 +51,8 @@ namespace WhiskeyEditor.Backend
             //TypeDescriptor.PropertyChanged += new PropertyChangedEventHandler(propertyChangedInType);
             //TypeDescriptor.PropertyRemoved += new PropertyRemovedEventHandler(propertyRemovedFromType);
 
-            TypeDescriptor.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
-            TypeDescriptor.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
+            TypeDescriptorInFileManager.ScriptAdded += new ScriptAddedEventHandler(scriptAddedInType);
+            TypeDescriptorInFileManager.ScriptRemoved += new ScriptRemovedEventHandler(scriptRemovedFromType);
 
 
             lookUpPropertyDescriptor(PROP_X).TypeVal.ValueChanged += (s, a) =>
@@ -136,7 +138,7 @@ namespace WhiskeyEditor.Backend
             List<PropertyDescriptor> checkedSet = new List<PropertyDescriptor>();
             propDescs.ForEach((p) => { checkedSet.Add(p); });
 
-            foreach (PropertyDescriptor typeProperty in TypeDescriptor.getPropertySet())
+            foreach (PropertyDescriptor typeProperty in TypeDescriptorInFileManager.getPropertySet())
             {
                 List<PropertyDescriptor> matches = propDescs.Where(s => s.Id.Equals(typeProperty.Id)).ToList();
 

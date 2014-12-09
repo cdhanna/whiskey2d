@@ -73,6 +73,7 @@ namespace WhiskeyEditor.UI.Menu
         public void setForType()
         {
             typeBox.SelectedItem = NewForm.NEW_TYPE;
+            scriptTypeBox.Visible = false;
         }
         //public void setForCode()
         //{

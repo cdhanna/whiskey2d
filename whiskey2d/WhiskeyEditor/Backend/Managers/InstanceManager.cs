@@ -119,21 +119,24 @@ namespace WhiskeyEditor.Backend.Managers
 
                         Assembly gameData = Assembly.LoadFrom(appDllPath);
 
+                        int c = 0;
                         List<GameObject> lGobs = new List<GameObject>();
                         foreach (InstanceDescriptor iDesc in appIDescs)
                         {
                             iDesc.X = iDesc.Position.X;
                             iDesc.Y = iDesc.Position.Y;
-
-                            string typeName = iDesc.TypeDescriptor.QualifiedName;
+                            
+                            string typeName = iDesc.TypeDescriptorCompile.QualifiedName;
                             Type type = gameData.GetType(typeName, true, false);
 
                             GameObject gob = (GameObject)type.GetConstructor
-                                (new Type[] { }).Invoke
-                                (new object[] { });
+                                (new Type[] {  }).Invoke
+                                (new object[] {  });
 
-                            foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptor.getPropertySetClone())
+
+                            foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptorCompile.getPropertySetClone())
                             {
+                                Console.WriteLine ( "converting " + c + " " + typeProp.Name);
                                 PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
                                 if (propInfo.SetMethod != null)
                                 {

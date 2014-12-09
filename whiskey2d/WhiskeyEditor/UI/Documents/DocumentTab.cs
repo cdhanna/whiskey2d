@@ -156,11 +156,11 @@ namespace WhiskeyEditor.UI.Documents
             Dirty = false;
 
         }
-        public void save()
-        {
-            Dirty = false;
-            //this.save(new DefaultProgressNotifier());
-        }
+        //public void save()
+        //{
+        //   // Dirty = false;
+        //    this.save(new DefaultProgressNotifier());
+        //}
 
         //TODO mark with a "Are you sure you want to close" if marked Dirty=True
         public virtual void close()

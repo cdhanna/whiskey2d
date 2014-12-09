@@ -45,7 +45,7 @@ namespace WhiskeyEditor.Backend
             getInstances().ForEach((i) =>
             {
 
-                if (i.TypeDescriptor.Name.Equals(typeDescriptor.Name))
+                if (i.TypeDescriptorInFileManager.Name.Equals(typeDescriptor.Name))
                 {
                     i.syncType();
                 }

@@ -93,7 +93,12 @@ namespace WhiskeyEditor.UI.Documents
 
 
         private void dragEnter(object sender, DragEventArgs args){
-            args.Effect = DragDropEffects.All;
+            LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
+            FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+            if (fDesc is TypeDescriptor)
+            {
+                args.Effect = DragDropEffects.All;
+            }
         }
         private void dragDrop(object sender, DragEventArgs args)
         {
@@ -120,6 +125,7 @@ namespace WhiskeyEditor.UI.Documents
                 //Descriptor.Level.Descriptors.Add(inst);
                 Dirty = true;
             }
+            
 
            // save(new DefaultProgressNotifier());
 
@@ -140,7 +146,7 @@ namespace WhiskeyEditor.UI.Documents
             
             State.serialize(state, Descriptor.FilePath);
             pn.Progress = 1;
-            base.save();
+            base.save(pn);
         }
 
         public override void open()

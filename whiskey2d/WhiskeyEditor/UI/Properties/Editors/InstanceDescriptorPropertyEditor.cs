@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
+using System.Windows.Forms;
+using System.Drawing;
+using WhiskeyEditor.UI.Library;
 
 namespace WhiskeyEditor.UI.Properties.Editors
 {
@@ -14,6 +18,13 @@ namespace WhiskeyEditor.UI.Properties.Editors
         protected PropertyAdapter Adapter { get; private set; }
         protected InstanceDescriptor Descriptor { get; private set; }
 
+        /// <summary>
+        /// A handler for drag drop
+        /// </summary>
+        private DragEventHandler dragEnterHandler;
+        private DragEventHandler dragDropHandler;
+
+
         public InstanceDescriptorPropertyEditor(InstanceDescriptor desc) : base(desc)
         {
             Title = "Instance Properties";
@@ -21,7 +32,18 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
             initControls();
             addControls();
+            AllowDrop = true;
+            dragEnterHandler = new DragEventHandler(dragEnter);
+            dragDropHandler = new DragEventHandler(dragDrop);
+            DragDrop += dragDropHandler;
+            DragEnter += dragEnterHandler;
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            DragDrop -= dragDropHandler;
+            DragEnter -= dragEnterHandler;
+            base.Dispose(disposing);
         }
 
         public override void Refresh()
@@ -38,7 +60,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
             PropertyGrid.PropertyList = pList;
 
 
-            PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptor.Name).PropIsReadOnly = true;
+            PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptorInFileManager.Name).PropIsReadOnly = true;
 
         }
 
@@ -47,6 +69,74 @@ namespace WhiskeyEditor.UI.Properties.Editors
             PropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             Controls.Add(PropertyGrid);
         }
+
+
+        private void dragEnter(object sender, DragEventArgs args)
+        {
+
+            LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
+            FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+            if (fDesc is ScriptDescriptor)
+            {
+
+                ScriptDescriptor sDesc = (ScriptDescriptor)fDesc;
+                if (sDesc.TargetTypeName.Equals(Descriptor.TypeDescriptorInFileManager.Name))
+                {
+                    args.Effect = DragDropEffects.All;
+                }
+            }
+
+
+            
+        }
+        private void dragDrop(object sender, DragEventArgs args)
+        {
+
+            LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
+            FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+            if (fDesc is ScriptDescriptor)
+            {
+
+                ScriptDescriptor sDesc = (ScriptDescriptor)fDesc;
+                if (sDesc.TargetTypeName.Equals(Descriptor.TypeDescriptorInFileManager.Name))
+                {
+
+
+                    Descriptor.addScript(sDesc.Name);
+
+
+                }
+            }
+
+            //LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
+
+
+            //FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+            //if (fDesc is TypeDescriptor)
+            //{
+            //    TypeDescriptor tDesc = (TypeDescriptor)fDesc;
+
+            //    InstanceDescriptor inst = new InstanceDescriptor(tDesc, Descriptor.Level);
+            //    inst.Sprite = new Sprite(WhiskeyControl.Renderer, inst.Sprite);
+
+
+            //    //inst.Sprite.Scale *= 50;
+            //    Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
+
+            //    inst.Position = new Vector(p.X, p.Y) - inst.Bounds.Size / 2;
+
+            //    inst.X = inst.Position.X;
+            //    inst.Y = inst.Position.Y;
+
+            //    //Descriptor.Level.Descriptors.Add(inst);
+            //    Dirty = true;
+            //}
+
+
+            // save(new DefaultProgressNotifier());
+
+        }
+
 
     }
 }

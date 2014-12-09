@@ -52,6 +52,9 @@ namespace WhiskeyEditor.UI.Documents
             base.open();
         }
 
+
+        
+
         public override void save(ProgressNotifier pn)
         {
             string code = editor.Text;
@@ -64,7 +67,7 @@ namespace WhiskeyEditor.UI.Documents
 
             lastText = editor.Text;
 
-            base.save();
+            base.save(pn);
         }
 
         public override void close()

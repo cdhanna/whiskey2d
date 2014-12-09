@@ -24,12 +24,12 @@ namespace WhiskeyEditor.Backend
     public class ScriptDescriptor : CodeDescriptor
     {
 
-        private String typeName;
+        public String TargetTypeName { get; private set; }
 
         public ScriptDescriptor(string name, string typeName)
             : base(name)
         {
-            this.typeName = typeName;
+            this.TargetTypeName = typeName;
             ScriptManager.Instance.addScript(this);
             FileManager.Instance.addFileDescriptor(this);
         }
@@ -39,7 +39,7 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return base.CodeClassDef + " : Script<" + typeName + ">" ;
+                return base.CodeClassDef + " : Script<" + TargetTypeName + ">" ;
             }
         }
         protected override void addSpecializedCode(System.IO.StreamWriter writer)

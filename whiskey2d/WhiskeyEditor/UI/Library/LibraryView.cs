@@ -97,6 +97,12 @@ namespace WhiskeyEditor.UI.Library
                     nodeLvl.populate();
                     root.Nodes.Add(nodeLvl);
 
+                    //MEDIA
+                    //LibraryTreeNode nodeArt = new LibraryTreeNode("Media", p.PathMedia);
+                    //nodeArt.populate();
+                    //root.Nodes.Add(nodeArt);
+
+
                     fileTree.Nodes.Add(root);
                     root.ExpandAll();
                     //fileTree.Update();
