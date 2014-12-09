@@ -104,10 +104,12 @@ namespace WhiskeyEditor.UI.Properties
 
                 this.SuspendLayout();
                 Visible = false;
+
+                Controls.Remove(oldContent);
                 Controls.Remove(panel);
                 Controls.Add(content);
                 Controls.Add(panel);
-                Controls.Remove(oldContent);
+                
                 oldContent = null;
 
                 Visible = true;

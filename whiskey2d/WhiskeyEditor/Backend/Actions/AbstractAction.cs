@@ -41,8 +41,8 @@ namespace WhiskeyEditor.Backend.Actions
 
         public event ActionChangedEventHandler Changed = new ActionChangedEventHandler((s, a) => { });
 
-        public string Name { get { return text; } }
-        public Image Image { get { return image; } }
+        public string Name { get { return text; } set { text = value; } }
+        public Image Image { get { return image; } set { image = value; } }
         public float Progress { get { return progress; } set { progress = value; Changed(this, new ActionChangedEventArgs(this)); } }
         public NoArgFunction Effect { get { return effect; } }
 

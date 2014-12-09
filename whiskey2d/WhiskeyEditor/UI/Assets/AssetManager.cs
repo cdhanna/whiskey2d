@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
+
+
 namespace WhiskeyEditor.UI.Assets
 {
     class AssetManager
@@ -20,8 +23,24 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
 
 
+        //public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "RealSet" + Path.DirectorySeparatorChar;
+        //public static readonly string FILE_ICON_FILE = PATH_ASSETS + "docEmpty.png";
+        //public static readonly string FILE_ICON_CODE_FILE = PATH_ASSETS + "docCode.png";
+        //public static readonly string FILE_ICON_LEVEL_FILE = PATH_ASSETS + "docLevel.png";
+        //public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folder.png";
+        //public static readonly string FILE_ICON_CLOSE = PATH_ASSETS + "close.png";
+        //public static readonly string FILE_ICON_SAVE = PATH_ASSETS + "save.png";
+        //public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "play.png";
+        //public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "gear.png";
+        //public static readonly string FILE_ICON_PLUS = PATH_ASSETS + "plus.png";
+        //public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
+
+
+
 
         public static readonly Image ICON_FILE;
+        //public static readonly Image ICON_CODE_FILE;
+        //public static readonly Image ICON_LEVEL_FILE;
         public static readonly Image ICON_FLDR;
         public static readonly Image ICON_CLOSE;
         public static readonly Image ICON_SAVE;
@@ -30,9 +49,14 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly Image ICON_PLUS;
         public static readonly Image ICON_MINUS;
 
+
+        public static readonly ImageList Images = new ImageList();
+
         static AssetManager()
         {
             ICON_FILE = loadImage(FILE_ICON_FILE);
+            //ICON_CODE_FILE = loadImage(FILE_ICON_CODE_FILE);
+            //ICON_LEVEL_FILE = loadImage(FILE_ICON_LEVEL_FILE);
             ICON_FLDR = loadImage(FILE_ICON_FLDR);
             ICON_CLOSE = loadImage(FILE_ICON_CLOSE);
             ICON_SAVE = loadImage(FILE_ICON_SAVE);
@@ -42,16 +66,33 @@ namespace WhiskeyEditor.UI.Assets
             ICON_MINUS = loadImage(FILE_ICON_MINUS);
         }
 
+        public static ImageList getImageList()
+        {
+            ImageList list = new ImageList();
+            foreach (string key in Images.Images.Keys)
+            {
+                list.Images.Add(key, Images.Images[key]);
+            }
+            return list;
+        }
+
         public static Image loadImage(string path)
         {
             try
             {
-                return Image.FromFile(path);
+                Image img = Image.FromFile(path);
+                Images.Images.Add(path, img);
+                return img;
             }
             catch (Exception e)
             {
                 return null;
             }
+        }
+
+        public static int indexOf(string path)
+        {
+            return Images.Images.IndexOfKey(path);
         }
 
         private AssetManager()

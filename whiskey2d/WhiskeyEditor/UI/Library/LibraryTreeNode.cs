@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using WhiskeyEditor.UI.Assets;
+
 namespace WhiskeyEditor.UI.Library
 {
     public class LibraryTreeNode : TreeNode
@@ -21,8 +23,9 @@ namespace WhiskeyEditor.UI.Library
             IsFile = false;
 
 
-            
 
+            ImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR);
+            SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR); ;
         }
 
         
@@ -34,8 +37,16 @@ namespace WhiskeyEditor.UI.Library
             foreach (string path in filePaths)
             {
                 LibraryTreeNode node = new LibraryTreeNode(getFileNameWithoutExtension(path), clearExtraSlashes(path));
-                node.ImageIndex = 1;
-                node.SelectedImageIndex = 1;
+
+                int index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
+                if (path.EndsWith(".state"))
+                {
+                    index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
+                }
+
+                node.ImageIndex = index;
+                node.SelectedImageIndex = index;
+                
                 node.IsFile = true;
                 Nodes.Add(node);
             }
@@ -45,6 +56,9 @@ namespace WhiskeyEditor.UI.Library
             {
                 LibraryTreeNode node = new LibraryTreeNode(getFileName(dir), dir);
                 node.IsFile = false;
+                node.ImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR);
+                node.SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR); ;
+                
                 Nodes.Add(node);
                 node.populate();
 

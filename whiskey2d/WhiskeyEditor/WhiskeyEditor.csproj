@@ -90,6 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\Actions\AbstractAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewFileAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewLevelAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewProjectAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewScriptAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewTypeAction.cs" />
     <Compile Include="Backend\Actions\WhiskeyAction.cs" />
     <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
     <Compile Include="Backend\Actions\Impl\PlayAction.cs" />
@@ -196,6 +201,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Properties\Editors\RemovePropertyAction.cs" />
+    <Compile Include="UI\Properties\Editors\ScriptDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Properties\Editors\TypeDescriptorPropertyEditor.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -247,6 +255,45 @@
     <Content Include="UI\Assets\plus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Assets\RealSet\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\docCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\docCode2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\docEmpty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\docLevel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\gear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\minus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\saveall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\RealSet\trash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Assets\saveIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -268,6 +315,9 @@
     <Content Include="compile-exe\WhiskeyRunner.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UI\Menu\NewForm.resx">
+      <DependentUpon>NewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

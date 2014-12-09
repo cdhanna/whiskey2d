@@ -95,6 +95,10 @@ namespace WhiskeyEditor.UI
             {
                 return new InstanceDescriptorPropertyEditor((InstanceDescriptor)propObj);
             }
+            else if (propObj is ScriptDescriptor)
+            {
+                return new ScriptDescriptorPropertyEditor((ScriptDescriptor)propObj);
+            }
             else throw new WhiskeyException("???");
         }
 

@@ -15,16 +15,26 @@ namespace WhiskeyEditor.UI.Menu
         public const string NEW_TYPE = "Type";
         public const string NEW_SCRIPT = "Script";
         public const string NEW_LEVEL = "Level";
-        public const string NEW_CODE = "Code";
+        //public const string NEW_CODE = "Code";
+
+
+        private FlowLayoutPanel btnPanel;
+
 
         private Label typeLabel;
         private Label nameLabel;
+        private Label detailLabel;
+        
         private Button btnCancel;
         private Button btnOkay;
+
+
         private TextBox nameBox;
         private ComboBox typeBox;
         private ComboBox scriptTypeBox;
-        private FlowLayoutPanel mainPanel;
+
+
+        private TableLayoutPanel mainPanel;
 
         public DialogResult DialogResult { get; private set; }
         public String SelectedType { get { return typeBox.SelectedItem.ToString(); } }
@@ -52,6 +62,7 @@ namespace WhiskeyEditor.UI.Menu
             {
                 nameBox.Text = "";
             };
+            this.FormBorderStyle =  System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 
             initControls();
             configureControls();
@@ -63,17 +74,27 @@ namespace WhiskeyEditor.UI.Menu
         {
             typeBox.SelectedItem = NewForm.NEW_TYPE;
         }
-        public void setForCode()
-        {
-            typeBox.SelectedItem = NewForm.NEW_CODE;
+        //public void setForCode()
+        //{
+        //    typeBox.SelectedItem = NewForm.NEW_CODE;
 
-        }
+        //}
         public void setForScript()
         {
             typeBox.SelectedItem = NewForm.NEW_SCRIPT;
-            scriptTypeBox.Visible = (typeBox.SelectedItem.ToString().Equals(NEW_SCRIPT));
+            //scriptTypeBox.Visible = (typeBox.SelectedItem.ToString().Equals(NEW_SCRIPT));
+            //scriptTypeBox.Items.Clear();
+            //if (scriptTypeBox.Visible)
+            //{
+            //    FileManager.Instance.FileDescriptors.Where(f => f is TypeDescriptor).ToList().ForEach((f) =>
+            //    {
+            //        scriptTypeBox.Items.Add(f.Name);
+            //    });
+
+            //}
+            scriptTypeBox.Visible = true;// (typeBox.SelectedItem.ToString().Equals(NEW_SCRIPT));
             scriptTypeBox.Items.Clear();
-            if (scriptTypeBox.Visible)
+            //if (scriptTypeBox.Visible)
             {
                 FileManager.Instance.FileDescriptors.Where(f => f is TypeDescriptor).ToList().ForEach((f) =>
                 {
@@ -89,61 +110,111 @@ namespace WhiskeyEditor.UI.Menu
 
         private void initControls()
         {
-            mainPanel = new FlowLayoutPanel();
-            mainPanel.AutoSize = true;
-            mainPanel.FlowDirection = FlowDirection.TopDown;
+            mainPanel = new TableLayoutPanel();
+            mainPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            //mainPanel.AutoSize = true;
 
-            FlowLayoutPanel topFlowPanel = new FlowLayoutPanel();
-            topFlowPanel.FlowDirection = FlowDirection.LeftToRight;
-            topFlowPanel.AutoSize = true;
+            //mainPanel.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;//.AddColumns;
+
+            //mainPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
+            //mainPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250));
+           
+            
+            
+            #region type
 
             typeLabel = new Label();
-            typeLabel.Text = "Select file type ";
-            topFlowPanel.Controls.Add(typeLabel);
+            typeLabel.Text = "New";
+            typeLabel.TextAlign = ContentAlignment.MiddleRight;
+           // typePanel.Controls.Add(typeLabel);
+            mainPanel.Controls.Add(typeLabel, 0, 0);
 
             typeBox = new ComboBox();
-            topFlowPanel.Controls.Add(typeBox);
+            typeBox.Dock = DockStyle.Fill;
+           // typePanel.Controls.Add(typeBox);
+            mainPanel.Controls.Add(typeBox, 1, 0);
 
-            mainPanel.Controls.Add(topFlowPanel);
+            //mainPanel.Controls.Add(typePanel, 0, 0);
+            #endregion 
 
-            FlowLayoutPanel nameFlowPanel = new FlowLayoutPanel();
-            nameFlowPanel.FlowDirection = FlowDirection.LeftToRight;
-            nameFlowPanel.AutoSize = true;
-            mainPanel.Controls.Add(nameFlowPanel);
+            #region name
 
             nameLabel = new Label();
-            nameLabel.Text = "Name ";
-            nameFlowPanel.Controls.Add(nameLabel);
-            
+            nameLabel.Text = "Name";
+            nameLabel.TextAlign = ContentAlignment.MiddleRight;
+            mainPanel.Controls.Add(nameLabel, 0, 1);
+           // namePanel.Controls.Add(nameLabel);
+
             nameBox = new TextBox();
             nameBox.Dock = DockStyle.Fill;
-            nameFlowPanel.Controls.Add(nameBox);
-            nameFlowPanel.SetFlowBreak(nameBox, true);
+            mainPanel.Controls.Add(nameBox, 1, 1);
+           // namePanel.Controls.Add(nameBox);
+
+           // mainPanel.Controls.Add(namePanel, 0, 1);
+
+            #endregion
+
+
+            #region detail
+
+
+            detailLabel = new Label();
+            detailLabel.TextAlign = ContentAlignment.MiddleRight;
+            detailLabel.Text = "For";
+            mainPanel.Controls.Add(detailLabel, 0, 2);
+           // detailPanel.Controls.Add(detailLabel);
 
             scriptTypeBox = new ComboBox();
-            scriptTypeBox.Width = mainPanel.Width;
-            scriptTypeBox.Visible = false;
-            nameFlowPanel.Controls.Add(scriptTypeBox);
-            
+            scriptTypeBox.Dock = DockStyle.Fill;
+            mainPanel.Controls.Add(scriptTypeBox, 1, 2);
+           // detailPanel.Controls.Add(scriptTypeBox);
 
-            #region Buttons
+            //mainPanel.Controls.Add(detailPanel, 0, 2);
 
-            FlowLayoutPanel btnFlowPanel = new FlowLayoutPanel();
-            btnFlowPanel.FlowDirection = FlowDirection.LeftToRight;
-            btnFlowPanel.AutoSize = true;
-            btnFlowPanel.Dock = DockStyle.Bottom;
-            mainPanel.Controls.Add(btnFlowPanel);
+            #endregion
 
-            btnCancel = new Button();
-            btnCancel.Text = "Cancel";
-            btnFlowPanel.Controls.Add(btnCancel);
+            #region buttons
+            btnPanel = new FlowLayoutPanel();
+            btnPanel.FlowDirection = FlowDirection.LeftToRight;
+            //btnPanel.AutoSize = true;
+            btnPanel.Dock = DockStyle.Fill;
+            //btnPanel.Width = Width;
+            btnPanel.Anchor = AnchorStyles.Right ;
+           // btnPanel.BackColor = Color.AliceBlue;
 
             btnOkay = new Button();
             btnOkay.Dock = DockStyle.Fill;
             btnOkay.Text = "Okay";
-            btnFlowPanel.Controls.Add(btnOkay);
+           // mainPanel.Controls.Add(btnOkay, 0, 3);
+            btnPanel.Controls.Add(btnOkay);
 
+            btnCancel = new Button();
+            btnCancel.Text = "Cancel";
+            //btnCancel.Dock = DockStyle.Fill;
+            //mainPanel.Controls.Add(btnCancel, 2, 3);
+            btnPanel.Controls.Add(btnCancel);
+            
+            mainPanel.Controls.Add(btnPanel, 0, 3);
+            mainPanel.SetColumnSpan(btnPanel, 2);
             #endregion
+
+            mainPanel.SetRowSpan(btnPanel, 2);
+            //scriptTypeBox = new ComboBox();
+            //scriptTypeBox.Width = mainPanel.Width;
+            //scriptTypeBox.Visible = false;
+            //nameFlowPanel.Controls.Add(scriptTypeBox);
+            
+
+     
+            //FlowLayoutPanel btnFlowPanel = new FlowLayoutPanel();
+            //btnFlowPanel.FlowDirection = FlowDirection.LeftToRight;
+            //btnFlowPanel.AutoSize = true;
+            //btnFlowPanel.Dock = DockStyle.Bottom;
+            //mainPanel.Controls.Add(btnFlowPanel);
+
+
+            
+
 
         }
 
@@ -152,7 +223,7 @@ namespace WhiskeyEditor.UI.Menu
 
 
 
-           // mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Dock = DockStyle.Fill;
             Controls.Add(mainPanel);
         }
 
@@ -162,8 +233,8 @@ namespace WhiskeyEditor.UI.Menu
             typeBox.Items.Add(NEW_SCRIPT);
             typeBox.Items.Add(NEW_TYPE);
             typeBox.Items.Add(NEW_LEVEL);
-            typeBox.Items.Add(NEW_CODE);
-            typeBox.SelectedItem = NEW_CODE;
+            //typeBox.Items.Add(NEW_CODE);
+            typeBox.SelectedItem = NEW_TYPE;
 
             typeBox.DropDownStyle = ComboBoxStyle.DropDownList;
             typeBox.SelectedIndexChanged += (s, a) =>
@@ -205,6 +276,18 @@ namespace WhiskeyEditor.UI.Menu
                 DialogResult = DialogResult.Cancel;
                 Close();
             };
+
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // NewForm
+            // 
+            this.ClientSize = new System.Drawing.Size(335, 311);
+            this.Name = "NewForm";
+            this.ResumeLayout(false);
 
         }
 

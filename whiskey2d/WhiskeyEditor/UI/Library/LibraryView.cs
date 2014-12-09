@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Actions.Impl;
 using WhiskeyEditor.UI.Assets;
 
 
@@ -30,7 +31,15 @@ namespace WhiskeyEditor.UI.Library
 
         public event LibrarySelectionEventHandler SelectionChanged = new LibrarySelectionEventHandler((s, a) => { });
         public event LibrarySelectionEventHandler ClickedOnNode = new LibrarySelectionEventHandler((s, a) => { });
-        
+
+
+        private NewLevelAction newLevelAction;
+        private NewTypeAction newTypeAction;
+        private NewScriptAction newScriptAction;
+
+        private ContextMenuStrip newFileMenu;
+
+
 
         public LibraryView()
         {
@@ -106,10 +115,27 @@ namespace WhiskeyEditor.UI.Library
             fileTree = new TreeView();
             fileTree.Size = new Size(50, 50);
 
-            fileTree.ImageList = new ImageList();
-            fileTree.ImageList.Images.Add(AssetManager.ICON_FLDR);
-            fileTree.ImageList.Images.Add(AssetManager.ICON_FILE);
+            fileTree.ImageList = AssetManager.getImageList();
+            //fileTree.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            //fileTree.ImageList.ImageSize = new Size(16, 16);
+            //fileTree.ImageList = new ImageList();
+            //fileTree.ImageList.Images.Add(AssetManager.ICON_FLDR);
+            //fileTree.ImageList.Images.Add(AssetManager.ICON_FILE);
 
+
+            newLevelAction = new NewLevelAction();
+            newTypeAction = new NewTypeAction();
+            newScriptAction = new NewScriptAction();
+
+            newFileMenu = new ContextMenuStrip();
+            newFileMenu.Width = 200;
+
+            ToolStripLabel label = new ToolStripLabel("Add File...");
+            newFileMenu.Text = "Add File";
+            newFileMenu.Items.Add(label);
+            newFileMenu.Items.Add( newTypeAction.generateControl<ToolStripButton>() );
+            newFileMenu.Items.Add( newScriptAction.generateControl<ToolStripButton>());
+            newFileMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
         }
 
         private void configureControls()
@@ -127,12 +153,19 @@ namespace WhiskeyEditor.UI.Library
             fileTree.NodeMouseClick += (s, a) =>
             {
                 LibraryTreeNode node = (LibraryTreeNode)a.Node;
-                if (node.IsFile)
+                if (node.IsFile && a.Button == System.Windows.Forms.MouseButtons.Left)
                 {
                     ClickedOnNode(this, new LibrarySelectionEventArgs(node));
                 }
+
+                if (!node.IsFile && a.Button == System.Windows.Forms.MouseButtons.Right)
+                {
+                    newFileMenu.Show(this, a.Location, ToolStripDropDownDirection.Right);
+                }
+
             };
 
+          
 
         }
 
