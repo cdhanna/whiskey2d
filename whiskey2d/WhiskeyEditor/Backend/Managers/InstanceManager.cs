@@ -99,6 +99,9 @@ namespace WhiskeyEditor.Backend.Managers
             buildDomain.SetData("color", level.BackgroundColor);
             buildDomain.SetData("dllPath", dllPathIn);
             buildDomain.SetData("statePath", statePath);
+
+            level.getInstances().ForEach((i) => { i.updateTypeDescriptor();  });
+
             buildDomain.SetData("iDescs", level.getInstances());
             buildDomain.SetData("scriptTable", ScriptManager.Instance.getScriptTable());
 
@@ -180,7 +183,7 @@ namespace WhiskeyEditor.Backend.Managers
             }
             catch (Exception e)
             {
-                Console.WriteLine("broken");
+                Console.WriteLine("conversion broken");
             }
             
             AppDomain.Unload(buildDomain);

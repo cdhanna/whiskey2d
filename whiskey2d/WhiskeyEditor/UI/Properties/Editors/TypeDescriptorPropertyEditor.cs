@@ -22,12 +22,17 @@ namespace WhiskeyEditor.UI.Properties.Editors
         private EventHandler dropDownOpeningHandler;
         private PropertyRemovedEventHandler propRemovedHandler;
 
+        protected List<GeneralPropertyDescriptor> ScriptProperties;
+
+
+        protected EditScriptsAction editScriptsAction;
+
         public TypeDescriptorPropertyEditor(TypeDescriptor tDesc) : base(tDesc)
         {
             
             Title = "Type Properties";
 
-            
+            ScriptProperties = new List<GeneralPropertyDescriptor>();
             
 
             initControls();
@@ -35,6 +40,27 @@ namespace WhiskeyEditor.UI.Properties.Editors
            
         }
 
+
+        public void refreshScripts()
+        {
+            ScriptProperties.ForEach((s) => { WhiskeyPropertyListGrid.removeOtherProperty(s); });
+            ScriptProperties.Clear();
+            Descriptor.getScriptNames().ForEach((s) =>
+            {
+                GeneralPropertyDescriptor gpd = WhiskeyPropertyListGrid.addOtherProperty(s, "Scripts", 1);
+                gpd.PropIsReadOnly = true;
+                ScriptProperties.Add(gpd);
+            });
+        }
+
+        public override void Refresh()
+        {
+            refreshScripts();
+
+
+            WhiskeyPropertyListGrid.Refresh();
+            base.Refresh();
+        }
 
         private void initControls()
         {
@@ -73,7 +99,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
             //removeBox.DropDownStyle = ComboBoxStyle.DropDownList;
             ToolStripItems.Add(dropDownBtn);
 
-
+            editScriptsAction = new AddRemoveTypeScriptsAction(Descriptor, this);
+            ToolStripItems.Add(editScriptsAction.generateControl());
            
 
         }

@@ -197,6 +197,10 @@ namespace WhiskeyEditor.Backend
             return names;
         }
 
+        public List<string> getScriptNames()
+        {
+            return scriptNames;
+        }
        
     
         protected override string CodeClassDef

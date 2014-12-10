@@ -226,6 +226,12 @@ namespace WhiskeyEditor.Backend.Managers
                     levels.Add(l);
                     InstanceManager.Instance.addLevel(l.Level);
                 }
+                else if (f is ScriptDescriptor)
+                {
+                    ScriptDescriptor s = (ScriptDescriptor)f;
+                    ScriptManager.Instance.addScript(s);
+
+                }
 
             }
             levels.ForEach((l) =>

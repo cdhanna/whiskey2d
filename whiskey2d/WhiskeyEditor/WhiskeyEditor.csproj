@@ -189,6 +189,15 @@
     <Compile Include="UI\Properties\Dictionary\DictionaryPropertyDescriptor.cs" />
     <Compile Include="UI\Properties\Dictionary\DictionaryPropertyGridAdapter.cs" />
     <Compile Include="UI\Properties\Editors\AddPropertyAction.cs" />
+    <Compile Include="UI\Properties\Editors\AddRemoveInstanceScriptsAction.cs" />
+    <Compile Include="UI\Properties\Editors\AddRemoveScriptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\AddRemoveScriptControl.Designer.cs">
+      <DependentUpon>AddRemoveScriptControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\AddRemoveTypeScriptsAction.cs" />
+    <Compile Include="UI\Properties\Editors\EditScriptsAction.cs" />
     <Compile Include="UI\Properties\Editors\FileDescriptorPropertyEditor.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -318,6 +327,9 @@
     </Content>
     <EmbeddedResource Include="UI\Menu\NewForm.resx">
       <DependentUpon>NewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Properties\Editors\AddRemoveScriptControl.resx">
+      <DependentUpon>AddRemoveScriptControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

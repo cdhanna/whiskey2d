@@ -153,7 +153,7 @@ namespace Whiskey2D.Core
         //    this.objectScriptTable.Remove(script);
         //}
 
-        public void clearScripts()
+        public virtual void clearScripts()
         {
             this.scripts.Clear();
            // this.objectScriptTable.Clear();

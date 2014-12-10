@@ -44,6 +44,11 @@ namespace WhiskeyEditor.Backend
         public TypeDescriptor TypeDescriptorInFileManager { get { return FileManager.Instance.lookUpFileByName<TypeDescriptor>(typeDesc.Name); } }
         public TypeDescriptor TypeDescriptorCompile { get { return typeDesc; } }
 
+        public void updateTypeDescriptor()
+        {
+            typeDesc = TypeDescriptorInFileManager;
+        }
+
 
         public void registerListeners()
         {
@@ -185,6 +190,11 @@ namespace WhiskeyEditor.Backend
                 scriptNames.Remove(scriptName);
             }
             else throw new WhiskeyException("Script Not Found : " + scriptName);
+        }
+        public override void clearScripts()
+        {
+            scriptNames.Clear();
+            base.clearScripts();
         }
 
         private PropertyDescriptor lookUpPropertyDescriptor(String name)

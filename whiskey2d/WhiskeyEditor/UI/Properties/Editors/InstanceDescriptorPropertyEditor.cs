@@ -18,6 +18,12 @@ namespace WhiskeyEditor.UI.Properties.Editors
         protected PropertyAdapter Adapter { get; private set; }
         protected InstanceDescriptor Descriptor { get; private set; }
 
+
+        protected List<GeneralPropertyDescriptor> ScriptProperties;
+
+
+        protected EditScriptsAction editScriptsAction;
+
         /// <summary>
         /// A handler for drag drop
         /// </summary>
@@ -29,7 +35,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
         {
             Title = "Instance Properties";
             Descriptor = desc;
-
+            ScriptProperties = new List<GeneralPropertyDescriptor>();
             initControls();
             addControls();
             AllowDrop = true;
@@ -46,8 +52,23 @@ namespace WhiskeyEditor.UI.Properties.Editors
             base.Dispose(disposing);
         }
 
+        public void refreshScripts()
+        {
+            ScriptProperties.ForEach((s) => { PropertyGrid.removeOtherProperty(s); });
+            ScriptProperties.Clear();
+            Descriptor.getScriptNames().ForEach((s) =>
+            {
+                GeneralPropertyDescriptor gpd = PropertyGrid.addOtherProperty(s, "Scripts", 1);
+                gpd.PropIsReadOnly = true;
+                ScriptProperties.Add(gpd);
+            });
+        }
+
         public override void Refresh()
         {
+            refreshScripts();
+            
+
             PropertyGrid.Refresh();
             base.Refresh();
         }
@@ -55,6 +76,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
         private void initControls()
         {
             
+
+
             PropertyGrid = new PropertyDescriptorListEditor();
             List<PropertyDescriptor> pList = Descriptor.getPropertySet();
             PropertyGrid.PropertyList = pList;
@@ -62,6 +85,17 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
             PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptorInFileManager.Name).PropIsReadOnly = true;
 
+
+            editScriptsAction = new AddRemoveInstanceScriptsAction(Descriptor, this);
+            ToolStripItems.Add(editScriptsAction.generateControl());
+            //ToolStripContentPanel
+
+          
+
+          
+
+
+            refreshScripts();
         }
 
         private void addControls()
@@ -104,7 +138,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
                     Descriptor.addScript(sDesc.Name);
 
-
+                    Refresh();
                 }
             }
 
