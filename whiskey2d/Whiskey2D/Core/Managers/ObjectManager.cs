@@ -43,6 +43,8 @@ namespace Whiskey2D.Core.Managers
         List<GameObject> getAllObjects();
 
 
+        string getDefaultNameFor(GameObject gob);
+
         List<GameObject> getAllObjectsNotOfType<G>() where G : GameObject;
 
         /// <summary>
@@ -52,6 +54,9 @@ namespace Whiskey2D.Core.Managers
         /// <returns>A list of all GameObjects that are of the specified type</returns>
         List<G> getAllObjectsOfType<G>() where G : GameObject;
 
+
+        GameObject getObject(string name);
+        G getObject<G>(string name) where G : GameObject;
 
         State getState();
 

@@ -15,13 +15,14 @@ namespace WhiskeyEditor.Backend
         public const string PROP_X = "X";
         public const string PROP_Y = "Y";
         public const string PROP_SPRITE = "Sprite";
+        public const string PROP_NAME = "Name";
 
 
         private bool initialized;
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
-
+       
         public InstanceDescriptor(TypeDescriptor typeDesc, ObjectManager manager )
             : base(manager)
         {
@@ -74,6 +75,7 @@ namespace WhiskeyEditor.Backend
         {
             initialized = true;
             this.typeDesc = typeDesc;
+          
             
             propDescs = typeDesc.getPropertySetClone();
 
@@ -89,6 +91,10 @@ namespace WhiskeyEditor.Backend
             {
                 base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
             };
+
+            
+
+            Name = objectManager.getDefaultNameFor(this);
 
         }
 
@@ -171,10 +177,23 @@ namespace WhiskeyEditor.Backend
             //get synced!
         }
 
+        public void updateObjectManager(ObjectManager objMan)
+        {
+            objectManager = objMan;
+
+        }
+
 
         public TypeVal getTypeValOfName(string name)
         {
             return lookUpPropertyDescriptor(name).TypeVal;
+        }
+
+        public override string getTypeName()
+        {
+            if (initialized)
+                return typeDesc.Name;
+            else return "unnamed";
         }
 
         public void addScript(String scriptName)
@@ -271,6 +290,28 @@ namespace WhiskeyEditor.Backend
                 {
                     getTypeValOfName(PROP_SPRITE).Value = value;
                 }
+ 
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.Name;
+                }
+                else return (String)getTypeValOfName(PROP_NAME).Value;
+            }
+            set
+            {
+                base.Name = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_NAME).Value = value;
+                }
+
             }
         }
 
@@ -283,5 +324,27 @@ namespace WhiskeyEditor.Backend
         {
             //none at the moment
         }
+
+
+        public InstanceDescriptor clone(ObjectManager objectManager)
+        {
+            InstanceDescriptor inst = new InstanceDescriptor(TypeDescriptorInFileManager, objectManager);
+
+            inst.X = X;
+            inst.Y = Y;
+            inst.Sprite = new Sprite(Sprite.getRenderer(), Sprite.getResources(), Sprite);
+
+            for (int i = 0 ; i < getPropertySet().Count ; i ++)
+            {
+                propDescs[i] = lookUpPropertyDescriptor(propDescs[i].Name).clone();
+            }
+            foreach (string scriptName in getScriptNames())
+            {
+                inst.addScript(scriptName);
+            }
+
+            return inst;
+        }
+
     }
 }

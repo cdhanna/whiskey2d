@@ -62,6 +62,18 @@ namespace WhiskeyEditor.UI.Properties.TypeConverters
             if (destinationType == typeof(string))
             {
                 WhiskeyPropertyContainer container = (WhiskeyPropertyContainer)value;
+
+                TypeConverter converter = WhiskeyTypeConverters.lookUp(container.Value.GetType().Name);
+                if (converter != null)
+                {
+                    object newValue = converter.ConvertTo(context, culture, container.Value, destinationType);
+
+                    
+
+                    return newValue;
+                }
+
+
                 if (ConverterManager.Instance.hasConverter(container.Value.GetType()))
                 {
                     return ConverterManager.Instance.convertToString(container.Value);

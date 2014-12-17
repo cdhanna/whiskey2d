@@ -46,6 +46,10 @@ namespace WhiskeyEditor.Backend.Managers
             return scriptNames;
         }
 
+        public void clear()
+        {
+            scriptTable.Clear();
+        }
 
         public ScriptDescriptor lookUpScript(string name)
         {

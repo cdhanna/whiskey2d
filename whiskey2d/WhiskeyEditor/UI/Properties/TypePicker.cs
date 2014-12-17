@@ -59,7 +59,7 @@ namespace WhiskeyEditor.UI.Properties
                     return list.SelectedItem;
             }
 
-            return "SQUASH";
+            return value;
         }
 
         public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)

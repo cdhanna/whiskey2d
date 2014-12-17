@@ -62,17 +62,21 @@ namespace WhiskeyEditor.UI.Properties.Editors
             base.Refresh();
         }
 
+        private void updateFile(object sender, EventArgs args)
+        {
+            Descriptor.ensureFileExists();
+            WhiskeyEditor.Backend.Managers.InstanceManager.Instance.syncTypeToInstances(Descriptor);
+        }
+
         private void initControls()
         {
             WhiskeyPropertyListGrid.PropertyList = Descriptor.getPropertySet();
 
             remPropertyActions = new List<WhiskeyAction>();
-           
-            WhiskeyPropertyListGrid.PropertyGrid.PropertyValueChanged += (s, a) =>
-            {
-                Descriptor.ensureFileExists();
-                WhiskeyEditor.Backend.Managers.InstanceManager.Instance.syncTypeToInstances(Descriptor);
-            };
+
+            WhiskeyPropertyListGrid.PropertyAdapter.PropertyValueChanged += updateFile;
+            WhiskeyPropertyListGrid.PropertyGrid.PropertyValueChanged += updateFile;
+            
 
             addPropertyAction = new AddPropertyAction(Descriptor, WhiskeyPropertyListGrid);
             ToolStripItems.Add(addPropertyAction.generateControl<ToolStripButton>());

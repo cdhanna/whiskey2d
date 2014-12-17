@@ -53,24 +53,44 @@ namespace WhiskeyEditor.UI.Documents
             //    Dirty = true;
             //};
 
-            whiskey.SelectionChanged += (s, a) =>
-            {
-                requestPropertyChange(a.SelectedObject);
-            };
+
+
+
+
+
 
             whiskey.MouseUp += (s, a) =>
             {
-                if (whiskey.SelectedGob != null)
+                if (SelectionManager.Instance.SelectedInstance != null)
                 {
-                    requestPropertyChange(whiskey.SelectedGob);
+                    requestPropertyChange(SelectionManager.Instance.SelectedInstance);
                 }
             };
 
+            SelectionManager.Instance.SelectedInstanceUpdated += (s, a) =>
+            {
+                if (SelectionManager.Instance.SelectedInstance != null)
+                {
+                    requestPropertyChange(SelectionManager.Instance.SelectedInstance); //TODO fix how slow this is
+                }
+                else
+                {
+                    if (ParentController.Tabs.SelectedTab == this)
+                    {
+                        requestPropertyChange(Descriptor);
+                    }
+                }
+            }; 
 
             dragEnterHandler = new DragEventHandler(dragEnter);
             dragDropHandler = new DragEventHandler(dragDrop);
 
-            base.addAction(new PlayLevelAction(levelDescriptor));
+            base.addAction(new PlayLevelAction(Descriptor));
+            base.addAction<ToolStripDropDownButton>(new ViewInstanceDetailsAction(Descriptor.Level));
+
+            base.addAction(new CopyInstanceAction());
+            base.addAction(new PasteInstanceAction(Descriptor));
+
         }
 
 
@@ -93,11 +113,14 @@ namespace WhiskeyEditor.UI.Documents
 
 
         private void dragEnter(object sender, DragEventArgs args){
-            LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
-            FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
-            if (fDesc is TypeDescriptor)
+            if (args.Data.GetData(typeof(LibraryTreeNode)) is LibraryTreeNode)
             {
-                args.Effect = DragDropEffects.All;
+                LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
+                FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+                if (fDesc is TypeDescriptor)
+                {
+                    args.Effect = DragDropEffects.All;
+                }
             }
         }
         private void dragDrop(object sender, DragEventArgs args)
@@ -111,8 +134,9 @@ namespace WhiskeyEditor.UI.Documents
                 TypeDescriptor tDesc = (TypeDescriptor)fDesc;
 
                 InstanceDescriptor inst = new InstanceDescriptor(tDesc, Descriptor.Level);
-                inst.Sprite = new Sprite(WhiskeyControl.Renderer, inst.Sprite);
-
+                inst.Sprite = new Sprite(WhiskeyControl.Renderer, WhiskeyControl.Resources, inst.Sprite);
+                //inst.Sprite.setImage(WhiskeyControl.Resources.loadImage("ricky_simple"));
+               
 
                 //inst.Sprite.Scale *= 50;
                 Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
@@ -121,18 +145,18 @@ namespace WhiskeyEditor.UI.Documents
 
                 inst.X = inst.Position.X;
                 inst.Y = inst.Position.Y;
-                
-                //Descriptor.Level.Descriptors.Add(inst);
+
+                SelectionManager.Instance.SelectedInstance = inst;
+
                 Dirty = true;
             }
             
-
-           // save(new DefaultProgressNotifier());
 
         }
 
         public override void Refresh()
         {
+
             whiskey.setAsActive();
             
             base.Refresh();
@@ -141,10 +165,11 @@ namespace WhiskeyEditor.UI.Documents
         public override void save(ProgressNotifier pn)
         {
             pn.Progress = .3f;
-            State state = Descriptor.Level.getInstanceLevelState();
+            //State state = Descriptor.Level.getInstanceLevelState();
+            Descriptor.save();
             pn.Progress = .9f;
             
-            State.serialize(state, Descriptor.FilePath);
+            //State.serialize(state, Descriptor.FilePath);
             pn.Progress = 1;
             base.save(pn);
         }

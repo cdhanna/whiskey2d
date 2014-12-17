@@ -19,7 +19,8 @@ namespace WhiskeyEditor.MonoHelp
         public GraphicsDevice GraphicsDevice { get; private set; }
         private SpriteBatch spriteBatch;
         private static Texture2D pixel;
-      
+
+        private Sprite alwaysOnSprite;
 
         /// <summary>
         /// Initializes the RenderManager
@@ -28,7 +29,12 @@ namespace WhiskeyEditor.MonoHelp
         {
             this.GraphicsDevice = graphicsDevice;
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            
+
+            alwaysOnSprite = new Sprite("selection.png", Vector.One, Vector.Zero, .5f, XnaColor.White, 0);
+            alwaysOnSprite = new Sprite(WhiskeyControl.Renderer, WhiskeyControl.Resources, alwaysOnSprite);
+            alwaysOnSprite.getImage();
+            alwaysOnSprite.Center();
+            alwaysOnSprite.Scale *= .5f;
         }
 
         /// <summary>
@@ -52,6 +58,7 @@ namespace WhiskeyEditor.MonoHelp
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
+                    
                     spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
                 }
             }
@@ -68,8 +75,11 @@ namespace WhiskeyEditor.MonoHelp
             {
                 Sprite spr = gob.Sprite;
                 spr.setRender(this);
+                spr.setResources(WhiskeyControl.Resources);
                 if (spr != null)
                 {
+                    Vector2 alwaysOnPos = gob.Position + gob.Bounds.Size / 2;
+                    spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, (spr.Depth / 2) - .01f);
                     spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
                 }
             }

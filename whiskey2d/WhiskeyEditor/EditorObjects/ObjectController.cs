@@ -16,7 +16,7 @@ namespace WhiskeyEditor.EditorObjects
         public InstanceDescriptor Dragging { get; set; }
         public InstanceDescriptor Selected { get; set; }
         public bool Unselect { get; set; }
-        public Level CurrentLevel { get; set; }
+        public EditorLevel CurrentLevel { get; set; }
     
 
         public ObjectController(ObjectManager manager) : base(manager)
@@ -30,6 +30,7 @@ namespace WhiskeyEditor.EditorObjects
         {
             addScript(new DragControllerScript());
             addScript(new SelectScript());
+            addScript(new CopyPasteScript());
         }
     }
 }

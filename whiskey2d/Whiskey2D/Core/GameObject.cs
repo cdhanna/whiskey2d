@@ -27,7 +27,8 @@ namespace Whiskey2D.Core
             this.addInitialScripts();
 
             objMan.addObject(this);
-
+            objectManager = objMan;
+            
         }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace Whiskey2D.Core
 
         }
 
+        protected ObjectManager objectManager;
         private Sprite sprite;
         private int id;
         private List<Script> scripts;
@@ -55,11 +57,14 @@ namespace Whiskey2D.Core
 
         public virtual float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
         public virtual float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
+
+
+        public virtual string Name { get; set; }
+        
         /// <summary>
         /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
         /// To give the Game Object visuals, set this to a new Sprite()
         /// </summary>
-
         public virtual Sprite Sprite
         {
             get
@@ -123,7 +128,8 @@ namespace Whiskey2D.Core
         /// </summary>
         public void close()
         {
-            GameManager.Objects.removeObject(this);
+            objectManager.removeObject(this);
+            //GameManager.Objects.removeObject(this);
         }
 
         public List<Script> getScripts()
@@ -238,7 +244,24 @@ namespace Whiskey2D.Core
         {
         }
 
-        
 
+        public virtual string getTypeName()
+        {
+            return GetType().Name;
+        }
+
+        public List<G> currentCollisions<G>() where G : GameObject
+        {
+            List<G> collisionObjects = new List<G>();
+            List<G> all = objectManager.getAllObjectsOfType<G>();
+            all.ForEach((gob) =>
+            {
+                if (gob.Bounds.boundWithin(Bounds))
+                {
+                    collisionObjects.Add(gob);
+                }
+            });
+            return collisionObjects;
+        }
     }
 }

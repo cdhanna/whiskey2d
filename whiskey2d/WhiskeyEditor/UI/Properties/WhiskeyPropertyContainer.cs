@@ -156,6 +156,7 @@ namespace WhiskeyEditor.UI.Properties
         /// The value of the property
         /// </summary>
         [TypeConverter(typeof(WhiskeyPropertyValueTypeConverter))]
+        [Editor(typeof(WhiskeyPropertyValuePicker), typeof(UITypeEditor))]
         public object Value
         {
             get

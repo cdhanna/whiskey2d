@@ -34,7 +34,9 @@ namespace WhiskeyEditor.UI.Properties
         /// The most recent set of propertyModels created 
         /// </summary>
         private List<WhiskeyPropertyContainer> LastModelSet { get; set; }
-        
+
+
+        public event EventHandler PropertyValueChanged = new EventHandler((s, a) => { });
 
         public PropertyAdapter(List<WhiskeyProperty> props, PropertyGrid grid)
         {
@@ -120,50 +122,53 @@ namespace WhiskeyEditor.UI.Properties
             //for every property in our set...
             foreach (WhiskeyProperty prop in WhiskeyPropertys)
             {
-
-                //create a new property descriptor (for the property grid) for it....
-                GeneralPropertyDescriptor gpd = new GeneralPropertyDescriptor(prop.Name);
-                
-                //create a model, that is either secure or unsecure depending on if the WhiskeyProp.Secure is true/false
-                WhiskeyPropertyContainer model;
-                if (prop.Secure)
+                if (prop.Visible)
                 {
-                    model = new WhiskeyPropertyContainerSecured(prop);
+                    //create a new property descriptor (for the property grid) for it....
+                    GeneralPropertyDescriptor gpd = new GeneralPropertyDescriptor(prop.Name);
 
-                    gpd.PropCategory = "Base Properties";
-                
-                }
-                else
-                {
-                    model = new WhiskeyPropertyContainer(prop);
-
-                    gpd.PropCategory = "Properties";
-                
-                }
-
-                //set the value of the propertygrid property descriptor, to our model
-                gpd.PropValue = model;
-                
-
-                //add a listener that will update the propertygrid when the model changes
-                model.Changed += (s, a) => {
-                    gpd.PropDisplayName = a.WhiskeyProperty.Name;
-
-                    if (PropertyGrid.IsHandleCreated)
+                    //create a model, that is either secure or unsecure depending on if the WhiskeyProp.Secure is true/false
+                    WhiskeyPropertyContainer model;
+                    if (prop.Secure)
                     {
+                        model = new WhiskeyPropertyContainerSecured(prop);
 
-                        //PropertyGrid.BeginInvoke(new NoArgFunction(() => {
-                        //    PropertyGrid.Refresh();
-                        //}));
-                        
+                        gpd.PropCategory = "Base Properties";
 
                     }
-                };
+                    else
+                    {
+                        model = new WhiskeyPropertyContainer(prop);
 
-                //add the model to our set
-                LastModelSet.Add(model);
-                //add the propertygrid descriptor to the set to be returned
-                properties.Add(gpd);
+                        gpd.PropCategory = "Properties";
+
+                    }
+
+                    //set the value of the propertygrid property descriptor, to our model
+                    gpd.PropValue = model;
+
+
+                    //add a listener that will update the propertygrid when the model changes
+                    model.Changed += (s, a) =>
+                    {
+                        gpd.PropDisplayName = a.WhiskeyProperty.Name;
+
+                        if (PropertyGrid.IsHandleCreated)
+                        {
+
+                            //PropertyGrid.BeginInvoke(new NoArgFunction(() => {
+                                PropertyGrid.Refresh();
+                            //}));
+                                PropertyValueChanged(this, new EventArgs());
+
+                        }
+                    };
+
+                    //add the model to our set
+                    LastModelSet.Add(model);
+                    //add the propertygrid descriptor to the set to be returned
+                    properties.Add(gpd);
+                }
             }
 
             //converting the set of propertygrid descriptors to a returnable array

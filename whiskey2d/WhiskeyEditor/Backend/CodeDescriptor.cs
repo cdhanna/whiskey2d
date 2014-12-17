@@ -42,7 +42,13 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return new string[] { "System", "Whiskey2D.Core" };
+                return new string[] { 
+                    "System",
+                    "System.Collections.Generic",
+                    "Whiskey2D.Core",
+                    "Whiskey2D.Core.Managers",
+                    "Whiskey2D.Core.Inputs",
+                    "Microsoft.Xna.Framework.Input"};
             }
         }
 

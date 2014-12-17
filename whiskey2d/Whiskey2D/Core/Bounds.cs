@@ -45,6 +45,13 @@ namespace Whiskey2D.Core
         /// </summary>
         public float Left { get { return position.X; } }
 
+        public Vector TopLeft { get { return Position; } }
+        public Vector TopRight { get { return TopLeft + Vector.UnitX * Size.X; } }
+        public Vector BottomLeft { get { return TopLeft + Vector.UnitY * Size.Y; } }
+        public Vector BottomRight { get { return TopLeft + Size; } }
+
+
+
         /// <summary>
         /// Create a Bound from a top-left position, and a width-height
         /// </summary>
@@ -71,5 +78,21 @@ namespace Whiskey2D.Core
                 
         }
 
+
+        public virtual Boolean boundWithin(Bounds bound)
+        {
+
+            return _inBound(this, bound) || _inBound(bound, this);
+
+        }
+
+        private static Boolean _inBound(Bounds a, Bounds b)
+        {
+            return (a.vectorWithin(b.TopLeft) ||
+                    a.vectorWithin(b.TopRight) ||
+                    a.vectorWithin(b.BottomLeft) ||
+                    a.vectorWithin(b.BottomRight));
+
+        }
     }
 }

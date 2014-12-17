@@ -42,6 +42,9 @@ namespace WhiskeyEditor.MonoHelp
 
         public static GraphicsDevice WhiskeyGraphicsDevice { get; private set; }
         public static EditorRenderManager Renderer { get; private set; }
+        public static EditorResourceManager Resources { get; private set; }
+        public static ContentManager Content { get; private set; }
+
 
         public static DefaultInputManager InputManager { get; private set; }
         public static DefaultInputSourceManager InputSourceManager { get; private set; }
@@ -105,7 +108,7 @@ namespace WhiskeyEditor.MonoHelp
         private bool backThreadRunKey = true;
 
         public event EventHandler BecameDirty = new EventHandler((s, a) => { });
-        public event WhiskeyControlEventHandler SelectionChanged = new WhiskeyControlEventHandler((s, a) => { });
+        //public event WhiskeyControlEventHandler SelectionChanged = new WhiskeyControlEventHandler((s, a) => { });
         
         
         /// <summary>
@@ -122,7 +125,7 @@ namespace WhiskeyEditor.MonoHelp
         /// <summary>
         /// Set the level that the WhiskeyControl is rendering
         /// </summary>
-        public Level Level
+        public EditorLevel Level
         {
             get { return level; }
             set
@@ -145,7 +148,7 @@ namespace WhiskeyEditor.MonoHelp
 
             }
         }
-        private Level level;
+        private EditorLevel level;
 
 
 
@@ -189,6 +192,9 @@ namespace WhiskeyEditor.MonoHelp
         /// </summary>
         public void setAsActive()
         {
+            SelectionManager.Instance.SelectedInstance = null;
+
+
 
             if (IsHandleCreated)
             {
@@ -225,11 +231,22 @@ namespace WhiskeyEditor.MonoHelp
         {
             Controller = this;
             WhiskeyGraphicsDevice = this.GraphicsDevice;
+            
             InputSource = new EditorInputSource(this);
             if (Renderer == null)
             {
                 Renderer = new EditorRenderManager();
+               
+
+                
+                Content = new ContentManager(this.Services);
+                Content.RootDirectory = "compile-media";
+                //Content.RootDirectory = ProjectManager.Instance.ActiveProject.PathMedia;
+                Resources = new EditorResourceManager();
+                Resources.init(Content);
                 Renderer.init(WhiskeyGraphicsDevice);
+                //Resources = new DefaultResourceManager();
+
             }
             if (InputManager == null)
             {
@@ -258,7 +275,7 @@ namespace WhiskeyEditor.MonoHelp
 
             //construct the object controller, and make sure it resides in the correct object managers
             objectController = new ObjectController(editorObjects);
-            objectController.Sprite = new Sprite(Renderer, objectController.Sprite);
+            objectController.Sprite = new Sprite(Renderer, Resources, objectController.Sprite);
 
 
            // editorObjects.addObject(objectController);
@@ -383,28 +400,28 @@ namespace WhiskeyEditor.MonoHelp
 
        
 
-        public GameObject SelectedGob
-        {
-            get
-            {
-                return selectedGob;
-            }
-            set
-            {
-                GameObject old = selectedGob;
-                selectedGob = value;
-                //BecameDirty(this, new EventArgs());
+        //public GameObject SelectedGob
+        //{
+        //    get
+        //    {
+        //        return selectedGob;
+        //    }
+        //    set
+        //    {
+        //        GameObject old = selectedGob;
+        //        selectedGob = value;
+        //        //BecameDirty(this, new EventArgs());
 
-                if (old != value)
-                    SelectionChanged(this, new WhiskeyControlEventArgs((InstanceDescriptor)value));
-                //GobGrid.SelectedObject = value;
-                //GobGrid.Refresh();
+        //        if (old != value)
+        //            SelectionChanged(this, new WhiskeyControlEventArgs((InstanceDescriptor)value));
+        //        //GobGrid.SelectedObject = value;
+        //        //GobGrid.Refresh();
 
-                //GobScriptCollection.SelectedObject = value;
-                //GobScriptCollection.Refresh();
+        //        //GobScriptCollection.SelectedObject = value;
+        //        //GobScriptCollection.Refresh();
 
-            }
-        }
+        //    }
+        //}
 
 
 

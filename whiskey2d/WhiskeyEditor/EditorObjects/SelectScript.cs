@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.MonoHelp;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.EditorObjects
 {
@@ -16,6 +17,17 @@ namespace WhiskeyEditor.EditorObjects
 
         public override void onStart()
         {
+
+            SelectionManager.Instance.SelectedInstanceChanged += (s, a) =>
+            {
+                Gob.Selected = SelectionManager.Instance.SelectedInstance;
+                if (Gob.Selected == null)
+                {
+                    Gob.Unselect = true;
+
+                }
+            };
+
         }
 
         public override void onUpdate()
@@ -30,19 +42,26 @@ namespace WhiskeyEditor.EditorObjects
                 foreach (InstanceDescriptor obj in objs)
                 {
                     Vector v = WhiskeyControl.InputManager.getMousePosition();
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()) || new Bounds(obj.Position - obj.Sprite.Offset - Vector.One * 8, Vector.One * 16).vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
                     {
                         Gob.Selected = obj;
 
-                        WhiskeyControl.Controller.SelectedGob = obj;
+                        SelectionManager.Instance.SelectedInstance = obj;
+                        
 
                         break;
                     }
 
                 }
-               
+
+                if (Gob.Selected == null)
+                {
+                    SelectionManager.Instance.SelectedInstance = null;
+                }
 
             }
+
+            
 
             if (Gob.Selected != null)
             {
@@ -51,6 +70,8 @@ namespace WhiskeyEditor.EditorObjects
                 Gob.Position = Gob.Selected.Bounds.Position - new Vector(5, 5);
                 Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(10, 10);
             }
+
+            
             else if (Gob.Unselect)
             {
                 Gob.Unselect = false;

@@ -79,9 +79,13 @@ namespace Whiskey2D.Core.Managers.Impl
 
                     if (spr.getImage() == GameManager.Renderer.getPixel())
                     {
-
+                        spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
                     }
-                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+                    {
+                        spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
+                        //GameManager.Log.debug(spr.ImagePath);
+                    }
+
                 }
             }
 

@@ -7,6 +7,7 @@ using Whiskey2D.Core;
 using Microsoft.Xna.Framework;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.MonoHelp;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.EditorObjects
 {
@@ -35,7 +36,7 @@ namespace WhiskeyEditor.EditorObjects
 
                 foreach (InstanceDescriptor obj in objs)
                 {
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()) || new Bounds(obj.Position - obj.Sprite.Offset - Vector.One * 8, Vector.One * 16).vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
                     {
                         Gob.Dragging = obj;
                         grabOffset = Gob.Dragging.Position - WhiskeyControl.InputManager.getMousePosition();
@@ -49,7 +50,9 @@ namespace WhiskeyEditor.EditorObjects
 
             if (Gob.Dragging != null)
             {
-                WhiskeyControl.Controller.SelectedGob = Gob.Dragging;
+                //WhiskeyControl.Controller.SelectedGob = Gob.Dragging;
+                SelectionManager.Instance.SelectedInstance = Gob.Dragging;
+                
                 Gob.Dragging.Position = WhiskeyControl.InputManager.getMousePosition() + grabOffset;
                 Gob.Dragging.X = Gob.Dragging.Position.X;
                 Gob.Dragging.Y = Gob.Dragging.Position.Y;

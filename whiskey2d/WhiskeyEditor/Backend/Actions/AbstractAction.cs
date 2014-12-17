@@ -53,11 +53,22 @@ namespace WhiskeyEditor.Backend.Actions
 
         
 
-
+        
         public C generateControl<C>() 
         {
             C control;
             Type controlType = typeof(C);
+
+
+            if (controlType == typeof(ToolStripDropDownButton))
+            {
+                ToolStripDropDownButton btn = new ToolStripDropDownButton(Name, Image, (s, a) => { ActionManager.Instance.run(this); });
+                setupDropDown(btn);
+                
+                
+                C btn2 = (C)Convert.ChangeType(btn, typeof(C));
+                return btn2;
+            }
 
             try
             {
@@ -80,6 +91,15 @@ namespace WhiskeyEditor.Backend.Actions
             {
                 throw new WhiskeyException("Cannot generate Control out of " + controlType + " because it doesn't have a Click Event");
             }
+
+            //if (typeof(C).Equals(typeof(ToolStripDropDownButton)))
+            //{
+
+            //    ToolStripDropDownButton btn = (ToolStripDropDownButton)Convert.ChangeType(control, typeof(ToolStripDropDownButton));
+            //    setupDropDown(btn);
+            //}
+
+
             return control;
         }
         private void writeValue(string propName, object src, object value)
@@ -93,6 +113,8 @@ namespace WhiskeyEditor.Backend.Actions
                 throw new WhiskeyException("Cannot generate control from " + src.GetType() + " Because it doesnt have a " + propName + " Property");
             }
         }
-
+        protected virtual void setupDropDown(ToolStripDropDownButton btn)
+        {
+        }
     }
 }

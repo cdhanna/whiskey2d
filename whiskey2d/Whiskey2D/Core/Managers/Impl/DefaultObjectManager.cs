@@ -30,10 +30,12 @@ namespace Whiskey2D.Core.Managers.Impl
         protected List<GameObject> gameObjects;
         protected List<GameObject> deadObjects;
         protected List<GameObject> newObjects;
+        private int objectCounter;
+        
 
         public DefaultObjectManager()
         {
-           
+            objectCounter = 0;
         }
 
         /// <summary>
@@ -98,6 +100,43 @@ namespace Whiskey2D.Core.Managers.Impl
             //gameObjects.Add(gob);
             //gob.init();
             newObjects.Add(gob);
+            gob.Name = getDefaultNameFor(gob);
+        }
+
+        public string getDefaultNameFor(GameObject gob)
+        {
+            int counter = 1;
+            string defaultName = gob.getTypeName() + counter;
+            
+            GameObject alreadyExists = getObject(defaultName);
+            while (alreadyExists != null)
+            {
+                counter++;
+                defaultName = gob.getTypeName() + counter;
+                alreadyExists = getObject(defaultName);
+            }
+
+            return defaultName;
+            //return gob.getTypeName() + (objectCounter++);
+        }
+        public GameObject getObject(string name)
+        {
+            foreach (GameObject gob in getAllObjects())
+            {
+                if (gob.Name.Equals(name))
+                {
+                    return gob;
+                }
+            }
+            return null;
+        }
+        public G getObject<G>(string name) where G : GameObject
+        {
+            GameObject gob = getObject(name);
+            if (gob.getTypeName().Equals(typeof(G).Name))
+                return (G)getObject(name);
+            else
+                return null;
         }
 
         /// <summary>

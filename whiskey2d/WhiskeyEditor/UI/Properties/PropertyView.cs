@@ -18,6 +18,9 @@ namespace WhiskeyEditor.UI.Properties
     public class PropertyView : Control 
     {
 
+       
+
+
         private PropertyContent pView;
         public PropertyContent PropertyContent
         {
@@ -33,6 +36,7 @@ namespace WhiskeyEditor.UI.Properties
 
         public PropertyView()
         {
+            
             BackColor = Color.White;
             Size = new Size(150, 50);
 
@@ -41,6 +45,27 @@ namespace WhiskeyEditor.UI.Properties
             addControls();
 
             setPropertyContent(null);
+        }
+
+        public void clearPropertyContent()
+
+        {
+            if (IsHandleCreated)
+            {
+                Invoke(new NoArgFunction(() =>
+                {
+                    removePropertyContent();
+                    ToolStrip.Items.Clear();
+                    titleLabel.Text = "";
+                }));
+            }
+            else
+            {
+                removePropertyContent();
+                ToolStrip.Items.Clear();
+                titleLabel.Text = "";
+            }
+            
         }
 
         private void removePropertyContent()
@@ -54,6 +79,9 @@ namespace WhiskeyEditor.UI.Properties
 
         public void setPropertyContent(PropertyContent content)
         {
+
+            
+
             if (PropertyContent != null && content.PropertyObject == PropertyContent.PropertyObject)
             {
                 PropertyContent.Refresh();
@@ -78,12 +106,11 @@ namespace WhiskeyEditor.UI.Properties
         {
             if (content == null)
             {
-                removePropertyContent();
-                Controls.Remove(panel);
+                clearPropertyContent();
             }
             else
             {
-                
+
                 PropertyContent oldContent = PropertyContent;
                 //removePropertyContent();
                 pView = content;
@@ -109,7 +136,7 @@ namespace WhiskeyEditor.UI.Properties
                 Controls.Remove(panel);
                 Controls.Add(content);
                 Controls.Add(panel);
-                
+
                 oldContent = null;
 
                 Visible = true;

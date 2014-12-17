@@ -2,41 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Whiskey2D.Core.Managers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using WhiskeyEditor.Backend.Managers;
+using System.IO;
 
-namespace Whiskey2D.Core.Managers.Impl
+namespace WhiskeyEditor.MonoHelp
 {
-
-    /// <summary>
-    /// Loads different Resources into the WHiskey Game
-    /// </summary>
-    public class DefaultResourceManager : ResourceManager
+    public class EditorResourceManager : ResourceManager
     {
-
-        private static DefaultResourceManager instance;
-
-
-        /// <summary>
-        /// Retrives the ResourceManager
-        /// </summary>
-        /// <returns>The ResourceManager</returns>
-        public static DefaultResourceManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DefaultResourceManager();
-            }
-            return instance;
-        }
-
-
         private ContentManager content;
 
         private SpriteFont defaultFont;
 
-        private DefaultResourceManager()
+        public EditorResourceManager()
         {
         }
 
@@ -65,7 +47,18 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
-            return content.Load<Texture2D>(filePath);
+
+            string destPath = "compile-media" + Path.DirectorySeparatorChar + filePath;
+
+
+            //file is in project space
+            string fullPath = ProjectManager.Instance.ActiveProject.PathMedia + Path.DirectorySeparatorChar + filePath;
+            if (File.Exists(fullPath))
+            {
+                File.Copy(fullPath, destPath, true);
+            }
+            Texture2D texture = content.Load<Texture2D>(filePath);
+            return texture;
         }
 
         public SpriteFont getDefaultFont()
@@ -73,7 +66,5 @@ namespace Whiskey2D.Core.Managers.Impl
             return defaultFont;
         }
 
-
- 
     }
 }

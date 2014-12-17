@@ -153,7 +153,8 @@ namespace WhiskeyEditor.Backend.Managers
             {
                 return fileDescMap[filePath];
             }
-            else throw new WhiskeyException("File could not be found : " + filePath);
+            else return null;
+            //else throw new WhiskeyException("File could not be found : " + filePath);
         }
 
 
@@ -213,6 +214,7 @@ namespace WhiskeyEditor.Backend.Managers
             fileDescMap.Clear();
 
             FileDescriptor[] files = new FileDescriptor[data.Files.Count];
+            ScriptManager.Instance.clear();
             data.Files.CopyTo(files);
             // = objs.ToList();
             List<LevelDescriptor> levels = new List<LevelDescriptor>();
@@ -223,6 +225,7 @@ namespace WhiskeyEditor.Backend.Managers
                 if (f is LevelDescriptor)
                 {
                     LevelDescriptor l = (LevelDescriptor)f;
+                    l.Level.updateAll();
                     levels.Add(l);
                     InstanceManager.Instance.addLevel(l.Level);
                 }

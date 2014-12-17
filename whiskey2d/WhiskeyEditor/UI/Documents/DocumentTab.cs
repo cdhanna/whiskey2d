@@ -145,6 +145,13 @@ namespace WhiskeyEditor.UI.Documents
             ToolStripButton btn = action.generateControl<ToolStripButton>();
             ToolStrip.Items.Add(btn);
         }
+        protected void addAction<C>(WhiskeyAction action) where C : ToolStripItem
+        {
+            Actions.Add(action);
+            C btn = action.generateControl<C>();
+            ToolStrip.Items.Add(btn);
+        }
+
 
         public virtual void open()
         {

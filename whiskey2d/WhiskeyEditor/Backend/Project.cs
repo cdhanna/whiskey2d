@@ -89,7 +89,7 @@ namespace WhiskeyEditor.Backend
         private PropertiesFiles GameSettings { get { return gameSettings; } }
 
 
-        
+        public event EventHandler MediaAdded = new EventHandler((s, a) => { });
 
         /// <summary>
         /// Get/Set the name of the project. 
@@ -219,6 +219,28 @@ namespace WhiskeyEditor.Backend
 
         //}
 
+        public string addMedia(string fullPath)
+        {
+
+            string name = fullPath.Substring(fullPath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+
+            string destPath = PathMedia + Path.DirectorySeparatorChar + name;
+
+            File.Copy(fullPath, destPath, true);
+            MediaAdded(this, new EventArgs());
+            return name;
+
+        }
+
+        public string[] getMedia(string extension)
+        {
+            string[] files = Directory.GetFiles(PathMedia, "*." + extension);
+            for (int i = 0; i < files.Length; i++)
+            {
+                files[i] = files[i].Substring(files[i].LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            }
+            return files;
+        }
 
 
         public void saveGameData()
@@ -312,7 +334,7 @@ namespace WhiskeyEditor.Backend
             
             //InstanceManager.Instance.convertToGobs(dll, "default");
 
-            foreach (Level level in InstanceManager.Instance.Levels)
+            foreach (EditorLevel level in InstanceManager.Instance.Levels)
             {
                 string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level);
                 GameStartScene = level.LevelName;
@@ -330,6 +352,9 @@ namespace WhiskeyEditor.Backend
             
             
             DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+
+            //WhiskeyEditor.MonoHelp.WhiskeyControl.Content.Unload();
+
             DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
             File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
             File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
@@ -377,7 +402,8 @@ namespace WhiskeyEditor.Backend
             foreach (FileInfo file in files)
             {
                 string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
+                
+                file.CopyTo(temppath, true);
             }
 
             // If copying subdirectories, copy them and their contents to new location. 

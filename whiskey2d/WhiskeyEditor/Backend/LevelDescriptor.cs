@@ -17,7 +17,7 @@ namespace WhiskeyEditor.Backend
     public class LevelDescriptor : FileDescriptor
     {
 
-        private List<PropertyDescriptor> propDescs = new List<PropertyDescriptor>();
+       // private List<PropertyDescriptor> propDescs = new List<PropertyDescriptor>();
 
         private Color color;
         public Color Color
@@ -31,7 +31,7 @@ namespace WhiskeyEditor.Backend
             }
         }
 
-        public Level Level { get; private set; }
+        public EditorLevel Level { get; private set; }
         //private State state;
 
         //public State State { get { return state; } }
@@ -39,7 +39,7 @@ namespace WhiskeyEditor.Backend
         public LevelDescriptor(string name)
             : base(ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + name + ".state", name)
         {
-            Level = new Level(name);
+            Level = new EditorLevel(name);
             Color = Level.BackgroundColor;
            
            
@@ -47,20 +47,26 @@ namespace WhiskeyEditor.Backend
             FileManager.Instance.addFileDescriptor(this);
         }
 
-        private void addPropertyDescriptor(PropertyDescriptor prop)
-        {
-            propDescs.Add(prop);
-        }
+        //private void addPropertyDescriptor(PropertyDescriptor prop)
+        //{
+        //    propDescs.Add(prop);
+        //}
 
-        public List<PropertyDescriptor> getPropertySet()
+        //public List<PropertyDescriptor> getPropertySet()
+        //{
+        //    return propDescs;
+        //}
+
+        public override void save()
         {
-            return propDescs;
+            EditorLevel.serialize(Level, FilePath);
         }
-        
 
         public override void inspectFile()
         {
-            Level.setInstanceLevelState(State.deserialize(FilePath));
+            Level = EditorLevel.deserialize(FilePath);
+            
+            //Level.setInstanceLevelState(State.deserialize(FilePath));
             
             //colorProperty.TypeVal.Value = Level.BackgroundColor;
             Level.BackgroundColor = Color;
@@ -71,8 +77,9 @@ namespace WhiskeyEditor.Backend
 
         public override void createFile()
         {
-            State state = Level.getInstanceLevelState();
-            State.serialize(state, FilePath);
+            //State state = Level.getInstanceLevelState();
+            //State.serialize(state, FilePath);
+            save();
         }
 
     }

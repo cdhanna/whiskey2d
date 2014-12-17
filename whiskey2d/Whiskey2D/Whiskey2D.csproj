@@ -58,6 +58,7 @@
     <Compile Include="Core\Hud\TextLine.cs" />
     <Compile Include="Core\Inputs\InputSource.cs" />
     <Compile Include="Core\Inputs\MouseButtons.cs" />
+    <Compile Include="Core\Level.cs" />
     <Compile Include="Core\Managers\Impl\DefaultInputSourceManager.cs" />
     <Compile Include="Core\LogCommands\InputCommand.cs" />
     <Compile Include="Core\LogCommands\LogCommand.cs" />

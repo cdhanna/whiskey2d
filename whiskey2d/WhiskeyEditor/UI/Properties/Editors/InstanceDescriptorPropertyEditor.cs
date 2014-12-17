@@ -8,6 +8,7 @@ using WhiskeyEditor.Backend.Managers;
 using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.UI.Library;
+using WhiskeyEditor.UI.Documents.Actions;
 
 namespace WhiskeyEditor.UI.Properties.Editors
 {
@@ -23,6 +24,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
 
         protected EditScriptsAction editScriptsAction;
+        protected DeleteInstanceAction deleteAction;
 
         /// <summary>
         /// A handler for drag drop
@@ -85,13 +87,17 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
             PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptorInFileManager.Name).PropIsReadOnly = true;
 
+            PropertyGrid.PropertyAdapter.PropertyValueChanged += (s, a) =>
+            {
+
+            };
 
             editScriptsAction = new AddRemoveInstanceScriptsAction(Descriptor, this);
             ToolStripItems.Add(editScriptsAction.generateControl());
             //ToolStripContentPanel
 
-          
-
+            deleteAction = new DeleteInstanceAction(Descriptor);
+            ToolStripItems.Add(deleteAction.generateControl<ToolStripButton>());
           
 
 
@@ -107,19 +113,23 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
         private void dragEnter(object sender, DragEventArgs args)
         {
-
-            LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
-            FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
-            if (fDesc is ScriptDescriptor)
+            if (args.Data.GetData(typeof(LibraryTreeNode)) is LibraryTreeNode)
             {
+                LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
 
-                ScriptDescriptor sDesc = (ScriptDescriptor)fDesc;
-                if (sDesc.TargetTypeName.Equals(Descriptor.TypeDescriptorInFileManager.Name))
+
+
+                FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+                if (fDesc != null && fDesc is ScriptDescriptor)
                 {
-                    args.Effect = DragDropEffects.All;
+
+                    ScriptDescriptor sDesc = (ScriptDescriptor)fDesc;
+                    if (sDesc.TargetTypeName.Equals(Descriptor.TypeDescriptorInFileManager.Name))
+                    {
+                        args.Effect = DragDropEffects.All;
+                    }
                 }
             }
-
 
             
         }

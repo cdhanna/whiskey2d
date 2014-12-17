@@ -32,7 +32,7 @@ namespace WhiskeyEditor.UI.Properties
             
             PropDisplayName = name;
         }
-
+        
         
         public override string Description
         {

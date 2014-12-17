@@ -38,9 +38,15 @@ namespace WhiskeyEditor.Backend
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(InstanceDescriptor), new TypeConverterAttribute(typeof(WhiskeyInstanceTypeConverter)));
             
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+            
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color),
                 new TypeConverterAttribute(typeof(StructTypeConverter<Whiskey2D.Core.Color>)),
                 new EditorAttribute(typeof(ColorPicker), typeof(System.Drawing.Design.UITypeEditor)));
+
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(WhiskeyPropertyContainer),
+               // new TypeConverterAttribute(typeof(ExpandableObjectConverter)),
+                new EditorAttribute(typeof(WhiskeyPropertyContainerPicker), typeof(System.Drawing.Design.UITypeEditor)));
+
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Vector), new TypeConverterAttribute(typeof(StructTypeConverter<Vector>)));
            // System.ComponentModel.TypeDescriptor.AddAttributes(typeof(WhiskeyPropertyContainer), new TypeConverterAttribute(typeof(Whiskey)));
             //System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Color), new TypeConverterAttribute(typeof(ColorTypeConverter)));

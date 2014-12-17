@@ -79,8 +79,13 @@ namespace Whiskey2D.Core
         public InputSourceManager InputSourceManager { get; protected set; }
         public LogManager LogManager { get; protected set; }
         public ObjectManager ObjectManager { get; protected set; }
+
+        
+
         public RenderManager RenderManager { get; protected set; }
         public ResourceManager ResourceManager { get; protected set; }
+        
+        
         public GameController GameController { get; protected set; }
         public HudManager HudManager { get; protected set; }
 
@@ -104,11 +109,11 @@ namespace Whiskey2D.Core
             BackgroundColor = Color.SkyBlue;
             //create all default managers
             ObjectManager = new DefaultObjectManager();
-            RenderManager = new DefaultRenderManager();
+            //RenderManager = new DefaultRenderManager();
             InputManager = new DefaultInputManager();
             InputSourceManager = new DefaultInputSourceManager();
             LogManager = DefaultLogManager.getInstance();
-            ResourceManager = DefaultResourceManager.getInstance();
+            
             HudManager = HudManager.getInstance();
 
             //LogManager.init();
@@ -130,6 +135,22 @@ namespace Whiskey2D.Core
         public int ScreenHeight { get { return (GraphicsDevice != null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferHeight : -1; } }
 
         public TimeSpan TargetElapsedTime { get; set; }
+
+
+        public Level loadLevel(string name) //input comes as "myLevel.state"
+        {
+            string path ="states\\" + name ;
+
+            Level level = Level.deserialize(path);
+
+            ObjectManager.close();
+
+            ObjectManager = level;
+
+            return level;
+            //level.init();
+
+        }
 
         /// <summary>
         /// Shuts down all managers
@@ -167,9 +188,11 @@ namespace Whiskey2D.Core
             //RUN THE START CODE
             if (CurrentScene != null)
             {
-                State RunningState = State.deserialize(CurrentScenePath);
-                BackgroundColor = RunningState.BackgroundColor;
-                GameManager.Objects.setState(RunningState);
+                //State RunningState = State.deserialize(CurrentScenePath);
+                //BackgroundColor = RunningState.BackgroundColor;
+                //GameManager.Objects.setState(RunningState);
+                Level lvl = loadLevel(CurrentScene);
+                BackgroundColor = lvl.BackgroundColor;
             }
         }
 
@@ -177,9 +200,11 @@ namespace Whiskey2D.Core
         {
             if (StartScene != null)
             {
-                State RunningState = State.deserialize(StartScenePath);
-                BackgroundColor = RunningState.BackgroundColor;
-                GameManager.Objects.setState(RunningState);
+                //State RunningState = State.deserialize(StartScenePath);
+                //BackgroundColor = RunningState.BackgroundColor;
+                //GameManager.Objects.setState(RunningState);
+                Level lvl = loadLevel(StartScene);
+                BackgroundColor = lvl.BackgroundColor;
             }
             CurrentScene = StartScene;
         }

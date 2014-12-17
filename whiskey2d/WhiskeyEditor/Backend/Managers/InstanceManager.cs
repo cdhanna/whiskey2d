@@ -22,13 +22,13 @@ namespace WhiskeyEditor.Backend.Managers
         public static InstanceManager Instance { get { return instance; } }
 
         //private List<InstanceDescriptor> iDescs;
-        public List<Level> Levels { get; private set; }
+        public List<EditorLevel> Levels { get; private set; }
 
 
         private InstanceManager()
         {
            // iDescs = new List<InstanceDescriptor>();
-            Levels = new List<Level>();
+            Levels = new List<EditorLevel>();
           
 
         }
@@ -36,8 +36,11 @@ namespace WhiskeyEditor.Backend.Managers
         {
             Levels.Clear();
         }
-        public void addLevel(Level level)
+        public void addLevel(EditorLevel level)
         {
+
+            level.syncObjectManager();
+
             Levels.Add(level);
         }
 
@@ -87,22 +90,22 @@ namespace WhiskeyEditor.Backend.Managers
         /// by Whiskey.Core. 
         /// </summary>
         /// <param name="dllPathIn">The path to the GameData.dll, that contains the type information</param>
-        /// <param name="level">Some level that contains a set of instance descriptors</param>
+        /// <param name="editorLevel">Some level that contains a set of instance descriptors</param>
         /// <returns>The path to the state file that Whiskey.Core will load</returns>
-        public string convertToGobs(string dllPathIn, Level level)
+        public string convertToGobs(string dllPathIn, EditorLevel editorLevel)
         {
             AppDomain buildDomain = AppDomain.CreateDomain("BuildDomain");
 
 
-            string statePath = ProjectManager.Instance.ActiveProject.PathBuildStates + Path.DirectorySeparatorChar + level.LevelName + ".state";
+            string statePath = ProjectManager.Instance.ActiveProject.PathBuildStates + Path.DirectorySeparatorChar + editorLevel.LevelName + ".state";
 
-            buildDomain.SetData("color", level.BackgroundColor);
+            buildDomain.SetData("color", editorLevel.BackgroundColor);
             buildDomain.SetData("dllPath", dllPathIn);
             buildDomain.SetData("statePath", statePath);
 
-            level.getInstances().ForEach((i) => { i.updateTypeDescriptor();  });
-
-            buildDomain.SetData("iDescs", level.getInstances());
+            editorLevel.getInstances().ForEach((i) => { i.updateTypeDescriptor();  });
+            buildDomain.SetData("stateName", editorLevel.LevelName);
+            buildDomain.SetData("iDescs", editorLevel.getInstances());
             buildDomain.SetData("scriptTable", ScriptManager.Instance.getScriptTable());
 
             try
@@ -122,6 +125,9 @@ namespace WhiskeyEditor.Backend.Managers
 
                         Assembly gameData = Assembly.LoadFrom(appDllPath);
 
+                        Level level = new Level(appStateName);
+                        level.init();
+
                         int c = 0;
                         List<GameObject> lGobs = new List<GameObject>();
                         foreach (InstanceDescriptor iDesc in appIDescs)
@@ -133,9 +139,11 @@ namespace WhiskeyEditor.Backend.Managers
                             Type type = gameData.GetType(typeName, true, false);
 
                             GameObject gob = (GameObject)type.GetConstructor
-                                (new Type[] {  }).Invoke
-                                (new object[] {  });
+                                (new Type[] { typeof(ObjectManager) }).Invoke
+                                (new object[] { level });
 
+                            gob.Sprite.setRender(GameManager.Renderer);
+                            gob.Sprite.setResources(GameManager.Resources);
 
                             foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptorCompile.getPropertySetClone())
                             {
@@ -162,13 +170,18 @@ namespace WhiskeyEditor.Backend.Managers
 
                             lGobs.Add(gob);
                         }
-                        State state = new State();
-                        state.GameObjects = lGobs;
-                        state.BackgroundColor = backGroundColor;
-                        state.Name = appStateName;
-                        string filename = State.serialize(
-                                            state,
-                                            appStatePath);
+                        //State state = new State();
+                        //state.GameObjects = lGobs;
+                        //state.BackgroundColor = backGroundColor;
+                        //state.Name = appStateName;
+                        //string filename = State.serialize(
+                        //                    state,
+                        //                    appStatePath);
+
+                        level.BackgroundColor = backGroundColor;
+                        
+                        string filename = Level.serialize(level, appStatePath);
+
                         //TempFilePath = filename;
 
                         //AppDomain.CurrentDomain.SetData("fileName", filename);

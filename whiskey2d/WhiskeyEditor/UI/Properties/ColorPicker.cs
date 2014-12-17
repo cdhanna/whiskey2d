@@ -42,6 +42,8 @@ namespace WhiskeyEditor.UI.Properties
             if (service != null)
             {
                 //service.ShowDialog();
+
+                //DialogResult result = service.ShowDialog(colorDialog as Form);
                 
                 DialogResult result = colorDialog.ShowDialog();
                 if (result == DialogResult.OK)

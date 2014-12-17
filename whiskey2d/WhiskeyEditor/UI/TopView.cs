@@ -21,6 +21,17 @@ namespace WhiskeyEditor.UI
 {
     class TopView : Form
     {
+
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
+
         private Panel mainPanel;
 
         private OutputView outputView;
@@ -39,7 +50,7 @@ namespace WhiskeyEditor.UI
 
         public TopView()
         {
-
+           
             this.Size = new Size(1440, 900);
             Text = ProjectManager.Instance.ActiveProject.Name;
             ProjectManager.Instance.ProjectChanged += (s, a) =>
@@ -142,12 +153,26 @@ namespace WhiskeyEditor.UI
                 }
             };
 
+            ProjectManager.Instance.ActiveProject.MediaAdded += mediaAddedListener;
+            ProjectManager.Instance.ProjectChanged += (s, a) =>
+            {
+                a.NewProject.MediaAdded += mediaAddedListener;
+            };
 
             libraryView.SelectionChanged += (s, args) =>
             {
-                docView.openDocument(args.Selected.FilePath);
-                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+
+                //if (args.Selected.FilePath.
+                if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
+                {
+
+                }
+                else
+                {
+                    docView.openDocument(args.Selected.FilePath);
+                    FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
+                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                }
             };
 
             libraryView.SelectionChanged += (s, args) =>
@@ -157,8 +182,16 @@ namespace WhiskeyEditor.UI
             };
             libraryView.ClickedOnNode += (s, args) =>
             {
-                FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
+                {
+
+                }
+                else
+                {
+
+                    FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
+                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                }
             };
 
 
@@ -169,9 +202,25 @@ namespace WhiskeyEditor.UI
                 propView.setPropertyContent(UIManager.Instance.getPropertyEditor(args.PropertyObject));
             };
 
-
+            SelectionManager.Instance.SelectedInstanceChanged += (s, old) =>
+            {
+                if (SelectionManager.Instance.SelectedInstance == null)
+                {
+                    propView.clearPropertyContent();
+                }
+                else
+                {
+                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(SelectionManager.Instance.SelectedInstance));
+                }
+            };
            
         }
+
+        private void mediaAddedListener(object sender, EventArgs args)
+        {
+            libraryView.refreshContent();
+        }
+
 
         private void initControls()
         {

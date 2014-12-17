@@ -77,6 +77,7 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "Y", new RealType(typeof(float), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "ID", new RealType(typeof(int), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
+            addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
         }
 
         public void changePropertyDescriptorName(String propName, String newPropName)
@@ -211,6 +212,8 @@ namespace WhiskeyEditor.Backend
             }
         }
 
+        
+
 
         private string getCodeFor(object val)
         {
@@ -307,6 +310,8 @@ namespace WhiskeyEditor.Backend
 
             writer.WriteLine("\t\t#endregion");
             writer.WriteLine("");
+
+            writer.WriteLine("\t\tpublic " + Name + "( ObjectManager objMan ) : base (objMan) { }");
 
             writer.WriteLine("\t\t#region INIT_SCRIPTS");
 

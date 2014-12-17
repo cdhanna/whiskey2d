@@ -41,36 +41,75 @@ namespace Whiskey2D.Core
         }
 
 
+        [NonSerialized]
+        private ResourceManager resources;
+        public ResourceManager getResources()
+        {
+            if (resources == null)
+            {
+                resources = GameManager.Resources;
+            }
+            return resources;
+        }
+        public void setResources(ResourceManager resources)
+        {
+            this.resources = resources;
+        }
+
+
         public Texture2D getImage()
         {
             if (getRenderer() == null)
             {
                 return null;
             }
-
-            if (image == null && imagePath != null)
+            if (ImagePath == null)
             {
-                if (imagePath.Equals(PIXEL))
+                ImagePath = PIXEL;
+            }
+
+            if (image == null && ImagePath != null || newImage)
+            {
+                newImage = false;
+                if (ImagePath.Equals(PIXEL))
                 {
                     
                     image = getRenderer().getPixel();
                 }
                 else
                 {
-                    image = GameManager.Resources.loadImage(imagePath);
+                    image = getResources().loadImage(ImagePath);
                 }
             }
+
+            
+
             return image;
         }
 
-        public void setImage(Texture2D image)
-        {
-            this.image = image;
-        }
+        //public void setImage(Texture2D image)
+        //{
+        //    this.image = image;
+        //}
+
+
 
         private string imagePath;
-
-        public String ImagePath { get { return this.imagePath; } }
+        private bool newImage = false;
+       // public String ImagePath { get { return this.imagePath; } }
+        [System.ComponentModel.ReadOnly(true)]
+        public String ImagePath
+        {
+            get
+            {
+                return imagePath;
+            }
+            set
+            {
+                imagePath = value;
+                newImage = true;
+            }
+        }
 
         /// <summary>
         /// The Vector Scale of the Sprite. By default, the Scale is set to (1, 1), which represents 100% scale.
@@ -127,7 +166,7 @@ namespace Whiskey2D.Core
         public Sprite(string imagePath)
         {
            
-            this.imagePath = imagePath;
+            ImagePath = imagePath;
             image = getImage();
             Scale = Vector.One;
             Offset = Vector.Zero;
@@ -137,7 +176,7 @@ namespace Whiskey2D.Core
         }
         public Sprite()
         {
-            this.imagePath = PIXEL;
+            ImagePath = PIXEL;
             image = getImage();
             Scale = Vector.One;
             Offset = Vector.Zero;
@@ -150,7 +189,7 @@ namespace Whiskey2D.Core
         {
             setRender(renderer);
 
-            this.imagePath = PIXEL;
+            ImagePath = PIXEL;
             image = getImage();
             Scale = Vector.One;
             Offset = Vector.Zero;
@@ -159,12 +198,12 @@ namespace Whiskey2D.Core
             Rotation = 0;
         }
 
-        public Sprite(RenderManager renderer, Sprite other)
+        public Sprite(RenderManager renderer, ResourceManager resources, Sprite other)
         {
             setRender(renderer);
-
-            this.imagePath = other.ImagePath;
-            image = other.getImage();
+            setResources(resources);
+            ImagePath = other.ImagePath;
+           // image = other.getImage();
             Scale = other.Scale;
             Offset = other.Offset;
             Depth = other.Depth;
@@ -174,7 +213,7 @@ namespace Whiskey2D.Core
 
         public Sprite(string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
         {
-            this.imagePath = imagePath;
+            ImagePath = imagePath;
             image = getImage();
             Scale = scale;
             Offset = offset;
@@ -186,7 +225,7 @@ namespace Whiskey2D.Core
         public Sprite(RenderManager renderer, string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
         {
             setRender(renderer);
-            this.imagePath = imagePath;
+            ImagePath = imagePath;
             image = getImage();
             Scale = scale;
             Offset = offset;

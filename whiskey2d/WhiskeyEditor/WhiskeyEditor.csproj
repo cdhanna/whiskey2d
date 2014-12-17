@@ -99,7 +99,7 @@
     <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
     <Compile Include="Backend\Actions\Impl\PlayAction.cs" />
     <Compile Include="Backend\Expando.cs" />
-    <Compile Include="Backend\Level.cs" />
+    <Compile Include="Backend\EditorLevel.cs" />
     <Compile Include="Backend\Managers\ActionManager.cs" />
     <Compile Include="Backend\CodeDescriptor.cs" />
     <Compile Include="Backend\GameData.cs" />
@@ -108,9 +108,11 @@
     <Compile Include="Backend\InstanceType.cs" />
     <Compile Include="Backend\FileDescriptor.cs" />
     <Compile Include="Backend\InstanceDescriptor.cs" />
+    <Compile Include="Backend\Managers\CopyPasteManager.cs" />
     <Compile Include="Backend\Managers\FileManager.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
     <Compile Include="Backend\Managers\ScriptManager.cs" />
+    <Compile Include="Backend\Managers\SelectionManager.cs" />
     <Compile Include="Backend\MediaDescriptor.cs" />
     <Compile Include="Backend\ProgressNotifier.cs" />
     <Compile Include="Backend\PropertyContainer.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Backend\TypeNameBank.cs" />
     <Compile Include="Backend\TypeVal.cs" />
     <Compile Include="Backend\WhiskeyException.cs" />
+    <Compile Include="EditorObjects\CopyPasteScript.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
     <Compile Include="EditorObjects\EditorGameObject.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="MonoHelp\EditorGameManager.cs" />
     <Compile Include="MonoHelp\EditorInputSource.cs" />
     <Compile Include="MonoHelp\EditorRenderManager.cs" />
+    <Compile Include="MonoHelp\EditorResourceManager.cs" />
     <Compile Include="MonoHelp\GraphicsDeviceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,8 +155,12 @@
     <Compile Include="UI\Dockable\DockControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\Actions\CopyInstanceAction.cs" />
+    <Compile Include="UI\Documents\Actions\DeleteInstanceAction.cs" />
+    <Compile Include="UI\Documents\Actions\PasteInstanceAction.cs" />
     <Compile Include="UI\Documents\Actions\PlayLevelAction.cs" />
     <Compile Include="UI\Documents\Actions\SaveAction.cs" />
+    <Compile Include="UI\Documents\Actions\ViewInstanceDetailsAction.cs" />
     <Compile Include="UI\Documents\CodeCompletionHandler.cs" />
     <Compile Include="UI\Documents\CodeDocument.cs">
       <SubType>Component</SubType>
@@ -185,7 +193,10 @@
     <Compile Include="UI\Properties\Converters\ColorTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\Converter.cs" />
     <Compile Include="UI\Properties\Converters\ConvertManager.cs" />
+    <Compile Include="UI\Properties\Converters\SpriteTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\VectorConverter.cs" />
+    <Compile Include="UI\Properties\Converters\WhiskeyTypeConverters.cs" />
+    <Compile Include="UI\Properties\Converters\WhiskeyTypeEditors.cs" />
     <Compile Include="UI\Properties\Dictionary\DictionaryPropertyDescriptor.cs" />
     <Compile Include="UI\Properties\Dictionary\DictionaryPropertyGridAdapter.cs" />
     <Compile Include="UI\Properties\Editors\AddPropertyAction.cs" />
@@ -225,12 +236,21 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Properties\GeneralPropertyDescriptor.cs" />
+    <Compile Include="UI\Properties\SpriteButtonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\SpriteButtonControl.Designer.cs">
+      <DependentUpon>SpriteButtonControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Properties\SpritePathPicker.cs" />
     <Compile Include="UI\Properties\TypeConverters\StructTypeConverter.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyInstanceTypeConverter.cs" />
     <Compile Include="UI\Properties\TypePicker.cs" />
     <Compile Include="UI\Properties\WhiskeyPropertyContainer.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyContainerTypeConverter.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyValueTypeConverter.cs" />
+    <Compile Include="UI\Properties\WhiskeyPropertyContainerPicker.cs" />
+    <Compile Include="UI\Properties\WhiskeyPropertyValuePicker.cs" />
     <Compile Include="UI\Status\StatusBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -244,6 +264,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UIManager.cs" />
+    <Content Include="compile-media\selection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Assets\closeIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -330,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Properties\Editors\AddRemoveScriptControl.resx">
       <DependentUpon>AddRemoveScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Properties\SpriteButtonControl.resx">
+      <DependentUpon>SpriteButtonControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

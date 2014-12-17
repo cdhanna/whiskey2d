@@ -75,6 +75,10 @@ namespace WhiskeyEditor.Backend
         {
             //do nothing
         }
+        public virtual void save()
+        {
+            //do nothing
+        }
 
         public virtual void ensureFileExists()
         {

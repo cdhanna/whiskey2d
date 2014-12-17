@@ -40,6 +40,7 @@ namespace WhiskeyEditor.UI.Output
                 data.Clear();
                 foreach (CompilerError err in args.Errors)
                 {
+                  
                     string fileName = err.FileName;
                     try
                     {
