@@ -73,7 +73,7 @@ namespace WhiskeyEditor.UI.Properties
             OtherProperties = new List<GeneralPropertyDescriptor>();
             PropertyList = new List<PropertyDescriptor>();
             addControls();
-
+            
             //updateThreadKey = true;
             //updateThread = new Thread(() =>
             //{

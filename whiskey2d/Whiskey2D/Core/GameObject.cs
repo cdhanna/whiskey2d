@@ -22,7 +22,7 @@ namespace Whiskey2D.Core
             ID = idCounter++;
             scripts = new List<Script>();
             //objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
-            
+            active = true;
             this.initProperties();
             this.addInitialScripts();
 
@@ -46,13 +46,9 @@ namespace Whiskey2D.Core
         protected ObjectManager objectManager;
         private Sprite sprite;
         private int id;
-        private List<Script> scripts;
-       // private Dictionary<object, ScriptBundle<GameObject>> objectScriptTable;
-        /// <summary>
-        /// The position of the Game Object
-        /// </summary>
-        //[TypeConverter(typeof(ExpandableObjectConverter))]
-        //public Vector2 Position;
+        protected List<Script> scripts;
+        private bool active;
+
         public Vector Position;
 
         public virtual float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
@@ -60,7 +56,17 @@ namespace Whiskey2D.Core
 
 
         public virtual string Name { get; set; }
-        
+        public virtual Boolean Active
+        {
+            get
+            {
+                return active;
+            }
+            set
+            {
+                active = value;
+            }
+        }
         /// <summary>
         /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
         /// To give the Game Object visuals, set this to a new Sprite()
@@ -115,12 +121,8 @@ namespace Whiskey2D.Core
         /// </summary>
         public void init()
         {
-
-            foreach (Script script in scripts)
-            {
-                script.onStart();
-            }
-
+            getActiveScripts().ForEach(s => s.onStart());
+            
         }
 
         /// <summary>
@@ -129,7 +131,8 @@ namespace Whiskey2D.Core
         public void close()
         {
             objectManager.removeObject(this);
-            //GameManager.Objects.removeObject(this);
+            getActiveScripts().ForEach(s => s.onClose());
+           
         }
 
         public List<Script> getScripts()
@@ -178,12 +181,14 @@ namespace Whiskey2D.Core
         public void removeScript<G>(Script<G> script) where G : GameObject
         {
             this.scripts.Remove(script);
+            
             //removeScript((object)script);
         }
 
         public void removeScript(Script script)
         {
             this.scripts.Remove(script);
+            
         }
 
         public void addScript<S>(S script) where S : Script
@@ -225,10 +230,12 @@ namespace Whiskey2D.Core
         /// </summary>
         public void update()
         {
-            foreach (Script script in scripts)
-            {
-                script.onUpdate();
-            }
+            getActiveScripts().ForEach(s => s.onUpdate());
+        }
+
+        protected List<Script> getActiveScripts()
+        {
+            return scripts.FindAll(s => s.Active);
         }
 
         /// <summary>

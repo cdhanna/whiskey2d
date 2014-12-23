@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace WhiskeyEditor.Backend
 {
+    [Serializable]
     class InstanceType : TypeVal
     {
         private TypeDescriptor descr;
@@ -32,7 +33,12 @@ namespace WhiskeyEditor.Backend
             }
             set
             {
-                if (value is InstanceDescriptor)
+                //if (value == null)
+                //{
+                //    this.instance = null;
+                //}
+                //else 
+                    if (value is InstanceDescriptor)
                 {
                     InstanceDescriptor newVal = (InstanceDescriptor)value;
                     if (newVal.TypeDescriptorInFileManager.ClassName.Equals(TypeName))

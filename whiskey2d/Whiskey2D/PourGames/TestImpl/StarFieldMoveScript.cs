@@ -27,5 +27,10 @@ namespace Whiskey2D.PourGames.TestImpl
             stars.Position -= plr.Velocity * stars.Sprite.Depth*.5f;
             stars.Sprite.Rotation += stars.StarRotation;
         }
+
+        public override void onClose()
+        {
+            
+        }
     }
 }

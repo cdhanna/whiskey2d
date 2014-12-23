@@ -24,7 +24,10 @@ namespace Whiskey2D.PourGames.Game3
         {
             ticksLeftToFire = Gob.FireRate;
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
 

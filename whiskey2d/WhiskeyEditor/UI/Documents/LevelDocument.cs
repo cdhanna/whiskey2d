@@ -142,6 +142,7 @@ namespace WhiskeyEditor.UI.Documents
                 Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
                 
                 inst.Position = new Vector(p.X, p.Y) - inst.Bounds.Size/2;
+                inst.Position = WhiskeyControl.ActiveCamera.getGameCoordinate(inst.Position);
 
                 inst.X = inst.Position.X;
                 inst.Y = inst.Position.Y;

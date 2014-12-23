@@ -45,10 +45,23 @@ namespace WhiskeyEditor.Backend
         protected override void addSpecializedCode(System.IO.StreamWriter writer)
         {
 
-            writer.WriteLine("\t\tpublic override void onStart(){ }");
-            writer.WriteLine("\t\tpublic override void onUpdate(){ }");
+            writer.WriteLine("\t\tpublic override void onStart()");
+            writer.WriteLine("\t\t{");
+            writer.WriteLine("\t\t \\\\This code runs when the GameObject is initialized");
+            writer.WriteLine("\t\t}");
+            writer.WriteLine("\t\t");
 
-
+            writer.WriteLine("\t\tpublic override void onUpdate() ");
+            writer.WriteLine("\t\t{");
+            writer.WriteLine("\t\t \\\\This code runs when the GameObject is initialized");
+            writer.WriteLine("\t\t}");
+            writer.WriteLine("\t\t");
+            
+            writer.WriteLine("\t\tpublic override void onClose()  ");
+            writer.WriteLine("\t\t{");
+            writer.WriteLine("\t\t \\\\This code runs when the GameObject is initialized");
+            writer.WriteLine("\t\t}");
+            writer.WriteLine("\t\t");
         }
 
     }

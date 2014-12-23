@@ -21,5 +21,11 @@ namespace Whiskey2D.Core.Managers
         Vector getMousePosition();
         bool isMouseDown(MouseButtons b);
         bool isNewMouseDown(MouseButtons b);
+
+        int getMouseWheelDelta();
+
+        bool scrolledUp();
+        bool scrolledDown();
+
     }
 }

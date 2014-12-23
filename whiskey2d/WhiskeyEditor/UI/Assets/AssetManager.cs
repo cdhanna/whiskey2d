@@ -12,16 +12,30 @@ namespace WhiskeyEditor.UI.Assets
 {
     class AssetManager
     {
-        public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar;
-        public static readonly string FILE_ICON_FILE = PATH_ASSETS + "fileIcon.png";
-        public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folderIcon.png";
+        public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Set" + Path.DirectorySeparatorChar;
+        public static readonly string FILE_ICON_FILE = PATH_ASSETS + "document.png";
+        public static readonly string FILE_ICON_FILE_LEVEL = PATH_ASSETS + "leveldocument.png";
+        public static readonly string FILE_ICON_FILE_SCRIPT = PATH_ASSETS + "scriptdocument.png";
+        public static readonly string FILE_ICON_FILE_TYPE = PATH_ASSETS + "typedocument.png";
+        public static readonly string FILE_ICON_FILE_PICTURE = PATH_ASSETS + "picturedocument.png";
+        public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folder.png";
         public static readonly string FILE_ICON_CLOSE = PATH_ASSETS + "closeIcon.png";
-        public static readonly string FILE_ICON_SAVE = PATH_ASSETS + "saveIcon.png";
-        public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "playIcon.png";
-        public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "compileIcon.png";
+        public static readonly string FILE_ICON_SAVE = PATH_ASSETS + "save.png";
+        public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "play.png";
+        public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "properties.png";
         public static readonly string FILE_ICON_PLUS = PATH_ASSETS + "plus.png";
         public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
 
+
+        //public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar;
+        //public static readonly string FILE_ICON_FILE = PATH_ASSETS + "fileIcon.png";
+        //public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folderIcon.png";
+        //public static readonly string FILE_ICON_CLOSE = PATH_ASSETS + "closeIcon.png";
+        //public static readonly string FILE_ICON_SAVE = PATH_ASSETS + "saveIcon.png";
+        //public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "playIcon.png";
+        //public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "compileIcon.png";
+        //public static readonly string FILE_ICON_PLUS = PATH_ASSETS + "plus.png";
+        //public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
 
         //public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "RealSet" + Path.DirectorySeparatorChar;
         //public static readonly string FILE_ICON_FILE = PATH_ASSETS + "docEmpty.png";
@@ -39,6 +53,10 @@ namespace WhiskeyEditor.UI.Assets
 
 
         public static readonly Image ICON_FILE;
+        public static readonly Image ICON_FILE_LEVEL;
+        public static readonly Image ICON_FILE_PICTURE;
+        public static readonly Image ICON_FILE_TYPE;
+        public static readonly Image ICON_FILE_SCRIPT;
         //public static readonly Image ICON_CODE_FILE;
         //public static readonly Image ICON_LEVEL_FILE;
         public static readonly Image ICON_FLDR;
@@ -55,6 +73,11 @@ namespace WhiskeyEditor.UI.Assets
         static AssetManager()
         {
             ICON_FILE = loadImage(FILE_ICON_FILE);
+
+            ICON_FILE_LEVEL = loadImage(FILE_ICON_FILE_LEVEL);
+            ICON_FILE_PICTURE = loadImage(FILE_ICON_FILE_PICTURE);
+            ICON_FILE_TYPE = loadImage(FILE_ICON_FILE_TYPE);
+            ICON_FILE_SCRIPT = loadImage(FILE_ICON_FILE_SCRIPT);
             //ICON_CODE_FILE = loadImage(FILE_ICON_CODE_FILE);
             //ICON_LEVEL_FILE = loadImage(FILE_ICON_LEVEL_FILE);
             ICON_FLDR = loadImage(FILE_ICON_FLDR);

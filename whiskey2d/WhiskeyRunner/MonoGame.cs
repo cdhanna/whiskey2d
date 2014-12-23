@@ -41,6 +41,19 @@ namespace WhiskeyRunner
 
         protected override void Initialize()
         {
+
+            
+            this.graphics.PreferredBackBufferWidth = 1280;
+            this.graphics.PreferredBackBufferHeight = 720;
+            //this.graphics.IsFullScreen = true;
+
+            Type type = typeof(OpenTKGameWindow);
+            System.Reflection.FieldInfo field = type.GetField("window", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            OpenTK.GameWindow window = (OpenTK.GameWindow)field.GetValue(this.Window);
+            window.X = 50;
+            window.Y = 50;
+            this.graphics.ApplyChanges();
+
             gameMan = GameManager.getInstance();
 
             gameMan.Initialize(this, Content, GraphicsDevice,

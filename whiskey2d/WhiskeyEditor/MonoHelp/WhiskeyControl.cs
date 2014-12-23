@@ -52,6 +52,8 @@ namespace WhiskeyEditor.MonoHelp
         public static GameController Controller { get; private set; }
 
         private static List<WhiskeyControl> allControls = new List<WhiskeyControl>();
+        private static WhiskeyControl active;
+        private static Camera defaultCamera = new Camera();
 
         //private static GameManager gameMan = GameManager.getInstance();     //The game manager
         //private static ContentManager content;                              //A content manager
@@ -150,7 +152,18 @@ namespace WhiskeyEditor.MonoHelp
         }
         private EditorLevel level;
 
+        public static Camera ActiveCamera
+        {
+            get
+            {
 
+                if (active != null && active.Level != null)
+                    return active.Level.Camera;
+
+
+                return defaultCamera;
+            }
+        }
 
         /// <summary>
         /// Creates a WhiskeyControl
@@ -193,7 +206,7 @@ namespace WhiskeyEditor.MonoHelp
         public void setAsActive()
         {
             SelectionManager.Instance.SelectedInstance = null;
-
+            active = this;
 
 
             if (IsHandleCreated)
@@ -341,6 +354,9 @@ namespace WhiskeyEditor.MonoHelp
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
+            if (this == active)
+                active = null;
+
             Application.Idle -= update;
             backThreadRunKey = false;
             editorObjects.close();

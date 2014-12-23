@@ -23,23 +23,30 @@ namespace WhiskeyEditor.EditorObjects
 
 
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
-            
-            
+
+
+            Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+            mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
+
+            mousePos = new Vector((int)mousePos.X, (int)mousePos.Y);
 
             if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
 
                 List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();
-
+                
                 foreach (InstanceDescriptor obj in objs)
                 {
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()) || new Bounds(obj.Position - obj.Sprite.Offset - Vector.One * 8, Vector.One * 16).vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
                     {
                         Gob.Dragging = obj;
-                        grabOffset = Gob.Dragging.Position - WhiskeyControl.InputManager.getMousePosition();
+                        grabOffset = Gob.Dragging.Position - mousePos;
                         break;
                     }
 
@@ -53,7 +60,7 @@ namespace WhiskeyEditor.EditorObjects
                 //WhiskeyControl.Controller.SelectedGob = Gob.Dragging;
                 SelectionManager.Instance.SelectedInstance = Gob.Dragging;
                 
-                Gob.Dragging.Position = WhiskeyControl.InputManager.getMousePosition() + grabOffset;
+                Gob.Dragging.Position = mousePos + grabOffset;
                 Gob.Dragging.X = Gob.Dragging.Position.X;
                 Gob.Dragging.Y = Gob.Dragging.Position.Y;
 

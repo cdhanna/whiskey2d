@@ -120,10 +120,12 @@
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />
     <Compile Include="Backend\TestBack.cs" />
+    <Compile Include="Backend\TypeBank.cs" />
     <Compile Include="Backend\TypeDescriptor.cs" />
     <Compile Include="Backend\TypeNameBank.cs" />
     <Compile Include="Backend\TypeVal.cs" />
     <Compile Include="Backend\WhiskeyException.cs" />
+    <Compile Include="EditorObjects\CameraMovementScript.cs" />
     <Compile Include="EditorObjects\CopyPasteScript.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
@@ -188,7 +190,9 @@
     <Compile Include="UI\Output\OutputView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Properties\BoolPicker.cs" />
     <Compile Include="UI\Properties\ColorPicker.cs" />
+    <Compile Include="UI\Properties\Converters\BoolTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\ColorConverter.cs" />
     <Compile Include="UI\Properties\Converters\ColorTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\Converter.cs" />
@@ -228,6 +232,13 @@
     <Compile Include="UI\Properties\Editors\TypeDescriptorPropertyEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Properties\InstancePicker.cs" />
+    <Compile Include="UI\Properties\InstancePickerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\InstancePickerControl.Designer.cs">
+      <DependentUpon>InstancePickerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Properties\PropertyAdapter.cs" />
     <Compile Include="UI\Properties\PropertyDescriptorEditor.cs">
       <SubType>Component</SubType>
@@ -246,6 +257,12 @@
     <Compile Include="UI\Properties\TypeConverters\StructTypeConverter.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyInstanceTypeConverter.cs" />
     <Compile Include="UI\Properties\TypePicker.cs" />
+    <Compile Include="UI\Properties\TypePickerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\TypePickerControl.Designer.cs">
+      <DependentUpon>TypePickerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Properties\WhiskeyPropertyContainer.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyContainerTypeConverter.cs" />
     <Compile Include="UI\Properties\TypeConverters\WhiskeyPropertyValueTypeConverter.cs" />
@@ -330,6 +347,54 @@
     <Content Include="UI\Assets\saveIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Assets\Set\closeIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\document.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\leveldocument.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\minus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\newfile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\picturedocument.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\properties.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\scriptdocument.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\trash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Set\typedocument.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="MonoHelp\GraphicsDeviceControl.resx">
       <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -354,8 +419,14 @@
     <EmbeddedResource Include="UI\Properties\Editors\AddRemoveScriptControl.resx">
       <DependentUpon>AddRemoveScriptControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Properties\InstancePickerControl.resx">
+      <DependentUpon>InstancePickerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Properties\SpriteButtonControl.resx">
       <DependentUpon>SpriteButtonControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Properties\TypePickerControl.resx">
+      <DependentUpon>TypePickerControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

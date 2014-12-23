@@ -122,6 +122,7 @@ namespace WhiskeyEditor.UI.Library
             fileTree.Size = new Size(50, 50);
 
             fileTree.ImageList = AssetManager.getImageList();
+            //fileTree.ImageList.ImageSize = new Size(32, 32);
             //fileTree.ImageList.ColorDepth = ColorDepth.Depth32Bit;
             //fileTree.ImageList.ImageSize = new Size(16, 16);
             //fileTree.ImageList = new ImageList();

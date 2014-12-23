@@ -32,7 +32,7 @@ namespace WhiskeyEditor.Backend
             
             registerType("Color", typeof(Color), Color.White);
             registerType("Vector", typeof(Vector), Vector.One);
-            registerType("Sprite", typeof(Sprite), null);
+            registerType("Sprite", typeof(Sprite), new Sprite() );
 
 
         }

@@ -44,7 +44,7 @@ namespace Whiskey2D.PourGames.TestImpl
             SimpleGameObject pour1 = new SimpleGameObject();
             pour1.Position = new Vector(400, 470);
             pour1.Sprite = new Sprite("pour1.png");
-            pour1.Sprite.Offset = new Vector(pour1.Sprite.ImageWidth / 2, pour1.Sprite.ImageHeight);
+            //pour1.Sprite.Offset = new Vector(pour1.Sprite.ImageWidth / 2, pour1.Sprite.ImageHeight);
             pour1.Sprite.Depth = .2f;
             pour1.Sprite.Color = Color.Gray;
 

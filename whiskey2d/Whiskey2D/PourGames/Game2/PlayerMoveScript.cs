@@ -24,7 +24,10 @@ namespace Whiskey2D.PourGames.Game2
         {
 
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
 

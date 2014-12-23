@@ -12,6 +12,11 @@ namespace Whiskey2D.Core
     public abstract class Script
     {
 
+        public Script()
+        {
+            Active = true;
+        }
+
         public virtual Type GobType
         {
             get
@@ -36,9 +41,17 @@ namespace Whiskey2D.Core
             }
         }
 
+        public Boolean Active
+        {
+            get;
+            set;
+        }
+
 
         public abstract void onStart();
         public abstract void onUpdate();
+        public abstract void onClose();
+
 
     }
 

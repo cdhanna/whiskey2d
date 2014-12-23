@@ -100,6 +100,21 @@ namespace Whiskey2D.Core.Managers.Impl
         }
 
 
+        public int getMouseWheelDelta()
+        {
+
+            return currentMouse.ScrollWheelValue;
+            
+        }
+
+        public bool scrolledUp()
+        {
+            return currentMouse.ScrollWheelValue > oldMouse.ScrollWheelValue;
+        }
+        public bool scrolledDown()
+        {
+            return currentMouse.ScrollWheelValue < oldMouse.ScrollWheelValue;
+        }
 
 
         public Vector getMousePosition()

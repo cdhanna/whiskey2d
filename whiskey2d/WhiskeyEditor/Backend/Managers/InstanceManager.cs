@@ -130,45 +130,55 @@ namespace WhiskeyEditor.Backend.Managers
 
                         int c = 0;
                         List<GameObject> lGobs = new List<GameObject>();
-                        foreach (InstanceDescriptor iDesc in appIDescs)
+                       
+                        try
                         {
-                            iDesc.X = iDesc.Position.X;
-                            iDesc.Y = iDesc.Position.Y;
+                            foreach (InstanceDescriptor iDesc in appIDescs)
+                            {
+                                iDesc.X = iDesc.Position.X;
+                                iDesc.Y = iDesc.Position.Y;
                             
-                            string typeName = iDesc.TypeDescriptorCompile.QualifiedName;
-                            Type type = gameData.GetType(typeName, true, false);
+                                string typeName = iDesc.TypeDescriptorCompile.QualifiedName;
+                                Type type = gameData.GetType(typeName, true, false);
 
-                            GameObject gob = (GameObject)type.GetConstructor
-                                (new Type[] { typeof(ObjectManager) }).Invoke
-                                (new object[] { level });
+                                GameObject gob = (GameObject)type.GetConstructor
+                                    (new Type[] { typeof(ObjectManager) }).Invoke
+                                    (new object[] { level });
 
-                            gob.Sprite.setRender(GameManager.Renderer);
-                            gob.Sprite.setResources(GameManager.Resources);
+                                gob.Sprite.setRender(GameManager.Renderer);
+                                gob.Sprite.setResources(GameManager.Resources);
 
-                            foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptorCompile.getPropertySetClone())
-                            {
-                                Console.WriteLine ( "converting " + c + " " + typeProp.Name);
-                                PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
-                                if (propInfo.SetMethod != null)
+                                foreach (PropertyDescriptor typeProp in iDesc.TypeDescriptorCompile.getPropertySetClone())
                                 {
-                                    propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).Value });
+                                
+                                        Console.WriteLine("converting " + c + " " + typeProp.Name);
+                                        PropertyInfo propInfo = gob.GetType().GetProperty(typeProp.Name);
+                                        if (propInfo.SetMethod != null)
+                                        {
+                                            propInfo.GetSetMethod().Invoke(gob, new object[] { iDesc.getTypeValOfName(typeProp.Name).Value });
+                                        }
+                                
                                 }
+
+                                gob.clearScripts();
+
+                                foreach (String scriptName in iDesc.getScriptNames())
+                                {
+                                    Type scriptType = gameData.GetType(appScriptTable[scriptName].QualifiedName, false);
+                                    object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                                    gob.addScript((Script)script);
+                                }
+
+
+                                //TODO THIS IS A TEMPORARY WORK AROUND
+                                gob.initializeObject();
+
+                                lGobs.Add(gob);
                             }
-
-                            gob.clearScripts();
-
-                            foreach (String scriptName in iDesc.getScriptNames())
-                            {
-                                Type scriptType = gameData.GetType(appScriptTable[scriptName].QualifiedName, false);
-                                object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-                                gob.addScript((Script)script);
-                            }
-
-
-                            //TODO THIS IS A TEMPORARY WORK AROUND
-                            gob.initializeObject();
-
-                            lGobs.Add(gob);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.GetType() + " |  " + e.Message);
                         }
                         //State state = new State();
                         //state.GameObjects = lGobs;

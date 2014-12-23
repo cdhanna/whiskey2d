@@ -28,5 +28,9 @@ namespace Whiskey2D.PourGames.TestImpl
             plr.Sprite.Scale += scaleDiff * .1f;
 
         }
+        public override void onClose()
+        {
+
+        }
     }
 }

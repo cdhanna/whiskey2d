@@ -20,10 +20,13 @@ namespace WhiskeyEditor.Backend
         //public List<InstanceDescriptor> Descriptors { get; private set; }
         public string LevelName { get; private set; }
         public Color BackgroundColor { get; set; }
+        public Camera Camera { get; set; }
+
 
         public EditorLevel(string name)
         {
             init();
+            Camera = new Camera();
             BackgroundColor = Color.BurlyWood;
             LevelName = name;
             //Descriptors = new List<InstanceDescriptor>();

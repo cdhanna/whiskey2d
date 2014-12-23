@@ -30,12 +30,17 @@ namespace WhiskeyEditor.UI.Properties.Converters
 
             map.Add("Color", new ColorPicker());
             map.Add("Sprite", new SpritePathPicker());
-
+            map.Add("Boolean", new BoolPicker());
+            map.Add("InstanceDescriptor", new InstancePicker());
         }
 
 
         public static UITypeEditor lookUp(string name)
         {
+
+            if (TypeBank.Instance.getObjectNames().Contains(name))
+                return lookUp("InstanceDescriptor");
+
             if (map.ContainsKey(name))
                 return map[name];
             else return null;

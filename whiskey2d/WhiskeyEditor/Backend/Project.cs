@@ -366,6 +366,7 @@ namespace WhiskeyEditor.Backend
         {
             var startInfo = new ProcessStartInfo();
             startInfo.WorkingDirectory = PathBuild;
+           
             // set additional properties 
             startInfo.FileName = Name + ".exe";
             Process proc = Process.Start(startInfo);

@@ -78,7 +78,36 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "ID", new RealType(typeof(int), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
+            addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
         }
+
+
+        //------------------------------------------------- experiment
+
+        private static Dictionary<string, InstanceDescriptor> nullTable = new Dictionary<string, InstanceDescriptor>();
+        private static Whiskey2D.Core.Managers.ObjectManager nullObjMan;
+        public InstanceDescriptor createNull()
+        {
+            if (nullObjMan == null)
+            {
+                nullObjMan = new Whiskey2D.Core.Managers.Impl.DefaultObjectManager();
+                nullObjMan.init();
+            }
+            if (nullTable.ContainsKey(ClassName))
+            {
+                return nullTable[ClassName];
+            }
+            InstanceDescriptor nullInst = new InstanceDescriptor(this, nullObjMan);
+            nullInst.Name = "empty (" + ClassName+")";
+            nullObjMan.updateAll();
+
+
+
+            nullTable.Add(ClassName, nullInst);
+            return nullInst;
+        }
+        //-------------------------------------------------------------
+
 
         public void changePropertyDescriptorName(String propName, String newPropName)
         {
@@ -274,6 +303,10 @@ namespace WhiskeyEditor.Backend
             {
 
                 return "" + val + "f";
+            }
+            else if (val.GetType() == typeof(Boolean))
+            {
+                return ((Boolean)val) ? "true" : "false";
             }
             else
             {

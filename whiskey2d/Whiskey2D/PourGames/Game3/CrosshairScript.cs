@@ -13,7 +13,10 @@ namespace Whiskey2D.PourGames.Game3
         public override void onStart()
         {
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
             Gob.Position = GameManager.Input.getMousePosition();

@@ -65,7 +65,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             List<GameObject> didntDie = new List<GameObject>();
 
-            foreach (GameObject gob in gameObjects)
+            foreach (GameObject gob in gameObjects.Where( g => g.Active ))
             {
                 gob.update();
             }
@@ -128,6 +128,7 @@ namespace Whiskey2D.Core.Managers.Impl
                     return gob;
                 }
             }
+           // GameManager.Log.error("Object Manager could not find : " + name);
             return null;
         }
         public G getObject<G>(string name) where G : GameObject

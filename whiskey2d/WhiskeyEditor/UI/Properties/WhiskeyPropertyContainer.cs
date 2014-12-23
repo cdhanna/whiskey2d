@@ -125,7 +125,7 @@ namespace WhiskeyEditor.UI.Properties
             set
             {
                 
-                WhiskeyEditor.Backend.TypeVal typeVal = WhiskeyEditor.Backend.TypeNameBank.Instance.createTypeVal(value);
+                WhiskeyEditor.Backend.TypeVal typeVal = WhiskeyEditor.Backend.TypeBank.Instance.createNewInstance(value);//WhiskeyEditor.Backend.TypeNameBank.Instance.createTypeVal(value);
 
                 object val = null;
                 try
@@ -133,6 +133,10 @@ namespace WhiskeyEditor.UI.Properties
                     if (typeVal is WhiskeyEditor.Backend.RealType )
                     {
                         val = Convert.ChangeType(Value, ((WhiskeyEditor.Backend.RealType)typeVal).Type);
+                    }
+                    if (typeVal is WhiskeyEditor.Backend.InstanceType)
+                    {
+                        // ??? 
                     }
                 }
                 catch (Exception e)

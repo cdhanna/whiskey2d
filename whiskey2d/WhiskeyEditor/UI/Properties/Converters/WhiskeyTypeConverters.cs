@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using WhiskeyEditor.UI.Properties.TypeConverters;
+
+
 
 namespace WhiskeyEditor.UI.Properties.Converters
 {
@@ -16,6 +19,8 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map = new Dictionary<string, TypeConverter>();
 
             map.Add("Sprite", new SpriteTypeConverter());
+            map.Add("Boolean", new BoolTypeConverter());
+            map.Add("InstanceDescriptor", new WhiskeyInstanceTypeConverter());
         }
 
         public static TypeConverter lookUp(string typeName)

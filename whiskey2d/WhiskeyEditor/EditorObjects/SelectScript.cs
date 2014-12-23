@@ -29,7 +29,10 @@ namespace WhiskeyEditor.EditorObjects
             };
 
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
             if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
@@ -41,8 +44,10 @@ namespace WhiskeyEditor.EditorObjects
 
                 foreach (InstanceDescriptor obj in objs)
                 {
-                    Vector v = WhiskeyControl.InputManager.getMousePosition();
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(WhiskeyControl.InputManager.getMousePosition()) || new Bounds(obj.Position - obj.Sprite.Offset - Vector.One * 8, Vector.One * 16).vectorWithin(WhiskeyControl.InputManager.getMousePosition()))
+                    Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+                    mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
+
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
                     {
                         Gob.Selected = obj;
 
@@ -67,8 +72,9 @@ namespace WhiskeyEditor.EditorObjects
             {
 
                 Gob.Sprite.Color = Color.Orange;
-                Gob.Position = Gob.Selected.Bounds.Position - new Vector(5, 5);
-                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(10, 10);
+                Gob.Position = Gob.Selected.Position;
+                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(5, 5);
+               
             }
 
             

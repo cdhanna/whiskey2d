@@ -41,7 +41,15 @@ namespace WhiskeyEditor.UI.Library
                 int index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
                 if (path.EndsWith(".state"))
                 {
-                    index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
+                    index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_LEVEL);
+                }
+                if (path.EndsWith(".cs"))
+                {
+                    index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_TYPE);
+                }
+                if (path.EndsWith(".png"))
+                {
+                    index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_PICTURE);
                 }
 
                 node.ImageIndex = index;

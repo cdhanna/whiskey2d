@@ -24,27 +24,64 @@ namespace WhiskeyEditor.UI.Properties
     class TypePicker : UITypeEditor
     {
 
-        private ListBox list;
+       // private ListBox list;
+        private TypePickerControl control;
         private IWindowsFormsEditorService service;
-
+        private object selectedName;
+        
         public TypePicker()
         {
-            list = new ListBox();
-            foreach (string name in (WhiskeyEditor.Backend.TypeNameBank.Instance.getTypeDisplayNames()))
-            {
-                list.Items.Add(name);
-            }
+            control = new TypePickerControl();
+            control.PrimitiveBox.SelectedIndexChanged += clickedPrimitive;
+            control.ObjectsBox.SelectedIndexChanged += clickedObject;
+            //list = new ListBox();
+            //foreach (string name in (WhiskeyEditor.Backend.TypeNameBank.Instance.getTypeDisplayNames()))
+            //{
+            //    list.Items.Add(name);
+            //}
 
-            list.SelectedIndexChanged += (s, a) =>
-            {
-                if (service != null)
-                {
-                    service.CloseDropDown();
-                    service = null;
-                }
-            };
+            //list.SelectedIndexChanged += (s, a) =>
+            //{
+            //    if (service != null)
+            //    {
+            //        service.CloseDropDown();
+            //        service = null;
+            //    }
+            //};
 
         }
+
+        private void clickedPrimitive(object sender, EventArgs args)
+        {
+            if (service == null) 
+                return;
+
+            string primName = (string)control.PrimitiveBox.SelectedItem;
+
+            if (primName != null)
+            {
+                selectedName = primName;
+            }
+
+            service.CloseDropDown();
+
+        }
+
+        private void clickedObject(object sender, EventArgs args)
+        {
+            if (service == null)
+                return;
+
+            string objName = (string)control.ObjectsBox.SelectedItem;
+            if (objName != null)
+            {
+                selectedName = objName;
+            }
+
+            service.CloseDropDown();
+
+        }
+
 
         public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
@@ -53,10 +90,23 @@ namespace WhiskeyEditor.UI.Properties
             // show the list box
             if (service != null)
             {
-                service.DropDownControl(list);
+                object oldSelected = selectedName;
+                selectedName = value;
+                control.updateBoxes();
 
-                if (list.SelectedItem != null)
-                    return list.SelectedItem;
+                if (control.PrimitiveBox.Items.Contains(value))
+                    control.PrimitiveBox.SelectedItem = value;
+                if (control.ObjectsBox.Items.Contains(value))
+                    control.ObjectsBox.SelectedItem = value;
+
+                service.DropDownControl(control);
+                //service.DropDownControl(list);
+                if (selectedName != null && oldSelected != selectedName)
+                {
+                    value = selectedName;
+                }
+                //if (list.SelectedItem != null)
+                //    return list.SelectedItem;
             }
 
             return value;
@@ -64,7 +114,7 @@ namespace WhiskeyEditor.UI.Properties
 
         public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
         {
-            return UITypeEditorEditStyle.DropDown;
+            return UITypeEditorEditStyle.Modal;
             //return base.GetEditStyle(context);
         }
 

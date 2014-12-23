@@ -20,7 +20,7 @@ namespace WhiskeyEditor.MonoHelp
 
         private Dictionary<WinMouse, Microsoft.Xna.Framework.Input.ButtonState> winMouseState;
 
-        private int mouseX, mouseY;
+        private int mouseX, mouseY, mouseScroll;
 
 
         public EditorInputSource(WhiskeyControl control)
@@ -62,6 +62,14 @@ namespace WhiskeyEditor.MonoHelp
             control.MouseMove += mouseMove;
             control.MouseDown += mouseDown;
             control.MouseUp += mouseUp;
+
+            control.MouseWheel += mouseWheel;
+            
+        }
+
+        private void mouseWheel(object sender, MouseEventArgs e)
+        {
+            mouseScroll += e.Delta;
         }
 
         private void mouseMove(object sender, MouseEventArgs e)
@@ -134,13 +142,15 @@ namespace WhiskeyEditor.MonoHelp
 
         public MonoMouse getMouseState()
         {
-            return new MonoMouse(mouseX, mouseY, 
-                0,
+            MonoMouse m = new MonoMouse(mouseX, mouseY, 
+                mouseScroll,
                 winMouseState[WinMouse.Left],
                 winMouseState[WinMouse.Middle],
                 winMouseState[WinMouse.Right],
                 winMouseState[WinMouse.XButton1],
                 winMouseState[WinMouse.XButton2]);
+
+            return m;
         }
     }
 }

@@ -16,7 +16,10 @@ namespace Whiskey2D.PourGames.Game2
         {
             //throw new NotImplementedException();
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
             Floor floor = (Floor)this.Gob;

@@ -18,7 +18,10 @@ namespace WhiskeyEditor.EditorObjects
         {
             
         }
+        public override void onClose()
+        {
 
+        }
         public override void onUpdate()
         {
             if (WhiskeyControl.InputManager.isKeyDown(Keys.C))

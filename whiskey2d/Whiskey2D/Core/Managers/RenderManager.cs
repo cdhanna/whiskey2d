@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Whiskey2D.Core;
 
 namespace Whiskey2D.Core.Managers
 {
     public interface RenderManager
     {
+
+        Camera ActiveCamera { get; set; }
 
         /// <summary>
         /// Initializes the RenderManager

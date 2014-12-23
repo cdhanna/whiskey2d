@@ -35,6 +35,14 @@ namespace WhiskeyEditor.UI.Properties.TypeConverters
 
                 Type toType = whiskeyProp.TypeVal.Value.GetType();
 
+                TypeConverter converter = WhiskeyTypeConverters.lookUp(toType.Name);
+                if (converter != null)
+                {
+                    object converted = converter.ConvertFrom(context, culture, value);
+                    whiskeyProp.TypeVal.Value = converted;
+                }
+
+
                 if (ConverterManager.Instance.hasConverter(toType))
                     whiskeyProp.TypeVal.Value = ConverterManager.Instance.convertFromString(toType, (string)value);
                 else

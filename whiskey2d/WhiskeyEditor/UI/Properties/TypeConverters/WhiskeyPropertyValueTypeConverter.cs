@@ -38,7 +38,8 @@ namespace WhiskeyEditor.UI.Properties.TypeConverters
                     {
                         try
                         {
-                            return Convert.ChangeType(value, toType);
+                            object converted = Convert.ChangeType(value, toType);
+                            return converted;
                         }
                         catch (Exception e)
                         {

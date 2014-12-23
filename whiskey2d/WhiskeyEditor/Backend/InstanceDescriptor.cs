@@ -16,13 +16,17 @@ namespace WhiskeyEditor.Backend
         public const string PROP_Y = "Y";
         public const string PROP_SPRITE = "Sprite";
         public const string PROP_NAME = "Name";
-
+        public const string PROP_ACTIVE = "Active";
 
         private bool initialized;
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
        
+
+
+
+
         public InstanceDescriptor(TypeDescriptor typeDesc, ObjectManager manager )
             : base(manager)
         {
@@ -232,6 +236,27 @@ namespace WhiskeyEditor.Backend
             
             return scriptNames;
         }
+
+        public override Boolean Active
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.Active;
+                }
+                else return (Boolean)getTypeValOfName(PROP_ACTIVE).Value;
+            }
+            set
+            {
+                base.Active = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_ACTIVE).Value = value;
+                }
+            }
+        }
+
 
         public override float X
         {

@@ -80,6 +80,8 @@ namespace Whiskey2D.Core
                 {
                     image = getResources().loadImage(ImagePath);
                 }
+
+                Center();
             }
 
             
@@ -145,7 +147,7 @@ namespace Whiskey2D.Core
         /// The offset of the sprite. By default, the offset is (0,0), which means all sprites will be drawn from their top-left corner.
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
         /// </summary>
-        public Vector Offset { get; set; }
+        public Vector Offset { get; private set; }
 
         
 
