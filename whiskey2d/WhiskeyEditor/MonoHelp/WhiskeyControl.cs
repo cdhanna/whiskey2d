@@ -208,6 +208,7 @@ namespace WhiskeyEditor.MonoHelp
             SelectionManager.Instance.SelectedInstance = null;
             active = this;
 
+            Renderer.Level = Level;
 
             if (IsHandleCreated)
             {
@@ -336,7 +337,7 @@ namespace WhiskeyEditor.MonoHelp
         {
             if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
             {
-
+                Level.Camera.Size = new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
                 InputSourceManager.update();
                 InputManager.update();
                 Level.updateAll();

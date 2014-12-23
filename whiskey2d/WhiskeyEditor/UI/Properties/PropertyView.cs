@@ -169,6 +169,8 @@ namespace WhiskeyEditor.UI.Properties
             ToolStrip.Dock = DockStyle.Bottom;
             panel.Controls.Add(ToolStrip);
 
+
+
             
             //titleLabel.Font = new Font(titleLabel.Font.FontFamily, titleLabel.Font.Size, FontStyle.Regular);
         }

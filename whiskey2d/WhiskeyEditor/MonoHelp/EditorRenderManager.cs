@@ -13,7 +13,7 @@ using WhiskeyEditor.Backend.Managers;
 namespace WhiskeyEditor.MonoHelp
 {
     using XnaColor = Microsoft.Xna.Framework.Color;
-
+    using WhiskeyColor = Whiskey2D.Core.Color;
     public class EditorRenderManager : RenderManager
     {
 
@@ -22,6 +22,9 @@ namespace WhiskeyEditor.MonoHelp
         private static Texture2D pixel;
 
         private Sprite alwaysOnSprite;
+
+
+        public EditorLevel Level { get; set; }
 
         //public Camera Camera { get; set; }
 
@@ -102,58 +105,80 @@ namespace WhiskeyEditor.MonoHelp
             if (ActiveCamera != null)
             {
 
-                
-                Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
-                Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
-
-
-                //draw grid
-                //int gridSize = 120;
-
-                float currY = GridManager.Instance.snapY(topLeft.Y);//topLeft.Y - (topLeft.Y % gridSize);
-                while (currY < botRight.Y)
-                {
-
-                    XnaColor color = XnaColor.White;
-                    if (currY == 0)
-                        color = XnaColor.Indigo;
-                   
-                    drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
-                    spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
-                    
-                    currY += GridManager.Instance.GridSizeY;
-                }
-
-                float currX = GridManager.Instance.snapX(topLeft.X);//topLeft.X - (topLeft.X % gridSize);
-                while (currX < botRight.X)
-                {
-                    XnaColor color = XnaColor.White;
-                    if (currX == 0)
-                        color = XnaColor.Indigo;
-                    drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
-                    spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
-                    currX += GridManager.Instance.GridSizeX;
-                }
-
-
-                //draw screen-box
-                int screenWidth = 1280;
-                int screenHeight = 720;
-                Vector screenSize = new Vector(screenWidth, screenHeight);
-                Vector center = (topLeft + botRight) / 2;
-
-                Vector screenTopLeft = center - screenSize / 2;
-                Vector screenBotRight = center + screenSize / 2;
-
-
-                drawBox(spriteBatch, XnaColor.Blue, .02f, screenTopLeft, screenBotRight);
-                drawBox(spriteBatch, XnaColor.Red, .03f, Vector.Zero, Vector.Zero + screenSize );
-
+              
+                drawGrid();
+                drawBoxes();
             }
 
 
 
             spriteBatch.End();
+        }
+
+        private void drawBoxes()
+        {
+
+            XnaColor constantBox = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.Red, .5f);
+            XnaColor screenBox = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.Blue, .5f);
+
+            Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
+            Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
+
+
+            //draw screen-box
+            int screenWidth = 1280;
+            int screenHeight = 720;
+            Vector screenSize = new Vector(screenWidth, screenHeight);
+            Vector center = (topLeft + botRight) / 2;
+
+            Vector screenTopLeft = center - screenSize / 2;
+            Vector screenBotRight = center + screenSize / 2;
+
+
+            drawBox(spriteBatch, screenBox, .02f, screenTopLeft, screenBotRight);
+            drawBox(spriteBatch, constantBox, .03f, Vector.Zero, Vector.Zero + screenSize);
+
+        }
+
+        private void drawGrid()
+        {
+            Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
+            Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
+
+            
+
+            XnaColor lineColor = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.DarkGray, .8f);
+
+            //lineColor = XnaColor.Lerp(lineColor, Level.BackgroundColor, .5f);
+
+            //draw grid
+            //int gridSize = 120;
+
+            float currY = GridManager.Instance.snapY(topLeft.Y);//topLeft.Y - (topLeft.Y % gridSize);
+            while (currY < botRight.Y)
+            {
+
+                XnaColor color = lineColor;
+                if (currY == 0)
+                    color = Level.BackgroundColor.invert();
+
+                drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
+                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
+
+                currY += GridManager.Instance.GridSizeY;
+            }
+
+            float currX = GridManager.Instance.snapX(topLeft.X);//topLeft.X - (topLeft.X % gridSize);
+            while (currX < botRight.X)
+            {
+                XnaColor color = lineColor;
+                if (currX == 0)
+                    color = Level.BackgroundColor.invert();
+                drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
+                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
+                currX += GridManager.Instance.GridSizeX;
+            }
+
         }
 
         private void drawLine(SpriteBatch spriteBatch, XnaColor color, float depth, Vector start, Vector end)

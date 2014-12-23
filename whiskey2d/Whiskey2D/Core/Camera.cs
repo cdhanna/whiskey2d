@@ -13,6 +13,7 @@ namespace Whiskey2D.Core
 
         public Camera()
         {
+            Size = new Vector(1280, 720);
             Position = Vector.Zero;
             Zoom = 1;
         }
@@ -46,6 +47,29 @@ namespace Whiskey2D.Core
         public void reset()
         {
             reset(Vector.Zero, 1, 0);
+        }
+
+        public Vector Size
+        {
+            get;
+            set;
+        }
+
+        public Vector TruePosition
+        {
+
+            get
+            {
+                return round(getGameCoordinate(Size / 2));
+            }
+
+            set
+            {
+                float oldZoom = Zoom;
+                origin = Vector.Zero;
+                position = -value + Size/2;
+                updateTransform();
+            }
         }
 
         private Vector position;
@@ -104,7 +128,7 @@ namespace Whiskey2D.Core
             set
             {
                 zoom = value;
-                //zoom = (float) Math.Round(zoom, 3);
+                zoom = (float) Math.Round(zoom, 3);
                 if (zoom < .001f) zoom = .001f;
 
                 updateTransform();
@@ -151,10 +175,10 @@ namespace Whiskey2D.Core
             transform = buildTransform();
         }
 
-        //private Vector2 round(Vector2 v2)
-        //{
-        //    return new Vector2((float)Math.Round((double)v2.X), (float)Math.Round((double)v2.Y));
-        //}
+        private Vector2 round(Vector2 v2)
+        {
+            return new Vector2((float)Math.Round((double)v2.X), (float)Math.Round((double)v2.Y));
+        }
 
         private Matrix buildTransform()
         {

@@ -181,6 +181,24 @@ namespace Whiskey2D.Core
             this.a = a;
         }
 
+        public Color invert()
+        {
+            return new Color(255 - R, 255 - G, 255 - B, A);
+        }
+
+        public Color multiply(float amount)
+        {
+            return new Color(R / 255f * amount, G / 255f * amount, B / 255f * amount, A);
+        }
+
+        public float intensity()
+        {
+            float i = R + G + B;
+            i /= 3;
+            i /= 255f;
+            return i;
+        }
+
         #region converters
 
         public static implicit operator XnaColor(Color v)

@@ -56,6 +56,7 @@ namespace WhiskeyEditor.EditorObjects
 
                 camera.Position = mouseShiftCameraStart + mouseDelta;
 
+                
             }
 
             
