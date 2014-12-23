@@ -55,12 +55,20 @@ namespace WhiskeyEditor.EditorObjects
 
             }
 
+            
+
             if (Gob.Dragging != null)
             {
                 //WhiskeyControl.Controller.SelectedGob = Gob.Dragging;
                 SelectionManager.Instance.SelectedInstance = Gob.Dragging;
                 
                 Gob.Dragging.Position = mousePos + grabOffset;
+
+                if (WhiskeyControl.InputManager.isKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                {
+                    Gob.Dragging.Position = GridManager.Instance.snapRound(Gob.Dragging.Position);
+                }
+
                 Gob.Dragging.X = Gob.Dragging.Position.X;
                 Gob.Dragging.Y = Gob.Dragging.Position.Y;
 

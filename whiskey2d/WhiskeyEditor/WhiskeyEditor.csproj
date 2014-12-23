@@ -110,6 +110,7 @@
     <Compile Include="Backend\InstanceDescriptor.cs" />
     <Compile Include="Backend\Managers\CopyPasteManager.cs" />
     <Compile Include="Backend\Managers\FileManager.cs" />
+    <Compile Include="Backend\Managers\GridManager.cs" />
     <Compile Include="Backend\Managers\InstanceManager.cs" />
     <Compile Include="Backend\Managers\ScriptManager.cs" />
     <Compile Include="Backend\Managers\SelectionManager.cs" />

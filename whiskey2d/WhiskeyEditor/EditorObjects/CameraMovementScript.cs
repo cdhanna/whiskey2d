@@ -12,6 +12,8 @@ namespace WhiskeyEditor.EditorObjects
 {
     class CameraMovementScript : Script<ObjectController>
     {
+        Vector mouseShiftStart = Vector.Zero;
+        Vector mouseShiftCameraStart = Vector.Zero;
         public override void onStart()
         {
         }
@@ -40,6 +42,21 @@ namespace WhiskeyEditor.EditorObjects
             }
 
             camera.Position -= cameraVel;
+
+            if (Gob.Selected == null && WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
+            {
+                
+                if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
+                {
+                    mouseShiftStart = WhiskeyControl.InputManager.getMousePosition();
+                    mouseShiftCameraStart = camera.Position;
+                }
+
+                Vector mouseDelta = WhiskeyControl.InputManager.getMousePosition() - mouseShiftStart;
+
+                camera.Position = mouseShiftCameraStart + mouseDelta;
+
+            }
 
             
             Vector screenOrigin = new Vector(WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferWidth, WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferHeight) /2;

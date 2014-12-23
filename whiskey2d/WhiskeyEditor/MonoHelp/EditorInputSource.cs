@@ -45,6 +45,7 @@ namespace WhiskeyEditor.MonoHelp
             winToMono.Add(Keys.ControlKey, MonoKeys.LeftControl);
             winToMono.Add(Keys.V, MonoKeys.V);
             winToMono.Add(Keys.C, MonoKeys.C);
+            winToMono.Add(Keys.ShiftKey, MonoKeys.LeftShift);
 
             winDown = new Dictionary<Keys, bool>();
             Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
@@ -99,15 +100,15 @@ namespace WhiskeyEditor.MonoHelp
         }
         private void keyDown(object sender, KeyEventArgs e)
         {
-            Keys kTest = e.KeyData & ~Keys.Control;
-            
+            Keys kTest = e.KeyData & ~Keys.Control & ~Keys.Shift;
+           
             
             winDown[kTest] = true;
             Console.WriteLine("down: " + kTest.ToString() );
         }
         private void keyUp(object sender, KeyEventArgs e)
         {
-            Keys kTest = e.KeyData & ~Keys.Control;
+            Keys kTest = e.KeyData & ~Keys.Control & ~Keys.Shift;
             
             winDown[kTest] = false;
            

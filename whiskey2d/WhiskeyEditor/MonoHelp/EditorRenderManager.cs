@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core.Managers;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.MonoHelp
 {
@@ -107,9 +108,9 @@ namespace WhiskeyEditor.MonoHelp
 
 
                 //draw grid
-                int gridSize = 120;
+                //int gridSize = 120;
 
-                float currY = topLeft.Y - (topLeft.Y % gridSize);
+                float currY = GridManager.Instance.snapY(topLeft.Y);//topLeft.Y - (topLeft.Y % gridSize);
                 while (currY < botRight.Y)
                 {
 
@@ -120,10 +121,10 @@ namespace WhiskeyEditor.MonoHelp
                     drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
                     spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
                     
-                    currY += gridSize;
+                    currY += GridManager.Instance.GridSizeY;
                 }
 
-                float currX = topLeft.X - (topLeft.X % gridSize);
+                float currX = GridManager.Instance.snapX(topLeft.X);//topLeft.X - (topLeft.X % gridSize);
                 while (currX < botRight.X)
                 {
                     XnaColor color = XnaColor.White;
@@ -131,7 +132,7 @@ namespace WhiskeyEditor.MonoHelp
                         color = XnaColor.Indigo;
                     drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
                     spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
-                    currX += gridSize;
+                    currX += GridManager.Instance.GridSizeX;
                 }
 
 
