@@ -83,6 +83,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
             {
                 Descriptor.Level.Camera.Zoom = (float)CameraZoomDesc.PropValue;
             };
+            
+
 
             WhiskeyPropertyListGrid.PropertyGrid.PropertyValueChanged += (s, a) =>
             {

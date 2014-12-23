@@ -77,8 +77,8 @@ namespace WhiskeyEditor.EditorObjects
                 camera.Zoom += .1f;
             }
 
-            camera.Zoom = Math.Max(camera.Zoom, .5f);
-            camera.Zoom = Math.Min(camera.Zoom, 1.5f);
+            //camera.Zoom = Math.Max(camera.Zoom, .5f);
+            //camera.Zoom = Math.Min(camera.Zoom, 1.5f);
 
             
         }

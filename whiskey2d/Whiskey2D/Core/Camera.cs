@@ -6,55 +6,97 @@ using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
+    /// <summary>
+    /// A Camera controls the position and zoom of the view into the game world. 
+    /// </summary>
     [Serializable]
     public class Camera
     {
 
-
+        /// <summary>
+        /// Create a new camera with default values. 
+        /// </summary>
         public Camera()
         {
             Size = new Vector(1280, 720);
             Position = Vector.Zero;
+            ZoomMin = .5f;
+            ZoomMax = 1.5f;
             Zoom = 1;
         }
 
-
+        /// <summary>
+        /// Convert a regular value into camera values by multiplying the camera's current zoom
+        /// </summary>
+        /// <param name="regular">a number</param>
+        /// <returns>a number modified by the camera's zoom</returns>
         public float getCameraUnits(float regular)
         {
             return regular * Zoom;
         }
+
+        /// <summary>
+        /// Convert a regular vector into a camera vector by multiplying the camera's current zoom as a scalar on the vector
+        /// </summary>
+        /// <param name="regular">a vector</param>
+        /// <returns>a vector modified by the camera's zoom</returns>
         public Vector getCameraUnits(Vector regular)
         {
             return new Vector(getCameraUnits(regular.X), getCameraUnits(regular.Y));
         }
 
+        /// <summary>
+        /// Convert a screen coordinate to a game coordinate
+        /// </summary>
+        /// <param name="screenCoord">A screen coordinate</param>
+        /// <returns>A game coordinate</returns>
         public Vector getGameCoordinate(Vector screenCoord)
         {
             Vector converted = Vector2.Transform(screenCoord, buildBackwardsTransform());
             return converted;
         }
+
+        /// <summary>
+        /// Convert a game coordinate to a screen coordinate
+        /// </summary>
+        /// <param name="gameCoord">A game coordinate</param>
+        /// <returns>a screen coordinate</returns>
         public Vector getScreenCoordinate(Vector gameCoord)
         {
             return Vector2.Transform(gameCoord, buildTransform());
         }
 
-        public void reset(Vector position, float zoom, float rotation)
+        /// <summary>
+        /// Reset all of the camera's values
+        /// </summary>
+        /// <param name="position">The new position of the camera</param>
+        /// <param name="zoom">The new zoom of the camera</param>
+        public void reset(Vector position, float zoom)
         {
             Position = position;
             Zoom = zoom;
-            Rotation = rotation;
-        }
-        public void reset()
-        {
-            reset(Vector.Zero, 1, 0);
         }
 
+        /// <summary>
+        /// Reset all of the camera's values to their default values
+        /// </summary>
+        public void reset()
+        {
+            reset(Vector.Zero, 1);
+        }
+
+        /// <summary>
+        /// get or set the screen size the camera is representing
+        /// </summary>
         public Vector Size
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// get or set the game coordinate in the center of the screen
+        /// </summary>
         public Vector TruePosition
         {
 
@@ -73,6 +115,10 @@ namespace Whiskey2D.Core
         }
 
         private Vector position;
+
+        /// <summary>
+        /// get or set the camera position
+        /// </summary>
         public Vector Position
         {
             get
@@ -87,6 +133,9 @@ namespace Whiskey2D.Core
         }
 
         private Vector origin;
+        /// <summary>
+        /// get or set the camera origin 
+        /// </summary>
         public Vector Origin
         {
             get
@@ -95,30 +144,19 @@ namespace Whiskey2D.Core
             }
             set
             {
-
-
-                //Vector2 originNew = GetGameLocation(screenLocation);
-                //_origin = originNew;
-                //UpdateTranslation();
-                //originNew = GetScreenLocation(_origin);
-                //_position += (screenLocation - originNew);
-                //UpdateTranslation();
-
                 Vector originNew = getGameCoordinate(value);
                 origin = originNew;
                 updateTransform();
                 originNew = getScreenCoordinate(origin);
                 position += (value - originNew);
                 updateTransform();
-
-
-                //origin = value;
-                //updateTransform();
-                
             }
         }
 
         private float zoom;
+        /// <summary>
+        /// get or set the camera zoom. The larger the zoom value, the more zoomed in the camera will be.
+        /// </summary>
         public float Zoom
         {
             get
@@ -128,31 +166,40 @@ namespace Whiskey2D.Core
             set
             {
                 zoom = value;
+                zoom = MathHelper.Clamp(zoom, ZoomMin, ZoomMax);
                 zoom = (float) Math.Round(zoom, 3);
+
                 if (zoom < .001f) zoom = .001f;
 
                 updateTransform();
             }
         }
 
-        float rotation;
-        public float Rotation
+        /// <summary>
+        /// get or set the minimum value for the zoom value. 
+        /// </summary>
+        public float ZoomMin
         {
-            get
-            {
-                return rotation;
-            }
-            set
-            {
-                rotation = value;
-                updateTransform();
-            }
+            get;
+            set;
         }
+
+        /// <summary>
+        /// get or set the maximum value for the zoom value.
+        /// </summary>
+        public float ZoomMax
+        {
+            get;
+            set;
+        }
+
 
         [NonSerialized]
         private Matrix transform;
 
-
+        /// <summary>
+        /// get the transform matrix that has been created as a result of position, origin, zoom, and rotation
+        /// </summary>
         public Matrix TranformMatrix
         {
             get
@@ -182,56 +229,23 @@ namespace Whiskey2D.Core
 
         private Matrix buildTransform()
         {
-
-
-            //position = round(position);
-            //origin = round(origin);
-            //zoom = (float)Math.Round((float)zoom, 1);
-
             Matrix t = Matrix.Identity
-            
-                
-            
-
             * Matrix.CreateTranslation(toVec3(-origin))
-            //t *= Matrix.CreateRotationZ(Rotation);
             * Matrix.CreateScale(zoom)
-
             * Matrix.CreateTranslation(toVec3(position))
             * Matrix.CreateTranslation(toVec3(origin))
-
-            
             ;
-            
-           
-            
-
             return t;
         }
 
         private Matrix buildBackwardsTransform()
         {
-
-            //position = round(position);
-            //origin = round(origin);
-            //zoom = (float)Math.Round((float)zoom, 1);
-
             Matrix t = Matrix.Identity
-
             * Matrix.CreateTranslation(toVec3(-position))
             * Matrix.CreateTranslation(toVec3(-origin))
-            
-            //t *= Matrix.CreateRotationZ(-Rotation);
             * Matrix.CreateScale(1 / zoom)
-            
             * Matrix.CreateTranslation(toVec3(origin))
-
-            
-            
             ;
-
-            
-
             return t;
         }
 
