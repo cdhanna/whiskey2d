@@ -47,10 +47,24 @@ namespace WhiskeyEditor.EditorObjects
                     Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
                     mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
+                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) 
+                        || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos)
+                        
+                        
+                        || obj == Gob.ControlPointObject && (
+                               Gob.ControlPointRight.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointRightTop.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointTop.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointLeftTop.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointLeft.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointLeftBot.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointBot.Bounds.vectorWithin(mousePos)
+                            || Gob.ControlPointRightBot.Bounds.vectorWithin(mousePos)) 
+
+                        )
                     {
                         Gob.Selected = obj;
-
+                        Gob.ControlPointObject = Gob.Selected;
                         SelectionManager.Instance.SelectedInstance = obj;
                         
 
@@ -71,9 +85,10 @@ namespace WhiskeyEditor.EditorObjects
             if (Gob.Selected != null)
             {
 
-                Gob.Sprite.Color = Color.Orange;
+                Gob.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert();
+
                 Gob.Position = Gob.Selected.Position;
-                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(5, 5);
+                Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(12);
                
             }
 

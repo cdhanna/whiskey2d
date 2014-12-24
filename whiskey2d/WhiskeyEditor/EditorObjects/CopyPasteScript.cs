@@ -24,11 +24,10 @@ namespace WhiskeyEditor.EditorObjects
         }
         public override void onUpdate()
         {
-            if (WhiskeyControl.InputManager.isKeyDown(Keys.C))
-            {
-                Console.WriteLine("SDF");
-            }
+            Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+            mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
+            
             if (WhiskeyControl.InputManager.isNewKeyDown(Keys.C) && WhiskeyControl.InputManager.isKeyDown(Keys.LeftControl))
             {
                 CopyPasteManager.Instance.copyToBuffer(Gob.Selected);
@@ -38,8 +37,8 @@ namespace WhiskeyEditor.EditorObjects
                 InstanceDescriptor inst = CopyPasteManager.Instance.pasteFromBuffer(Gob.CurrentLevel);
                 if (inst != null)
                 {
-                    inst.X = WhiskeyControl.InputManager.getMousePosition().X;
-                    inst.Y = WhiskeyControl.InputManager.getMousePosition().Y;
+                    inst.X = mousePos.X;
+                    inst.Y = mousePos.Y;
                 }
             }
         }

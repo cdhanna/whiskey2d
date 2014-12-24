@@ -123,9 +123,13 @@ namespace Whiskey2D.Core
         /// <summary>
         /// A Vector representing the actual size of the Image, including the current Scale settings. 
         /// </summary>
+        [System.ComponentModel.Browsable(false)]
         public Vector ImageSize { get { return new Vector(ImageWidth * Scale.X, ImageHeight * Scale.Y); } }
 
+        [System.ComponentModel.Browsable(false)]
         public float ImageWidth { get { return (getImage() == null) ? 0 : getImage().Width; } }
+
+        [System.ComponentModel.Browsable(false)]
         public float ImageHeight { get { return (getImage() == null) ? 0 : getImage().Height; } }
 
 
@@ -148,12 +152,14 @@ namespace Whiskey2D.Core
         /// The offset of the sprite. By default, the offset is (0,0), which means all sprites will be drawn from their top-left corner.
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
         /// </summary>
+        [System.ComponentModel.Browsable(false)]
         public Vector Offset { get; private set; }
 
+        [System.ComponentModel.Browsable(false)]
         public Vector ScaledOffset { get { return new Vector(Offset.X * Scale.X, Offset.Y * Scale.Y); } }
 
         public bool Tiled { get; set; }
-
+        public bool Visible { get; set; }
         /// <summary>
         /// Creates a sprite with a given Image.
         /// </summary>
@@ -177,7 +183,7 @@ namespace Whiskey2D.Core
             Offset = Vector.Zero;
             Depth = .5f;
             Color = Microsoft.Xna.Framework.Color.White;
-            
+            Visible = true;
             Rotation = 0;
         }
         public Sprite()
@@ -189,6 +195,7 @@ namespace Whiskey2D.Core
             Depth = .5f;
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
+            Visible = true;
         }
 
         public Sprite(RenderManager renderer)
@@ -202,6 +209,7 @@ namespace Whiskey2D.Core
             Depth = .5f;
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
+            Visible = true;
         }
 
         public Sprite(RenderManager renderer, ResourceManager resources, Sprite other)
@@ -216,6 +224,7 @@ namespace Whiskey2D.Core
             Color = other.Color;
             Tiled = other.Tiled;
             Rotation = other.Rotation;
+            Visible = other.Visible;
         }
 
         public Sprite(string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
@@ -226,6 +235,7 @@ namespace Whiskey2D.Core
             Offset = offset;
             Depth = depth;
             Color = color;
+            Visible = true;
             Rotation = rotation;
         }
 
@@ -233,6 +243,7 @@ namespace Whiskey2D.Core
         {
             setRender(renderer);
             ImagePath = imagePath;
+            Visible = true;
             image = getImage();
             Scale = scale;
             Offset = offset;
@@ -253,6 +264,10 @@ namespace Whiskey2D.Core
 
         public void draw(SpriteBatch spriteBatch, Vector position)
         {
+            if (!Visible)
+                return;
+
+
             if (Tiled)
             {
                 

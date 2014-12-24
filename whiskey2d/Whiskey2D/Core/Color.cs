@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Whiskey2D.Core
 {
@@ -189,6 +190,11 @@ namespace Whiskey2D.Core
         public Color multiply(float amount)
         {
             return new Color(R / 255f * amount, G / 255f * amount, B / 255f * amount, A);
+        }
+
+        public Color lerp(Color other, float amount)
+        {
+            return new Color((int)MathHelper.Lerp(R, other.R, amount), (int)MathHelper.Lerp(G, other.G, amount), (int)MathHelper.Lerp(B, other.B, amount), (int)MathHelper.Lerp(A, other.A, amount));
         }
 
         public float intensity()
