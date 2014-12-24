@@ -249,6 +249,12 @@
     </Compile>
     <Compile Include="UI\Properties\GeneralPropertyDescriptor.cs" />
     <Compile Include="UI\Properties\RestrictedFloatPicker.cs" />
+    <Compile Include="UI\Properties\RestrictedFloatPickerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\RestrictedFloatPickerControl.Designer.cs">
+      <DependentUpon>RestrictedFloatPickerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Properties\SpriteButtonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -426,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Properties\InstancePickerControl.resx">
       <DependentUpon>InstancePickerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Properties\RestrictedFloatPickerControl.resx">
+      <DependentUpon>RestrictedFloatPickerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Properties\SpriteButtonControl.resx">
       <DependentUpon>SpriteButtonControl.cs</DependentUpon>

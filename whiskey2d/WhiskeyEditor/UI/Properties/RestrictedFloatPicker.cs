@@ -30,7 +30,8 @@ namespace WhiskeyEditor.UI.Properties
 
 
         private IWindowsFormsEditorService service;
-        private TrackBar trackBar;
+        private RestrictedFloatPickerControl control;
+        //private TrackBar trackBar;
 
         private float result = 0;
         public RestrictedFloatPicker(GeneralPropertyDescriptor gpd)
@@ -54,26 +55,27 @@ namespace WhiskeyEditor.UI.Properties
             Max = max;
             Inc = inc;
 
-            trackBar = new TrackBar();
+            control = new RestrictedFloatPickerControl();
 
             //1 - 0 = 1 / .1 = 10
             float range = max - min;
 
             int maxInt = (int) (range / inc);
 
-            trackBar.Minimum = 0;
-            trackBar.Maximum = (int)(range/inc) + 1;
-            trackBar.TickFrequency = (int)(range);
+            control.TrackBar.Minimum = 0;
+            control.TrackBar.Maximum = (int)(range / inc) + 1;
+            control.TrackBar.TickFrequency = (int)(range);
 
 
-            trackBar.ValueChanged += (s, a) =>
+            control.TrackBar.ValueChanged += (s, a) =>
             {
-                result = Min + (trackBar.Value * Inc);
+                result = Min + (control.TrackBar.Value * Inc);
+                control.Value = result;
                 if (Property != null)
                     Property.SetValue(null, result);
             };
 
-            trackBar.MouseUp += (s, a) =>
+            control.TrackBar.MouseUp += (s, a) =>
             {
                 if (service != null)
                 {
@@ -94,8 +96,11 @@ namespace WhiskeyEditor.UI.Properties
             if (service != null)
             {
                 result = (float)value;
-                trackBar.Value = (int)(.5f + (result / Inc) );
-                service.DropDownControl(trackBar);
+                control.TrackBar.Value = (int)(.5f + (result / Inc));
+                control.Min = Min;
+                control.Max = Max;
+                control.Value = result;
+                service.DropDownControl(control);
 
                 value = result;
             }
