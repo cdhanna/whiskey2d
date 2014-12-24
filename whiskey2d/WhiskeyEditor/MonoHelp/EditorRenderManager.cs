@@ -106,7 +106,8 @@ namespace WhiskeyEditor.MonoHelp
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+                    spr.draw(spriteBatch, gob.Position);
+                    //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
                 }
             }
 
@@ -206,7 +207,7 @@ namespace WhiskeyEditor.MonoHelp
            
 
             //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
             foreach (InstanceDescriptor gob in descs)
             {
                 Sprite spr = gob.Sprite;
@@ -216,7 +217,9 @@ namespace WhiskeyEditor.MonoHelp
                 {
                     Vector2 alwaysOnPos = gob.Position;
                     spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, (spr.Depth / 2) - .01f);
-                    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
+                    //Rectangle destRect = new Rectangle(0, 0, (int)(spr.ImageWidth * spr.Scale.X), (int)(spr.ImageHeight * spr.Scale.Y));
+                    gob.Sprite.draw(spriteBatch, gob.Position);
+                    //spriteBatch.Draw(spr.getImage(), gob.Position, destRect, spr.Color, spr.Rotation, spr.Offset, Vector.One, SpriteEffects.None, spr.Depth / 2);
                 }
             }
 

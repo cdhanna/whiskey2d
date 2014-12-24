@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Whiskey2D.Core.Managers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Whiskey2D.Core
@@ -124,8 +125,8 @@ namespace Whiskey2D.Core
         /// </summary>
         public Vector ImageSize { get { return new Vector(ImageWidth * Scale.X, ImageHeight * Scale.Y); } }
 
-        public float ImageWidth { get { return (image == null) ? 0 : image.Width; } }
-        public float ImageHeight { get { return (image == null) ? 0 : image.Height; } }
+        public float ImageWidth { get { return (getImage() == null) ? 0 : getImage().Width; } }
+        public float ImageHeight { get { return (getImage() == null) ? 0 : getImage().Height; } }
 
 
         /// <summary>
@@ -149,7 +150,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public Vector Offset { get; private set; }
 
-        
+        public Vector ScaledOffset { get { return new Vector(Offset.X * Scale.X, Offset.Y * Scale.Y); } }
+
+        public bool Tiled { get; set; }
 
         /// <summary>
         /// Creates a sprite with a given Image.
@@ -174,6 +177,7 @@ namespace Whiskey2D.Core
             Offset = Vector.Zero;
             Depth = .5f;
             Color = Microsoft.Xna.Framework.Color.White;
+            
             Rotation = 0;
         }
         public Sprite()
@@ -210,6 +214,7 @@ namespace Whiskey2D.Core
             Offset = other.Offset;
             Depth = other.Depth;
             Color = other.Color;
+            Tiled = other.Tiled;
             Rotation = other.Rotation;
         }
 
@@ -243,5 +248,26 @@ namespace Whiskey2D.Core
         {
             Offset = new Vector(ImageWidth, ImageHeight) / 2;
         }
+
+
+
+        public void draw(SpriteBatch spriteBatch, Vector position)
+        {
+            if (Tiled)
+            {
+                
+                Rectangle srcRect = new Rectangle(0, 0, (int)(ImageWidth * Scale.X), (int)(ImageHeight * Scale.Y));
+                spriteBatch.Draw(getImage(), position, srcRect, Color, Rotation, new Vector(Offset.X * (Scale.X ), Offset.Y * (Scale.Y )), Vector.One, SpriteEffects.None, Depth / 2);
+            }
+            else
+            {
+
+                spriteBatch.Draw(getImage(), position, null, Color, Rotation, Offset, Scale, SpriteEffects.None, Depth / 2);
+
+               // Bounds b = new Bounds(position - new Vector(Offset.X * Scale.X, Offset.Y), ImageSize);
+               // spriteBatch.Draw(getRenderer().getPixel(), b.Position, null, Color.Green, 0, Vector.Zero, b.Size, SpriteEffects.None, 1);
+            }
+        }
+
     }
 }
