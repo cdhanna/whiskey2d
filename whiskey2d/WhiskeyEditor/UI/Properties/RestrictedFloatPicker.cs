@@ -111,7 +111,7 @@ namespace WhiskeyEditor.UI.Properties
 
         public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
         {
-            return UITypeEditorEditStyle.Modal;
+            return UITypeEditorEditStyle.DropDown;
         }
 
     }

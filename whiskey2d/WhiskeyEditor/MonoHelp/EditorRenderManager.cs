@@ -26,9 +26,10 @@ namespace WhiskeyEditor.MonoHelp
 
         public EditorLevel Level { get; set; }
 
+
         private BloomComponent bloomComponent;
         private BloomSettings bloomSettings;
-
+        private RenderTarget2D hudTarget;
 
         //public Camera Camera { get; set; }
 
@@ -46,6 +47,10 @@ namespace WhiskeyEditor.MonoHelp
             alwaysOnSprite.getImage();
             alwaysOnSprite.Center();
             alwaysOnSprite.Scale *= .5f;
+
+
+            hudTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+
         }
 
         /// <summary>
@@ -106,14 +111,7 @@ namespace WhiskeyEditor.MonoHelp
             }
 
             
-            if (ActiveCamera != null)
-            {
-
-              
-                drawGrid();
-                drawBoxes();
-            }
-
+            
 
 
             spriteBatch.End();
@@ -152,7 +150,7 @@ namespace WhiskeyEditor.MonoHelp
             
 
             XnaColor lineColor = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.DarkGray, .8f);
-
+            lineColor = XnaColor.Lerp(lineColor, XnaColor.Transparent, .7f);
             //lineColor = XnaColor.Lerp(lineColor, Level.BackgroundColor, .5f);
 
             //draw grid
@@ -232,6 +230,8 @@ namespace WhiskeyEditor.MonoHelp
         public void renderAll(List<GameObject> gobs, List<InstanceDescriptor> insts)
         {
 
+
+
             if (bloomComponent == null)
             {
                 bloomComponent = new BloomComponent(GraphicsDevice, WhiskeyControl.Content);
@@ -240,12 +240,20 @@ namespace WhiskeyEditor.MonoHelp
                 bloomComponent.Settings = bloomSettings;
             }
 
+            if (GraphicsDevice.PresentationParameters.BackBufferHeight != hudTarget.Height || GraphicsDevice.PresentationParameters.BackBufferWidth != hudTarget.Width)
+            {
+                hudTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+            }
+
 
             if (Level.BloomSettings != null)
             {
                 bloomComponent.Settings = Level.BloomSettings;
             }
 
+            renderHud();
+
+            
             bloomComponent.BeginDraw();
 
            
@@ -254,7 +262,18 @@ namespace WhiskeyEditor.MonoHelp
             render(gobs);
             render(insts);
 
+            
+
+
             bloomComponent.draw();
+
+
+
+            GraphicsDevice.SetRenderTarget(null);
+            spriteBatch.Begin();
+            spriteBatch.Draw(hudTarget, Vector.Zero, XnaColor.White);
+            spriteBatch.End();
+
 
         }
 
@@ -263,7 +282,21 @@ namespace WhiskeyEditor.MonoHelp
         /// </summary>
         public void renderHud()
         {
-            //TODO fix this
+            GraphicsDevice.SetRenderTarget(hudTarget);
+            GraphicsDevice.Clear(XnaColor.Transparent);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, CameraTransform);
+            //spriteBatch.Begin();
+
+            if (ActiveCamera != null)
+            {
+
+                drawGrid();
+                drawBoxes();
+            }
+
+
+            spriteBatch.End();
+            
         }
 
 
@@ -289,6 +322,8 @@ namespace WhiskeyEditor.MonoHelp
             //do nothing
         }
 
+
+        public Matrix CameraTransform { get { return ActiveCamera == null ? Matrix.Identity : ActiveCamera.TranformMatrix; } }
 
         public Camera ActiveCamera
         {

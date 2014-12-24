@@ -398,6 +398,9 @@ namespace WhiskeyEditor.MonoHelp
         protected override void Draw()
         {
             //clear
+
+            Renderer.Level = Level;
+
             WhiskeyGraphicsDevice.Clear(Level.BackgroundColor);
 
 
