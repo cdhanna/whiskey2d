@@ -384,6 +384,13 @@ namespace WhiskeyEditor.MonoHelp
         //    }
         //}
 
+        public static void forceRedraw(){
+            if (active != null)
+            {
+                //active.Draw();
+                active.Invalidate();
+            }
+        }
  
         /// <summary>
         /// Draw the scene
@@ -392,9 +399,11 @@ namespace WhiskeyEditor.MonoHelp
         {
             //clear
             WhiskeyGraphicsDevice.Clear(Level.BackgroundColor);
-            
-            Renderer.render(editorObjects.getAllObjects());
-            Renderer.render(Level.getInstances());
+
+
+            Renderer.renderAll(editorObjects.getAllObjects(), Level.getInstances());
+           // Renderer.render(editorObjects.getAllObjects());
+           // Renderer.render(Level.getInstances());
             //draw things from the game manager
             //gameMan.Draw(null);
 

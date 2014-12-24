@@ -44,6 +44,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\BloomComponent.cs" />
+    <Compile Include="Core\BloomSettings.cs" />
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Color.cs" />

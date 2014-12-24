@@ -26,6 +26,10 @@ namespace WhiskeyEditor.MonoHelp
 
         public EditorLevel Level { get; set; }
 
+        private BloomComponent bloomComponent;
+        private BloomSettings bloomSettings;
+
+
         //public Camera Camera { get; set; }
 
         /// <summary>
@@ -201,6 +205,8 @@ namespace WhiskeyEditor.MonoHelp
         {
             Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
 
+           
+
             //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
             foreach (InstanceDescriptor gob in descs)
@@ -217,6 +223,39 @@ namespace WhiskeyEditor.MonoHelp
             }
 
             spriteBatch.End();
+
+
+            
+        }
+
+
+        public void renderAll(List<GameObject> gobs, List<InstanceDescriptor> insts)
+        {
+
+            if (bloomComponent == null)
+            {
+                bloomComponent = new BloomComponent(GraphicsDevice, WhiskeyControl.Content);
+                bloomComponent.loadContent();
+                bloomSettings = BloomSettings.PresetSettings[0];
+                bloomComponent.Settings = bloomSettings;
+            }
+
+
+            if (Level.BloomSettings != null)
+            {
+                bloomComponent.Settings = Level.BloomSettings;
+            }
+
+            bloomComponent.BeginDraw();
+
+           
+            GraphicsDevice.Clear(Level.BackgroundColor);
+
+            render(gobs);
+            render(insts);
+
+            bloomComponent.draw();
+
         }
 
         /// <summary>

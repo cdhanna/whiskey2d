@@ -23,11 +23,16 @@ namespace WhiskeyEditor.Backend
         public Camera Camera { get; set; }
 
 
+        //Thresh  Blur Bloom  Base  BloomSat BaseSat
+        public BloomSettings BloomSettings { get; set; }    
+
+
         public EditorLevel(string name)
         {
             init();
             Camera = new Camera();
             BackgroundColor = Color.BurlyWood;
+            BloomSettings = BloomSettings.PresetSettings[5];
             LevelName = name;
             //Descriptors = new List<InstanceDescriptor>();
             InstanceManager.Instance.addLevel(this);

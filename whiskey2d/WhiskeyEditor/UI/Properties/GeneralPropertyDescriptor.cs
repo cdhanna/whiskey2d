@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Drawing.Design;
 
 namespace WhiskeyEditor.UI.Properties
 {
@@ -16,11 +17,14 @@ namespace WhiskeyEditor.UI.Properties
 
         public event EventHandler ValueChanged = new EventHandler((s, a) => { });
 
+
+        
         public object PropValue { get; set; }
         public string PropDisplayName { get; set; }
         public string PropDescription { get; set; }
         public string PropCategory { get; set; }
         public bool PropIsReadOnly { get; set; }
+        public UITypeEditor CustomTypeEditor { get; set; }
         //public GeneralPropertyDescriptor(string name, string category)
         //    : base(name, new Attribute[] { new CategoryAttribute(category) })
         //{
@@ -60,7 +64,8 @@ namespace WhiskeyEditor.UI.Properties
 
         public override object GetEditor(Type editorBaseType)
         {
-            
+            if (CustomTypeEditor != null)
+                return CustomTypeEditor;
             //if (PropertyType == typeof(WhiskeyPropertyContainer))
             //{
             //    WhiskeyPropertyContainer container = (WhiskeyPropertyContainer)PropValue;
@@ -71,6 +76,8 @@ namespace WhiskeyEditor.UI.Properties
 
                 
             //}
+
+           // return new RestrictedFloatPicker();
 
             return base.GetEditor(editorBaseType);
         }

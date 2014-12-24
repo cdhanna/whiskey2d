@@ -248,6 +248,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Properties\GeneralPropertyDescriptor.cs" />
+    <Compile Include="UI\Properties\RestrictedFloatPicker.cs" />
     <Compile Include="UI\Properties\SpriteButtonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -282,6 +283,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UIManager.cs" />
+    <Content Include="compile-media\BloomCombine.fx" />
+    <Content Include="compile-media\BloomExtract.fx" />
+    <Content Include="compile-media\GaussianBlur.fx" />
     <Content Include="compile-media\selection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -429,6 +433,15 @@
     <EmbeddedResource Include="UI\Properties\TypePickerControl.resx">
       <DependentUpon>TypePickerControl.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="compile-media\BloomCombine.mgfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="compile-media\BloomExtract.mgfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="compile-media\GaussianBlur.mgfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
