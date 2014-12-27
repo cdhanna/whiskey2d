@@ -99,6 +99,7 @@ namespace WhiskeyEditor.Backend.Managers
 
             string statePath = ProjectManager.Instance.ActiveProject.PathBuildStates + Path.DirectorySeparatorChar + editorLevel.LevelName + ".state";
 
+            buildDomain.SetData("level", editorLevel);
             buildDomain.SetData("color", editorLevel.BackgroundColor);
             buildDomain.SetData("dllPath", dllPathIn);
             buildDomain.SetData("statePath", statePath);
@@ -119,14 +120,17 @@ namespace WhiskeyEditor.Backend.Managers
                         string appStateName = (string)AppDomain.CurrentDomain.GetData("stateName");
                         string appStatePath = (string)AppDomain.CurrentDomain.GetData("statePath");
                         Color backGroundColor = (Color)AppDomain.CurrentDomain.GetData("color");
+                        EditorLevel eLevel = (EditorLevel)AppDomain.CurrentDomain.GetData("level");
                         List<InstanceDescriptor> appIDescs = (List<InstanceDescriptor>)AppDomain.CurrentDomain.GetData("iDescs");
                         Dictionary<String, ScriptDescriptor> appScriptTable = (Dictionary<String, ScriptDescriptor>)AppDomain.CurrentDomain.GetData("scriptTable");
 
 
                         Assembly gameData = Assembly.LoadFrom(appDllPath);
 
-                        Level level = new Level(appStateName);
+                        GameLevel level = new GameLevel(appStateName);
+
                         level.init();
+                        level.BloomSettings = eLevel.BloomSettings;
 
                         int c = 0;
                         List<GameObject> lGobs = new List<GameObject>();
@@ -190,7 +194,7 @@ namespace WhiskeyEditor.Backend.Managers
 
                         level.BackgroundColor = backGroundColor;
                         
-                        string filename = Level.serialize(level, appStatePath);
+                        string filename = GameLevel.serialize(level, appStatePath);
 
                         //TempFilePath = filename;
 

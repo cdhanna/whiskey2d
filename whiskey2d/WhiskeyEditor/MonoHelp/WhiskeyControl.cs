@@ -205,6 +205,9 @@ namespace WhiskeyEditor.MonoHelp
         /// </summary>
         public void setAsActive()
         {
+            if (Renderer == null) return;
+
+
             SelectionManager.Instance.SelectedInstance = null;
             active = this;
 

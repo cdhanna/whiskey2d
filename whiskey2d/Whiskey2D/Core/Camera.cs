@@ -23,6 +23,7 @@ namespace Whiskey2D.Core
             ZoomMin = .5f;
             ZoomMax = 1.5f;
             Zoom = 1;
+            buildTransform();
         }
 
         /// <summary>

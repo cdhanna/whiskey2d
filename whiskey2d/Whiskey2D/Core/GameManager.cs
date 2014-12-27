@@ -67,7 +67,7 @@ namespace Whiskey2D.Core
             }
         }
 
-        private Color BackgroundColor { get; set; }
+       // private Color BackgroundColor { get; set; }
 
 
         //Core pieces of MonoGame
@@ -78,9 +78,20 @@ namespace Whiskey2D.Core
         public InputManager InputManager { get; protected set; }
         public InputSourceManager InputSourceManager { get; protected set; }
         public LogManager LogManager { get; protected set; }
+        
+        
         public ObjectManager ObjectManager { get; protected set; }
 
-        
+       
+
+        private GameLevel _level;
+        public GameLevel ActiveLevel
+        {
+            get
+            {
+                return _level;
+            }
+        }
 
         public RenderManager RenderManager { get; protected set; }
         public ResourceManager ResourceManager { get; protected set; }
@@ -97,6 +108,9 @@ namespace Whiskey2D.Core
         public static RenderManager Renderer { get { return Instance.RenderManager; } }
         public static ResourceManager Resources { get { return Instance.ResourceManager; } }
         public static GameController Controller { get { return Instance.GameController; } }
+        public static GameLevel Level { get { return Instance.ActiveLevel; } }
+
+
 
         /// <summary>
         /// Create singleton instance.
@@ -106,7 +120,7 @@ namespace Whiskey2D.Core
         {
             settings = new PropertiesFiles(".gameprops");
             instance = this;
-            BackgroundColor = Color.SkyBlue;
+            //BackgroundColor = Color.SkyBlue;
             //create all default managers
             ObjectManager = new DefaultObjectManager();
             //RenderManager = new DefaultRenderManager();
@@ -137,16 +151,17 @@ namespace Whiskey2D.Core
         public TimeSpan TargetElapsedTime { get; set; }
 
 
-        public Level loadLevel(string name) //input comes as "myLevel.state"
+        public GameLevel loadLevel(string name) //input comes as "myLevel.state"
         {
             string path ="states\\" + name ;
 
-            Level level = Level.deserialize(path);
+            GameLevel level = GameLevel.deserialize(path);
 
             ObjectManager.close();
 
             ObjectManager = level;
-
+            _level = level;
+            level.Camera.Position = Vector.Zero;
             return level;
             //level.init();
 
@@ -191,8 +206,8 @@ namespace Whiskey2D.Core
                 //State RunningState = State.deserialize(CurrentScenePath);
                 //BackgroundColor = RunningState.BackgroundColor;
                 //GameManager.Objects.setState(RunningState);
-                Level lvl = loadLevel(CurrentScene);
-                BackgroundColor = lvl.BackgroundColor;
+                GameLevel lvl = loadLevel(CurrentScene);
+                //BackgroundColor = lvl.BackgroundColor;
             }
         }
 
@@ -203,8 +218,8 @@ namespace Whiskey2D.Core
                 //State RunningState = State.deserialize(StartScenePath);
                 //BackgroundColor = RunningState.BackgroundColor;
                 //GameManager.Objects.setState(RunningState);
-                Level lvl = loadLevel(StartScene);
-                BackgroundColor = lvl.BackgroundColor;
+                GameLevel lvl = loadLevel(StartScene);
+                //BackgroundColor = lvl.BackgroundColor;
             }
             CurrentScene = StartScene;
         }
@@ -302,7 +317,16 @@ namespace Whiskey2D.Core
                 InputManager.update();
                 InputSourceManager.update();
                 LogManager.update();
-                ObjectManager.updateAll();
+
+
+                try
+                {
+                    ObjectManager.updateAll();
+                }
+                catch (Exception e)
+                {
+                    LogManager.error(e.Message);
+                }
             }
             
         }
@@ -314,7 +338,7 @@ namespace Whiskey2D.Core
         public virtual void Draw(GameTime gameTime)
         {
             
-           GraphicsDevice.Clear(BackgroundColor);
+           GraphicsDevice.Clear(ActiveLevel.BackgroundColor);
 
             this.RenderManager.render();
             this.RenderManager.renderHud();

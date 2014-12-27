@@ -14,19 +14,23 @@ namespace Whiskey2D.Core
 {
 
     [Serializable]
-    public class Level : DefaultObjectManager
+    public class GameLevel : DefaultObjectManager
     {
 
         public Color BackgroundColor { get; set; }
         public string Name { get; private set; }
+        public Camera Camera { get; set; }
+        public BloomSettings BloomSettings { get; set; }
 
-        public Level(string name)
+        public GameLevel(string name)
             : base()
         {
+            Camera = new Camera();
             Name = name;
+            BloomSettings = BloomSettings.PresetSettings[0];
         }
 
-        public static string serialize(Level lvl, string fileName)
+        public static string serialize(GameLevel lvl, string fileName)
         {
 
             FileStream fs = new FileStream(fileName, FileMode.Create);
@@ -53,7 +57,7 @@ namespace Whiskey2D.Core
 
         }
 
-        public static Level deserialize(string fileName)
+        public static GameLevel deserialize(string fileName)
         {
             // GameManager.Log.debug("State loading : " + fileName);
             if (!File.Exists(fileName))
@@ -62,12 +66,12 @@ namespace Whiskey2D.Core
             }
 
             // Open the file containing the data that you want to deserialize.
-            Level lvl;
+            GameLevel lvl;
             FileStream fs = new FileStream(fileName, FileMode.Open);
             try
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                lvl = (Level)formatter.Deserialize(fs);
+                lvl = (GameLevel)formatter.Deserialize(fs);
             }
             catch (SerializationException e)
             {

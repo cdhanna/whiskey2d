@@ -237,14 +237,16 @@ namespace Whiskey2D.Core.Hud
         /// add a new line to the bottom of the textbox, pushing all old text UP. 
         /// </summary>
         /// <param name="moreText"></param>
-        public void pushTextFromBottom(string moreText)
+        public List<TextLine> pushTextFromBottom(string moreText)
         {
-            this.addLinesToEnd(this.convertToLines(moreText));
+            List<TextLine> newLines = this.convertToLines(moreText);
+            
+            this.addLinesToEnd(newLines);
             this.text += moreText;
             //this.textStart = new Vector2(2, -(font.MeasureString("A").Y + 1) * lines.Count);
             this.textStart = new Vector2(2, size.Y - (getHeight()* lines.Count)) ;
             this.formatLines();
-
+            return newLines;
         }
 
         /// <summary>

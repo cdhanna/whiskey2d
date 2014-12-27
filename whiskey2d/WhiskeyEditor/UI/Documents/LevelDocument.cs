@@ -157,7 +157,7 @@ namespace WhiskeyEditor.UI.Documents
 
         public override void Refresh()
         {
-
+            
             whiskey.setAsActive();
             
             base.Refresh();

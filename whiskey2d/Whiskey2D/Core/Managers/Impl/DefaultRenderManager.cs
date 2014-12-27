@@ -35,6 +35,8 @@ namespace Whiskey2D.Core.Managers.Impl
         private GraphicsDevice graphicsDevice;
         private SpriteBatch spriteBatch;
         private static Texture2D pixel;
+        private BloomComponent bloomComponent;
+       
         /// <summary>
         /// Creates a new RenderManager
         /// </summary>
@@ -52,7 +54,12 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             this.graphicsDevice = graphicsDevice;
             if (graphicsDevice != null)
+            {
+                
+                bloomComponent = new BloomComponent(graphicsDevice, GameManager.Instance.Content);
+                bloomComponent.loadContent();
                 this.spriteBatch = new SpriteBatch(this.graphicsDevice);
+            }
         }
 
         /// <summary>
@@ -68,9 +75,17 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void render()
         {
-           
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+            //ActiveCamera.Position = Vector.Zero;
+            Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
 
+            bloomComponent.Settings = GameManager.Level.BloomSettings;
+            bloomComponent.BeginDraw();
+
+            graphicsDevice.Clear(GameManager.Level.BackgroundColor);
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
+            //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+            
             List<GameObject> allGobs = GameManager.Objects.getAllObjects();
             foreach (GameObject gob in allGobs.Where(g => g.Active) )
             {
@@ -86,7 +101,8 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
                     {
-                        spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
+                        spr.draw(spriteBatch, gob.Position);
+                        //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
                         //GameManager.Log.debug(spr.ImagePath);
                     }
 
@@ -95,7 +111,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
             spriteBatch.End();
 
-
+            bloomComponent.draw();
             
 
         }
@@ -147,8 +163,11 @@ namespace Whiskey2D.Core.Managers.Impl
 
         public Camera ActiveCamera
         {
-            get;
-            set;
+            get
+            {
+                return GameManager.Instance.ActiveLevel.Camera;
+            }
+            set { } //do nothing
         }
     }
 }

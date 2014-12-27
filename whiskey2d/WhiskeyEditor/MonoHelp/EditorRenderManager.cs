@@ -99,7 +99,7 @@ namespace WhiskeyEditor.MonoHelp
             //spriteBatch.End();
 
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
             
             foreach (GameObject gob in descs)
             {

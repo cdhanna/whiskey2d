@@ -204,6 +204,11 @@ namespace Whiskey2D.Core.Hud
                 debugWindow.pushTextFromBottom(message.Time + "> " + message.Message);
             }
 
+            else if (message.Level == LogLevel.ERROR)
+            {
+                debugWindow.pushTextFromBottom(message.Time + "> " + message.Message).ForEach( l => l.Color = Color.Red);
+            }
+
         }
 
     }
