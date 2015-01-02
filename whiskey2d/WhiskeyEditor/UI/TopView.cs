@@ -10,6 +10,7 @@ using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Dockable;
 using WhiskeyEditor.UI.Output;
 using WhiskeyEditor.UI.Documents;
+using WhiskeyEditor.UI.Documents.ContentFactories;
 using WhiskeyEditor.UI.Properties;
 using WhiskeyEditor.UI.Properties.Editors;
 using WhiskeyEditor.UI.Library;
@@ -169,9 +170,15 @@ namespace WhiskeyEditor.UI
                 }
                 else
                 {
-                    docView.openDocument(args.Selected.FilePath);
+                    
                     FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+
+                    IDocumentContentFactory factory = UIManager.Instance.getDocumentFactory(desc);
+
+                    propView.setPropertyContent(factory.generatePropertyContent());
+                    docView.openDocument(factory.generateDocumentTab());
+                    //docView.openDocument(args.Selected.FilePath);
+                    //propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
                 }
             };
 
@@ -190,7 +197,10 @@ namespace WhiskeyEditor.UI
                 {
 
                     FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                    IDocumentContentFactory factory = UIManager.Instance.getDocumentFactory(desc);
+                    propView.setPropertyContent(factory.generatePropertyContent());
+
+                    //propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
                 }
             };
 
@@ -198,8 +208,8 @@ namespace WhiskeyEditor.UI
 
             docView.PropertyChangeRequested += (s, args) =>
             {
-
-                propView.setPropertyContent(UIManager.Instance.getPropertyEditor(args.PropertyObject));
+                PropertyContent content = UIManager.Instance.getDocumentFactory(args.PropertyDescriptor).generatePropertyContent();
+                propView.setPropertyContent(content);
             };
 
             SelectionManager.Instance.SelectedInstanceChanged += (s, old) =>
@@ -210,11 +220,15 @@ namespace WhiskeyEditor.UI
                 }
                 else
                 {
-                    propView.setPropertyContent(UIManager.Instance.getPropertyEditor(SelectionManager.Instance.SelectedInstance));
+                    PropertyContent content = UIManager.Instance.getDocumentFactory(SelectionManager.Instance.SelectedInstance).generatePropertyContent();
+                    propView.setPropertyContent(content);
                 }
             };
            
         }
+
+
+        
 
         private void mediaAddedListener(object sender, EventArgs args)
         {
@@ -254,6 +268,7 @@ namespace WhiskeyEditor.UI
 
 
             docView = new DocumentView();
+            UIManager.Instance.setDocumentView(docView);
             docView.Name = "Documents";
             docViewDock = new DockControl(mainPanel, DockStyle.Fill);
             docViewDock.Name = UIManager.VIEW_NAME_DOCUMENTS;

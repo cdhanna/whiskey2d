@@ -38,6 +38,48 @@ namespace WhiskeyEditor.UI.Documents
 
         }
 
+        /// <summary>
+        /// get a documenttab with a given name
+        /// </summary>
+        /// <param name="text">a name</param>
+        /// <returns>the documenttab with the given name, or null if it does not exist</returns>
+        public DocumentTab getTab(string text)
+        {
+
+            if (text != null)
+            {
+                foreach (TabPage page in Tabs.TabPages)
+                    if (text.Equals(page.Text))
+                        return (DocumentTab) page;
+                return null;
+            }
+            else return null;
+
+        }
+        /// <summary>
+        /// Add a documenttab to the view. 
+        /// </summary>
+        /// <param name="tab">A non null tab</param>
+        /// <returns>True if the tab was added, or false if the tab already exists in the view</returns>
+        public bool addTab(DocumentTab tab)
+        {
+            if (tab == null) throw new ArgumentNullException("Tab");
+
+            foreach (TabPage page in Tabs.TabPages)
+            {
+                if (page.Name.Equals(tab.Name))
+                {
+                    return false ;
+                }
+            }
+
+            Tabs.TabPages.Add(tab);
+            Tabs.MouseMove += tab.mouseMoveHandle;
+            Tabs.MouseLeave += tab.mouseMoveHandle;
+
+            return true;
+        }
+
         public void focusDocument(string fileName)
         {
             if (tabMap.ContainsKey(fileName))
@@ -48,26 +90,43 @@ namespace WhiskeyEditor.UI.Documents
             }
         }
 
-        public void openDocument(string fileName)
+        public void openDocument(DocumentTab docTab)
         {
-            if (!tabMap.ContainsKey(fileName))
+            if (docTab == null) throw new ArgumentNullException("DocumentTab");
+
+            if (!tabMap.ContainsKey(docTab.FileName))
             {
-                DocumentTab dt = UIManager.Instance.getDocumentTabFor(this, UIManager.Instance.Files.lookUp(fileName));
-                //DocumentTab dt = new DocumentTab(title, this);
-                tabMap.Add(fileName, dt);
-
-                dt.PropertyChangeRequested += (s, a) =>
-                {
-                    PropertyChangeRequested(s, a);
-                };
-
-                dt.open();
-                dt.Refresh();
-              //  dt.Font = new Font(Font, FontStyle.Bold);
+                tabMap.Add(docTab.FileName, docTab);
+                docTab.open();
+                docTab.Refresh();
             }
-            focusDocument(fileName);
-            
+
+            focusDocument(docTab.FileName);
+
+            //openDocument(docTab.FileName);
         }
+
+
+        //public void openDocument(string fileName)
+        //{
+        //    if (!tabMap.ContainsKey(fileName))
+        //    {
+        //        DocumentTab dt = UIManager.Instance.getDocumentTabFor(this, UIManager.Instance.Files.lookUp(fileName));
+        //        //DocumentTab dt = new DocumentTab(title, this);
+        //        tabMap.Add(fileName, dt);
+
+        //        dt.PropertyChangeRequested += (s, a) =>
+        //        {
+        //            PropertyChangeRequested(s, a);
+        //        };
+
+        //        dt.open();
+        //        dt.Refresh();
+        //      //  dt.Font = new Font(Font, FontStyle.Bold);
+        //    }
+        //    focusDocument(fileName);
+            
+        //}
 
         public void saveCurrent()
         {

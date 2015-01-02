@@ -87,6 +87,12 @@ namespace WhiskeyEditor.UI.Library
 
                     LibraryTreeNode root = new LibraryTreeNode(p.Name, p.PathBase);
 
+                    //PROPERTIES
+                    LibraryTreeNode nodeProp = new LibraryTreeNode("Properties", p.FileSettingsPath, true);
+                    nodeProp.ImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
+                    nodeProp.SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FILE); 
+                    root.Nodes.Add(nodeProp);
+
                     //SOURCE
                     LibraryTreeNode nodeSrc = new LibraryTreeNode("Source", p.PathSrc);
                     nodeSrc.populate();

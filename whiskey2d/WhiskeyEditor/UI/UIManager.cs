@@ -8,6 +8,8 @@ using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.UI.Properties;
 using WhiskeyEditor.UI.Properties.Editors;
+using WhiskeyEditor.UI.Documents.ContentFactories;
+using WhiskeyEditor.UI.Documents.Info;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
@@ -34,6 +36,8 @@ namespace WhiskeyEditor.UI
             FlairColor = Color.Orange;//Color.FromArgb(128, 200, 255);
             ErrorColor = Color.LightPink;
             WarningColor = Color.LightSalmon;
+
+            DocumentContentInfoFactory = new DocumentInfoFactory();
         }
 
 
@@ -43,6 +47,9 @@ namespace WhiskeyEditor.UI
 
 
         public TopView TopView { get; private set; }
+
+        public IDocumentContentFactoryBuilder DocumentContentFactoryBuilder { get; private set; }
+        public DocumentInfoFactory DocumentContentInfoFactory { get; private set; }
 
         public event EventHandler Closing = new EventHandler((s, a) => { });
 
@@ -67,40 +74,75 @@ namespace WhiskeyEditor.UI
         public Color ErrorColor { get; private set; }
         public Color WarningColor { get; private set; }
 
-
-        public DocumentTab getDocumentTabFor(DocumentView parent, FileDescriptor file)
+        public void setDocumentView(DocumentView docView)
         {
-            if (file is CodeDescriptor)
-            {
-                return new CodeDocument( (CodeDescriptor) file, parent);
-            }
-            else if (file is LevelDescriptor)
-            {
-                return new LevelDocument((LevelDescriptor)file, parent);
-            }
-            else return new DocumentTab(file.FilePath, parent);
+            DocumentContentFactoryBuilder = new DocumentContentFactoryBuilder(docView);
         }
 
-        public PropertyContent getPropertyEditor(Object propObj)
+        public IDocumentContentFactory getDocumentFactory(Descriptor descriptor)
         {
-            if (propObj is TypeDescriptor)
-            {
-                return new TypeDescriptorPropertyEditor( (TypeDescriptor) propObj);
-            }
-            else if (propObj is LevelDescriptor)
-            {
-                return new LevelDescriptorPropertyEditor((LevelDescriptor)propObj);
-            }
-            else if (propObj is InstanceDescriptor)
-            {
-                return new InstanceDescriptorPropertyEditor((InstanceDescriptor)propObj);
-            }
-            else if (propObj is ScriptDescriptor)
-            {
-                return new ScriptDescriptorPropertyEditor((ScriptDescriptor)propObj);
-            }
-            else throw new WhiskeyException("???");
+            DocumentContentInfo info = DocumentContentInfoFactory.generateDocumentContentInfo(descriptor);
+            IDocumentContentFactory factory = DocumentContentFactoryBuilder.generateDocumentContentFactory(info);
+            return factory;
         }
+
+        //public DocumentTab getDocumentTabFor(DocumentView parent, FileDescriptor file)
+        //{
+        //    if (file is CodeDescriptor)
+        //    {
+        //        return new CodeDocument( (CodeDescriptor) file, parent);
+        //    }
+        //    else if (file is LevelDescriptor)
+        //    {
+        //        return new LevelDocument((LevelDescriptor)file, parent);
+        //    }
+        //    else return new DocumentTab(file.FilePath, parent);
+        //}
+
+        //public PropertyContent getPropertyEditor(Object propObj)
+        //{
+        //    if (propObj is TypeDescriptor)
+        //    {
+        //        return new TypeDescriptorPropertyEditor((TypeDescriptor)propObj);
+        //    }
+        //    else if (propObj is LevelDescriptor)
+        //    {
+        //        return new LevelDescriptorPropertyEditor((LevelDescriptor)propObj);
+        //    }
+        //    else if (propObj is InstanceDescriptor)
+        //    {
+        //        return new InstanceDescriptorPropertyEditor((InstanceDescriptor)propObj);
+        //    }
+        //    else if (propObj is ScriptDescriptor)
+        //    {
+        //        return new ScriptDescriptorPropertyEditor((ScriptDescriptor)propObj);
+        //    }
+        //    else return null;//throw new WhiskeyException("???");
+        //}
+
+        //public PropertyContent getPropertyEditor(string code)
+        //{
+        //    PropertyContent propContent = null; //default value
+
+        //    FileDescriptor descriptor = FileManager.Instance.lookUp(code);
+
+        //    //if the code given represents a file descriptor, return one of those editors
+        //    if (descriptor != null)
+        //    {
+        //        if (descriptor is TypeDescriptor)
+        //            propContent = new TypeDescriptorPropertyEditor((TypeDescriptor)descriptor);
+        //        else if (descriptor is LevelDescriptor)
+        //            propContent = new LevelDescriptorPropertyEditor((LevelDescriptor)descriptor);
+        //        else if (descriptor is ScriptDescriptor)
+        //            propContent = new ScriptDescriptorPropertyEditor((ScriptDescriptor)descriptor);
+        //    }
+
+
+
+        //    return propContent;
+        //}
+
+
 
 
         public string normalizePath(string path)

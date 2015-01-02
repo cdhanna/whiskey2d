@@ -15,10 +15,10 @@ namespace WhiskeyEditor.UI.Documents
     public delegate void PropertyChangeRequestEventHandler(object sender, PropertyChangeRequestEventArgs args);
     public class PropertyChangeRequestEventArgs : EventArgs
     {
-        public Object PropertyObject { get; private set; }
-        public PropertyChangeRequestEventArgs(Object obj)
+        public Descriptor PropertyDescriptor { get; private set; }
+        public PropertyChangeRequestEventArgs(Descriptor descriptor)
         {
-            PropertyObject = obj;
+            PropertyDescriptor = descriptor;
         }
     }
 
@@ -64,10 +64,10 @@ namespace WhiskeyEditor.UI.Documents
         /// Fire a PropertyChangeRequest event.
         /// Caling this means to ask for the given object to have its properties displayed
         /// </summary>
-        /// <param name="propertyObject"></param>
-        protected void requestPropertyChange(Object propertyObject)
+        /// <param name="descriptor"></param>
+        protected void requestPropertyChange(Descriptor descriptor)
         {
-            PropertyChangeRequested(this, new PropertyChangeRequestEventArgs(propertyObject));
+            PropertyChangeRequested(this, new PropertyChangeRequestEventArgs(descriptor));
         }
 
         public DocumentTab(string fileName, DocumentView parent)
@@ -77,37 +77,41 @@ namespace WhiskeyEditor.UI.Documents
             FileName = fileName;
             ParentController = parent;
             TabNumber = parent.Tabs.TabCount;
-            
+
+            //bool newTab = ParentController.addTab(this);
+
+
             ParentController.Tabs.TabPages.Add(this);
             ParentController.Tabs.MouseMove += mouseMoveHandle;
             ParentController.Tabs.MouseLeave += mouseMoveHandle;
-            //ParentController.Tabs.MouseClick += mouseClickHandle;
 
-            Actions = new List<WhiskeyAction>();
+            //if (newTab)
+            {
+                Actions = new List<WhiskeyAction>();
 
-            ContentPanel = new Panel();
-            ContentPanel.Dock = DockStyle.Fill;
+                ContentPanel = new Panel();
+                ContentPanel.Dock = DockStyle.Fill;
 
-            ToolStrip = new ToolStrip();
-            ToolStrip.Dock = DockStyle.Top;
-            ToolStrip.BackColor = UIManager.Instance.PaleFlairColor;
-            ToolStrip.GripStyle = ToolStripGripStyle.Hidden;
-            ToolStrip.Margin = new Padding(0);
-            ContentPanel.Padding = new Padding(0, ToolStrip.Height, 0, 0);
-            ContentPanel.Margin = new Padding(0);
-            Controls.Add(ToolStrip);
-            Controls.Add(ContentPanel);
+                ToolStrip = new ToolStrip();
+                ToolStrip.Dock = DockStyle.Top;
+                ToolStrip.BackColor = UIManager.Instance.PaleFlairColor;
+                ToolStrip.GripStyle = ToolStripGripStyle.Hidden;
+                ToolStrip.Margin = new Padding(0);
+                ContentPanel.Padding = new Padding(0, ToolStrip.Height, 0, 0);
+                ContentPanel.Margin = new Padding(0);
+                Controls.Add(ToolStrip);
+                Controls.Add(ContentPanel);
 
-            Dirty = false;
-            SaveAction saveAction = new SaveAction(this);
-            addAction(saveAction);
-            
-            
+                Dirty = false;
+                SaveAction saveAction = new SaveAction(this);
+                addAction(saveAction);
+
+            }
 
 
         }
 
-
+        
 
         private bool dirty = false;
         protected bool Dirty
@@ -127,7 +131,8 @@ namespace WhiskeyEditor.UI.Documents
                     txt += (Dirty ? " * " : "");
                     Text = txt;
                 }));
-               
+
+
             }
         }
 

@@ -16,16 +16,25 @@ namespace WhiskeyEditor.UI.Library
         public string FilePath { get; private set; }
         public bool IsFile { get; private set; }
 
+
+
         public LibraryTreeNode(string text, string filePath)
+            : this(text, filePath, false)
+        {
+            
+        }
+
+
+        public LibraryTreeNode(string text, string filePath, bool isFile)
             : base(text)
         {
             FilePath = UIManager.Instance.normalizePath(clearExtraSlashes(filePath)) ;
-            IsFile = false;
+            IsFile = isFile;
 
 
 
             ImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR);
-            SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR); ;
+            SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FLDR); 
         }
 
         

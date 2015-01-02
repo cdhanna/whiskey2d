@@ -10,7 +10,7 @@ using WhiskeyEditor.EditorObjects;
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    public class InstanceDescriptor : EditorGameObject
+    public class InstanceDescriptor : EditorGameObject, Descriptor
     {
         public const string PROP_X = "X";
         public const string PROP_Y = "Y";

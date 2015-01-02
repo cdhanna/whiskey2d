@@ -9,7 +9,7 @@ using WhiskeyEditor.UI;
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    public class FileDescriptor
+    public class FileDescriptor : Descriptor
     {
 
         private string filePath;
