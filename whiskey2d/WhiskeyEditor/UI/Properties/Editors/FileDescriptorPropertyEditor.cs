@@ -26,7 +26,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
     }
 
-    class FileDescriptorPropertyEditor : PropertyContent
+    class FileDescriptorPropertyEditor : PropertyEditor
     {
 
         protected PropertyDescriptorListEditor WhiskeyPropertyListGrid { get; private set; }

@@ -21,8 +21,8 @@ namespace WhiskeyEditor.UI.Properties
        
 
 
-        private PropertyContent pView;
-        public PropertyContent PropertyContent
+        private PropertyEditor pView;
+        public PropertyEditor PropertyContent
         {
             get { return pView; }
             private set { pView = value; }
@@ -77,7 +77,7 @@ namespace WhiskeyEditor.UI.Properties
             }
         }
 
-        public void setPropertyContent(PropertyContent content)
+        public void setPropertyContent(PropertyEditor content)
         {
 
             
@@ -102,7 +102,7 @@ namespace WhiskeyEditor.UI.Properties
             
         }
 
-        private void setPropertyContentInternal(PropertyContent content)
+        private void setPropertyContentInternal(PropertyEditor content)
         {
             if (content == null)
             {
@@ -111,7 +111,7 @@ namespace WhiskeyEditor.UI.Properties
             else
             {
 
-                PropertyContent oldContent = PropertyContent;
+                PropertyEditor oldContent = PropertyContent;
                 //removePropertyContent();
                 pView = content;
                 // PropertyContent = content;

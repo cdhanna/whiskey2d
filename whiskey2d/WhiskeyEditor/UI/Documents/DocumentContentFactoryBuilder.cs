@@ -43,6 +43,10 @@ namespace WhiskeyEditor.UI.Documents
             {
                 factory = new InstanceContentFactory(DocumentView, (InstanceDocumentInfo)info);
             }
+            else if (info is ProjectSettingsDocumentInfo)
+            {
+                factory = new ProjectContentFactory(DocumentView, (ProjectSettingsDocumentInfo)info);
+            }
             return factory;
         }
 

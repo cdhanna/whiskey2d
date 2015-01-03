@@ -12,7 +12,7 @@ namespace WhiskeyEditor.UI.Documents.ContentFactories
     interface IDocumentContentFactory
     {
 
-        PropertyContent generatePropertyContent();
+        PropertyEditor generatePropertyContent();
         DocumentTab generateDocumentTab();
 
     }

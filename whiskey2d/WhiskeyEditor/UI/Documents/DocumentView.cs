@@ -99,6 +99,12 @@ namespace WhiskeyEditor.UI.Documents
                 tabMap.Add(docTab.FileName, docTab);
                 docTab.open();
                 docTab.Refresh();
+
+                docTab.PropertyChangeRequested += (s, a) =>
+                {
+                    PropertyChangeRequested(s, a);
+                };
+
             }
 
             focusDocument(docTab.FileName);

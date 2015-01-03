@@ -96,6 +96,7 @@ namespace WhiskeyEditor.Backend.Managers
 
             });
             actionThread.Name = "ACTION: " + action.Name;
+            actionThread.SetApartmentState(ApartmentState.STA);
             actionThread.Start();
 
             

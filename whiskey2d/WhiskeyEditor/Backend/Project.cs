@@ -14,11 +14,11 @@ using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.Backend
 {
-    public class Project
+    public class Project : Descriptor
     {
         public const string PROP_NAME = "Name";
         public const string PROP_LAST_EDITING_SCENE = "LastEditingScene";
-
+        public const string EXTENSION_PROJ = ".whiskeyproj";
         
         public const string PATH_COMPILE_EXE_CONFIG = ResourceFiles.LibExe + ".config";
         private string path;
@@ -41,9 +41,15 @@ namespace WhiskeyEditor.Backend
         public string PathSrcScripts { get { return PathSrc + Path.DirectorySeparatorChar + "scripts"; } }
 
         /// <summary>
+        /// the path the scripts directory
+        /// </summary>
+        public string PathSrcObjects { get { return PathSrc + Path.DirectorySeparatorChar + "objects"; } }
+
+
+        /// <summary>
         /// the path to the media directory
         /// </summary>
-        public string PathMedia { get { return PathBase + Path.DirectorySeparatorChar + "media"; } }
+        public string PathMedia { get { return PathBase + Path.DirectorySeparatorChar + "art"; } }
 
         /// <summary>
         /// the path to the bin directory
@@ -76,7 +82,7 @@ namespace WhiskeyEditor.Backend
         /// <summary>
         /// The path of the .project file
         /// </summary>
-        public string FileSettingsPath { get { return PathBase + Path.DirectorySeparatorChar + ".whiskeyproj"; } }
+        public string FileSettingsPath { get { return PathBase + Path.DirectorySeparatorChar + EXTENSION_PROJ; } }
 
         /// <summary>
         /// the settings file
@@ -187,6 +193,7 @@ namespace WhiskeyEditor.Backend
             Directory.CreateDirectory(PathLib);
             Directory.CreateDirectory(PathStates);
             Directory.CreateDirectory(PathSrcScripts);
+            Directory.CreateDirectory(PathSrcObjects);
         }
 
         private void createSettings()

@@ -120,30 +120,6 @@ namespace WhiskeyEditor.UI
 
             };
 
-            //toolBar.ButtonPressed += (s, args) =>
-            //{
-            //    switch (args.ButtonName)
-            //    {
-            //        case UIManager.COMMAND_PLAY:
-
-            //            string dll = UIManager.Instance.Compiler.compile();
-            //           //// UIManager.Instance.GobInstances.convertToGobs(dll, "default");
-            //            ProjectManager.Instance.ActiveProject.buildExecutable();
-            //            ProjectManager.Instance.ActiveProject.runGame();
-
-            //            break;
-            //        case UIManager.COMMAND_COMPILE:
-            //            UIManager.Instance.Compiler.compile();
-            //            break;
-            //        case UIManager.COMMAND_SAVE:
-            //            docView.saveCurrent();
-            //            break;
-            //        default:
-            //            break;
-            //    }
-
-
-            //};
 
             this.KeyPreview = true;
             this.KeyDown += (s, a) =>
@@ -163,30 +139,20 @@ namespace WhiskeyEditor.UI
             libraryView.SelectionChanged += (s, args) =>
             {
 
-                //if (args.Selected.FilePath.
+               
                 if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
                 {
-
+                    //clicked on a node in the media directory
                 }
                 else
                 {
-                    
-                    FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
 
-                    IDocumentContentFactory factory = UIManager.Instance.getDocumentFactory(desc);
-
-                    propView.setPropertyContent(factory.generatePropertyContent());
-                    docView.openDocument(factory.generateDocumentTab());
-                    //docView.openDocument(args.Selected.FilePath);
-                    //propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                    //clicked on a node not in the media directory
+                    setDocumentAndProperties(args.Selected.FilePath, true, true);
                 }
             };
 
-            libraryView.SelectionChanged += (s, args) =>
-            {
-                
-
-            };
+      
             libraryView.ClickedOnNode += (s, args) =>
             {
                 if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
@@ -195,12 +161,7 @@ namespace WhiskeyEditor.UI
                 }
                 else
                 {
-
-                    FileDescriptor desc = FileManager.Instance.lookUp(args.Selected.FilePath);
-                    IDocumentContentFactory factory = UIManager.Instance.getDocumentFactory(desc);
-                    propView.setPropertyContent(factory.generatePropertyContent());
-
-                    //propView.setPropertyContent(UIManager.Instance.getPropertyEditor(desc));
+                    setDocumentAndProperties(args.Selected.FilePath, false, true);
                 }
             };
 
@@ -208,8 +169,7 @@ namespace WhiskeyEditor.UI
 
             docView.PropertyChangeRequested += (s, args) =>
             {
-                PropertyContent content = UIManager.Instance.getDocumentFactory(args.PropertyDescriptor).generatePropertyContent();
-                propView.setPropertyContent(content);
+                setDocumentAndProperties(UIManager.Instance.getDocumentFactory(args.PropertyDescriptor), false, true);
             };
 
             SelectionManager.Instance.SelectedInstanceChanged += (s, old) =>
@@ -220,15 +180,49 @@ namespace WhiskeyEditor.UI
                 }
                 else
                 {
-                    PropertyContent content = UIManager.Instance.getDocumentFactory(SelectionManager.Instance.SelectedInstance).generatePropertyContent();
-                    propView.setPropertyContent(content);
+                    setDocumentAndProperties(UIManager.Instance.getDocumentFactory(SelectionManager.Instance.SelectedInstance), false, true);
                 }
             };
            
         }
 
+        public void setDocumentAndProperties(string filePath, bool document, bool properties)
+        {
+            Descriptor desc = null;
+            
+            FileDescriptor fDesc = FileManager.Instance.lookUp(filePath);
+            desc = fDesc;
 
-        
+            if (desc == null) //try for whiskeyProperties 
+            {
+                if (filePath.EndsWith(Project.EXTENSION_PROJ))
+                {
+                    desc = ProjectManager.Instance.ActiveProject;
+                }
+            }
+
+
+
+            if (desc != null)
+            {
+                IDocumentContentFactory factory = UIManager.Instance.getDocumentFactory(desc);
+                setDocumentAndProperties(factory, document, properties);
+            }
+        }
+        public void setDocumentAndProperties(IDocumentContentFactory factory, bool document, bool properties)
+        {
+            if (factory != null)
+            {
+                if (properties)
+                {
+                    propView.setPropertyContent(factory.generatePropertyContent());
+                }
+                if (document)
+                {
+                    docView.openDocument(factory.generateDocumentTab());
+                }
+            }
+        }
 
         private void mediaAddedListener(object sender, EventArgs args)
         {

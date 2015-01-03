@@ -12,6 +12,12 @@ namespace WhiskeyEditor.Backend
     public abstract class CodeDescriptor : FileDescriptor
     {
 
+        public CodeDescriptor(string baseFolder, string name)
+            : base(baseFolder +Path.DirectorySeparatorChar + name + ".cs", name)
+        {
+
+        }
+
         public CodeDescriptor(string name)
             : base(ProjectManager.Instance.ActiveProject.PathSrc + Path.DirectorySeparatorChar + name + ".cs", name)
         {

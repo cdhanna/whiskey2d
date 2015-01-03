@@ -27,7 +27,7 @@ namespace WhiskeyEditor.Backend
         public String TargetTypeName { get; private set; }
 
         public ScriptDescriptor(string name, string typeName)
-            : base(name)
+            : base(ProjectManager.Instance.ActiveProject.PathSrcScripts, name)
         {
             this.TargetTypeName = typeName;
             ScriptManager.Instance.addScript(this);

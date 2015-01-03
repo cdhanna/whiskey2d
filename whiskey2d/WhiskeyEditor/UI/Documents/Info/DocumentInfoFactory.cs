@@ -29,6 +29,11 @@ namespace WhiskeyEditor.UI.Documents.Info
             {
                 info = new InstanceDocumentInfo((InstanceDescriptor)descriptor);
             }
+            else if (descriptor is Project)
+            {
+                info = new ProjectSettingsDocumentInfo((Project)descriptor);
+            }
+
 
             return info;
         }

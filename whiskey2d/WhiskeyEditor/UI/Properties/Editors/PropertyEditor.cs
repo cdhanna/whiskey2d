@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.Backend.Actions;
+using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.UI.Properties.Editors
 {
-    public class PropertyContent : Control
+    public class PropertyEditor : Control
     {
        
         protected List<ToolStripItem> ToolStripItems { get; set; }
 
         public string Title { get; protected set; }
 
-        public Object PropertyObject { get; private set; }
+        public Descriptor PropertyObject { get; private set; }
 
-        public PropertyContent(Object propertyObject)
+        public PropertyEditor(Descriptor propertyDescriptor)
         {
-            PropertyObject = propertyObject;
+            PropertyObject = propertyDescriptor;
 
             ToolStripItems = new List<ToolStripItem>();
 
-            BackColor = Color.Yellow;
+            BackColor = Color.White;
             Size = new Size(50, 50);
         }
 

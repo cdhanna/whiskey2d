@@ -36,6 +36,7 @@ namespace WhiskeyEditor.UI.Library
         private NewLevelAction newLevelAction;
         private NewTypeAction newTypeAction;
         private NewScriptAction newScriptAction;
+        private NewArtAction newArtAction;
 
         private ContextMenuStrip newFileMenu;
 
@@ -93,10 +94,15 @@ namespace WhiskeyEditor.UI.Library
                     nodeProp.SelectedImageIndex = AssetManager.indexOf(AssetManager.FILE_ICON_FILE); 
                     root.Nodes.Add(nodeProp);
 
-                    //SOURCE
-                    LibraryTreeNode nodeSrc = new LibraryTreeNode("Source", p.PathSrc);
-                    nodeSrc.populate();
-                    root.Nodes.Add(nodeSrc);
+                    //SOURCE-Objects
+                    LibraryTreeNode nodeObjects = new LibraryTreeNode("Objects", p.PathSrcObjects);
+                    nodeObjects.populate();
+                    root.Nodes.Add(nodeObjects);
+
+                    //SOURCE-Scripts
+                    LibraryTreeNode nodeScripts = new LibraryTreeNode("Scripts", p.PathSrcScripts);
+                    nodeScripts.populate();
+                    root.Nodes.Add(nodeScripts);
 
                     //LEVELS
                     LibraryTreeNode nodeLvl = new LibraryTreeNode("Levels", p.PathStates);
@@ -139,6 +145,7 @@ namespace WhiskeyEditor.UI.Library
             newLevelAction = new NewLevelAction();
             newTypeAction = new NewTypeAction();
             newScriptAction = new NewScriptAction();
+            newArtAction = new NewArtAction();
 
             newFileMenu = new ContextMenuStrip();
             newFileMenu.Width = 200;
@@ -149,6 +156,7 @@ namespace WhiskeyEditor.UI.Library
             newFileMenu.Items.Add( newTypeAction.generateControl<ToolStripButton>() );
             newFileMenu.Items.Add( newScriptAction.generateControl<ToolStripButton>());
             newFileMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
+            newFileMenu.Items.Add(newArtAction.generateControl<ToolStripButton>());
         }
 
         private void configureControls()

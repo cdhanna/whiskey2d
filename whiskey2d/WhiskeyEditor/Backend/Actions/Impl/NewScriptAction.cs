@@ -9,7 +9,7 @@ namespace WhiskeyEditor.Backend.Actions.Impl
     class NewScriptAction : NewFileAction
     {
         public NewScriptAction()
-            : base("New Script", AssetManager.ICON_FILE)
+            : base("New Script", AssetManager.ICON_FILE_SCRIPT)
         {
 
         }

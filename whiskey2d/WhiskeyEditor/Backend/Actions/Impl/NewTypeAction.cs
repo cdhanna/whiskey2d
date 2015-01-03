@@ -11,7 +11,7 @@ namespace WhiskeyEditor.Backend.Actions.Impl
     class NewTypeAction : NewFileAction
     {
         public NewTypeAction()
-            : base("New Type", AssetManager.ICON_FILE)
+            : base("New Type", AssetManager.ICON_FILE_TYPE)
         {
 
         }

@@ -56,7 +56,7 @@ namespace WhiskeyEditor.Backend
 
 
         public TypeDescriptor(string name)
-            : base(name)
+            : base(ProjectManager.Instance.ActiveProject.PathSrcObjects, name)
         {
             
             addInitialProps();

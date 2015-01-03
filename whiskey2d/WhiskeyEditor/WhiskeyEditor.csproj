@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\Actions\AbstractAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewArtAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewFileAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewLevelAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewProjectAction.cs" />
@@ -164,6 +165,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Documents\ContentFactories\InstanceContentFactory.cs" />
+    <Compile Include="UI\Documents\ContentFactories\ProjectContentFactory.cs" />
     <Compile Include="UI\Documents\DocumentContentFactoryBuilder.cs" />
     <Compile Include="UI\Documents\Info\DocumentInfoFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\IDocumentContentFactory.cs" />
@@ -187,11 +189,21 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Documents\Info\InstanceDocumentInfo.cs" />
+    <Compile Include="UI\Documents\Info\ProjectSettingsDocumentInfo.cs" />
     <Compile Include="UI\Documents\LevelDocument.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Documents\ContentFactories\LevelContentFactory.cs" />
     <Compile Include="UI\Documents\Info\LevelDocumentInfo.cs" />
+    <Compile Include="UI\Documents\ProjectSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Documents\ProjectSettingsControl.Designer.cs">
+      <DependentUpon>ProjectSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Documents\ProjectSettingsDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Library\LibraryTreeNode.cs" />
     <Compile Include="UI\Library\LibraryView.cs">
       <SubType>Component</SubType>
@@ -442,6 +454,9 @@
     <Content Include="compile-exe\WhiskeyRunner.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UI\Documents\ProjectSettingsControl.resx">
+      <DependentUpon>ProjectSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Menu\NewForm.resx">
       <DependentUpon>NewForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -55,6 +55,12 @@ namespace WhiskeyEditor.UI.Library
                 if (path.EndsWith(".cs"))
                 {
                     index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_TYPE);
+
+                    if (path.ToLower().StartsWith(WhiskeyEditor.Backend.Managers.ProjectManager.Instance.ActiveProject.PathSrcScripts.ToLower()))
+                    {
+                        index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_SCRIPT);
+                    }
+
                 }
                 if (path.EndsWith(".png"))
                 {

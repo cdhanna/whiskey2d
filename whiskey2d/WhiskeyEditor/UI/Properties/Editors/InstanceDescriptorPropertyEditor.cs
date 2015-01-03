@@ -12,7 +12,7 @@ using WhiskeyEditor.UI.Documents.Actions;
 
 namespace WhiskeyEditor.UI.Properties.Editors
 {
-    class InstanceDescriptorPropertyEditor : PropertyContent
+    class InstanceDescriptorPropertyEditor : PropertyEditor
     {
 
         protected PropertyDescriptorListEditor PropertyGrid { get; private set; }

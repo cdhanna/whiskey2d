@@ -7,18 +7,14 @@ using WhiskeyEditor.Backend;
 using WhiskeyEditor.UI.Properties.Editors;
 using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.UI.Documents.Info;
-
-
 namespace WhiskeyEditor.UI.Documents.ContentFactories
 {
-    class LevelContentFactory : IDocumentContentFactory
+    class ProjectContentFactory : IDocumentContentFactory
     {
-
         public DocumentView DocumentView { get; private set; }
-        public LevelDocumentInfo Info { get; private set; }
+        public ProjectSettingsDocumentInfo Info { get; private set; }
 
-
-        public LevelContentFactory(DocumentView docView, LevelDocumentInfo info)
+        public ProjectContentFactory(DocumentView docView, ProjectSettingsDocumentInfo info)
         {
             DocumentView = docView;
             Info = info;
@@ -26,20 +22,19 @@ namespace WhiskeyEditor.UI.Documents.ContentFactories
 
         public PropertyEditor generatePropertyContent()
         {
-            return new LevelDescriptorPropertyEditor(Info.LevelDescriptor);
+            return new PropertyEditor(Info.Project);
         }
 
         public DocumentTab generateDocumentTab()
         {
 
-            LevelDocument doc = (LevelDocument)DocumentView.getTab(Info.LevelDescriptor.Name);
+            ProjectSettingsDocument doc = (ProjectSettingsDocument)DocumentView.getTab(Info.Project.Name);
             if (doc == null)
             {
-                doc = new LevelDocument(Info.LevelDescriptor, DocumentView);
+                doc = new ProjectSettingsDocument(Info.Project, DocumentView);
             }
             return doc;
 
-            
         }
     }
 }

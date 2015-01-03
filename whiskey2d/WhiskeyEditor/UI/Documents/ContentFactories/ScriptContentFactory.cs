@@ -22,7 +22,7 @@ namespace WhiskeyEditor.UI.Documents.ContentFactories
             Info = info;
         }
 
-        public PropertyContent generatePropertyContent()
+        public PropertyEditor generatePropertyContent()
         {
             return new ScriptDescriptorPropertyEditor(Info.ScriptDescriptor);
         }
