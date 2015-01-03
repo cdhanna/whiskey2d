@@ -18,6 +18,7 @@ using System.Windows.Forms.ComponentModel;
 using System.Windows.Forms.Design;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend.Managers;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace WhiskeyEditor.UI.Properties
 {
@@ -108,7 +109,17 @@ namespace WhiskeyEditor.UI.Properties
 
                 if (result != null)
                 {
+
+                    Vector oldSize = sprite.ImageSize;
+
                     sprite.ImagePath = result;
+                    Texture2D tex = sprite.getImage();
+                    if (tex != null)
+                    {
+                        Vector currentSize = sprite.ImageSize;
+                        Vector sizeRatio = new Vector(currentSize.X / oldSize.X, currentSize.Y / oldSize.Y);
+                        sprite.Scale = new Vector(sprite.Scale.X / sizeRatio.X, sprite.Scale.Y / sizeRatio.Y);
+                    }
                 }
 
                
