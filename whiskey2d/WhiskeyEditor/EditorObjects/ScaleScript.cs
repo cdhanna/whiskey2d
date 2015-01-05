@@ -111,7 +111,7 @@ namespace WhiskeyEditor.EditorObjects
         private void process(Vector mousePos)
         {
             Vector diff = mousePos - startDrag;
-            Vector scaleDiff = new Vector(diff.X / Gob.Selected.Sprite.ImageWidth, diff.Y / Gob.Selected.Sprite.ImageHeight);
+            Vector scaleDiff = new Vector(diff.X / Gob.Selected.Sprite.FrameWidth, diff.Y / Gob.Selected.Sprite.FrameHeight);
 
             if (draggedOCP == Gob.ControlPointRight)
             {

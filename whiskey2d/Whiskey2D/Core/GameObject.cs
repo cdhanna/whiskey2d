@@ -112,7 +112,7 @@ namespace Whiskey2D.Core
                 {
                     return new Bounds(Position, Vector.Zero);
                 }
-                else return new Bounds(Position - Sprite.ScaledOffset, Sprite.ImageSize);
+                else return new Bounds(Position - Sprite.FrameOffsetScaled, Sprite.FrameSizeScaled);
             }
         }
 
@@ -231,6 +231,7 @@ namespace Whiskey2D.Core
         public void update()
         {
             getActiveScripts().ForEach(s => s.onUpdate());
+            sprite.update();
         }
 
         protected List<Script> getActiveScripts()

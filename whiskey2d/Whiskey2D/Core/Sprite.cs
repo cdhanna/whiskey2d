@@ -148,6 +148,125 @@ namespace Whiskey2D.Core
         /// </summary>
         public float Depth { get; set; }
 
+        private int rows = 1;
+        private int columns = 1;
+        private int frame = 0;
+
+        
+
+        public int Rows
+        {
+            get
+            {
+                return rows;
+            }
+            set
+            {
+                rows = Math.Max(1, value);
+            }
+        }
+
+        public int Columns
+        {
+            get
+            {
+                return columns;
+            }
+            set
+            {
+                columns = Math.Max(1, value);
+            }
+        }
+
+        public int FrameCount
+        {
+            get
+            {
+                return Rows * Columns;
+            }
+        }
+
+        public int Frame
+        {
+            get
+            {
+                return frame;
+            }
+            set
+            {
+                frame = MathHelper.Clamp(value, 0, FrameCount - 1);
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public float FrameWidth
+        {
+            get
+            {
+                return ImageWidth / Columns;
+                //return ImageSize.X / Columns;
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public float FrameHeight
+        {
+            get
+            {
+                return ImageHeight / Rows;
+                //return ImageSize.Y / Rows;
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public Vector FrameSize
+        {
+            get
+            {
+                return new Vector(FrameWidth, FrameHeight);
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public Vector FrameSizeScaled
+        {
+            get
+            {
+                return new Vector(FrameWidth * Scale.X, FrameHeight * Scale.Y);
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public Vector FrameOffset
+        {
+            get
+            {
+                return new Vector(FrameWidth, FrameHeight) / 2;
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public Vector FrameOffsetScaled
+        {
+            get
+            {
+                return new Vector(FrameWidth * Scale.X, FrameHeight * Scale.Y) / 2;
+            }
+        }
+
+        [System.ComponentModel.Browsable(false)]
+        public Rectangle FrameRectangle
+        {
+            get
+            {
+                float x = (Frame % Columns) * FrameWidth;
+                float y = (Frame / Columns) * FrameHeight;
+                return new Rectangle((int)x, (int)y, (int)FrameWidth, (int)FrameHeight);
+            }
+        }
+
+
+
         /// <summary>
         /// The offset of the sprite. By default, the offset is (0,0), which means all sprites will be drawn from their top-left corner.
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
@@ -277,12 +396,167 @@ namespace Whiskey2D.Core
             else
             {
 
-                spriteBatch.Draw(getImage(), position, null, Color, Rotation, Offset, Scale, SpriteEffects.None, Depth / 2);
+                //Texture2D frameTex = getImage().
+
+                float destRectWidth = FrameSize.X * Scale.X;
+                float destRectHeight = FrameSize.Y * Scale.Y;
+                Rectangle destRect = new Rectangle((int)position.X, (int)position.Y, (int)destRectWidth, (int)destRectHeight);
+
+                Vector off = FrameOffset;
+                spriteBatch.Draw(getImage(), destRect, FrameRectangle, Color, Rotation, off, SpriteEffects.None, Depth / 2);
+                //spriteBatch.Draw(getImage(), position, FrameRectangle, Color, Rotation, new Vector(Offset.X * (Scale.X), Offset.Y * (Scale.Y)), Scale, SpriteEffects.None, Depth / 2);
 
                // Bounds b = new Bounds(position - new Vector(Offset.X * Scale.X, Offset.Y), ImageSize);
                // spriteBatch.Draw(getRenderer().getPixel(), b.Position, null, Color.Green, 0, Vector.Zero, b.Size, SpriteEffects.None, 1);
             }
         }
 
+
+        public Animation createAnimation(int startFrame, int endFrame)
+        {
+            return createAnimation(startFrame, endFrame, 7, true);
+        }
+        public Animation createAnimation(int startFrame, int endFrame, int speed, bool looped)
+        {
+
+            Animation anim = new Animation(this);
+            anim.Looped = looped;
+            
+            anim.Speed = speed;
+            anim.StartFrame = MathHelper.Clamp(startFrame, 0, FrameCount);
+            anim.EndFrame = MathHelper.Clamp(endFrame, 0, FrameCount);
+            anim.CurrentFrame = anim.StartFrame;
+
+           
+            
+            return anim;
+        }
+
+
+        internal Animation ActiveAnimation { get; set; }
+
+        internal List<Animation> recentAnims = new List<Animation>();
+        public void update()
+        {
+            recentAnims.Clear();
+        }
+
     }
+
+    [Serializable]
+    public class Animation
+    {
+
+        private Sprite sprite;
+
+        private int ticks = 0;
+
+        private int currentFrame, startFrame, endFrame;
+
+        public Animation(Sprite sprite)
+        {
+            if (sprite == null) throw new ArgumentNullException("sprite");
+            
+            this.sprite = sprite;
+        }
+
+        public int CurrentFrame
+        {
+            get
+            {
+                return currentFrame;
+            }
+            set
+            {
+                currentFrame = MathHelper.Clamp(value, 0, sprite.FrameCount);
+            }
+        }
+        public int StartFrame
+        {
+            get
+            {
+                return startFrame;
+            }
+            set
+            {
+                startFrame = MathHelper.Clamp(value, 0, sprite.FrameCount - 1);
+            }
+        }
+        public int EndFrame
+        {
+            get
+            {
+                return endFrame;
+            }
+            set
+            {
+                endFrame = MathHelper.Clamp(value, 0, sprite.FrameCount - 1);
+            }
+        }
+
+
+        public int Speed { get; set; }
+        public bool Looped { get; set; }
+
+        //public void update()
+        //{
+        //    if (!frameAdvanced)
+        //        ticks = Speed;
+
+        //    frameAdvanced = false;
+        //}
+
+        public void advanceFrame()
+        {
+
+
+            //if (!sprite.recentAnims.Contains(this))
+            //{
+            //    sprite.recentAnims.Add(this);
+                
+            //}
+
+            if (sprite.ActiveAnimation != this)
+            {
+                sprite.ActiveAnimation = this;
+                ticks = Speed;
+            }
+
+            
+
+
+            ticks++;
+            if (ticks >= Speed)
+            {
+                ticks = 0;
+
+
+                int direction = Math.Sign(EndFrame - StartFrame);
+
+                CurrentFrame += direction;
+
+
+                if (CurrentFrame > EndFrame && direction == 1)
+                {
+                    if (Looped)
+                        CurrentFrame = StartFrame;
+                    else CurrentFrame = EndFrame;
+                }
+                if (CurrentFrame < StartFrame && direction == -1)
+                {
+                    if (Looped)
+                        CurrentFrame = EndFrame;
+                    else CurrentFrame = StartFrame;
+                }
+
+
+                sprite.Frame = CurrentFrame;
+
+
+            }
+
+        }
+
+    }
+
 }
