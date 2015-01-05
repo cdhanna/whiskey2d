@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
+
 namespace Whiskey2D.Core.Managers
 {
     public interface ResourceManager
@@ -21,6 +23,14 @@ namespace Whiskey2D.Core.Managers
         /// <param name="filePath">The filepath to an image</param>
         /// <returns>The Image</returns>
         Texture2D loadImage(string filePath);
+
+        /// <summary>
+        /// Loads a sound effect
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        SoundEffect loadSound(string filePath);
+
 
         SpriteFont getDefaultFont();
 

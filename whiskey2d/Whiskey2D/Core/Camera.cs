@@ -108,7 +108,7 @@ namespace Whiskey2D.Core
 
             set
             {
-                float oldZoom = Zoom;
+                
                 origin = Vector.Zero;
                 position = -value + Size/2;
                 updateTransform();

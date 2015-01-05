@@ -11,7 +11,7 @@ namespace WhiskeyEditor.UI.Documents.Actions
     class CopyInstanceAction : AbstractAction
     {
         public CopyInstanceAction()
-            : base("Copy", Assets.AssetManager.ICON_PLUS)
+            : base("Copy", Assets.AssetManager.ICON_COPY)
         {
 
         }

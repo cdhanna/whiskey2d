@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Whiskey2D.Core.Managers.Impl
 {
@@ -67,6 +68,12 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             return content.Load<Texture2D>(filePath);
         }
+
+        public SoundEffect loadSound(string filePath)
+        {
+            return content.Load<SoundEffect>(filePath);
+        }
+
 
         public SpriteFont getDefaultFont()
         {

@@ -86,6 +86,7 @@
     <Compile Include="Core\Inputs\ReplayService.cs" />
     <Compile Include="Core\ServiceContainer.cs" />
     <Compile Include="Core\SimpleGameObject.cs" />
+    <Compile Include="Core\Sound.cs" />
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\WhiskeyRunTimeException.cs" />

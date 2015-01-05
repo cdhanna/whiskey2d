@@ -14,7 +14,7 @@ namespace WhiskeyEditor.UI.Documents.Actions
         public LevelDescriptor Descriptor { get; private set; }
 
         public PasteInstanceAction(LevelDescriptor level)
-            : base("Paste", Assets.AssetManager.ICON_PLUS)
+            : base("Paste", Assets.AssetManager.ICON_PASTE)
         {
             Descriptor = level;
         }

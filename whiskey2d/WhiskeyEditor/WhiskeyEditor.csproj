@@ -95,6 +95,7 @@
     <Compile Include="Backend\Actions\Impl\NewLevelAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewProjectAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewScriptAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewSoundAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewTypeAction.cs" />
     <Compile Include="Backend\Actions\WhiskeyAction.cs" />
     <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
@@ -329,6 +330,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Assets\compileIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Dan\copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Dan\lightning.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Dan\paste.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Dan\paste32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Assets\Dan\red_box.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Assets\fileIcon.png">

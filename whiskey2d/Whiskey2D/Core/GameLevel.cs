@@ -30,6 +30,7 @@ namespace Whiskey2D.Core
             BloomSettings = BloomSettings.PresetSettings[0];
         }
 
+
         public static string serialize(GameLevel lvl, string fileName)
         {
 

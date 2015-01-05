@@ -37,6 +37,7 @@ namespace WhiskeyEditor.UI.Library
         private NewTypeAction newTypeAction;
         private NewScriptAction newScriptAction;
         private NewArtAction newArtAction;
+        private NewSoundAction newSoundAction;
 
         private ContextMenuStrip newFileMenu;
 
@@ -146,6 +147,7 @@ namespace WhiskeyEditor.UI.Library
             newTypeAction = new NewTypeAction();
             newScriptAction = new NewScriptAction();
             newArtAction = new NewArtAction();
+            newSoundAction = new NewSoundAction();
 
             newFileMenu = new ContextMenuStrip();
             newFileMenu.Width = 200;
@@ -156,7 +158,8 @@ namespace WhiskeyEditor.UI.Library
             newFileMenu.Items.Add( newTypeAction.generateControl<ToolStripButton>() );
             newFileMenu.Items.Add( newScriptAction.generateControl<ToolStripButton>());
             newFileMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
-            newFileMenu.Items.Add(newArtAction.generateControl<ToolStripButton>());
+            newFileMenu.Items.Add( newArtAction.generateControl<ToolStripButton>());
+            newFileMenu.Items.Add( newSoundAction.generateControl<ToolStripButton>());
         }
 
         private void configureControls()

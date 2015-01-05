@@ -111,10 +111,10 @@ namespace WhiskeyEditor.UI.Properties
                 {
 
                     Vector oldSize = sprite.ImageSize;
-
+                    string oldImage = sprite.ImagePath;
                     sprite.ImagePath = result;
                     Texture2D tex = sprite.getImage();
-                    if (tex != null)
+                    if (tex != null && oldImage.Equals(Sprite.PIXEL))
                     {
                         Vector currentSize = sprite.ImageSize;
                         Vector sizeRatio = new Vector(currentSize.X / oldSize.X, currentSize.Y / oldSize.Y);

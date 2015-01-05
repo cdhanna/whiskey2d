@@ -13,10 +13,13 @@ namespace WhiskeyEditor.UI.Assets
     class AssetManager
     {
         public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Set" + Path.DirectorySeparatorChar;
+
+        public static readonly string PATH_ASSETS_DAN = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Dan" + Path.DirectorySeparatorChar;
+
         public static readonly string FILE_ICON_FILE = PATH_ASSETS + "document.png";
         public static readonly string FILE_ICON_FILE_LEVEL = PATH_ASSETS + "leveldocument.png";
-        public static readonly string FILE_ICON_FILE_SCRIPT = PATH_ASSETS + "scriptdocument.png";
-        public static readonly string FILE_ICON_FILE_TYPE = PATH_ASSETS + "typedocument.png";
+        public static readonly string FILE_ICON_FILE_SCRIPT = PATH_ASSETS_DAN + "lightning.png";
+        public static readonly string FILE_ICON_FILE_TYPE = PATH_ASSETS_DAN + "red_box.png";
         public static readonly string FILE_ICON_FILE_PICTURE = PATH_ASSETS + "picturedocument.png";
         public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folder.png";
         public static readonly string FILE_ICON_CLOSE = PATH_ASSETS + "closeIcon.png";
@@ -24,6 +27,8 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly string FILE_ICON_PLAY = PATH_ASSETS + "play.png";
         public static readonly string FILE_ICON_COMPILE = PATH_ASSETS + "properties.png";
         public static readonly string FILE_ICON_PLUS = PATH_ASSETS + "plus.png";
+        public static readonly string FILE_ICON_COPY = PATH_ASSETS_DAN + "copy.png";
+        public static readonly string FILE_ICON_PASTE = PATH_ASSETS_DAN + "paste.png";
         public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
 
 
@@ -66,7 +71,8 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly Image ICON_COMPILE;
         public static readonly Image ICON_PLUS;
         public static readonly Image ICON_MINUS;
-
+        public static readonly Image ICON_COPY;
+        public static readonly Image ICON_PASTE;
 
         public static readonly ImageList Images = new ImageList();
 
@@ -87,6 +93,9 @@ namespace WhiskeyEditor.UI.Assets
             ICON_COMPILE = loadImage(FILE_ICON_COMPILE);
             ICON_PLUS = loadImage(FILE_ICON_PLUS);
             ICON_MINUS = loadImage(FILE_ICON_MINUS);
+
+            ICON_COPY = loadImage(FILE_ICON_COPY);
+            ICON_PASTE = loadImage(FILE_ICON_PASTE);
         }
 
         public static ImageList getImageList()

@@ -7,6 +7,7 @@ using Whiskey2D.Core.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using WhiskeyEditor.Backend.Managers;
 using System.IO;
 
@@ -60,6 +61,13 @@ namespace WhiskeyEditor.MonoHelp
             Texture2D texture = content.Load<Texture2D>(filePath);
             return texture;
         }
+
+        public SoundEffect loadSound(string filePath)
+        {
+            return null; //TODO FIX 
+            //string destPath = "compile-media" + Path.DirectorySeparatorChar + filePath;
+        }
+
 
         public SpriteFont getDefaultFont()
         {
