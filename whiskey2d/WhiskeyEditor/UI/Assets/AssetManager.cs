@@ -18,8 +18,8 @@ namespace WhiskeyEditor.UI.Assets
 
         public static readonly string FILE_ICON_FILE = PATH_ASSETS + "document.png";
         public static readonly string FILE_ICON_FILE_LEVEL = PATH_ASSETS + "leveldocument.png";
-        public static readonly string FILE_ICON_FILE_SCRIPT = PATH_ASSETS_DAN + "lightning.png";
-        public static readonly string FILE_ICON_FILE_TYPE = PATH_ASSETS_DAN + "red_box.png";
+        public static readonly string FILE_ICON_FILE_SCRIPT = PATH_ASSETS_DAN + "orange_lightning2.png";
+        public static readonly string FILE_ICON_FILE_TYPE = PATH_ASSETS_DAN + "orange_box2.png";
         public static readonly string FILE_ICON_FILE_PICTURE = PATH_ASSETS + "picturedocument.png";
         public static readonly string FILE_ICON_FLDR = PATH_ASSETS + "folder.png";
         public static readonly string FILE_ICON_CLOSE = PATH_ASSETS + "closeIcon.png";
@@ -30,7 +30,7 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly string FILE_ICON_COPY = PATH_ASSETS_DAN + "copy.png";
         public static readonly string FILE_ICON_PASTE = PATH_ASSETS_DAN + "paste.png";
         public static readonly string FILE_ICON_MINUS = PATH_ASSETS + "minus.png";
-
+        public static readonly string FILE_ICON_WHISKEY = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "whiskey2D.ico";
 
         //public static readonly string PATH_ASSETS = "UI" + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar;
         //public static readonly string FILE_ICON_FILE = PATH_ASSETS + "fileIcon.png";
@@ -73,7 +73,7 @@ namespace WhiskeyEditor.UI.Assets
         public static readonly Image ICON_MINUS;
         public static readonly Image ICON_COPY;
         public static readonly Image ICON_PASTE;
-
+        public static readonly Image ICON_WHISKEY;
         public static readonly ImageList Images = new ImageList();
 
         static AssetManager()
@@ -93,7 +93,7 @@ namespace WhiskeyEditor.UI.Assets
             ICON_COMPILE = loadImage(FILE_ICON_COMPILE);
             ICON_PLUS = loadImage(FILE_ICON_PLUS);
             ICON_MINUS = loadImage(FILE_ICON_MINUS);
-
+            ICON_WHISKEY = loadImage(FILE_ICON_WHISKEY);
             ICON_COPY = loadImage(FILE_ICON_COPY);
             ICON_PASTE = loadImage(FILE_ICON_PASTE);
         }

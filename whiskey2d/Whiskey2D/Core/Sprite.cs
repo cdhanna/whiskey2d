@@ -331,6 +331,21 @@ namespace Whiskey2D.Core
             Visible = true;
         }
 
+
+        public Sprite( Sprite other)
+        {
+            setRender(other.getRenderer());
+            setResources(other.getResources());
+            ImagePath = other.ImagePath;
+            // image = other.getImage();
+            Scale = other.Scale;
+            Offset = other.Offset;
+            Depth = other.Depth;
+            Color = other.Color;
+            Tiled = other.Tiled;
+            Rotation = other.Rotation;
+            Visible = other.Visible;
+        }
         public Sprite(RenderManager renderer, ResourceManager resources, Sprite other)
         {
             setRender(renderer);

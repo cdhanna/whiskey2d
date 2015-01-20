@@ -16,9 +16,11 @@ namespace WhiskeyEditor.Backend
     {
 
         public List<FileDescriptor> Files { get; set; }
+        
         public GameData()
         {
             Files = new List<FileDescriptor>();
+            
         }
 
 

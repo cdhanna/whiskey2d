@@ -147,25 +147,25 @@ namespace WhiskeyEditor.UI
 
         public string normalizePath(string path)
         {
-            path = Path.GetFullPath(path).ToLower();
-            if (path.Contains(Path.DirectorySeparatorChar))
-            {
-                int i = path.LastIndexOf(Path.DirectorySeparatorChar);
-                if (i == path.Length - 1)
-                {
-                    path = path.Substring(0, 1).ToUpper() + path.Substring(1);
-                }
-                else
-                {
-                    path = path.Substring(0, i + 1) + path.Substring(i + 1, 1).ToUpper() + path.Substring(i + 2);
-                }
-            }
-            else if (path.Length > 0)
-            {
-                path = path.Substring(0, 1).ToUpper() + path.Substring(1);
-            }
-
-      
+            //path = Path.GetFullPath(path).ToLower();
+            //if (path.Contains(Path.DirectorySeparatorChar))
+            //{
+            //    int i = path.LastIndexOf(Path.DirectorySeparatorChar);
+            //    if (i == path.Length - 1)
+            //    {
+            //        path = path.Substring(0, 1).ToUpper() + path.Substring(1);
+            //    }
+            //    else
+            //    {
+            //        path = path.Substring(0, i + 1) + path.Substring(i + 1, 1).ToUpper() + path.Substring(i + 2);
+            //    }
+            //}
+            //else if (path.Length > 0)
+            //{
+            //    path = path.Substring(0, 1).ToUpper() + path.Substring(1);
+            //}
+            
+            //TODO the above code is commented out because it works being commented out.... no need to cause a fuss. It is also responsible for uppercasing the first letter and lower casing all else. 
             return path;
         }
 

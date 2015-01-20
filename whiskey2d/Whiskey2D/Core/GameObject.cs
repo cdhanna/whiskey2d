@@ -67,6 +67,9 @@ namespace Whiskey2D.Core
                 active = value;
             }
         }
+
+       
+
         /// <summary>
         /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
         /// To give the Game Object visuals, set this to a new Sprite()
@@ -258,18 +261,32 @@ namespace Whiskey2D.Core
             return GetType().Name;
         }
 
-        public List<G> currentCollisions<G>() where G : GameObject
+        public List<CollisionInfo<GameObject, G>> currentCollisions<G>() where G : GameObject
         {
-            List<G> collisionObjects = new List<G>();
+           // List<G> collisionObjects = new List<G>();
+
+
+            
+
+            List<CollisionInfo<GameObject, G>> collisionInfos = new List<CollisionInfo<GameObject, G>>();
+
             List<G> all = objectManager.getAllObjectsOfType<G>();
             all.ForEach((gob) =>
             {
-                if (gob.Bounds.boundWithin(Bounds))
+                if (gob != this)
                 {
-                    collisionObjects.Add(gob);
+                    Vector normal = gob.Bounds.getNormalOfCollision(Bounds);
+                    if (normal != Vector.Zero)
+                    {
+                        collisionInfos.Add(new CollisionInfo<GameObject, G>(this, gob, normal));
+                    }
                 }
+                //if (gob.Bounds.boundWithin(Bounds))
+                //{
+                //    collisionObjects.Add(gob);
+                //}
             });
-            return collisionObjects;
+            return collisionInfos;
         }
     }
 }

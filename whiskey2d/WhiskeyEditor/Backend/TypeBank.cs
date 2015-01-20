@@ -28,6 +28,7 @@ namespace WhiskeyEditor.Backend
             registerPrimitive("String", new RealType(typeof(String), ""));
             registerPrimitive("Boolean", new RealType(typeof(Boolean), false));
             registerPrimitive("Char", new RealType(typeof(Char), '?'));
+            registerPrimitive("Key", new RealType(typeof(Microsoft.Xna.Framework.Input.Keys), Microsoft.Xna.Framework.Input.Keys.A));
             registerPrimitive("Float", new RealType(typeof(float), 0f));
             registerPrimitive("Double", new RealType(typeof(double), 0.0));
             registerPrimitive("Color", new RealType(typeof(Color), Color.White));

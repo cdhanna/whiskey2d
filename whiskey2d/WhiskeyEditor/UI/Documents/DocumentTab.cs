@@ -8,6 +8,7 @@ using System.Drawing;
 using WhiskeyEditor.Backend.Actions;
 using WhiskeyEditor.UI.Documents.Actions;
 using WhiskeyEditor.Backend;
+using System.IO;
 
 namespace WhiskeyEditor.UI.Documents
 {
@@ -79,7 +80,18 @@ namespace WhiskeyEditor.UI.Documents
             TabNumber = parent.Tabs.TabCount;
 
             //bool newTab = ParentController.addTab(this);
-
+            string dir = Path.GetDirectoryName(fileName);
+            FileSystemWatcher watcher = new FileSystemWatcher(dir);
+            watcher.IncludeSubdirectories = true;
+            watcher.Deleted += (s, a) =>
+            {
+                if (a.FullPath.EndsWith(fileName))
+                {
+                    ParentController.closeDocument(fileName);
+                    watcher.EnableRaisingEvents = false;
+                }
+            };
+            watcher.EnableRaisingEvents = true;
 
             ParentController.Tabs.TabPages.Add(this);
             ParentController.Tabs.MouseMove += mouseMoveHandle;

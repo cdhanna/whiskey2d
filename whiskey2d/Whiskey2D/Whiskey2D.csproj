@@ -48,6 +48,7 @@
     <Compile Include="Core\BloomSettings.cs" />
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Camera.cs" />
+    <Compile Include="Core\CollisionInfo.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\GameController.cs" />
     <Compile Include="Core\GameProperties.cs" />

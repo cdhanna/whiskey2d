@@ -34,6 +34,7 @@
             this.projectNameBox = new System.Windows.Forms.TextBox();
             this.authorNameBox = new System.Windows.Forms.TextBox();
             this.startLevelBox = new System.Windows.Forms.ComboBox();
+            this.isFullScreen = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -85,10 +86,22 @@
             this.startLevelBox.Size = new System.Drawing.Size(575, 24);
             this.startLevelBox.TabIndex = 5;
             // 
+            // isFullScreen
+            // 
+            this.isFullScreen.AutoSize = true;
+            this.isFullScreen.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.isFullScreen.Location = new System.Drawing.Point(7, 193);
+            this.isFullScreen.Name = "isFullScreen";
+            this.isFullScreen.Size = new System.Drawing.Size(101, 21);
+            this.isFullScreen.TabIndex = 6;
+            this.isFullScreen.Text = "Full Screen";
+            this.isFullScreen.UseVisualStyleBackColor = true;
+            // 
             // ProjectSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.isFullScreen);
             this.Controls.Add(this.startLevelBox);
             this.Controls.Add(this.authorNameBox);
             this.Controls.Add(this.projectNameBox);
@@ -110,5 +123,6 @@
         private System.Windows.Forms.TextBox projectNameBox;
         private System.Windows.Forms.TextBox authorNameBox;
         private System.Windows.Forms.ComboBox startLevelBox;
+        private System.Windows.Forms.CheckBox isFullScreen;
     }
 }

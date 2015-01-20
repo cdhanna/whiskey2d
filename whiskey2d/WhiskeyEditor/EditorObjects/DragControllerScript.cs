@@ -40,14 +40,23 @@ namespace WhiskeyEditor.EditorObjects
             {
 
                 List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();
-                
+
+                float highestDepth = 0f;
+
                 foreach (InstanceDescriptor obj in objs)
                 {
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
+                    if (!obj.Layer.Locked && obj.Layer.Visible)
                     {
-                        Gob.Dragging = obj;
-                        grabOffset = Gob.Dragging.Position - mousePos;
-                        break;
+                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
+                        {
+                            if (obj.Sprite.Depth > highestDepth)
+                            {
+                                highestDepth = obj.Sprite.Depth;
+                                Gob.Dragging = obj;
+                                grabOffset = Gob.Dragging.Position - mousePos;
+                                //break;
+                            }
+                        }
                     }
 
                 }

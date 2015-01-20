@@ -54,7 +54,8 @@ namespace WhiskeyEditor.Backend
                     "Whiskey2D.Core",
                     "Whiskey2D.Core.Managers",
                     "Whiskey2D.Core.Inputs",
-                    "Microsoft.Xna.Framework.Input"};
+                    "Microsoft.Xna.Framework.Input",
+                    "Microsoft.Xna.Framework.Audio"};
             }
         }
 

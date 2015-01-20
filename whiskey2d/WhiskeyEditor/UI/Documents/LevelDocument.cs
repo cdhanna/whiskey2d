@@ -87,7 +87,7 @@ namespace WhiskeyEditor.UI.Documents
 
             base.addAction(new PlayLevelAction(Descriptor));
             base.addAction<ToolStripDropDownButton>(new ViewInstanceDetailsAction(Descriptor.Level));
-
+            base.addAction<ToolStripDropDownButton>(new ViewLevelLayersAction(Descriptor));
             base.addAction(new CopyInstanceAction());
             base.addAction(new PasteInstanceAction(Descriptor));
 

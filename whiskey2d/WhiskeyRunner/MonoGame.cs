@@ -29,7 +29,7 @@ namespace WhiskeyRunner
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "media";
 
-            
+              
         }
 
 
@@ -55,6 +55,9 @@ namespace WhiskeyRunner
             this.graphics.ApplyChanges();
 
             gameMan = GameManager.getInstance();
+
+            if (gameMan.IsFullScreen)
+                graphics.IsFullScreen = true;
 
             gameMan.Initialize(this, Content, GraphicsDevice,
                 new DefaultInputManager(),

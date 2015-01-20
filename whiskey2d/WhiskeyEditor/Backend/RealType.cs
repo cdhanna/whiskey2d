@@ -46,7 +46,20 @@ namespace WhiskeyEditor.Backend
             {
                 if (value != null && !value.GetType().Equals(type))
                 {
-                    throw new WhiskeyException("Cannot set value of " + value.GetType().Name + " to a typeval of " + TypeName);
+
+                    //check for enum
+                    if (type.IsEnum)
+                    {
+                        
+                        object converted = Enum.Parse(type, value.ToString());
+                        this.value = value;
+                        if (ValueChanged != null)
+                            ValueChanged(this, new EventArgs());
+                    }
+                    else
+                    {
+                        throw new WhiskeyException("Cannot set value of " + value.GetType().Name + " to a typeval of " + TypeName);
+                    }
                 }
                 else
                 {
@@ -60,8 +73,15 @@ namespace WhiskeyEditor.Backend
 
         public TypeVal clone()
         {
-            
-            object clone = Nuclex.Cloning.ReflectionCloner.DeepPropertyClone(value);
+            object clone = null;
+            if (!value.GetType().IsEnum)
+            {
+                clone = Nuclex.Cloning.ReflectionCloner.DeepPropertyClone(value);
+            }
+            else
+            {
+                clone = value;
+            }
             return new RealType(type, clone);
         }
 

@@ -52,7 +52,7 @@ namespace WhiskeyEditor.MonoHelp
         public static GameController Controller { get; private set; }
 
         private static List<WhiskeyControl> allControls = new List<WhiskeyControl>();
-        private static WhiskeyControl active;
+        public static WhiskeyControl Active { get; private set; }
         private static Camera defaultCamera = new Camera();
 
         //private static GameManager gameMan = GameManager.getInstance();     //The game manager
@@ -95,7 +95,7 @@ namespace WhiskeyEditor.MonoHelp
 
         
         public EditorInputSource InputSource { get; private set; }
-        private ObjectController objectController;
+        public ObjectController ObjectController { get; private set; }
         private DefaultObjectManager editorObjects;
         private static int idc;
 
@@ -104,7 +104,7 @@ namespace WhiskeyEditor.MonoHelp
         private TimeSpan TargetElapsedTime;                          //target time per tick
         //private EditorRenderManager renderer;
 
-        private GameObject selectedGob;
+       
         private int id;
         private Thread backThread;
         private bool backThreadRunKey = true;
@@ -133,8 +133,8 @@ namespace WhiskeyEditor.MonoHelp
             set
             {
                 level = value;
-                if (objectController != null)
-                    objectController.CurrentLevel = level;
+                if (ObjectController != null)
+                    ObjectController.CurrentLevel = level;
 
                 //ensureGameManInitialized();
                 //gameMan.ObjectManager.close();
@@ -157,8 +157,8 @@ namespace WhiskeyEditor.MonoHelp
             get
             {
 
-                if (active != null && active.Level != null)
-                    return active.Level.Camera;
+                if (Active != null && Active.Level != null)
+                    return Active.Level.Camera;
 
 
                 return defaultCamera;
@@ -209,7 +209,7 @@ namespace WhiskeyEditor.MonoHelp
 
 
             SelectionManager.Instance.SelectedInstance = null;
-            active = this;
+            Active = this;
 
             Renderer.Level = Level;
 
@@ -291,8 +291,8 @@ namespace WhiskeyEditor.MonoHelp
             
 
             //construct the object controller, and make sure it resides in the correct object managers
-            objectController = new ObjectController(editorObjects);
-            objectController.Sprite = new Sprite(Renderer, Resources, objectController.Sprite);
+            ObjectController = new ObjectController(editorObjects);
+            ObjectController.Sprite = new Sprite(Renderer, Resources, ObjectController.Sprite);
 
 
            // editorObjects.addObject(objectController);
@@ -324,8 +324,8 @@ namespace WhiskeyEditor.MonoHelp
 
 
             //set the current level of the object controller
-            if (objectController != null)
-                objectController.CurrentLevel = Level;
+            if (ObjectController != null)
+                ObjectController.CurrentLevel = Level;
 
             
 
@@ -358,8 +358,8 @@ namespace WhiskeyEditor.MonoHelp
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            if (this == active)
-                active = null;
+            if (this == Active)
+                Active = null;
 
             Application.Idle -= update;
             backThreadRunKey = false;
@@ -388,10 +388,10 @@ namespace WhiskeyEditor.MonoHelp
         //}
 
         public static void forceRedraw(){
-            if (active != null)
+            if (Active != null)
             {
                 //active.Draw();
-                active.Invalidate();
+                Active.Invalidate();
             }
         }
  

@@ -22,7 +22,7 @@ namespace WhiskeyEditor.Backend.Actions.Impl
             Dialog = new OpenFileDialog();
             Dialog.CheckFileExists = true;
             Dialog.DefaultExt = ".wav";
-            Dialog.Filter = "wav files | *.wav";
+          //  Dialog.Filter = "wav files | *.wav";
         }
 
         protected override void run()

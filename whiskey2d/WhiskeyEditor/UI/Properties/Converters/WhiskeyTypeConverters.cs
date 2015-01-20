@@ -21,10 +21,13 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map.Add("Sprite", new SpriteTypeConverter());
             map.Add("Boolean", new BoolTypeConverter());
             map.Add("InstanceDescriptor", new WhiskeyInstanceTypeConverter());
+            map.Add("Layer", new LayerTypeConverter());
+            map.Add("Keys", new KeyConverter());
         }
 
         public static TypeConverter lookUp(string typeName)
         {
+            Console.WriteLine("looking for : " + typeName);
             if (map.ContainsKey(typeName))
             {
                 return map[typeName];

@@ -26,11 +26,11 @@ namespace WhiskeyEditor.Backend.Actions.Impl
 
         }
 
-        protected virtual void beforeShow(NewForm form)
+        protected virtual void beforeShow(NewFileForm form)
         {
 
         }
-        protected virtual void afterShow(NewForm form)
+        protected virtual void afterShow(NewFileForm form)
         {
             if (form.DialogResult == DialogResult.OK)
             {
@@ -39,7 +39,7 @@ namespace WhiskeyEditor.Backend.Actions.Impl
         }
         protected override void run()
         {
-            NewForm form = new NewForm();
+            NewFileForm form = new NewFileForm();
 
             beforeShow(form);
             form.ShowDialog();
@@ -53,13 +53,13 @@ namespace WhiskeyEditor.Backend.Actions.Impl
         {
             switch (fileType)
             {
-                case NewForm.NEW_TYPE:
+                case NewFileForm.NEW_TYPE:
                     FileManager.Instance.createNewTypeDescriptor(fileName);
                     break;
-                case NewForm.NEW_SCRIPT:
+                case NewFileForm.NEW_SCRIPT:
                     FileManager.Instance.createNewScriptDescriptor(fileName, option);
                     break;
-                case NewForm.NEW_LEVEL:
+                case NewFileForm.NEW_LEVEL:
                     FileManager.Instance.createNewLevelDescriptor(fileName);
                     break;
                 default:

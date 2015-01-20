@@ -42,33 +42,46 @@ namespace WhiskeyEditor.EditorObjects
                 //GameManager.Controller.SelectedGob = null;
                 List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
 
+               
+                float highestDepth = 0;
+
                 foreach (InstanceDescriptor obj in objs)
                 {
-                    Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
-                    mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
-
-                    if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) 
-                        || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos)
-                        
-                        
-                        || obj == Gob.ControlPointObject && (
-                               Gob.ControlPointRight.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointRightTop.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointTop.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointLeftTop.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointLeft.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointLeftBot.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointBot.Bounds.vectorWithin(mousePos)
-                            || Gob.ControlPointRightBot.Bounds.vectorWithin(mousePos)) 
-
-                        )
+                    if (!obj.Layer.Locked && obj.Layer.Visible)
                     {
-                        Gob.Selected = obj;
-                        Gob.ControlPointObject = Gob.Selected;
-                        SelectionManager.Instance.SelectedInstance = obj;
-                        
 
-                        break;
+                        Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+                        mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
+
+                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos)
+                            || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos)
+
+
+                            || obj == Gob.ControlPointObject && (
+                                   Gob.ControlPointRight.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointRightTop.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointTop.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointLeftTop.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointLeft.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointLeftBot.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointBot.Bounds.vectorWithin(mousePos)
+                                || Gob.ControlPointRightBot.Bounds.vectorWithin(mousePos))
+
+                            )
+                        {
+                           
+                            
+
+                            if (obj.Sprite.Depth > highestDepth)
+                            {
+                                Gob.Selected = obj;
+                                highestDepth = obj.Sprite.Depth;
+                                Gob.ControlPointObject = Gob.Selected;
+                                SelectionManager.Instance.SelectedInstance = obj;
+                            }
+
+                            //break;
+                        }
                     }
 
                 }
@@ -84,10 +97,18 @@ namespace WhiskeyEditor.EditorObjects
 
             if (Gob.Selected != null)
             {
-
+                //Sprite clone = new Sprite(Gob.Selected.Sprite);
+               // Gob.Sprite = clone;
                 Gob.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert();
 
+                //Color c = Gob.Sprite.Color;
+                //c.A = 128;
+                //Gob.Sprite.Color = c;
+                
+                Gob.Sprite.Depth = Gob.Selected.Sprite.Depth /2;
                 Gob.Position = Gob.Selected.Position;
+               
+                
                 Gob.Sprite.Scale = Gob.Selected.Bounds.Size + new Vector(12);
                
             }

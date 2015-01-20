@@ -78,13 +78,54 @@ namespace Whiskey2D.Core
                 
         }
 
+        public Vector Center
+        {
+            get
+            {
+                return position + (size / 2);
+            }
+        }
 
         public virtual Boolean boundWithin(Bounds bound)
         {
-
-            return _inBound(this, bound) || _inBound(bound, this);
+            return !getNormalOfCollision(bound).Equals(Vector.Zero);
+            //return _inBound(this, bound) || _inBound(bound, this);
 
         }
+
+     
+
+        public virtual Vector getNormalOfCollision(Bounds other)
+        {
+            Bounds A = this;
+            Bounds B = other;
+
+            float w = 0.5f * (A.size.X + B.size.X);
+            float h = 0.5f * (A.size.Y  + B.size.Y);
+            float dx = (A.Center - B.Center).X;
+            float dy = (A.Center - B.Center).Y;
+            Vector normal = Vector.Zero;
+            if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
+            {
+                /* collision! */
+                
+                float wy = w * dy;
+                float hx = h * dx;
+
+                if (wy > hx)
+                    if (wy > -hx)
+                        normal = -Vector.UnitY; //top
+                    else
+                        normal = -Vector.UnitX; //left
+                else
+                    if (wy > -hx)
+                        normal = Vector.UnitX; /* on the right */
+                    else
+                        normal = Vector.UnitY; /* at the bottom */
+            }
+            return normal;
+        }
+
 
         private static Boolean _inBound(Bounds a, Bounds b)
         {

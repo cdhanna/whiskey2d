@@ -27,7 +27,7 @@ namespace WhiskeyEditor.UI.Menu
     {
 
         private OpenFileDialog openProjDialog;
-        private NewForm newForm;
+        private NewFileForm newForm;
 
 
         private NewFileAction newFileAction;
@@ -195,7 +195,7 @@ namespace WhiskeyEditor.UI.Menu
             newLevelAction = new NewLevelAction();
             newLevelAction.Name = "Level";
 
-            newForm = new NewForm();
+            newForm = new NewFileForm();
 
             openProjDialog = new OpenFileDialog();
             openProjDialog.DefaultExt = ".whiskeyproj";

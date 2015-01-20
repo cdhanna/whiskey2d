@@ -278,14 +278,19 @@ namespace WhiskeyEditor.Backend
                 Color col = (Color)val;
                 return "new Color(" + col.R + ", " + col.G + ", " + col.B + ", " + col.A + ")";
 
-            } 
+            }
+            else if (typeName.Equals(typeof(Microsoft.Xna.Framework.Input.Keys).Name))
+            {
+                Microsoft.Xna.Framework.Input.Keys k = (Microsoft.Xna.Framework.Input.Keys)val;
+                return "Microsoft.Xna.Framework.Input.Keys." + k.ToString();
+            }
 
             else
             {
                 //assume that the val is an instance desc
                 return "null";
 
-              //  throw new WhiskeyException("Property is not of supported type: " + val.GetType().Name);
+                //  throw new WhiskeyException("Property is not of supported type: " + val.GetType().Name);
             }
 
         }

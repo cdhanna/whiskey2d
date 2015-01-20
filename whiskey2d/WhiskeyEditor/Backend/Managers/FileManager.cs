@@ -76,6 +76,7 @@ namespace WhiskeyEditor.Backend.Managers
             }
 
             fileWatcher = new FileSystemWatcher(ProjectManager.Instance.ActiveProject.PathSrc);
+            fileWatcher.IncludeSubdirectories = true;
             fileWatcher.Filter = "*.cs";
             fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
             fileWatcher.Changed += fileWatcherHandler;
@@ -134,6 +135,8 @@ namespace WhiskeyEditor.Backend.Managers
                 fileDescs.Remove(fileDesc);
                 fireFileRemoved(new FileEventArgs(fileDesc));
             }
+
+            ProjectManager.Instance.ActiveProject.saveGameData();
         }
 
 
@@ -157,13 +160,20 @@ namespace WhiskeyEditor.Backend.Managers
             //else throw new WhiskeyException("File could not be found : " + filePath);
         }
 
-
+        public T lookUpFileByPath<T>(string path) where T : FileDescriptor
+        {
+            List<T> conv = new List<T>();
+            fileDescs.Where(f => (f is T && f.FilePath.Equals(path))).ToList().ForEach(f => conv.Add((T)f));
+            if (conv.Count == 1)
+                return conv[0];
+            else throw new WhiskeyException("No file exists with the given path : " + path);
+        }
         public T lookUpFileByName<T>(string name) where T : FileDescriptor
         {
             List<T> conv = new List<T>();
 
             fileDescs.Where(f => (f is T && f.Name.Equals(name))).ToList().ForEach((f) => { conv.Add((T) f); });
-            if (conv.Count < 2)
+            if (conv.Count == 1)
             {
                 return conv[0];
             }

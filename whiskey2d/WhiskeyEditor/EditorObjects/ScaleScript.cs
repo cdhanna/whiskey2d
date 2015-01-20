@@ -119,6 +119,8 @@ namespace WhiskeyEditor.EditorObjects
                 diff.Y = 0;
 
                 Gob.Selected.Sprite.Scale = startScale + scaleDiff;
+
+                
                 setPos(startPos + diff / 2);
                
                 Gob.Selected.update();
@@ -184,6 +186,8 @@ namespace WhiskeyEditor.EditorObjects
                 setPos(startPos + diff / 2);
 
             }
+            Gob.Selected.Sprite.Scale = new Vector(Math.Abs(Gob.Selected.Sprite.Scale.X), Math.Abs(Gob.Selected.Sprite.Scale.Y));
+
         }
 
         private void setControlPointVisibility(bool vis, ObjectControlPoint ocp)

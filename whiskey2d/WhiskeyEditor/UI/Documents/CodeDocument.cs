@@ -67,6 +67,9 @@ namespace WhiskeyEditor.UI.Documents
 
             lastText = editor.Text;
 
+
+           
+
             base.save(pn);
         }
 

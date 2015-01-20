@@ -32,6 +32,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map.Add("Sprite", new SpritePathPicker());
             map.Add("Boolean", new BoolPicker());
             map.Add("InstanceDescriptor", new InstancePicker());
+            map.Add("Keys", new KeyTypeEditor());
         }
 
 

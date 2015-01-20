@@ -145,17 +145,19 @@ namespace WhiskeyEditor.UI.Documents
 
         public void closeDocument(string fileName)
         {
-
-            if (tabMap.ContainsKey(fileName))
+            Invoke(new NoArgFunction(() =>
             {
-                DocumentTab dt = tabMap[fileName];
-                tabMap.Remove(fileName);
-                dt.close();
-                Tabs.TabPages.Remove(dt);
-                refreshTabNumbers();
-                
+                if (tabMap.ContainsKey(fileName))
+                {
+                    DocumentTab dt = tabMap[fileName];
+                    tabMap.Remove(fileName);
+                    dt.close();
+                    Tabs.TabPages.Remove(dt);
+                    refreshTabNumbers();
 
-            }
+
+                }
+            }));
 
 
         }

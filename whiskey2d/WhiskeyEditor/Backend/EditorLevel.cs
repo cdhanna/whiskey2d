@@ -17,11 +17,13 @@ namespace WhiskeyEditor.Backend
     public class EditorLevel : DefaultObjectManager
     {
 
+        private Layer defaultLayer = new Layer("Default");
+
         //public List<InstanceDescriptor> Descriptors { get; private set; }
         public string LevelName { get; private set; }
         public Color BackgroundColor { get; set; }
         public Camera Camera { get; set; }
-
+        public List<Layer> Layers { get; set; }
 
         //Thresh  Blur Bloom  Base  BloomSat BaseSat
         public BloomSettings BloomSettings { get; set; }    
@@ -34,6 +36,8 @@ namespace WhiskeyEditor.Backend
             BackgroundColor = Color.BurlyWood;
             BloomSettings = BloomSettings.PresetSettings[5];
             LevelName = name;
+            Layers = new List<Layer>();
+            Layers.Add(defaultLayer);
             //Descriptors = new List<InstanceDescriptor>();
             InstanceManager.Instance.addLevel(this);
         }
@@ -43,6 +47,11 @@ namespace WhiskeyEditor.Backend
         //    init();
         //    setInstanceLevelState(state);
         //}
+
+        public Layer getLayer(string name)
+        {
+            return Layers.Find(l => l.Name.Equals(name));
+        }
 
         public void syncObjectManager()
         {

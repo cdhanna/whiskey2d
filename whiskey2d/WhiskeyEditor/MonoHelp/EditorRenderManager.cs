@@ -9,6 +9,7 @@ using Whiskey2D.Core.Managers;
 using Whiskey2D.Core;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.Backend.Managers;
+using WhiskeyEditor.EditorObjects;
 
 namespace WhiskeyEditor.MonoHelp
 {
@@ -61,62 +62,62 @@ namespace WhiskeyEditor.MonoHelp
             this.spriteBatch.Dispose();
         }
 
-        /// <summary>
-        /// Renders the Game
-        /// </summary>
-        public void render(List<GameObject> descs)
-        {
+        ///// <summary>
+        ///// Renders the Game
+        ///// </summary>
+        //public void render(List<GameObject> descs)
+        //{
 
-            Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
-
-
-            //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+        //    Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
 
 
-            //    //draw grid
-            //    if (ActiveCamera != null)
-            //    {
+        //    //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
 
-            //        Vector topLeft =  (Vector.Zero);
-            //        Vector botRight =  (new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
+        //    //    //draw grid
+        //    //    if (ActiveCamera != null)
+        //    //    {
 
-            //        int gridSize = 100;
-            //        drawLine(spriteBatch, new Vector(topLeft.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom, new Vector(botRight.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom);
-            //        //float currY = topLeft.Y - (topLeft.Y % gridSize);
-            //        //while (currY < botRight.Y)
-            //        //{
-            //        //    drawLine(spriteBatch, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
 
-            //        //    currY += gridSize;
-            //        //}
+        //    //        Vector topLeft =  (Vector.Zero);
+        //    //        Vector botRight =  (new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
+
+        //    //        int gridSize = 100;
+        //    //        drawLine(spriteBatch, new Vector(topLeft.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom, new Vector(botRight.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom);
+        //    //        //float currY = topLeft.Y - (topLeft.Y % gridSize);
+        //    //        //while (currY < botRight.Y)
+        //    //        //{
+        //    //        //    drawLine(spriteBatch, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
+
+        //    //        //    currY += gridSize;
+        //    //        //}
 
                     
 
 
-            //    }
+        //    //    }
 
-            //spriteBatch.End();
+        //    //spriteBatch.End();
 
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
+        //    spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
             
-            foreach (GameObject gob in descs)
-            {
-                Sprite spr = gob.Sprite;
-                if (spr != null)
-                {
-                    spr.draw(spriteBatch, gob.Position);
-                    //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
-                }
-            }
+        //    foreach (GameObject gob in descs)
+        //    {
+        //        Sprite spr = gob.Sprite;
+        //        if (spr != null)
+        //        {
+        //            spr.draw(spriteBatch, gob.Position);
+        //            //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
+        //        }
+        //    }
 
             
             
 
 
-            spriteBatch.End();
-        }
+        //    spriteBatch.End();
+        //}
 
         private void drawBoxes()
         {
@@ -200,33 +201,77 @@ namespace WhiskeyEditor.MonoHelp
         }
 
 
-        public void render(List<InstanceDescriptor> descs)
+        public void render(List<GameObject> descs)
         {
-            Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
 
-           
-
-            //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
-            foreach (InstanceDescriptor gob in descs)
+            ObjectController controller = WhiskeyControl.Active.ObjectController;
+            if (controller != null)
             {
-                Sprite spr = gob.Sprite;
-                spr.setRender(this);
-                spr.setResources(WhiskeyControl.Resources);
-                if (spr != null)
+
+                List<GameObject> uiGobs = new List<GameObject>();
+
+                spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+                foreach (GameObject gob in descs)
                 {
-                    Vector2 alwaysOnPos = gob.Position;
-                    spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, (spr.Depth / 2) - .01f);
-                    //Rectangle destRect = new Rectangle(0, 0, (int)(spr.ImageWidth * spr.Scale.X), (int)(spr.ImageHeight * spr.Scale.Y));
-                    gob.Sprite.draw(spriteBatch, gob.Position);
-                    //spriteBatch.Draw(spr.getImage(), gob.Position, destRect, spr.Color, spr.Rotation, spr.Offset, Vector.One, SpriteEffects.None, spr.Depth / 2);
+                    if (gob == controller || gob == controller.Selected)
+                        continue;
+
+
+                    if (gob is ObjectControlPoint)
+                    {
+                        uiGobs.Add(gob);
+                        continue;
+                    }
+
+
+                    Sprite spr = gob.Sprite;
+                    spr.setRender(this);
+                    spr.setResources(WhiskeyControl.Resources);
+
+
+                    Boolean shouldDraw = true;
+
+                    if (gob is InstanceDescriptor)
+                    {
+                        shouldDraw = ((InstanceDescriptor)gob).Layer.Visible;
+                    }
+
+
+                    if (shouldDraw)
+                    {
+                        if (spr != null)
+                        {
+                            Vector2 alwaysOnPos = gob.Position;
+                            spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, (spr.Depth / 2) - .01f);
+                            gob.Sprite.draw(spriteBatch, gob.Position);
+                        }
+                    }
+                }
+
+                spriteBatch.End();
+
+                /////////////////////DRAW SELECTED
+
+
+                if (controller.Selected != null)
+                {
+                    spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+
+                    uiGobs.ForEach(g =>
+                    {
+                        g.Sprite.draw(spriteBatch, g.Position);
+                    });
+
+                    controller.Sprite.draw(spriteBatch, controller.Position);
+
+
+                    Sprite spr = controller.Selected.Sprite;
+                    spr.setRender(this);
+                    spr.setResources(WhiskeyControl.Resources);
+                    controller.Selected.Sprite.draw(spriteBatch, controller.Selected.Position);
+                    spriteBatch.End();
                 }
             }
-
-            spriteBatch.End();
-
-
-            
         }
 
 
@@ -242,6 +287,8 @@ namespace WhiskeyEditor.MonoHelp
                 bloomSettings = BloomSettings.PresetSettings[0];
                 bloomComponent.Settings = bloomSettings;
             }
+
+            bloomComponent.ensureRenderTargetSize();
 
             if (GraphicsDevice.PresentationParameters.BackBufferHeight != hudTarget.Height || GraphicsDevice.PresentationParameters.BackBufferWidth != hudTarget.Width)
             {
@@ -262,9 +309,13 @@ namespace WhiskeyEditor.MonoHelp
            
             GraphicsDevice.Clear(Level.BackgroundColor);
 
-            render(gobs);
-            render(insts);
+            //render(gobs);
 
+            List<GameObject> gobsToRender = new List<GameObject>();
+            gobs.ForEach(g => gobsToRender.Add(g));
+            insts.ForEach(g => gobsToRender.Add(g));
+            render(gobsToRender);
+            
             
 
 

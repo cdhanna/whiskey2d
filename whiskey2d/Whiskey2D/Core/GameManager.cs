@@ -46,6 +46,15 @@ namespace Whiskey2D.Core
             }
         }
 
+        public bool IsFullScreen
+        {
+            get
+            {
+                return bool.Parse(settings.get(GameProperties.FULL_SCREEN));
+            }
+        }
+
+
         public string CurrentScene
         {
             get;
@@ -133,6 +142,9 @@ namespace Whiskey2D.Core
             //LogManager.init();
             ObjectManager.init();
             InputManager.init();
+
+
+            
 
             //HudManager.init();
 

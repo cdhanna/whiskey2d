@@ -175,8 +175,10 @@ namespace WhiskeyEditor.UI.Properties
             //properties.Sort();
             
             //other
-            foreach (PropertyDescriptor prop in OtherProperties)
+            foreach (GeneralPropertyDescriptor prop in OtherProperties)
             {
+               
+                //properties.Add(new WhiskeyPropertyContainer(new WhiskeyProperty(prop.DisplayName, new WhiskeyEditor.Backend.RealType(prop.ComponentType, prop.PropValue)));
                 properties.Add(prop);
             }
             

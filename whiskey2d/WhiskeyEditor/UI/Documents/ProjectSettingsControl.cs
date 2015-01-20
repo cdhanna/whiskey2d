@@ -13,8 +13,18 @@ namespace WhiskeyEditor.UI.Documents
 {
     public partial class ProjectSettingsControl : UserControl
     {
-        
-        
+
+        public bool IsFullScreen
+        {
+            get
+            {
+                return isFullScreen.Checked;
+            }
+            set
+            {
+                isFullScreen.Checked = value;
+            }
+        }
         public string ProjectName
         {
             get

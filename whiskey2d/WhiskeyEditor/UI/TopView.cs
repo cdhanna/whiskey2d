@@ -63,7 +63,9 @@ namespace WhiskeyEditor.UI
             initControls();
             configureControls();
             addControls();
-            
+
+            Icon = new Icon(Assets.AssetManager.FILE_ICON_WHISKEY);
+
         }
 
         public override string Text
@@ -170,6 +172,14 @@ namespace WhiskeyEditor.UI
             docView.PropertyChangeRequested += (s, args) =>
             {
                 setDocumentAndProperties(UIManager.Instance.getDocumentFactory(args.PropertyDescriptor), false, true);
+            };
+            libraryView.FileDeleted += (s, args) =>
+            {
+                
+                propView.clearPropertyContent();
+               // docView.closeDocument(args.PropertyDescriptor.Name);    
+                
+                //setDocumentAndProperties(UIManager.Instance.getDocumentFactory(args.PropertyDescriptor), true, true);
             };
 
             SelectionManager.Instance.SelectedInstanceChanged += (s, old) =>

@@ -119,8 +119,34 @@ namespace Whiskey2D.Core
 
             renderTarget1 = new RenderTarget2D(GraphicsDevice, width, height, false, format, DepthFormat.None);
             renderTarget2 = new RenderTarget2D(GraphicsDevice, width, height, false, format, DepthFormat.None);
+        
         }
 
+        public void ensureRenderTargetSize()
+        {
+            sceneRenderTarget = checkRenderTarget(sceneRenderTarget, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+            renderTarget1 = checkRenderTarget(renderTarget1, GraphicsDevice.PresentationParameters.BackBufferWidth / 2, GraphicsDevice.PresentationParameters.BackBufferHeight / 2);
+            renderTarget2 = checkRenderTarget(renderTarget2, GraphicsDevice.PresentationParameters.BackBufferWidth / 2, GraphicsDevice.PresentationParameters.BackBufferHeight / 2);
+
+        }
+
+
+        //private RenderTarget2D checkRenderTarget(RenderTarget2D target)
+        //{
+        //    if (GraphicsDevice.PresentationParameters.BackBufferHeight != target.Height || GraphicsDevice.PresentationParameters.BackBufferWidth != target.Width)
+        //    {
+        //        return new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+        //    }
+        //    else return target;
+        //}
+        private RenderTarget2D checkRenderTarget(RenderTarget2D target, int width, int height)
+        {
+            if (height != target.Height || width != target.Width)
+            {
+                return new RenderTarget2D(GraphicsDevice, width, height);
+            }
+            else return target;
+        }
 
         /// <summary>
         /// Unload your graphics content.

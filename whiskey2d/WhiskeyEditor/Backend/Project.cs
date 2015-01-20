@@ -17,6 +17,7 @@ namespace WhiskeyEditor.Backend
     public class Project : Descriptor
     {
         public const string PROP_NAME = "Name";
+        public const string PROP_FULLSCREEN = "Fullscreen";
         public const string PROP_LAST_EDITING_SCENE = "LastEditingScene";
         public const string EXTENSION_PROJ = ".whiskeyproj";
         
@@ -24,6 +25,9 @@ namespace WhiskeyEditor.Backend
         private string path;
         private PropertiesFiles settings;
         private PropertiesFiles gameSettings;
+
+
+      
 
         /// <summary>
         /// The base path of the project
@@ -96,6 +100,8 @@ namespace WhiskeyEditor.Backend
 
 
         public event EventHandler MediaAdded = new EventHandler((s, a) => { });
+        public event EventHandler MediaRemoved = new EventHandler((s, a) => { });
+
 
         /// <summary>
         /// Get/Set the name of the project. 
@@ -112,6 +118,28 @@ namespace WhiskeyEditor.Backend
                 Settings.Save();
             }
         }
+
+        public Boolean IsFullScreen
+        {
+            get
+            {
+                string strVal = Settings.get(PROP_FULLSCREEN);
+                if (strVal == null) IsFullScreen = false;
+
+
+                if (strVal == null || strVal.Equals("False"))
+                    return false;
+
+                else return true;
+            }
+            set
+            {
+                string val = value.ToString();
+                Settings.set(PROP_FULLSCREEN, val);
+                Settings.Save();
+            }
+        }
+
 
         /// <summary>
         /// Get/Set the scene that the project is editing
@@ -149,8 +177,11 @@ namespace WhiskeyEditor.Backend
 
         public Project(string path, string name)
         {
+            while (path.EndsWith("\\"))
+                path = path.Substring(0, path.Length - 1);
+
             this.path = path;
-            
+           
             createDirs();
             createSettings();
             
@@ -161,7 +192,11 @@ namespace WhiskeyEditor.Backend
 
         public Project(string path)
         {
+            while (path.EndsWith("\\"))
+                path = path.Substring(0, path.Length - 1);
+            
             this.path = path;
+            
             createDirs();
             createSettings();
             ensureDefaultProps();
@@ -183,6 +218,7 @@ namespace WhiskeyEditor.Backend
             {
                 this.GameStartScene = EditingScene;
             }
+            bool b = IsFullScreen;
         }
 
         private void createDirs()
@@ -207,7 +243,7 @@ namespace WhiskeyEditor.Backend
             gameSettings = new PropertiesFiles(FileBuildGamePropPath);
             
             gameSettings.set(GameProperties.START_SCENE, GameStartScene + ".state");
-
+            gameSettings.set(GameProperties.FULL_SCREEN, IsFullScreen.ToString());
             gameSettings.Save();
 
         }
@@ -239,6 +275,13 @@ namespace WhiskeyEditor.Backend
 
         }
 
+        public void removeMedia(string name)
+        {
+            File.Delete(PathMedia + Path.DirectorySeparatorChar + name);
+            MediaRemoved(this, new EventArgs());
+        }
+
+
         public string[] getMedia(string extension)
         {
             string[] files = Directory.GetFiles(PathMedia, "*." + extension);
@@ -262,6 +305,7 @@ namespace WhiskeyEditor.Backend
             {
                 GameData data = GameData.deserialize(FileGameDataPath);
                 FileManager.Instance.setGameData(data);
+               
             }
             catch (WhiskeyException e)
             {

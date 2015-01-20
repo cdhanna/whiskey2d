@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Backend;
+
+using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.Backend.Actions.Impl;
 using WhiskeyEditor.UI.Assets;
 
@@ -27,10 +29,11 @@ namespace WhiskeyEditor.UI.Library
     public class LibraryView : Control
     {
 
-        private TreeView fileTree;
+        public TreeView FileTree { get; private set; }
 
         public event LibrarySelectionEventHandler SelectionChanged = new LibrarySelectionEventHandler((s, a) => { });
         public event LibrarySelectionEventHandler ClickedOnNode = new LibrarySelectionEventHandler((s, a) => { });
+        public event PropertyChangeRequestEventHandler FileDeleted = new PropertyChangeRequestEventHandler((s, a) => { });
 
 
         private NewLevelAction newLevelAction;
@@ -39,8 +42,10 @@ namespace WhiskeyEditor.UI.Library
         private NewArtAction newArtAction;
         private NewSoundAction newSoundAction;
 
-        private ContextMenuStrip newFileMenu;
+        private DeleteFileAction deleteAction;
 
+        private ContextMenuStrip folderNodeMenu;
+        private ContextMenuStrip fileNodeMenu;
 
 
         public LibraryView()
@@ -67,13 +72,62 @@ namespace WhiskeyEditor.UI.Library
             refreshContent();
 
            
-            fileTree.ItemDrag += (s, a) =>
+            FileTree.ItemDrag += (s, a) =>
             {
-                fileTree.DoDragDrop(a.Item, DragDropEffects.All);
+                FileTree.DoDragDrop(a.Item, DragDropEffects.All);
                 
             };
 
-            
+            FileTree.KeyDown += (s, a) =>
+            {
+               
+                if (!a.Handled && a.KeyData == Keys.Delete) //delete key
+                {
+                    deleteSelectedNode();
+                }
+            };
+
+        }
+
+        public void deleteSelectedNode()
+        {
+            Invoke(new NoArgFunction(() =>
+            {
+                TreeNode node = FileTree.SelectedNode;
+                if (node != null && node is LibraryTreeNode)
+                {
+                    LibraryTreeNode libNode = (LibraryTreeNode)node;
+
+                    DialogResult confirmResult = MessageBox.Show("Are you sure you want to delete this?",
+                        "Delete Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button2);
+
+
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            FileDescriptor fDesc = FileManager.Instance.lookUpFileByPath<FileDescriptor>(libNode.FilePath);
+                            fireDeleteFileEvent(new PropertyChangeRequestEventArgs(fDesc));
+                            FileManager.Instance.removeFileDescriptor(fDesc);
+                        }
+                        catch (WhiskeyException e)
+                        {
+
+                        }
+                        FileTree.Nodes.Remove(libNode);
+                    }
+
+
+                }
+            }));
+        }
+
+        public void fireDeleteFileEvent(PropertyChangeRequestEventArgs args)
+        {
+            FileDeleted(this, args);
 
         }
 
@@ -83,7 +137,7 @@ namespace WhiskeyEditor.UI.Library
             {
                 this.Invoke(new NoArgFunction(() =>
                 {
-                    fileTree.Nodes.Clear();
+                    FileTree.Nodes.Clear();
 
                     Project p = ProjectManager.Instance.ActiveProject;
 
@@ -116,7 +170,7 @@ namespace WhiskeyEditor.UI.Library
                     root.Nodes.Add(nodeArt);
 
 
-                    fileTree.Nodes.Add(root);
+                    FileTree.Nodes.Add(root);
                     root.ExpandAll();
                     //fileTree.Update();
                 }));
@@ -131,10 +185,10 @@ namespace WhiskeyEditor.UI.Library
 
         private void initControls()
         {
-            fileTree = new TreeView();
-            fileTree.Size = new Size(50, 50);
+            FileTree = new TreeView();
+            FileTree.Size = new Size(50, 50);
 
-            fileTree.ImageList = AssetManager.getImageList();
+            FileTree.ImageList = AssetManager.getImageList();
             //fileTree.ImageList.ImageSize = new Size(32, 32);
             //fileTree.ImageList.ColorDepth = ColorDepth.Depth32Bit;
             //fileTree.ImageList.ImageSize = new Size(16, 16);
@@ -149,22 +203,33 @@ namespace WhiskeyEditor.UI.Library
             newArtAction = new NewArtAction();
             newSoundAction = new NewSoundAction();
 
-            newFileMenu = new ContextMenuStrip();
-            newFileMenu.Width = 200;
+            folderNodeMenu = new ContextMenuStrip();
+            folderNodeMenu.Width = 200;
 
             ToolStripLabel label = new ToolStripLabel("Add File...");
-            newFileMenu.Text = "Add File";
-            newFileMenu.Items.Add(label);
-            newFileMenu.Items.Add( newTypeAction.generateControl<ToolStripButton>() );
-            newFileMenu.Items.Add( newScriptAction.generateControl<ToolStripButton>());
-            newFileMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
-            newFileMenu.Items.Add( newArtAction.generateControl<ToolStripButton>());
-            newFileMenu.Items.Add( newSoundAction.generateControl<ToolStripButton>());
+            folderNodeMenu.Text = "Add File";
+           // folderNodeMenu.Items.Add(label);
+            folderNodeMenu.Items.Add( newTypeAction.generateControl<ToolStripButton>() );
+            folderNodeMenu.Items.Add( newScriptAction.generateControl<ToolStripButton>());
+            folderNodeMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
+            folderNodeMenu.Items.Add( newArtAction.generateControl<ToolStripButton>());
+            folderNodeMenu.Items.Add( newSoundAction.generateControl<ToolStripButton>());
+
+
+            deleteAction = new DeleteFileAction(this);
+
+            fileNodeMenu = new ContextMenuStrip();
+            
+            ToolStripLabel fileNodeLabel = new ToolStripLabel("Options...");
+            fileNodeMenu.Text = "Options...";
+            //fileNodeMenu.Items.Add(fileNodeLabel);
+            fileNodeMenu.Items.Add(deleteAction.generateControl<ToolStripButton>());
+
         }
 
         private void configureControls()
         {
-            fileTree.NodeMouseDoubleClick += (s, a) =>
+            FileTree.NodeMouseDoubleClick += (s, a) =>
             {
                 LibraryTreeNode node = (LibraryTreeNode)a.Node;
                 if (node.IsFile)
@@ -174,7 +239,7 @@ namespace WhiskeyEditor.UI.Library
 
             };
 
-            fileTree.NodeMouseClick += (s, a) =>
+            FileTree.NodeMouseClick += (s, a) =>
             {
                 LibraryTreeNode node = (LibraryTreeNode)a.Node;
                 if (node.IsFile && a.Button == System.Windows.Forms.MouseButtons.Left)
@@ -182,13 +247,22 @@ namespace WhiskeyEditor.UI.Library
                     ClickedOnNode(this, new LibrarySelectionEventArgs(node));
                 }
 
-                if (!node.IsFile && a.Button == System.Windows.Forms.MouseButtons.Right)
+                if (a.Button == System.Windows.Forms.MouseButtons.Right)
                 {
-                    newFileMenu.Show(this, a.Location, ToolStripDropDownDirection.Right);
+                    FileTree.SelectedNode = a.Node;
+                    if (node.IsFile)
+                    {
+                        fileNodeMenu.Width = 300;
+                        fileNodeMenu.Show(this, a.Location, ToolStripDropDownDirection.Right);
+                    }
+                    else
+                    {
+                        folderNodeMenu.Show(this, a.Location, ToolStripDropDownDirection.Right);
+                    }
                 }
 
             };
-
+            
           
 
         }
@@ -196,8 +270,8 @@ namespace WhiskeyEditor.UI.Library
         private void addControls()
         {
 
-            fileTree.Dock = DockStyle.Fill;
-            Controls.Add(fileTree);
+            FileTree.Dock = DockStyle.Fill;
+            Controls.Add(FileTree);
 
         }
 

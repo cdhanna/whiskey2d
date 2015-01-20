@@ -13,7 +13,7 @@ namespace Whiskey2D.Core
     public class Sound 
     {
 
-        public SoundState Status
+        public SoundState State
         {
             get
             {

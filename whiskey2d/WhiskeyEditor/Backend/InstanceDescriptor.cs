@@ -79,7 +79,7 @@ namespace WhiskeyEditor.Backend
         {
             initialized = true;
             this.typeDesc = typeDesc;
-          
+            Layer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.getLayer("Default");
             
             propDescs = typeDesc.getPropertySetClone();
 
@@ -236,6 +236,8 @@ namespace WhiskeyEditor.Backend
             
             return scriptNames;
         }
+
+        public Layer Layer { get; set; }
 
         public override Boolean Active
         {
