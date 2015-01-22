@@ -56,7 +56,7 @@ namespace WhiskeyEditor.UI.Library
                 {
                     index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_TYPE);
 
-                    if (path.ToLower().StartsWith(WhiskeyEditor.Backend.Managers.ProjectManager.Instance.ActiveProject.PathSrcScripts.ToLower()))
+                    if (path.ToLower().StartsWith(WhiskeyEditor.Backend.Managers.ProjectManager.Instance.ActiveProject.PathSrcScripts.ToLower()) || path.StartsWith(WhiskeyEditor.compile_types.CoreTypes.corePathScripts))
                     {
                         index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE_SCRIPT);
                     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhiskeyEditor.UI.Properties.Editors;
 using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.Backend;
-
+using WhiskeyEditor.UI.Documents.ContentFactories;
 
 namespace WhiskeyEditor.UI.Documents.Info
 {
@@ -20,5 +20,10 @@ namespace WhiskeyEditor.UI.Documents.Info
             TypeDescriptor = descriptor;
         }
 
+
+        public IDocumentContentFactory generateContentFactory(DocumentView DocumentView)
+        {
+            return new TypeContentFactory(DocumentView, this);
+        }
     }
 }

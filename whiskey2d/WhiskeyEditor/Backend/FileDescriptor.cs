@@ -8,7 +8,7 @@ using WhiskeyEditor.UI;
 namespace WhiskeyEditor.Backend
 {
     [Serializable]
-    public class FileDescriptor : Descriptor
+    public class FileDescriptor : PathDescriptor
     {
 
         private string filePath;
@@ -48,7 +48,7 @@ namespace WhiskeyEditor.Backend
             }
         }
         
-        public void delete()
+        public virtual void delete()
         {
             if (File.Exists(FilePath))
             {

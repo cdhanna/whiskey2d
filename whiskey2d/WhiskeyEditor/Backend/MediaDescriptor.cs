@@ -8,16 +8,24 @@ using System.IO;
 
 namespace WhiskeyEditor.Backend
 {
-    class MediaDescriptor : FileDescriptor
+    [Serializable]
+    public class MediaDescriptor : FileDescriptor
     {
 
 
 
         public MediaDescriptor(string filePath)
-            : base(filePath, filePath.Substring(filePath.LastIndexOf(Path.DirectorySeparatorChar)))
+            : base(filePath, filePath.Substring(filePath.LastIndexOf(Path.DirectorySeparatorChar) + 1))
         {
 
         }
+
+        public override void delete()
+        {
+           // ProjectManager.Instance.ActiveProject.removeMedia(this); //remove from directory
+            base.delete();
+        }
+
 
     }
 }

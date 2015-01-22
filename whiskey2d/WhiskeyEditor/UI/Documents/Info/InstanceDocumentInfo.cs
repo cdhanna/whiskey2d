@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
-
+using WhiskeyEditor.UI.Documents.ContentFactories;
 namespace WhiskeyEditor.UI.Documents.Info
 {
     class InstanceDocumentInfo : DocumentContentInfo
@@ -13,6 +13,10 @@ namespace WhiskeyEditor.UI.Documents.Info
         public InstanceDocumentInfo(InstanceDescriptor instance)
         {
             Instance = instance;
+        }
+        public IDocumentContentFactory generateContentFactory(DocumentView DocumentView)
+        {
+            return new InstanceContentFactory(DocumentView, this);
         }
     }
 }

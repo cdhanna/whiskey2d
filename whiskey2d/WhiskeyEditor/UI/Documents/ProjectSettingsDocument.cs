@@ -18,8 +18,9 @@ namespace WhiskeyEditor.UI.Documents
 
 
         public ProjectSettingsDocument(Project project, DocumentView docView)
-            : base(project.Name, docView)
+            : base(project.FileSettingsPath, docView)
         {
+            Text = project.Name;
             Project = project;
             initControls();
             addControls();

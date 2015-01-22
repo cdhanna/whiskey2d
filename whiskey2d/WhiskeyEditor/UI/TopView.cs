@@ -17,6 +17,7 @@ using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Menu;
 using WhiskeyEditor.UI.Toolbar;
 using WhiskeyEditor.UI.Status;
+using WhiskeyEditor.compile_types;
 
 namespace WhiskeyEditor.UI
 {
@@ -142,11 +143,11 @@ namespace WhiskeyEditor.UI
             {
 
                
-                if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
-                {
-                    //clicked on a node in the media directory
-                }
-                else
+                //if (args.Selected.FilePath.ToLower().StartsWith(ProjectManager.Instance.ActiveProject.PathMedia.ToLower()))
+                //{
+                //    //clicked on a node in the media directory
+                //}
+                //else
                 {
 
                     //clicked on a node not in the media directory
@@ -177,7 +178,9 @@ namespace WhiskeyEditor.UI
             {
                 
                 propView.clearPropertyContent();
-               // docView.closeDocument(args.PropertyDescriptor.Name);    
+                
+                if (args.PropertyDescriptor is PathDescriptor)
+                    docView.closeDocument((args.PropertyDescriptor as PathDescriptor).FilePath);    
                 
                 //setDocumentAndProperties(UIManager.Instance.getDocumentFactory(args.PropertyDescriptor), true, true);
             };
@@ -211,6 +214,11 @@ namespace WhiskeyEditor.UI
                 }
             }
 
+            //try for core type.
+            if (desc == null)
+            {
+                desc = CoreTypes.lookUpType(filePath);
+            }
 
 
             if (desc != null)

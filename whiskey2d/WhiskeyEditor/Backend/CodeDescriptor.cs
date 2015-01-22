@@ -90,6 +90,10 @@ namespace WhiskeyEditor.Backend
 
         public override void createFile()
         {
+
+            string baseFldr = FilePath.Substring(0, FilePath.LastIndexOf("\\"));
+            Directory.CreateDirectory(baseFldr);
+
             FileStream fileStream = File.Create(FilePath);
             StreamWriter writer = new StreamWriter(fileStream);
                

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
-
+using WhiskeyEditor.UI.Documents.ContentFactories;
 namespace WhiskeyEditor.UI.Documents.Info
 {
     class ProjectSettingsDocumentInfo : DocumentContentInfo
@@ -16,6 +16,9 @@ namespace WhiskeyEditor.UI.Documents.Info
         {
             Project = project;
         }
-
+        public IDocumentContentFactory generateContentFactory(DocumentView DocumentView)
+        {
+            return new ProjectContentFactory(DocumentView, this);
+        }
     }
 }

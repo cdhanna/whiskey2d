@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhiskeyEditor.UI.Documents.Info;
 
 namespace WhiskeyEditor.Backend
 {
@@ -10,6 +11,7 @@ namespace WhiskeyEditor.Backend
     {
 
         string Name { get; }
+        
 
     }
 }

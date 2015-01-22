@@ -17,6 +17,7 @@ namespace WhiskeyEditor.Backend
         public const string PROP_SPRITE = "Sprite";
         public const string PROP_NAME = "Name";
         public const string PROP_ACTIVE = "Active";
+        public const string PROP_ISDEBUG = "IsDebug";
 
         private bool initialized;
         private TypeDescriptor typeDesc;
@@ -80,7 +81,7 @@ namespace WhiskeyEditor.Backend
             initialized = true;
             this.typeDesc = typeDesc;
             Layer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.getLayer("Default");
-            
+           
             propDescs = typeDesc.getPropertySetClone();
 
             scriptNames = typeDesc.getScriptNamesClone();
@@ -239,6 +240,7 @@ namespace WhiskeyEditor.Backend
 
         public Layer Layer { get; set; }
 
+        
         public override Boolean Active
         {
             get
@@ -259,6 +261,25 @@ namespace WhiskeyEditor.Backend
             }
         }
 
+        public override Boolean IsDebug
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.IsDebug;
+                }
+                else return (Boolean)getTypeValOfName(PROP_ISDEBUG).Value;
+            }
+            set
+            {
+                base.IsDebug = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_ISDEBUG).Value = value;
+                }
+            }
+        }
 
         public override float X
         {
@@ -360,7 +381,8 @@ namespace WhiskeyEditor.Backend
             inst.X = X;
             inst.Y = Y;
             inst.Sprite = new Sprite(Sprite.getRenderer(), Sprite.getResources(), Sprite);
-
+            inst.Layer = Layer;
+            inst.IsDebug = IsDebug;
             for (int i = 0 ; i < getPropertySet().Count ; i ++)
             {
                 propDescs[i] = lookUpPropertyDescriptor(propDescs[i].Name).clone();

@@ -152,6 +152,8 @@ namespace WhiskeyEditor.UI.Menu
                     
                     Project proj = ProjectManager.Instance.createNewProject(projPath, projName);
                     ProjectManager.Instance.ActiveProject = proj;
+                    WhiskeyEditor.compile_types.CoreTypes.addCoreTypesToFileManager();
+                    ProjectManager.Instance.ActiveProject.saveGameData();
                 }
             };
 

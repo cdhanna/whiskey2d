@@ -34,6 +34,15 @@ namespace WhiskeyEditor.Backend
             FileManager.Instance.addFileDescriptor(this);
         }
 
+        public ScriptDescriptor(string basePath, string name, string typeName)
+            : base (basePath, name)
+        {
+            this.TargetTypeName = typeName;
+            ScriptManager.Instance.addScript(this);
+            FileManager.Instance.addFileDescriptor(this);
+        }
+
+
 
         protected override string CodeClassDef
         {
@@ -63,6 +72,9 @@ namespace WhiskeyEditor.Backend
             writer.WriteLine("\t\t}");
             writer.WriteLine("\t\t");
         }
+
+        
+
 
     }
 }

@@ -52,6 +52,7 @@ namespace Whiskey2D.Core.Hud
             debugWindow.BorderColor = Color.Transparent;
             debugWindow.TextColor = Color.White;
             debugWindow.TextSize = .8f;
+            
             keyboard = new RealKeyBoard();
             console = new WhiskeyConsole();
             ConsoleMode = false;

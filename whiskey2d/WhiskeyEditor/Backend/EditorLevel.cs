@@ -85,43 +85,18 @@ namespace WhiskeyEditor.Backend
 
         }
 
-        //public State getInstanceLevelState()
-        //{
-        //    //State state = new State();
-        //    //state.Name = LevelName;
-        //    //state.BackgroundColor = BackgroundColor;
-        //    //Descriptors.ForEach((iDesc) => { 
-        //    //    state.GameObjects.Add(iDesc); 
-        //    //});
-        //    //return state;
-        //    State state = base.getState();
-        //    state.BackgroundColor = BackgroundColor;
-        //    return state;
-        //}
-
-        //public void setInstanceLevelState(State state)
-        //{
-        //    //Descriptors.Clear();
-        //    //BackgroundColor = state.BackgroundColor;
-        //    //state.GameObjects.ForEach((gob) =>
-        //    //{
-        //    //    Descriptors.Add((InstanceDescriptor)gob);
-        //    //});
-        //    BackgroundColor = state.BackgroundColor;
-        //    base.setState(state);
-
-        //    //getInstances().ForEach((i) =>
-        //    //{
-        //    //    i.syncType();
-        //    // //   i.registerListeners();
-
-        //    //});
-        //}
-
-        public void addObject(InstanceDescriptor gob)
+   
+        public override void addObject(GameObject gob)
         {
+
+            
             base.addObject(gob);
+            if (gob is InstanceDescriptor)
+            {
+                updateAll();
+            }
         }
+        
 
         public List<InstanceDescriptor> getInstances()
         {

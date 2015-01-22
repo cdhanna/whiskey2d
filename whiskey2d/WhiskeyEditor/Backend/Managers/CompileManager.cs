@@ -7,7 +7,7 @@ using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Threading;
-
+using WhiskeyEditor.compile_types;
 using System.Threading.Tasks;
 
 namespace WhiskeyEditor.Backend.Managers
@@ -52,7 +52,6 @@ namespace WhiskeyEditor.Backend.Managers
 
         public CompileManager() : base()
         {
-           
 
             FileManager.Instance.FileChanged += (sender, args) =>
             {
@@ -64,14 +63,12 @@ namespace WhiskeyEditor.Backend.Managers
         }
 
 
-
         public string compile()
         {
             return compile(true, ProjectManager.Instance.ActiveProject.PathLib + Path.DirectorySeparatorChar + "GameData.dll");
         }
         public string compile(bool ensured, string dllOutputPath)
         {
-
            
             CSharpCodeProvider compiler = new CSharpCodeProvider();
             CompilerParameters options = new CompilerParameters();
@@ -81,6 +78,8 @@ namespace WhiskeyEditor.Backend.Managers
             options.ReferencedAssemblies.Add(ResourceFiles.DllMonoGame);
             options.ReferencedAssemblies.Add(ResourceFiles.DllSystem);
             options.ReferencedAssemblies.Add(ResourceFiles.DllWhiskeyCore);
+
+            
 
 
             List<string> filePaths = new List<string>();
@@ -96,6 +95,14 @@ namespace WhiskeyEditor.Backend.Managers
                     filePaths.Add(fileDesc.FilePath);
                 }
             }
+
+
+            foreach (string coreType in CoreTypes.filepaths)
+            {
+                if (File.Exists(coreType))
+                    filePaths.Add(coreType);
+            }
+
             try
             {
                 CompilerResults results = compiler.CompileAssemblyFromFile(options, filePaths.ToArray());

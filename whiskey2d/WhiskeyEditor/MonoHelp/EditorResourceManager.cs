@@ -48,6 +48,12 @@ namespace WhiskeyEditor.MonoHelp
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
+            //remove any leading slashes 
+            while (filePath.StartsWith("\\"))
+            {
+                filePath = filePath.Substring(1);
+            }
+
 
             string destPath = "compile-media" + Path.DirectorySeparatorChar + filePath;
 

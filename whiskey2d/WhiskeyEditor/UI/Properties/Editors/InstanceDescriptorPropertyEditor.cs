@@ -23,7 +23,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
         protected List<GeneralPropertyDescriptor> ScriptProperties;
 
         protected GeneralPropertyDescriptor LayerProperty;
-
+        
 
         protected EditScriptsAction editScriptsAction;
         protected DeleteInstanceAction deleteAction;
@@ -93,6 +93,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
                 Descriptor.Layer = LayerProperty.PropValue as Layer;
             };
 
+       
 
             PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptorInFileManager.Name).PropIsReadOnly = true;
 

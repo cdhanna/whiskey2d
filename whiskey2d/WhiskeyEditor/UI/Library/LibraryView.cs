@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.Backend;
-
+using WhiskeyEditor.compile_types;
 using WhiskeyEditor.UI.Documents;
 using WhiskeyEditor.Backend.Actions.Impl;
 using WhiskeyEditor.UI.Assets;
@@ -169,9 +169,26 @@ namespace WhiskeyEditor.UI.Library
                     nodeArt.populate();
                     root.Nodes.Add(nodeArt);
 
+                    //CORE-TYPES
+
+                    LibraryTreeNode nodeCoreTypes = new LibraryTreeNode("Common Types", WhiskeyEditor.compile_types.CoreTypes.corePathTypes);
+                    nodeCoreTypes.populate();
+                    root.Nodes.Add(nodeCoreTypes);
+
+                    LibraryTreeNode nodeCoreScripts = new LibraryTreeNode("Common Scripts", WhiskeyEditor.compile_types.CoreTypes.corePathScripts);
+                    nodeCoreScripts.populate();
+                    root.Nodes.Add(nodeCoreScripts);
 
                     FileTree.Nodes.Add(root);
+                    
+                    
+                    //open everything
                     root.ExpandAll();
+
+                    //close common scripts
+                    nodeCoreScripts.Collapse();
+
+
                     //fileTree.Update();
                 }));
             }

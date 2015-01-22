@@ -50,12 +50,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(259, 157);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 128);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -63,25 +64,29 @@
             this.panel1.Controls.Add(this.okayBtn);
             this.panel1.Controls.Add(this.cancelBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 118);
+            this.panel1.Location = new System.Drawing.Point(2, 95);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(253, 36);
+            this.panel1.Size = new System.Drawing.Size(190, 31);
             this.panel1.TabIndex = 0;
             // 
             // okayBtn
             // 
-            this.okayBtn.Location = new System.Drawing.Point(94, 3);
+            this.okayBtn.Location = new System.Drawing.Point(70, 2);
+            this.okayBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.okayBtn.Name = "okayBtn";
-            this.okayBtn.Size = new System.Drawing.Size(75, 23);
+            this.okayBtn.Size = new System.Drawing.Size(56, 19);
             this.okayBtn.TabIndex = 1;
             this.okayBtn.Text = "Okay";
             this.okayBtn.UseVisualStyleBackColor = true;
             // 
             // cancelBtn
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(175, 3);
+            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBtn.Location = new System.Drawing.Point(131, 2);
+            this.cancelBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.cancelBtn.Size = new System.Drawing.Size(56, 19);
             this.cancelBtn.TabIndex = 0;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
@@ -95,70 +100,80 @@
             this.panel2.Controls.Add(this.nameLabel);
             this.panel2.Controls.Add(this.typeLabel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Location = new System.Drawing.Point(2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(253, 109);
+            this.panel2.Size = new System.Drawing.Size(190, 89);
             this.panel2.TabIndex = 1;
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(72, 36);
+            this.nameBox.Location = new System.Drawing.Point(54, 29);
+            this.nameBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(178, 22);
+            this.nameBox.Size = new System.Drawing.Size(134, 20);
             this.nameBox.TabIndex = 5;
             // 
             // scriptBox
             // 
             this.scriptBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.scriptBox.FormattingEnabled = true;
-            this.scriptBox.Location = new System.Drawing.Point(72, 64);
+            this.scriptBox.Location = new System.Drawing.Point(54, 52);
+            this.scriptBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.scriptBox.Name = "scriptBox";
-            this.scriptBox.Size = new System.Drawing.Size(178, 24);
+            this.scriptBox.Size = new System.Drawing.Size(134, 21);
             this.scriptBox.TabIndex = 4;
             // 
             // typeBox
             // 
             this.typeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.typeBox.FormattingEnabled = true;
-            this.typeBox.Location = new System.Drawing.Point(72, 7);
+            this.typeBox.Location = new System.Drawing.Point(54, 6);
+            this.typeBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.typeBox.Name = "typeBox";
-            this.typeBox.Size = new System.Drawing.Size(178, 24);
+            this.typeBox.Size = new System.Drawing.Size(134, 21);
             this.typeBox.TabIndex = 3;
             // 
             // scriptLabel
             // 
             this.scriptLabel.AutoSize = true;
-            this.scriptLabel.Location = new System.Drawing.Point(12, 67);
+            this.scriptLabel.Location = new System.Drawing.Point(9, 54);
+            this.scriptLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.scriptLabel.Name = "scriptLabel";
-            this.scriptLabel.Size = new System.Drawing.Size(29, 17);
+            this.scriptLabel.Size = new System.Drawing.Size(25, 15);
             this.scriptLabel.TabIndex = 2;
             this.scriptLabel.Text = "For";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(12, 39);
+            this.nameLabel.Location = new System.Drawing.Point(9, 32);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(45, 17);
+            this.nameLabel.Size = new System.Drawing.Size(41, 15);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "Name";
             // 
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(12, 10);
+            this.typeLabel.Location = new System.Drawing.Point(9, 8);
+            this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(40, 17);
+            this.typeLabel.Size = new System.Drawing.Size(33, 15);
             this.typeLabel.TabIndex = 0;
             this.typeLabel.Text = "Type";
             // 
             // NewFileForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AcceptButton = this.okayBtn;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 160);
+            this.CancelButton = this.cancelBtn;
+            this.ClientSize = new System.Drawing.Size(202, 130);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "NewFileForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

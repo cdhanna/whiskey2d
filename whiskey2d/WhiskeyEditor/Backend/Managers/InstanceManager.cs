@@ -22,13 +22,20 @@ namespace WhiskeyEditor.Backend.Managers
         public static InstanceManager Instance { get { return instance; } }
 
         //private List<InstanceDescriptor> iDescs;
-        public List<EditorLevel> Levels { get; private set; }
-
+       // public List<EditorLevel> Levels { get; private set; }
+        public List<EditorLevel> Levels
+        {
+            get
+            {
+                List<EditorLevel> levels = FileManager.Instance.FileDescriptors.FindAll(f => f is LevelDescriptor).Select(f => ((LevelDescriptor)f).Level).ToList();
+                return levels;
+            }
+        }
 
         private InstanceManager()
         {
            // iDescs = new List<InstanceDescriptor>();
-            Levels = new List<EditorLevel>();
+          //  Levels = new List<EditorLevel>();
           
 
         }
@@ -41,7 +48,7 @@ namespace WhiskeyEditor.Backend.Managers
 
             level.syncObjectManager();
 
-            Levels.Add(level);
+            //Levels.Add(level);
         }
 
         public void syncTypeToInstances(TypeDescriptor typeDescriptor)
@@ -163,6 +170,13 @@ namespace WhiskeyEditor.Backend.Managers
                                         }
                                 
                                 }
+
+                                //IS IT A DEBUG ONLY SPRITE?
+                                if (iDesc.IsDebug)
+                                {
+                                    gob.Sprite.Visible = false;
+                                }
+
 
                                 gob.clearScripts();
 

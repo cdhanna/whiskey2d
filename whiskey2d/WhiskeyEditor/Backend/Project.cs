@@ -188,6 +188,9 @@ namespace WhiskeyEditor.Backend
 
             this.Name = name;
             ensureDefaultProps();
+
+           
+
         }
 
         public Project(string path)
@@ -262,7 +265,7 @@ namespace WhiskeyEditor.Backend
 
         //}
 
-        public string addMedia(string fullPath)
+        public MediaDescriptor addMedia(string fullPath)
         {
 
             string name = fullPath.Substring(fullPath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
@@ -271,16 +274,24 @@ namespace WhiskeyEditor.Backend
 
             File.Copy(fullPath, destPath, true);
             MediaAdded(this, new EventArgs());
-            return name;
+
+            MediaDescriptor mDesc = null;
+            if (fullPath.EndsWith(".png"))
+            {
+                mDesc = new ArtDescriptor(destPath);
+            }
+            else if (fullPath.EndsWith(".wav"))
+            {
+                mDesc = new SoundDescriptor(destPath);
+            }
+
+            
+            FileManager.Instance.addFileDescriptor(mDesc);
+            return mDesc;
 
         }
 
-        public void removeMedia(string name)
-        {
-            File.Delete(PathMedia + Path.DirectorySeparatorChar + name);
-            MediaRemoved(this, new EventArgs());
-        }
-
+   
 
         public string[] getMedia(string extension)
         {

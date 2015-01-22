@@ -57,11 +57,16 @@ namespace WhiskeyEditor.Backend
 
         public TypeDescriptor(string name)
             : base(ProjectManager.Instance.ActiveProject.PathSrcObjects, name)
-        {
-            
+        {   
             addInitialProps();
             FileManager.Instance.addFileDescriptor(this);
+        }
 
+        public TypeDescriptor(string basePath, string name)
+            : base(basePath, name)
+        {
+            addInitialProps();
+            FileManager.Instance.addFileDescriptor(this);
         }
 
         
@@ -79,6 +84,7 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
+            addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));
         }
 
 

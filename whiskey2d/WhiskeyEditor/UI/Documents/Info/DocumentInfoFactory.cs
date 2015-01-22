@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhiskeyEditor.Backend;
+using WhiskeyEditor.compile_types;
 
 namespace WhiskeyEditor.UI.Documents.Info
 {
@@ -13,7 +14,13 @@ namespace WhiskeyEditor.UI.Documents.Info
         public DocumentContentInfo generateDocumentContentInfo(Descriptor descriptor)
         {
             DocumentContentInfo info = null;
-            if (descriptor is TypeDescriptor)
+
+
+            if (descriptor is CoreDescriptor)
+            {
+                info = new CoreDocumentInfo((CoreDescriptor)descriptor);
+            }
+            else if (descriptor is TypeDescriptor)
             {
                 info = new TypeDocumentInfo((TypeDescriptor)descriptor);
             }
@@ -33,7 +40,14 @@ namespace WhiskeyEditor.UI.Documents.Info
             {
                 info = new ProjectSettingsDocumentInfo((Project)descriptor);
             }
-
+            else if (descriptor is ArtDescriptor)
+            {
+                info = new ArtDocumentInfo((ArtDescriptor)descriptor);
+            }
+            else if (descriptor is SoundDescriptor)
+            {
+                info = new SoundDocumentInfo((SoundDescriptor)descriptor);
+            }
 
             return info;
         }

@@ -110,17 +110,29 @@ namespace WhiskeyEditor.Backend.Managers
 
         public void addFileDescriptor(FileDescriptor fileDesc)
         {
+
+            string filePathKey = UIManager.Instance.normalizePath(fileDesc.FilePath);
+
+            if (!fileDescMap.ContainsKey(filePathKey))
+            {
+                fileDescMap.Add(filePathKey, fileDesc);
+
+            }
+            else fileDescMap[filePathKey] = fileDesc;
+
             fileDescs.Add(fileDesc);
-            fileDescMap.Add(UIManager.Instance.normalizePath( fileDesc.FilePath ), fileDesc);
-            
-            
+
+           
+
             fileDesc.ensureFileExists();
             ProjectManager.Instance.ActiveProject.saveGameData();
 
 
 
             fireFileAdded(new FileEventArgs(fileDesc));
-          //  ProjectManager.Instance.ActiveProject.loadGameData();
+
+
+            //  ProjectManager.Instance.ActiveProject.loadGameData();
         }
 
         public void removeFileDescriptor(FileDescriptor fileDesc)
@@ -207,7 +219,16 @@ namespace WhiskeyEditor.Backend.Managers
             GameData data = new GameData();
             FileDescriptor[] files = new FileDescriptor[fileDescs.Count];
             fileDescs.CopyTo(files);
-            data.Files = files.ToList();
+
+            foreach (FileDescriptor file in files)
+            {
+                if (data.Files.Find(f => f.FilePath.Equals(file.FilePath)) == null)
+                    data.Files.Add(file);
+            }
+           // data.Files = files.ToList();
+
+
+
             return data;
         }
 
@@ -227,9 +248,24 @@ namespace WhiskeyEditor.Backend.Managers
             ScriptManager.Instance.clear();
             data.Files.CopyTo(files);
             // = objs.ToList();
+
+            ////add core types
+            //foreach (CoreTypeDescriptor c in WhiskeyEditor.compile_types.CoreTypes.typeFileNameMap.Values)
+            //{
+            //    addFileDescriptor(c);
+            //}
+            ////add core scripts
+            //foreach (CoreScriptDescriptor c in WhiskeyEditor.compile_types.CoreTypes.scriptFileNameMap.Values)
+            //{
+            //    addFileDescriptor(c);
+            //}
+
             List<LevelDescriptor> levels = new List<LevelDescriptor>();
             foreach (FileDescriptor f in files)
             {
+                //if (f is CoreScriptDescriptor || f is CoreTypeDescriptor)
+                //    continue; //we don't care about core descriptors
+                
                 addFileDescriptor(f);
 
                 if (f is LevelDescriptor)
@@ -245,6 +281,7 @@ namespace WhiskeyEditor.Backend.Managers
                     ScriptManager.Instance.addScript(s);
 
                 }
+
 
             }
             levels.ForEach((l) =>

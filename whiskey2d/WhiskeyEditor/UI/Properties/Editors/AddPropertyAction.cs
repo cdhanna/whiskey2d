@@ -34,6 +34,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
             {
                 editor.PropertyList = desc.getPropertySet();
                 desc.ensureFileExists();
+
+                
                 InstanceManager.Instance.syncTypeToInstances(desc);
             }));
         }

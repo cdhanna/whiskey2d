@@ -105,6 +105,8 @@ namespace WhiskeyEditor.Backend
 
             try
             {
+                string corePath = WhiskeyEditor.compile_types.CoreTypes.corePathTypes;
+                   
                 Project proj = ProjectManager.Instance.openProject(Settings.CurrentProject);
                 ProjectManager.Instance.ActiveProject = proj;
             }

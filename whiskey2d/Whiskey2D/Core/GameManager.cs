@@ -350,7 +350,7 @@ namespace Whiskey2D.Core
         public virtual void Draw(GameTime gameTime)
         {
             
-           GraphicsDevice.Clear(ActiveLevel.BackgroundColor);
+           //GraphicsDevice.Clear(ActiveLevel.BackgroundColor);
 
             this.RenderManager.render();
             this.RenderManager.renderHud();

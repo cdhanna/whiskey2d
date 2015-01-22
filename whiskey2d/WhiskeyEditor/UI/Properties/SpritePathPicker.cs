@@ -78,7 +78,8 @@ namespace WhiskeyEditor.UI.Properties
                 if (dr == DialogResult.OK)
                 {
                     result = fileDialog.FileName;
-                    result = ProjectManager.Instance.ActiveProject.addMedia(result);
+                    MediaDescriptor aDesc = ProjectManager.Instance.ActiveProject.addMedia(result);
+                    result = aDesc.Name;
                 }
                 service.CloseDropDown();
             }

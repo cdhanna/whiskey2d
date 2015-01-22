@@ -147,6 +147,8 @@ namespace WhiskeyEditor.UI
 
         public string normalizePath(string path)
         {
+            while (path.Contains("\\\\"))
+                path.Replace("\\\\", "\\");
             //path = Path.GetFullPath(path).ToLower();
             //if (path.Contains(Path.DirectorySeparatorChar))
             //{

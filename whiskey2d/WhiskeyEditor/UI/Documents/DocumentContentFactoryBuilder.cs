@@ -26,27 +26,11 @@ namespace WhiskeyEditor.UI.Documents
         {
             IDocumentContentFactory factory = null;
 
-            if (info is TypeDocumentInfo)
+            if (info != null)
             {
-                factory = new TypeContentFactory(DocumentView, (TypeDocumentInfo) info);
-                
+                factory = info.generateContentFactory(DocumentView);
             }
-            else if (info is ScriptDocumentInfo)
-            {
-                factory = new ScriptContentFactory(DocumentView, (ScriptDocumentInfo) info);
-            }
-            else if (info is LevelDocumentInfo)
-            {
-                factory = new LevelContentFactory(DocumentView, (LevelDocumentInfo)info);
-            }
-            else if (info is InstanceDocumentInfo)
-            {
-                factory = new InstanceContentFactory(DocumentView, (InstanceDocumentInfo)info);
-            }
-            else if (info is ProjectSettingsDocumentInfo)
-            {
-                factory = new ProjectContentFactory(DocumentView, (ProjectSettingsDocumentInfo)info);
-            }
+
             return factory;
         }
 

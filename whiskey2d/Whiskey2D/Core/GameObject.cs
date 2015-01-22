@@ -14,48 +14,106 @@ namespace Whiskey2D.Core
     {
         private static int idCounter = 0;
 
+        private Sprite sprite;
+        private int id;
+        private bool active;
+
+        /// <summary>
+        /// The list of Scripts that the GameObject is currently running
+        /// </summary>
+        protected List<Script> scripts;
+
+        /// <summary>
+        /// The ObjectManager that this GameObject belongs to
+        /// </summary>
+        protected ObjectManager objectManager;
+        
+        /// <summary>
+        /// The position of the GameObject
+        /// </summary>
+        public Vector Position;
+
+
+        /// <summary>
+        /// Creates a GameObject. This GameObject is created with an ObjectManager to store it in.
+        /// Every GameObject must belong to an ObjectManager. If no ObjectManager is given, then 
+        /// the GameManager's default ObjectManager will be used.
+        /// It is important to remember that Levels are ObjectManagers, and can be passed in to the 
+        /// GameObject constructor.
+        /// </summary>
+        /// <param name="objMan">An ObjectManager to store the GameObject in.</param>
         public GameObject(ObjectManager objMan)
         {
+            scripts = new List<Script>();
+
+            ID = idCounter++;
             Position = Vector.Zero;
             Sprite = new Sprite();
-            Sprite.Scale *= 50;
-            ID = idCounter++;
-            scripts = new List<Script>();
-            //objectScriptTable = new Dictionary<object, ScriptBundle<GameObject>>();
+
             active = true;
             this.initProperties();
             this.addInitialScripts();
 
+            if (objMan == null)
+            {
+                objMan = GameManager.Objects;
+            }
             objMan.addObject(this);
             objectManager = objMan;
             
         }
 
         /// <summary>
-        /// Create a new Game Object
+        /// Creates a GameObject. This GameObject is created with an ObjectManager to store it in.
+        /// Every GameObject must belong to an ObjectManager. If no ObjectManager is given, then 
+        /// the GameManager's default ObjectManager will be used.
+        /// It is important to remember that Levels are ObjectManagers, and can be passed in to the 
+        /// GameObject constructor.
         /// </summary>
         public GameObject() : this(GameManager.Objects)
         {
+            //do nothing, as subclasses will fill in implementation
+            /*
+                scripts = new List<Script>();
+                ID = idCounter++;
+                Position = Vector.Zero;
+                Sprite = new Sprite();
+
+                active = true;
+                this.initProperties();
+                this.addInitialScripts();
+             */
         }
 
+        /// <summary>
+        /// The initializeObject method is called by Whiskey immediately after the object is instantiated. 
+        /// Subclasses of GameObject should use this function to specify details
+        /// </summary>
         public virtual void initializeObject()
         {
 
         }
 
-        protected ObjectManager objectManager;
-        private Sprite sprite;
-        private int id;
-        protected List<Script> scripts;
-        private bool active;
-
-        public Vector Position;
-
+        /// <summary>
+        /// Gets or Sets the x-position of the GameObject. This property automatically reads into the Position's X coordiate.
+        /// </summary>
         public virtual float X { get { return Position.X; } set { Position = new Vector(value, Position.Y); } }
+        
+        /// <summary>
+        /// Gets or Sets the y-position of the GameObject. This property automatically reads into the Position's y coordinate.
+        /// </summary>
         public virtual float Y { get { return Position.Y; } set { Position = new Vector(Position.X, value); } }
 
-
+        /// <summary>
+        /// Gets or Sets the unique name of the GameObject. The name must be unique accross all GameObjects, reglardless of type.
+        /// </summary>
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the GameObject is Active.
+        /// If the GameObject is Active, then it is drawn and updated by the Whiskey engine, otherwise, 
+        /// it will lay dorment until Activated.
+        /// </summary>
         public virtual Boolean Active
         {
             get
@@ -68,11 +126,14 @@ namespace Whiskey2D.Core
             }
         }
 
-       
+        /// <summary>
+        /// Gets or Sets The Debug state of the GameObject. if The GameObject is in Debug, then it is only 
+        /// not drawn normally.
+        /// </summary>
+        public virtual Boolean IsDebug { get; set; }
 
         /// <summary>
-        /// The Sprite of the Game Object. By default, this will start as null, and the GameObject will have no visuals.
-        /// To give the Game Object visuals, set this to a new Sprite()
+        /// Gets or Sets the Sprite of the GameObject. 
         /// </summary>
         public virtual Sprite Sprite
         {
@@ -87,7 +148,7 @@ namespace Whiskey2D.Core
         }
 
         /// <summary>
-        /// The unique ID of the GameObject
+        /// Get or Set the unique ID of the GameObject
         /// </summary>
         [System.ComponentModel.ReadOnly(true)]
         public int ID
@@ -104,7 +165,8 @@ namespace Whiskey2D.Core
 
 
         /// <summary>
-        /// The bounds of the GameObject. The Bounds are computed from the Position and Sprite of the GameObject. 
+        /// Get the bounds of the GameObject. The Bounds are computed from the Position 
+        /// and Sprite of the GameObject. 
         /// If there is no Sprite, do not call this method.
         /// </summary>
         public Bounds Bounds
@@ -120,80 +182,57 @@ namespace Whiskey2D.Core
         }
 
         /// <summary>
-        /// Initializes the GameObject
+        /// Initializes the GameObject. This will call onStart() on any Scripts attached to the GameObject.
         /// </summary>
         public void init()
         {
             getActiveScripts().ForEach(s => s.onStart());
-            
         }
 
         /// <summary>
         /// Closes out the GameObject, and removes it from the ObjectManager
+        /// This will call onClose() on any Script attached to the GameObject.
         /// </summary>
         public void close()
         {
             objectManager.removeObject(this);
             getActiveScripts().ForEach(s => s.onClose());
-           
         }
 
-        public List<Script> getScripts()
-        {
-            return this.scripts;
-        }
-
-        //public List<ScriptBundle<GameObject>> getScriptBundles()
-        //{
-        //    return this.scripts;
-        //}
-
-        //public void removeScript(ScriptBundle<GameObject> script)
-        //{
-        //    this.scripts.Remove(script);
-        //    this.objectScriptTable.Remove(script);
-        //}
-
-        //public void removeScript(object script)
-        //{
-        //    if (!this.objectScriptTable.ContainsKey(script))
-        //    {
-        //        return;
-        //    }
-        //    ScriptBundle<GameObject> converted = this.objectScriptTable[script];
-        //    this.scripts.Remove(converted);
-        //    this.objectScriptTable.Remove(script);
-        //}
-
+        /// <summary>
+        /// Remove all Scripts from the GameObject
+        /// </summary>
         public virtual void clearScripts()
         {
             this.scripts.Clear();
-           // this.objectScriptTable.Clear();
         }
 
-        //public void addScript(object script)
-        //{
-
-        //    script.GetType().GetProperty(ScriptBundle<GameObject>.CODE_GOB).GetSetMethod().Invoke(script, new object[] { this });
-
-        //    ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
-        //    this.scripts.Add(converted);
-        //    this.objectScriptTable.Add(script, converted);
-        //}
-
+        /// <summary>
+        /// Remove a script from the GameObject.
+        /// Calling this function WILL NOT call onClose() on the given Script
+        /// </summary>
+        /// <typeparam name="G">The type of this GameObject</typeparam>
+        /// <param name="script">A Script that is currently attached to the GameObject</param>
         public void removeScript<G>(Script<G> script) where G : GameObject
         {
             this.scripts.Remove(script);
-            
-            //removeScript((object)script);
         }
 
+        /// <summary>
+        /// Remove a script from the GameObject.
+        /// Calling this function will NOT call onClose() on the given Script
+        /// </summary>
+        /// <param name="script">A Script that is currently attached to the GameObject</param>
         public void removeScript(Script script)
         {
             this.scripts.Remove(script);
-            
         }
 
+        /// <summary>
+        /// Add a Script
+        /// </summary>
+        /// <typeparam name="S"></typeparam>
+        /// <param name="script"></param>
         public void addScript<S>(S script) where S : Script
         {
             if (script.GobType.Equals(typeof(GameObject)) || 
@@ -205,16 +244,14 @@ namespace Whiskey2D.Core
                 script.Gob = this;
                 this.scripts.Add(script);
             }
-            
-
         }
+
         /// <summary>
         /// Add a script to the GameObject's behaviour
         /// </summary>
         /// <param name="script"></param>
         public void addScript<G>(Script<G> script) where G : GameObject
         {
-            //if (this.GetType() != typeof(G)) //runtime exception
             if (!this.GetType().IsSubclassOf(typeof(G)) && (this.GetType() != typeof(G)))
             {
                 throw new WhiskeyRunTimeException("Cannot add a script of type " + typeof(G) + " to a game object of type " + this.GetType());
@@ -222,14 +259,10 @@ namespace Whiskey2D.Core
 
             script.Gob = (G)this;
             this.scripts.Add(script);
-            //ScriptBundle<GameObject> converted = ScriptBundle<GameObject>.createFrom(script);
-
-            //this.objectScriptTable.Add(script, converted);
-            //this.scripts.Add(converted);
         }
 
         /// <summary>
-        /// Update all of the GameObject's scripts
+        /// Update all of the GameObject's scripts, as well as the GameObject's Sprite
         /// </summary>
         public void update()
         {
@@ -237,6 +270,10 @@ namespace Whiskey2D.Core
             sprite.update();
         }
 
+        /// <summary>
+        /// Get the set of all Scripts that are currently set to Active. 
+        /// </summary>
+        /// <returns></returns>
         protected List<Script> getActiveScripts()
         {
             return scripts.FindAll(s => s.Active);
@@ -247,27 +284,34 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <returns>A list of scripts to be run by the GameObject, or null if no scripts should be run</returns>
         // protected abstract List<Script> getInitialScripts();
-
         protected abstract void addInitialScripts();
 
-
+        //Used by subclasses to setup properties of the GameObject
         protected virtual void initProperties()
         {
+
         }
 
-
+        /// <summary>
+        /// Get the typename of the GameObject
+        /// </summary>
+        /// <returns>Returns the typename of the GameObject</returns>
         public virtual string getTypeName()
         {
             return GetType().Name;
         }
 
+        /// <summary>
+        /// Every GameObject has a set of Bounds that can be used to collect collision info.
+        /// This function returns a list of collision information objects with a particular other kind of GameObject
+        /// 
+        /// An example way to call this function looks like
+        /// List\GameObject, G/ collInfos = Gob.currentCollisions \G/ ();
+        /// </summary>
+        /// <typeparam name="G">The kind of GameObject to check for collisions with</typeparam>
+        /// <returns>The list of COllisionInfo</returns>
         public List<CollisionInfo<GameObject, G>> currentCollisions<G>() where G : GameObject
         {
-           // List<G> collisionObjects = new List<G>();
-
-
-            
-
             List<CollisionInfo<GameObject, G>> collisionInfos = new List<CollisionInfo<GameObject, G>>();
 
             List<G> all = objectManager.getAllObjectsOfType<G>();
@@ -281,10 +325,6 @@ namespace Whiskey2D.Core
                         collisionInfos.Add(new CollisionInfo<GameObject, G>(this, gob, normal));
                     }
                 }
-                //if (gob.Bounds.boundWithin(Bounds))
-                //{
-                //    collisionObjects.Add(gob);
-                //}
             });
             return collisionInfos;
         }

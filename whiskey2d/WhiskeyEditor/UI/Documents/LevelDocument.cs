@@ -11,6 +11,8 @@ using WhiskeyEditor.Backend.Managers;
 using WhiskeyEditor.MonoHelp;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Documents.Actions;
+using WhiskeyEditor.compile_types;
+using WhiskeyEditor.compile_types.Types;
 
 namespace WhiskeyEditor.UI.Documents
 {
@@ -117,7 +119,11 @@ namespace WhiskeyEditor.UI.Documents
             {
                 LibraryTreeNode node = (LibraryTreeNode)args.Data.GetData(typeof(LibraryTreeNode));
                 FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
-                if (fDesc is TypeDescriptor)
+                if (fDesc != null && (fDesc is TypeDescriptor || fDesc.GetType().IsSubclassOf(typeof(TypeDescriptor))))
+                {
+                    args.Effect = DragDropEffects.All;
+                }
+                if (fDesc != null && (fDesc is ArtDescriptor))
                 {
                     args.Effect = DragDropEffects.All;
                 }
@@ -129,13 +135,22 @@ namespace WhiskeyEditor.UI.Documents
 
 
             FileDescriptor fDesc = FileManager.Instance.lookUp(node.FilePath);
+            TypeDescriptor tDesc = null;
             if (fDesc is TypeDescriptor)
             {
-                TypeDescriptor tDesc = (TypeDescriptor)fDesc;
+                tDesc = (TypeDescriptor)fDesc;
+            }
+            else if (fDesc is ArtDescriptor)
+            {
+                tDesc = CoreTypes.getType<Simple>();
+            }
 
+
+
+            if (tDesc != null)
+            {
                 InstanceDescriptor inst = new InstanceDescriptor(tDesc, Descriptor.Level);
                 inst.Sprite = new Sprite(WhiskeyControl.Renderer, WhiskeyControl.Resources, inst.Sprite);
-                //inst.Sprite.setImage(WhiskeyControl.Resources.loadImage("ricky_simple"));
                
 
                 //inst.Sprite.Scale *= 50;
@@ -150,7 +165,18 @@ namespace WhiskeyEditor.UI.Documents
                 SelectionManager.Instance.SelectedInstance = inst;
 
                 Dirty = true;
+
+                if (fDesc is ArtDescriptor)
+                {
+                    ArtDescriptor aDesc = (ArtDescriptor) fDesc;
+                    inst.Sprite.ImagePath = aDesc.Name;
+                    inst.Sprite.Scale = Vector.One;
+                }
+
+                Descriptor.Level.updateAll();
+
             }
+
             
 
         }
