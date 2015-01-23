@@ -115,12 +115,19 @@ namespace WhiskeyEditor.Backend.Managers
 
             if (!fileDescMap.ContainsKey(filePathKey))
             {
+                //add
                 fileDescMap.Add(filePathKey, fileDesc);
-
+                fileDescs.Add(fileDesc);
+                fireFileAdded(new FileEventArgs(fileDesc));
             }
-            else fileDescMap[filePathKey] = fileDesc;
-
-            fileDescs.Add(fileDesc);
+            else
+            {
+                //replace
+                fileDescs.Remove(fileDescMap[filePathKey]);
+                fileDescs.Add(fileDesc);
+                fileDescMap[filePathKey] = fileDesc;
+            }
+            
 
            
 
@@ -129,7 +136,7 @@ namespace WhiskeyEditor.Backend.Managers
 
 
 
-            fireFileAdded(new FileEventArgs(fileDesc));
+            
 
 
             //  ProjectManager.Instance.ActiveProject.loadGameData();

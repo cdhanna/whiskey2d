@@ -74,11 +74,11 @@ namespace WhiskeyEditor.Backend
             get { return secure; }
         }
 
-        public Guid Id
-        {
-            get { return id; }
+        //public Guid Id
+        //{
+        //    get { return id; }
             
-        }
+        //}
 
         public string Name
         {

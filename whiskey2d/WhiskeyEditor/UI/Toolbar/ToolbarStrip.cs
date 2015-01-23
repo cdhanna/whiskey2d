@@ -24,9 +24,9 @@ namespace WhiskeyEditor.UI.Toolbar
     public class ToolBarStrip : ToolStrip
     {
         private CompileAction compileAction;
+        private PlayGameAction playAction;
 
-        private ToolStripButton btnCompile;
-        private ToolStripButton btnSave;
+ 
 
         public event ToolButtonEventHandler ButtonPressed = new ToolButtonEventHandler((s, a) => { });
        
@@ -57,18 +57,18 @@ namespace WhiskeyEditor.UI.Toolbar
            // btnPlay.Image = AssetManager.ICON_PLAY;
 
        
-            btnSave = new ToolStripButton("Save");
-            btnSave.ImageIndex = 0;
+           
 
             compileAction = new CompileAction();
-            btnCompile = compileAction.generateControl<ToolStripButton>();
+            playAction = new PlayGameAction();
+
 
         }
         private void configureControls()
         {
            // btnPlay.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_PLAY)); };
 
-            btnSave.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_SAVE)); };
+            //btnSave.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_SAVE)); };
 
 //            btnCompile.Click += (s, a) => { ButtonPressed(this, new ToolButtonEventArgs(UIManager.COMMAND_COMPILE)); };
 
@@ -77,8 +77,8 @@ namespace WhiskeyEditor.UI.Toolbar
         {
            // Items.Add(btnSave);
 
-            Items.Add(btnCompile);
-
+            Items.Add(compileAction.generateControl<ToolStripButton>());
+            Items.Add(playAction.generateControl<ToolStripButton>());
           
 
 

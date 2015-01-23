@@ -41,8 +41,11 @@ namespace WhiskeyEditor.Backend
         {
             Level = new EditorLevel(name);
             Color = Level.BackgroundColor;
-           
-           
+
+            if (ProjectManager.Instance.ActiveProject.GameStartScene.Equals("default"))
+            {
+                ProjectManager.Instance.ActiveProject.GameStartScene = name;
+            }
 
             FileManager.Instance.addFileDescriptor(this);
         }

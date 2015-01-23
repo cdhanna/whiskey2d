@@ -64,7 +64,9 @@ namespace WhiskeyEditor.Backend.Managers
                 FileManager.Instance.refreshFileWatch();
                 InstanceManager.Instance.clearLevels();
                 Settings.CurrentProject = active.PathBase;
+
                 active.loadGameData();
+                WhiskeyEditor.compile_types.CoreTypes.addCoreTypesToFileManager();
                 ProjectChanged(this, new ProjectChangedEventArgs(old, active));
             }
         }

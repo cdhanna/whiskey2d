@@ -380,6 +380,38 @@ namespace WhiskeyEditor.Backend
             GameStartScene = origStartScene;
         }
 
+
+        public void testGame(ProgressNotifier pn)
+        {
+           
+            pn.Progress = .2f;
+
+            cleanProject();
+            pn.Progress = .3f;
+
+            CompileManager.Instance.compile();
+            DirectoryCopy(PathLib, PathBuildLib, true);
+            DirectoryCopy(PathMedia, PathBuildMedia, true);
+
+            InstanceManager.Instance.Levels.ForEach(l => InstanceManager.Instance.convertToGobs(FileGameDataLibrary, l));
+
+
+            pn.Progress = .6f;
+
+            pn.Progress = .7f;
+
+            DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+            DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
+            File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
+            File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+            createGameSettings();
+
+            pn.Progress = .8f;
+            runGame();
+            pn.Progress = 1;
+
+        }
+
         /// <summary>
         /// Clean the project
         /// Then build the project into the build directory

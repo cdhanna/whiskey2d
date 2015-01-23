@@ -156,7 +156,8 @@ namespace WhiskeyEditor.Backend
 
             foreach (PropertyDescriptor typeProperty in TypeDescriptorInFileManager.getPropertySet())
             {
-                List<PropertyDescriptor> matches = propDescs.Where(s => s.Id.Equals(typeProperty.Id)).ToList();
+                //List<PropertyDescriptor> matches = propDescs.Where(s => s.Id.Equals(typeProperty.Id)).ToList(); //too strict.
+                List<PropertyDescriptor> matches = propDescs.Where(s => s.Name.Equals(typeProperty.Name) && s.TypeVal.TypeName.Equals(typeProperty.TypeVal.TypeName)).ToList();
 
                 if (matches.Count == 0)
                 {

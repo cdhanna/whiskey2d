@@ -51,6 +51,7 @@ namespace WhiskeyEditor.UI.Menu
                 scriptBox.Items.Clear();
                 if (scriptBox.Visible)
                 {
+                    //scriptBox.Items.Add("GameObject");
                     FileManager.Instance.FileDescriptors.Where(f => f is TypeDescriptor).ToList().ForEach((f) =>
                     {
                         scriptBox.Items.Add(f.Name);
@@ -113,7 +114,7 @@ namespace WhiskeyEditor.UI.Menu
             
             scriptBox.Visible = true;
             scriptBox.Items.Clear();
-            
+            //scriptBox.Items.Add("GameObject");
             FileManager.Instance.FileDescriptors.Where(f => f is TypeDescriptor).ToList().ForEach((f) =>
             {
                 scriptBox.Items.Add(f.Name);

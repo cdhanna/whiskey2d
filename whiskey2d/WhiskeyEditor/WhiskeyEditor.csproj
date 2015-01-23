@@ -95,9 +95,10 @@
     <Compile Include="Backend\Actions\Impl\NewScriptAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewSoundAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewTypeAction.cs" />
+    <Compile Include="Backend\Actions\Impl\PlayGameAction.cs" />
     <Compile Include="Backend\Actions\WhiskeyAction.cs" />
     <Compile Include="Backend\Actions\Impl\CompileAction.cs" />
-    <Compile Include="Backend\Actions\Impl\PlayAction.cs" />
+    <Compile Include="Backend\Actions\Impl\PlayLevelAction.cs" />
     <Compile Include="Backend\ArtDescriptor.cs" />
     <Compile Include="Backend\CoreScriptDescriptor.cs" />
     <Compile Include="Backend\CoreTypeDescriptor.cs" />
