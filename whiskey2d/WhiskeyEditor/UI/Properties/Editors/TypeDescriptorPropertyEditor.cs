@@ -123,6 +123,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
         private void onDropDownOpening(object sender, EventArgs args)
         {
+            
             dropDownBtn.DropDownItems.Clear();
             remPropertyActions.Clear();
             foreach (PropertyDescriptor prop in Descriptor.getPropertySet())
@@ -134,6 +135,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
                     dropDownBtn.DropDownItems.Add(rem.generateControl<ToolStripButton>());
                 }
             }
+            dropDownBtn.DropDown.AutoSize = true;
             //dropDownBtn.DropDown.Width = 300;
            // dropDownBtn.DropDown.
         }
