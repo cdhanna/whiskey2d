@@ -73,9 +73,6 @@
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\..\..\..\opentk-code-3127-trunk\Binaries\OpenTK\Debug\OpenTK.GLControl.dll</HintPath>
     </Reference>
-    <Reference Include="SmallMVC">
-      <HintPath>..\..\..\..\WinformsMVC\WinformsMVC\bin\Debug\SmallMVC.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />

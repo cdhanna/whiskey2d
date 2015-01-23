@@ -76,19 +76,25 @@ namespace Whiskey2D.Core.Managers.Impl
                     didntDie.Add(gob);
                 }
             }
+
+
+            List<GameObject> gobsThatWereNew = new List<GameObject>();
             foreach (GameObject gob in newObjects)
             {
                 gameObjects.Add(gob);
-                gob.init();
+                gobsThatWereNew.Add(gob);
+                
             }
+            newObjects.Clear();
+
+            gobsThatWereNew.ForEach(g => g.init());
 
 
             deadObjects.Clear();
             deadObjects.AddRange(didntDie);
             didntDie.Clear();
 
-            newObjects.Clear();
-
+            
         }
 
         /// <summary>
