@@ -90,6 +90,7 @@
     <Compile Include="Backend\Actions\Impl\DeleteFileAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewArtAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewFileAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewFolderAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewLevelAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewProjectAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewScriptAction.cs" />
@@ -136,7 +137,8 @@
     <Compile Include="Backend\WhiskeyException.cs" />
     <Compile Include="compile-types\CoreDescriptor.cs" />
     <Compile Include="compile-types\Scripts\TriggerActivate.cs" />
-    <Compile Include="compile-types\Types\Simple.cs" />
+    <Compile Include="compile-types\Types\DebugObject.cs" />
+    <Compile Include="compile-types\Types\SimpleObject.cs" />
     <Compile Include="compile-types\CoreTypes.cs" />
     <Compile Include="compile-types\Types\TriggerZone.cs" />
     <Compile Include="EditorObjects\CameraMovementScript.cs" />
@@ -370,6 +372,9 @@
     <Compile Include="UI\UIManager.cs" />
     <Content Include="compile-media\BloomCombine.fx" />
     <Content Include="compile-media\BloomExtract.fx" />
+    <Content Include="compile-media\debug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="compile-media\GaussianBlur.fx" />
     <Content Include="compile-media\selection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

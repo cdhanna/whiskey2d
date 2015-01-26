@@ -29,6 +29,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
             string uniqueName = "Unnamed" + desc.getPropertySet().Count; //TODO make a better unique name generator
 
             PropertyDescriptor prop = new PropertyDescriptor(uniqueName, new RealType(typeof(int), 0));
+            prop.Category = desc.ClassName + " Properties";
             desc.addPropertyDescriptor(prop);
             editor.Invoke(new NoArgFunction(() =>
             {

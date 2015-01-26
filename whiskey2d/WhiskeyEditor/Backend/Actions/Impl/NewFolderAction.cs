@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WhiskeyEditor.UI.Assets;
+
 namespace WhiskeyEditor.Backend.Actions.Impl
 {
-    class NewLevelAction : NewFileAction
+    class NewFolderAction: NewFileAction
     {
-        public NewLevelAction()
-            : base("New Level", AssetManager.ICON_FILE_LEVEL)
+        public NewFolderAction()
+            : base("Add Folder", WhiskeyEditor.UI.Assets.AssetManager.ICON_FLDR)
         {
 
         }
 
         protected override void beforeShow(UI.Menu.NewFileForm form)
         {
-            form.setForLevel(Path);
+            form.setForFolder(Path);
         }
-
     }
 }

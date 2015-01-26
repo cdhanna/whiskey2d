@@ -22,7 +22,7 @@ namespace WhiskeyRunner
         GameManager gameMan;
         GraphicsDeviceManager graphics;
 
-
+        bool started = false;
 
         public MonoBaseGame() : base()
         {
@@ -90,8 +90,11 @@ namespace WhiskeyRunner
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             
             gameMan.Update(gameTime);
+            
+            
             base.Update(gameTime);
 
         }

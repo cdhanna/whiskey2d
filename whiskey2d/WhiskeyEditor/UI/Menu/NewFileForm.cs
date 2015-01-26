@@ -19,6 +19,7 @@ namespace WhiskeyEditor.UI.Menu
         public const string NEW_TYPE = "Type";
         public const string NEW_SCRIPT = "Script";
         public const string NEW_LEVEL = "Level";
+        public const string NEW_FOLDER = "Folder";
 
         public DialogResult DialogResult { get; private set; }
         public String SelectedType { get { return typeBox.SelectedItem.ToString(); } }
@@ -41,6 +42,7 @@ namespace WhiskeyEditor.UI.Menu
             typeBox.Items.Add(NEW_SCRIPT);
             typeBox.Items.Add(NEW_TYPE);
             typeBox.Items.Add(NEW_LEVEL);
+            typeBox.Items.Add(NEW_FOLDER);
             //typeBox.Items.Add(NEW_CODE);
             typeBox.SelectedItem = NEW_TYPE;
 
@@ -100,16 +102,18 @@ namespace WhiskeyEditor.UI.Menu
                 okayBtn.Enabled &= scriptBox.SelectedItem != null && scriptBox.SelectedItem.ToString().Length > 0;
         }
 
-        public void setForType()
+        public void setForType(string path)
         {
+            setPath(path);
             typeBox.SelectedItem = NewFileForm.NEW_TYPE;
             scriptBox.Visible = false;
         }
-        
 
 
-        public void setForScript()
+
+        public void setForScript(string path)
         {
+            setPath(path);
             typeBox.SelectedItem = NewFileForm.NEW_SCRIPT;
             
             scriptBox.Visible = true;
@@ -120,9 +124,21 @@ namespace WhiskeyEditor.UI.Menu
                 scriptBox.Items.Add(f.Name);
             });
         }
-        public void setForLevel()
+        public void setForLevel(string path)
         {
+            setPath(path);
             typeBox.SelectedItem = NewFileForm.NEW_LEVEL;
+        }
+
+        public void setForFolder(string path)
+        {
+            setPath(path);
+            typeBox.SelectedItem = NewFileForm.NEW_FOLDER;
+        }
+
+        public void setPath(string path)
+        {
+            pathBox.Text = path;
         }
 
     }

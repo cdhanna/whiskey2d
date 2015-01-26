@@ -39,6 +39,8 @@
             this.scriptLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.typeLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pathBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -51,12 +53,12 @@
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 128);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.66666F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 150);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -64,16 +66,16 @@
             this.panel1.Controls.Add(this.okayBtn);
             this.panel1.Controls.Add(this.cancelBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(2, 95);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Location = new System.Drawing.Point(2, 116);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(190, 31);
+            this.panel1.Size = new System.Drawing.Size(190, 32);
             this.panel1.TabIndex = 0;
             // 
             // okayBtn
             // 
             this.okayBtn.Location = new System.Drawing.Point(70, 2);
-            this.okayBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.okayBtn.Margin = new System.Windows.Forms.Padding(2);
             this.okayBtn.Name = "okayBtn";
             this.okayBtn.Size = new System.Drawing.Size(56, 19);
             this.okayBtn.TabIndex = 1;
@@ -84,7 +86,7 @@
             // 
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelBtn.Location = new System.Drawing.Point(131, 2);
-            this.cancelBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cancelBtn.Margin = new System.Windows.Forms.Padding(2);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(56, 19);
             this.cancelBtn.TabIndex = 0;
@@ -93,6 +95,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.pathBox);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.nameBox);
             this.panel2.Controls.Add(this.scriptBox);
             this.panel2.Controls.Add(this.typeBox);
@@ -101,15 +105,15 @@
             this.panel2.Controls.Add(this.typeLabel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(2, 2);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(190, 89);
+            this.panel2.Size = new System.Drawing.Size(190, 110);
             this.panel2.TabIndex = 1;
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(54, 29);
-            this.nameBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nameBox.Location = new System.Drawing.Point(53, 59);
+            this.nameBox.Margin = new System.Windows.Forms.Padding(2);
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(134, 20);
             this.nameBox.TabIndex = 5;
@@ -118,8 +122,8 @@
             // 
             this.scriptBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.scriptBox.FormattingEnabled = true;
-            this.scriptBox.Location = new System.Drawing.Point(54, 52);
-            this.scriptBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.scriptBox.Location = new System.Drawing.Point(53, 82);
+            this.scriptBox.Margin = new System.Windows.Forms.Padding(2);
             this.scriptBox.Name = "scriptBox";
             this.scriptBox.Size = new System.Drawing.Size(134, 21);
             this.scriptBox.TabIndex = 4;
@@ -128,8 +132,8 @@
             // 
             this.typeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.typeBox.FormattingEnabled = true;
-            this.typeBox.Location = new System.Drawing.Point(54, 6);
-            this.typeBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.typeBox.Location = new System.Drawing.Point(53, 36);
+            this.typeBox.Margin = new System.Windows.Forms.Padding(2);
             this.typeBox.Name = "typeBox";
             this.typeBox.Size = new System.Drawing.Size(134, 21);
             this.typeBox.TabIndex = 3;
@@ -137,32 +141,51 @@
             // scriptLabel
             // 
             this.scriptLabel.AutoSize = true;
-            this.scriptLabel.Location = new System.Drawing.Point(9, 54);
+            this.scriptLabel.Location = new System.Drawing.Point(8, 84);
             this.scriptLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.scriptLabel.Name = "scriptLabel";
-            this.scriptLabel.Size = new System.Drawing.Size(25, 15);
+            this.scriptLabel.Size = new System.Drawing.Size(22, 13);
             this.scriptLabel.TabIndex = 2;
             this.scriptLabel.Text = "For";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(9, 32);
+            this.nameLabel.Location = new System.Drawing.Point(8, 62);
             this.nameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(41, 15);
+            this.nameLabel.Size = new System.Drawing.Size(35, 13);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "Name";
             // 
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(9, 8);
+            this.typeLabel.Location = new System.Drawing.Point(8, 38);
             this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(33, 15);
+            this.typeLabel.Size = new System.Drawing.Size(31, 13);
             this.typeLabel.TabIndex = 0;
             this.typeLabel.Text = "Type";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Path";
+            // 
+            // pathBox
+            // 
+            this.pathBox.Location = new System.Drawing.Point(53, 7);
+            this.pathBox.Margin = new System.Windows.Forms.Padding(2);
+            this.pathBox.Name = "pathBox";
+            this.pathBox.ReadOnly = true;
+            this.pathBox.Size = new System.Drawing.Size(134, 20);
+            this.pathBox.TabIndex = 7;
             // 
             // NewFileForm
             // 
@@ -170,10 +193,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
-            this.ClientSize = new System.Drawing.Size(202, 130);
+            this.ClientSize = new System.Drawing.Size(202, 154);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "NewFileForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -196,5 +219,7 @@
         private System.Windows.Forms.Label scriptLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label typeLabel;
+        private System.Windows.Forms.TextBox pathBox;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -39,7 +39,8 @@ namespace WhiskeyEditor.compile_types
             scriptMap = new Dictionary<Type, CoreScriptDescriptor>();
 
             addCoreScript<TriggerActivate>();
-            addCoreType<Simple>();
+            addCoreType<SimpleObject>();
+            addCoreType<DebugObject>();
             addCoreType<TriggerZone>();
 
            

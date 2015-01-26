@@ -386,7 +386,7 @@ namespace WhiskeyEditor.Backend
             inst.IsDebug = IsDebug;
             for (int i = 0 ; i < getPropertySet().Count ; i ++)
             {
-                propDescs[i] = lookUpPropertyDescriptor(propDescs[i].Name).clone();
+                inst.propDescs[i] = lookUpPropertyDescriptor(propDescs[i].Name).clone();
             }
             foreach (string scriptName in getScriptNames())
             {

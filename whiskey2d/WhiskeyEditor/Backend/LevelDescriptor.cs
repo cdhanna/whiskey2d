@@ -36,8 +36,8 @@ namespace WhiskeyEditor.Backend
 
         //public State State { get { return state; } }
 
-        public LevelDescriptor(string name)
-            : base(ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + name + ".state", name)
+        public LevelDescriptor (string basePath, string name)
+            : base(basePath, name)
         {
             Level = new EditorLevel(name);
             Color = Level.BackgroundColor;
@@ -48,6 +48,12 @@ namespace WhiskeyEditor.Backend
             }
 
             FileManager.Instance.addFileDescriptor(this);
+        }
+
+        public LevelDescriptor(string name)
+            : this(ProjectManager.Instance.ActiveProject.PathStates + Path.DirectorySeparatorChar + name + ".state", name)
+        {
+            
         }
 
         //private void addPropertyDescriptor(PropertyDescriptor prop)

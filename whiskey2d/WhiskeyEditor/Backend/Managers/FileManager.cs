@@ -118,6 +118,8 @@ namespace WhiskeyEditor.Backend.Managers
                 //add
                 fileDescMap.Add(filePathKey, fileDesc);
                 fileDescs.Add(fileDesc);
+                fileDesc.ensureFileExists();
+                ProjectManager.Instance.ActiveProject.saveGameData();
                 fireFileAdded(new FileEventArgs(fileDesc));
             }
             else
@@ -126,13 +128,14 @@ namespace WhiskeyEditor.Backend.Managers
                 fileDescs.Remove(fileDescMap[filePathKey]);
                 fileDescs.Add(fileDesc);
                 fileDescMap[filePathKey] = fileDesc;
+                fileDesc.ensureFileExists();
+                ProjectManager.Instance.ActiveProject.saveGameData();
             }
             
 
            
 
-            fileDesc.ensureFileExists();
-            ProjectManager.Instance.ActiveProject.saveGameData();
+            
 
 
 
@@ -158,6 +161,13 @@ namespace WhiskeyEditor.Backend.Managers
             ProjectManager.Instance.ActiveProject.saveGameData();
         }
 
+
+        public void createFolder(string filePath)
+        {
+            string projectPath = ProjectManager.Instance.ActiveProject.PathBase + filePath;
+            Directory.CreateDirectory(projectPath);
+
+        }
 
         /// <summary>
         /// Gets a file descriptor out of the file manager. 

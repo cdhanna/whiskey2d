@@ -41,6 +41,7 @@ namespace WhiskeyEditor.UI.Library
         private NewScriptAction newScriptAction;
         private NewArtAction newArtAction;
         private NewSoundAction newSoundAction;
+        private NewFolderAction newFolderAction;
 
         private DeleteFileAction deleteAction;
 
@@ -219,6 +220,8 @@ namespace WhiskeyEditor.UI.Library
             newScriptAction = new NewScriptAction();
             newArtAction = new NewArtAction();
             newSoundAction = new NewSoundAction();
+            newFolderAction = new NewFolderAction();
+
 
             folderNodeMenu = new ContextMenuStrip();
             folderNodeMenu.Width = 200;
@@ -231,7 +234,8 @@ namespace WhiskeyEditor.UI.Library
             folderNodeMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
             folderNodeMenu.Items.Add( newArtAction.generateControl<ToolStripButton>());
             folderNodeMenu.Items.Add( newSoundAction.generateControl<ToolStripButton>());
-
+            
+            //folderNodeMenu.Items.Add(newFolderAction.generateControl<ToolStripButton>()); //TODO add folder support
 
             deleteAction = new DeleteFileAction(this);
 
@@ -242,6 +246,14 @@ namespace WhiskeyEditor.UI.Library
             //fileNodeMenu.Items.Add(fileNodeLabel);
             fileNodeMenu.Items.Add(deleteAction.generateControl<ToolStripButton>());
 
+        }
+
+        private void setPathOfActions(string path)
+        {
+            newFolderAction.Path = path;
+            newScriptAction.Path = path;
+            newTypeAction.Path = path;
+            newLevelAction.Path = path;
         }
 
         private void configureControls()
@@ -274,6 +286,8 @@ namespace WhiskeyEditor.UI.Library
                     }
                     else
                     {
+                        string path = node.FilePath.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
+                        setPathOfActions(path);
                         folderNodeMenu.Show(this, a.Location, ToolStripDropDownDirection.Right);
                     }
                 }

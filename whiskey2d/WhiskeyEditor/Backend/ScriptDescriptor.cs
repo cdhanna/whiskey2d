@@ -62,13 +62,13 @@ namespace WhiskeyEditor.Backend
 
             writer.WriteLine("\t\tpublic override void onUpdate() ");
             writer.WriteLine("\t\t{");
-            writer.WriteLine("\t\t //This code runs when the GameObject is initialized");
+            writer.WriteLine("\t\t //This code runs when the GameObject is updated");
             writer.WriteLine("\t\t}");
             writer.WriteLine("\t\t");
             
             writer.WriteLine("\t\tpublic override void onClose()  ");
             writer.WriteLine("\t\t{");
-            writer.WriteLine("\t\t //This code runs when the GameObject is initialized");
+            writer.WriteLine("\t\t //This code runs when the GameObject is closed");
             writer.WriteLine("\t\t}");
             writer.WriteLine("\t\t");
         }

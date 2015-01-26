@@ -146,7 +146,7 @@ namespace WhiskeyEditor.UI.Properties
 
                     //set the value of the propertygrid property descriptor, to our model
                     gpd.PropValue = model;
-
+                    gpd.PropCategory = prop.Category;
 
                     //add a listener that will update the propertygrid when the model changes
                     model.Changed += (s, a) =>

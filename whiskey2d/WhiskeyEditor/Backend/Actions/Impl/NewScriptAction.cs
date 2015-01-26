@@ -16,7 +16,7 @@ namespace WhiskeyEditor.Backend.Actions.Impl
 
         protected override void beforeShow(UI.Menu.NewFileForm form)
         {
-            form.setForScript();
+            form.setForScript(Path);
         }
     }
 }

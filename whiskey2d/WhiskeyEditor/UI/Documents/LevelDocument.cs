@@ -142,7 +142,7 @@ namespace WhiskeyEditor.UI.Documents
             }
             else if (fDesc is ArtDescriptor)
             {
-                tDesc = CoreTypes.getType<Simple>();
+                tDesc = CoreTypes.getType<SimpleObject>();
             }
 
 

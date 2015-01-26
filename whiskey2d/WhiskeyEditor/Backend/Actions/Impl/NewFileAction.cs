@@ -7,17 +7,18 @@ using WhiskeyEditor.UI.Menu;
 using WhiskeyEditor.UI.Assets;
 using WhiskeyEditor.Backend.Managers;
 using System.Windows.Forms;
+using System.IO;
 
 namespace WhiskeyEditor.Backend.Actions.Impl
 {
     class NewFileAction : AbstractAction
     {
-        
+        public string Path { get; set; }
 
         public NewFileAction()
             : base("New", AssetManager.ICON_FILE)
         {
-
+            Path = "";
         }
 
         public NewFileAction(string name, System.Drawing.Image image)
@@ -51,6 +52,8 @@ namespace WhiskeyEditor.Backend.Actions.Impl
 
         protected void createFile(String fileName, String fileType, String option)
         {
+            string fullPath = Path + System.IO.Path.DirectorySeparatorChar + fileName;
+
             switch (fileType)
             {
                 case NewFileForm.NEW_TYPE:
@@ -61,6 +64,9 @@ namespace WhiskeyEditor.Backend.Actions.Impl
                     break;
                 case NewFileForm.NEW_LEVEL:
                     FileManager.Instance.createNewLevelDescriptor(fileName);
+                    break;
+                case NewFileForm.NEW_FOLDER:
+                    FileManager.Instance.createFolder(fullPath);
                     break;
                 default:
                     break;

@@ -33,7 +33,7 @@ namespace WhiskeyEditor.Backend
         private TypeVal typeVal;
         private bool secure;
         private bool visible;
-        private Guid id;
+        private string category;
 
         public event PropertyChangedEventHandler TypeValChanged = new PropertyChangedEventHandler((s, a) => { });
         
@@ -43,27 +43,19 @@ namespace WhiskeyEditor.Backend
         {
         }
 
+        
+
         public PropertyDescriptor(bool secure, string name, TypeVal typeVal)
-            : this(secure, name, typeVal, Guid.NewGuid())
+            : this(secure, true, name, typeVal)
         {
         }
 
         public PropertyDescriptor(bool secure, bool visible, string name, TypeVal typeVal)
-            : this(secure, visible, name, typeVal, Guid.NewGuid())
-        {
-        }
-
-        public PropertyDescriptor(bool secure, string name, TypeVal typeVal, Guid id)
-            : this(secure, true, name, typeVal, id)
-        {
-        }
-
-        public PropertyDescriptor(bool secure, bool visible, string name, TypeVal typeVal, Guid id)
         {
             this.name = name;
             this.TypeVal = typeVal;
             this.secure = secure;
-            this.id = id;
+            this.category = "Base Properties";
             this.visible = visible;
         }
 
@@ -107,15 +99,22 @@ namespace WhiskeyEditor.Backend
             }
         }
 
-       
+        public string Category
+        {
+            get { return category != null ? category : "Base Properties"; }
+            set { category = value; }
+        }
 
         public PropertyDescriptor clone()
         {
-            return new PropertyDescriptor(true, true, name, typeVal.clone(), id);
+            // new PropertyDescriptor(true, true, name, typeVal.clone());
+            return clone(true);
         }
         public PropertyDescriptor clone(bool secure)
         {
-            return new PropertyDescriptor(secure, visible, name, typeVal.clone(), id);
+            PropertyDescriptor pd = new PropertyDescriptor(secure, true, name, typeVal.clone());
+            pd.Category = Category;
+            return pd;
         }
 
         public string toCodeDefinition()
