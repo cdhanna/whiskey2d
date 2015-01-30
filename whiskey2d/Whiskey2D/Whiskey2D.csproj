@@ -48,7 +48,10 @@
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\CollisionInfo.cs" />
+    <Compile Include="Core\CollisionUtil.cs" />
     <Compile Include="Core\Color.cs" />
+    <Compile Include="Core\Convex.cs" />
+    <Compile Include="Core\Edge.cs" />
     <Compile Include="Core\GameController.cs" />
     <Compile Include="Core\GameProperties.cs" />
     <Compile Include="Core\Hud\Box.cs" />
@@ -80,15 +83,18 @@
     <Compile Include="Core\Managers\RenderManager.cs" />
     <Compile Include="Core\Managers\ResourceManager.cs" />
     <Compile Include="Core\MonoExtensions.cs" />
+    <Compile Include="Core\PrimitiveBatch.cs" />
     <Compile Include="Core\PropertiesFile.cs" />
     <Compile Include="Core\Rand.cs" />
     <Compile Include="Core\Inputs\RealKeyBoard.cs" />
     <Compile Include="Core\Inputs\ReplayService.cs" />
+    <Compile Include="Core\RenderHints.cs" />
     <Compile Include="Core\ServiceContainer.cs" />
     <Compile Include="Core\SimpleGameObject.cs" />
     <Compile Include="Core\Sound.cs" />
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />
+    <Compile Include="Core\VectorSet.cs" />
     <Compile Include="Core\WhiskeyRunTimeException.cs" />
     <Compile Include="ex2\Gob.cs" />
     <Compile Include="ex2\GobImpl.cs" />
@@ -135,6 +141,7 @@
     <Compile Include="PourGames\TestImpl\Player.cs" />
     <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs" />
     <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs" />
+    <Compile Include="Core\RenderInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Nuclex.Cloning">

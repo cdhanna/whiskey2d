@@ -47,7 +47,7 @@ namespace WhiskeyEditor.EditorObjects
                 {
                     if (!obj.Layer.Locked && obj.Layer.Visible)
                     {
-                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos))
+                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos))
                         {
                             if (obj.Sprite.Depth > highestDepth)
                             {

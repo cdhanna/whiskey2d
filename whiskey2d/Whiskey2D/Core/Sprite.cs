@@ -95,6 +95,8 @@ namespace Whiskey2D.Core
         //    this.image = image;
         //}
 
+        private Convex _convex;
+        public Convex Convex { get { if (_convex == null) buildConvex(); return _convex; } set { _convex = value; } }
 
 
         private string imagePath;
@@ -293,6 +295,11 @@ namespace Whiskey2D.Core
         //    Rotation = 0;
         //}
 
+        private void buildConvex()
+        {
+            Convex = new Convex();
+        }
+
         public Sprite(string imagePath)
         {
            
@@ -304,6 +311,7 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Visible = true;
             Rotation = 0;
+            buildConvex();
         }
         public Sprite()
         {
@@ -315,12 +323,13 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
             Visible = true;
+            buildConvex();
         }
 
         public Sprite(RenderManager renderer)
         {
             setRender(renderer);
-
+            
             ImagePath = PIXEL;
             image = getImage();
             Scale = Vector.One;
@@ -329,6 +338,7 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
             Visible = true;
+            buildConvex();
         }
 
 
@@ -345,6 +355,7 @@ namespace Whiskey2D.Core
             Tiled = other.Tiled;
             Rotation = other.Rotation;
             Visible = other.Visible;
+            buildConvex();
         }
         public Sprite(RenderManager renderer, ResourceManager resources, Sprite other)
         {
@@ -359,6 +370,8 @@ namespace Whiskey2D.Core
             Tiled = other.Tiled;
             Rotation = other.Rotation;
             Visible = other.Visible;
+            buildConvex();
+
         }
 
         public Sprite(string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
@@ -371,6 +384,7 @@ namespace Whiskey2D.Core
             Color = color;
             Visible = true;
             Rotation = rotation;
+            buildConvex();
         }
 
         public Sprite(RenderManager renderer, string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
@@ -384,6 +398,7 @@ namespace Whiskey2D.Core
             Depth = depth;
             Color = color;
             Rotation = rotation;
+            buildConvex();
         }
 
         /// <summary>
@@ -396,12 +411,14 @@ namespace Whiskey2D.Core
 
 
 
-        public void draw(SpriteBatch spriteBatch, Vector position)
+        public void draw(SpriteBatch spriteBatch, Matrix transform, Vector position)
         {
             if (!Visible)
                 return;
 
-
+           // Convex.Origin = position;
+           // Convex.render(spriteBatch, transform);
+            
             if (Tiled)
             {
                 

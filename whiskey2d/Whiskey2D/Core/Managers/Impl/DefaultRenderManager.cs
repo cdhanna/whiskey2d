@@ -101,7 +101,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
                     {
-                        spr.draw(spriteBatch, gob.Position);
+                        spr.draw(spriteBatch,transform, gob.Position);
                         //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
                         //GameManager.Log.debug(spr.ImagePath);
                     }
@@ -169,5 +169,16 @@ namespace Whiskey2D.Core.Managers.Impl
             }
             set { } //do nothing
         }
+
+        public Matrix CameraTransform { get { return ActiveCamera == null ? Matrix.Identity : ActiveCamera.TranformMatrix; } }
+
+        public RenderInfo RenderInfo
+        {
+            get
+            {
+                return new RenderInfo(spriteBatch, CameraTransform, this, GameManager.Resources);
+            }
+        }
+
     }
 }

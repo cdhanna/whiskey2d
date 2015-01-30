@@ -11,6 +11,8 @@ namespace Whiskey2D.Core.Managers
     {
 
         Camera ActiveCamera { get; set; }
+        RenderInfo RenderInfo { get; }
+
 
         /// <summary>
         /// Initializes the RenderManager

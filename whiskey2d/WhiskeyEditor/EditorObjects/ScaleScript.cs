@@ -8,6 +8,7 @@ using Whiskey2D.Core.Inputs;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.MonoHelp;
 using WhiskeyEditor.Backend.Managers;
+using Microsoft.Xna.Framework;
 
 namespace WhiskeyEditor.EditorObjects
 {
@@ -46,15 +47,17 @@ namespace WhiskeyEditor.EditorObjects
 
                 
                 
+                Matrix m = Matrix.Identity;
+                m *= Matrix.CreateRotationZ(Gob.Sprite.Rotation);
 
-                Gob.ControlPointRight.Position = Gob.Position + new Vector( Gob.Bounds.Size.X / 2, 0);
-                Gob.ControlPointRightTop.Position = Gob.Position + new Vector(Gob.Bounds.Size.X / 2, - Gob.Bounds.Size.Y /2);
-                Gob.ControlPointTop.Position = Gob.Position + new Vector(0, -Gob.Bounds.Size.Y / 2);
-                Gob.ControlPointLeftTop.Position = Gob.Position + new Vector(-Gob.Bounds.Size.X / 2, -Gob.Bounds.Size.Y / 2);
-                Gob.ControlPointLeft.Position = Gob.Position + new Vector(-Gob.Bounds.Size.X / 2, 0);
-                Gob.ControlPointLeftBot.Position = Gob.Position + new Vector(-Gob.Bounds.Size.X / 2, Gob.Bounds.Size.Y / 2);
-                Gob.ControlPointBot.Position = Gob.Position + new Vector(0, Gob.Bounds.Size.Y / 2);
-                Gob.ControlPointRightBot.Position = Gob.Position + new Vector(Gob.Bounds.Size.X / 2, Gob.Bounds.Size.Y / 2);
+                Gob.ControlPointRight.Position = Gob.Position + (Vector)Vector2.Transform( new Vector( Gob.Bounds.Size.X / 2, 0), m);
+                Gob.ControlPointRightTop.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(Gob.Bounds.Size.X / 2, - Gob.Bounds.Size.Y /2), m);
+                Gob.ControlPointTop.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(0, -Gob.Bounds.Size.Y / 2), m);
+                Gob.ControlPointLeftTop.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(-Gob.Bounds.Size.X / 2, -Gob.Bounds.Size.Y / 2), m);
+                Gob.ControlPointLeft.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(-Gob.Bounds.Size.X / 2, 0), m);
+                Gob.ControlPointLeftBot.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(-Gob.Bounds.Size.X / 2, Gob.Bounds.Size.Y / 2), m);
+                Gob.ControlPointBot.Position = Gob.Position + (Vector)Vector2.Transform( new Vector(0, Gob.Bounds.Size.Y / 2), m);
+                Gob.ControlPointRightBot.Position = Gob.Position + (Vector)Vector2.Transform(new Vector(Gob.Bounds.Size.X / 2, Gob.Bounds.Size.Y / 2), m);
 
                 
 
@@ -110,8 +113,16 @@ namespace WhiskeyEditor.EditorObjects
         }
         private void process(Vector mousePos)
         {
+
+            Matrix m = Matrix.Identity;
+            m *= Matrix.CreateRotationZ(Gob.Sprite.Rotation);
+
+
             Vector diff = mousePos - startDrag;
             Vector scaleDiff = new Vector(diff.X / Gob.Selected.Sprite.FrameWidth, diff.Y / Gob.Selected.Sprite.FrameHeight);
+
+            //diff = Vector2.Transform(diff, m);
+            //scaleDiff = Vector2.Transform(scaleDiff, m)
 
             if (draggedOCP == Gob.ControlPointRight)
             {
@@ -195,7 +206,7 @@ namespace WhiskeyEditor.EditorObjects
 
             ocp.Sprite.Visible = vis;
             ocp.Sprite.Depth = Gob.Sprite.Depth + .01f;
-            ocp.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert().lerp(Color.Black, .5f);
+            ocp.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert().lerp(Microsoft.Xna.Framework.Color.Black, .5f);
         
         }
 

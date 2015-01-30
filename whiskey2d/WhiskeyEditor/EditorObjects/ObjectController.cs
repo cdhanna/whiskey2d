@@ -68,7 +68,9 @@ namespace WhiskeyEditor.EditorObjects
             Sprite.Depth = .3f;
             
         }
+
         
+
         protected override void addInitialScripts()
         {
         }

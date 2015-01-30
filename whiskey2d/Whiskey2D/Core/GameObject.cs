@@ -175,9 +175,9 @@ namespace Whiskey2D.Core
             {
                 if (Sprite == null)
                 {
-                    return new Bounds(Position, Vector.Zero);
+                    return new Bounds(Position, Vector.Zero, 0);
                 }
-                else return new Bounds(Position - Sprite.FrameOffsetScaled, Sprite.FrameSizeScaled);
+                else return new Bounds(Position - Sprite.FrameOffsetScaled, Sprite.FrameSizeScaled, Sprite.Rotation);
             }
         }
 
@@ -271,6 +271,23 @@ namespace Whiskey2D.Core
         }
 
         /// <summary>
+        /// Render the GameObject. If the GameObject has a sprite, it will be rendered here. 
+        /// This is called from the RenderManager.
+        /// Override if needed to draw something fancy.
+        /// </summary>
+        /// <param name="info">The info needed to render</param>
+        public virtual void render(RenderInfo info)
+        {
+            if (Sprite != null)
+            {
+                Sprite.setRender(info.Renderer);
+                Sprite.setResources(info.Resources);
+                Sprite.draw(info.SpriteBatch, info.Transform, Position);
+            }
+        }
+
+
+        /// <summary>
         /// Get the set of all Scripts that are currently set to Active. 
         /// </summary>
         /// <returns></returns>
@@ -301,6 +318,9 @@ namespace Whiskey2D.Core
             return GetType().Name;
         }
 
+
+
+
         /// <summary>
         /// Every GameObject has a set of Bounds that can be used to collect collision info.
         /// This function returns a list of collision information objects with a particular other kind of GameObject
@@ -310,23 +330,44 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <typeparam name="G">The kind of GameObject to check for collisions with</typeparam>
         /// <returns>The list of COllisionInfo</returns>
-        public List<CollisionInfo<GameObject, G>> currentCollisions<G>() where G : GameObject
+        //public List<CollisionInfo<GameObject, G>> currentCollisions<G>() where G : GameObject
+        //{
+        //    List<CollisionInfo<GameObject, G>> collisionInfos = new List<CollisionInfo<GameObject, G>>();
+
+        //    List<G> all = objectManager.getAllObjectsOfType<G>();
+        //    all.ForEach((gob) =>
+        //    {
+        //        if (gob != this)
+        //        {
+        //            Vector normal = gob.Bounds.getNormalOfCollision(Bounds);
+        //            if (normal != Vector.Zero)
+        //            {
+        //                collisionInfos.Add(new CollisionInfo<GameObject, G>(this, gob, normal));
+        //            }
+        //        }
+        //    });
+        //    return collisionInfos;
+        //}
+
+        public List<G> currentCollisions<G>() where G : GameObject
         {
-            List<CollisionInfo<GameObject, G>> collisionInfos = new List<CollisionInfo<GameObject, G>>();
+            List<G> collList = new List<G>();
 
             List<G> all = objectManager.getAllObjectsOfType<G>();
             all.ForEach((gob) =>
             {
                 if (gob != this)
                 {
-                    Vector normal = gob.Bounds.getNormalOfCollision(Bounds);
-                    if (normal != Vector.Zero)
+                    if (gob.Bounds.boundWithin(Bounds))
                     {
-                        collisionInfos.Add(new CollisionInfo<GameObject, G>(this, gob, normal));
+                        collList.Add(gob);
                     }
                 }
+
             });
-            return collisionInfos;
+
+            return collList;
         }
+
     }
 }

@@ -223,10 +223,11 @@ namespace WhiskeyEditor.MonoHelp
                         continue;
                     }
 
+                    
 
-                    Sprite spr = gob.Sprite;
-                    spr.setRender(this);
-                    spr.setResources(WhiskeyControl.Resources);
+                    //Sprite spr = gob.Sprite;
+                    //spr.setRender(this);
+                    //spr.setResources(WhiskeyControl.Resources);
 
 
                     Boolean shouldDraw = true;
@@ -239,11 +240,15 @@ namespace WhiskeyEditor.MonoHelp
 
                     if (shouldDraw)
                     {
-                        if (spr != null)
+                        //if (spr != null)
                         {
                             Vector2 alwaysOnPos = gob.Position;
-                            spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, (spr.Depth / 2) - .01f);
-                            gob.Sprite.draw(spriteBatch, gob.Position);
+                            spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, 0);
+                           
+                            gob.Bounds.draw(RenderInfo, new RenderHints().setColor(Level.BackgroundColorCompliment));
+                            gob.render(RenderInfo);
+
+                            //gob.Sprite.draw(spriteBatch,CameraTransform, gob.Position);
                         }
                     }
                 }
@@ -259,16 +264,16 @@ namespace WhiskeyEditor.MonoHelp
 
                     uiGobs.ForEach(g =>
                     {
-                        g.Sprite.draw(spriteBatch, g.Position);
+                        g.Sprite.draw(spriteBatch, CameraTransform, g.Position);
                     });
 
-                    controller.Sprite.draw(spriteBatch, controller.Position);
-
+                    //controller.Sprite.draw(spriteBatch,CameraTransform,  controller.Position);
+                    controller.Bounds.draw(RenderInfo, new RenderHints().setColor(controller.Sprite.Color).setPrimitiveType(PrimitiveType.TriangleStrip));
 
                     Sprite spr = controller.Selected.Sprite;
                     spr.setRender(this);
                     spr.setResources(WhiskeyControl.Resources);
-                    controller.Selected.Sprite.draw(spriteBatch, controller.Selected.Position);
+                    controller.Selected.Sprite.draw(spriteBatch,CameraTransform, controller.Selected.Position);
                     spriteBatch.End();
                 }
             }
@@ -374,6 +379,7 @@ namespace WhiskeyEditor.MonoHelp
         public void render()
         {
             //do nothing
+           
         }
 
 
@@ -385,6 +391,13 @@ namespace WhiskeyEditor.MonoHelp
             set { }
         }
 
+        public RenderInfo RenderInfo
+        {
+            get
+            {
+                return new RenderInfo(spriteBatch, CameraTransform, this, WhiskeyControl.Resources);
+            }
+        }
         
     }
 }

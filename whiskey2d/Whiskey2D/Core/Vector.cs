@@ -68,6 +68,23 @@ namespace Whiskey2D.Core
             return (float)Math.Sqrt((X * X) + (Y * Y));
         }
 
+        public Vector getPerpendicular()
+        {
+            return new Vector(-Y, X);
+        }
+
+        public Vector normalize()
+        {
+            Vector v = this;
+            v.Normalize();
+            return v;
+        }
+
+        public float dot(Vector v)
+        {
+            return (X * v.x) + (Y * v.Y);
+        }
+
         public void Normalize()
         {
             float val = 1.0f / (float)Math.Sqrt((X * X) + (Y * Y));

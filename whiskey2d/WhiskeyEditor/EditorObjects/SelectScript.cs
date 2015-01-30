@@ -54,7 +54,7 @@ namespace WhiskeyEditor.EditorObjects
                         mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
                         if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos)
-                            || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16).vectorWithin(mousePos)
+                            || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos)
 
 
                             || obj == Gob.ControlPointObject && (
@@ -99,8 +99,8 @@ namespace WhiskeyEditor.EditorObjects
             {
                 //Sprite clone = new Sprite(Gob.Selected.Sprite);
                // Gob.Sprite = clone;
-                Gob.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert();
-
+                Gob.Sprite.Color = Gob.CurrentLevel.BackgroundColorCompliment;
+                Gob.Sprite.Rotation = Gob.Selected.Sprite.Rotation;
                 //Color c = Gob.Sprite.Color;
                 //c.A = 128;
                 //Gob.Sprite.Color = c;

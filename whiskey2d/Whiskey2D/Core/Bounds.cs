@@ -14,6 +14,9 @@ namespace Whiskey2D.Core
 
         private Vector position;
         private Vector size;
+        private float rotation;
+
+        private Convex convex;
 
         /// <summary>
         /// The top-left position of the bounds
@@ -57,10 +60,21 @@ namespace Whiskey2D.Core
         /// </summary>
         /// <param name="position">The top-left position of the bounds</param>
         /// <param name="size">The width-height of the bounds, in terms of X and Y</param>
-        public Bounds(Vector position, Vector size)
+        public Bounds(Vector position, Vector size, float rotation)
         {
             this.position = position;
             this.size = size;
+            this.rotation = rotation;
+
+            float width = size.X; 
+            float height = size.Y; 
+            float widthBar = width / 2;
+            float heightBar = height / 2;
+            convex = new Convex(position + size/2, rotation, new VectorSet(
+                new Vector(-widthBar, -heightBar),
+                new Vector(widthBar, -heightBar),
+                new Vector(widthBar, heightBar),
+                new Vector(-widthBar, heightBar)));
         }
 
         /// <summary>
@@ -70,11 +84,11 @@ namespace Whiskey2D.Core
         /// <returns>true if the point is within the bounds, false otherwise</returns>
         public virtual Boolean vectorWithin(Vector vec)
         {
-
-            return vec.X > position.X
-                && vec.X < position.X + size.X
-                && vec.Y > position.Y
-                && vec.Y < position.Y + size.Y;
+            return convex.isWithin(vec);
+            //return vec.X > position.X
+            //    && vec.X < position.X + size.X
+            //    && vec.Y > position.Y
+            //    && vec.Y < position.Y + size.Y;
                 
         }
 
@@ -88,7 +102,10 @@ namespace Whiskey2D.Core
 
         public virtual Boolean boundWithin(Bounds bound)
         {
-            return !getNormalOfCollision(bound).Equals(Vector.Zero);
+            //return !getNormalOfCollision(bound).Equals(Vector.Zero);
+
+            return convex.isWithin(bound.convex);
+            
             //return _inBound(this, bound) || _inBound(bound, this);
 
         }
@@ -124,6 +141,15 @@ namespace Whiskey2D.Core
                         normal = Vector.UnitY; /* at the bottom */
             }
             return normal;
+        }
+
+        public void draw(RenderInfo info, RenderHints hints)
+        {
+            convex.render(info.SpriteBatch, info.Transform, hints);
+        }
+        public void draw(RenderInfo info)
+        {
+            this.draw(info, new RenderHints());
         }
 
 
