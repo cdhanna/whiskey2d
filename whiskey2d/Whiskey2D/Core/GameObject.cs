@@ -349,25 +349,44 @@ namespace Whiskey2D.Core
         //    return collisionInfos;
         //}
 
-        public List<G> currentCollisions<G>() where G : GameObject
-        {
-            List<G> collList = new List<G>();
 
+        public List<ObjectCollisionInfo<G>> currentCollisions<G>() where G : GameObject
+        {
+            List<ObjectCollisionInfo<G>> collList = new List<ObjectCollisionInfo<G>>();
             List<G> all = objectManager.getAllObjectsOfType<G>();
             all.ForEach((gob) =>
             {
                 if (gob != this)
                 {
-                    if (gob.Bounds.boundWithin(Bounds))
+                    CollisionInfo info = gob.Bounds.getCollisionInfo(Bounds);
+                    if (info != null)
                     {
-                        collList.Add(gob);
+                        collList.Add(new ObjectCollisionInfo<G>(info, gob));
                     }
                 }
-
             });
-
             return collList;
         }
+
+        //public List<G> currentCollisions<G>() where G : GameObject
+        //{
+        //    List<G> collList = new List<G>();
+
+        //    List<G> all = objectManager.getAllObjectsOfType<G>();
+        //    all.ForEach((gob) =>
+        //    {
+        //        if (gob != this)
+        //        {
+        //            if (gob.Bounds.boundWithin(Bounds))
+        //            {
+        //                collList.Add(gob);
+        //            }
+        //        }
+
+        //    });
+
+        //    return collList;
+        //}
 
     }
 }

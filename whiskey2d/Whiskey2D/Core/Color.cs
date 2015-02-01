@@ -205,6 +205,9 @@ namespace Whiskey2D.Core
             return i;
         }
 
+        
+
+
         #region converters
 
         public static implicit operator XnaColor(Color v)

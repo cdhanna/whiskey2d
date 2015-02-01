@@ -10,34 +10,30 @@ namespace Whiskey2D.Core
     public class CollisionInfo
     {
 
-        public GameObject A { get; protected set; }
-        public GameObject B { get; protected set; }
-
         public Vector Normal { get; private set; }
+        public Vector MTV { get; private set; }
+        public float Overlap { get; private set; }
 
-        internal CollisionInfo(GameObject a, GameObject b, Vector normal)
+        
+
+        internal CollisionInfo(Vector MTV)
         {
-            A = a;
-            B = b;
-            Normal = normal;
+            this.MTV = MTV;
+            Normal = MTV.normalize();
+            Overlap = MTV.Length();
         }
-
     }
 
     [Serializable]
-    public class CollisionInfo<G1, G2> : CollisionInfo where G1 : GameObject where G2 : GameObject
+    public class ObjectCollisionInfo<G> where G : GameObject
     {
-        public new G1 A { get; private set; }
-        public new G2 B { get; private set; }
-
-
-        internal CollisionInfo(G1 a, G2 b, Vector normal)
-            : base(a, b, normal)
+        public G Gob { get; private set; }
+        public CollisionInfo Info { get; private set; }
+        internal ObjectCollisionInfo(CollisionInfo info, G gob)
         {
-            A = a;
-            B = b;
+            Gob = gob;
+            Info = info;
         }
-
     }
 
 }

@@ -16,8 +16,7 @@ namespace Whiskey2D.Core
         public float Rotation { get; set; }
         public VectorSet Vectors { get; set; }
 
-        [NonSerialized]
-        private PrimitiveBatch primBatch;
+       
         
         public Convex()
             : this(Vector.Zero)
@@ -80,14 +79,18 @@ namespace Whiskey2D.Core
 
         public Boolean isWithin(Convex conv)
         {
+            return getCollisionInfo(conv) != null;
+        }
+
+        public CollisionInfo getCollisionInfo(Convex conv)
+        {
 
 
             List<Vector> axisSet = new List<Vector>();
             VectorSet aSet = calculateTrans();
             VectorSet bSet = conv.calculateTrans();
-
+            Vector mtv = Vector.One * 10000;
             bool colliding = true;
-            int cCount = 0;
 
             aSet.forEachEdge(e => axisSet.Add(e.Normal));
             bSet.forEachEdge(e => axisSet.Add(e.Normal));
@@ -124,12 +127,23 @@ namespace Whiskey2D.Core
                     )
                 {
                     //they are overlapping
-                    cCount++;
+                    //calculate overlap vector
+                    float overlap = Math.Min(aMax, bMax) - Math.Max(aMin, bMin);
+                    if (aMax < bMax)
+                    {
+                        overlap *= -1;
+                    }
+                    
+
+                    if (Math.Abs(overlap) < mtv.Length())
+                    {
+                        mtv = axis * overlap;
+                    }
+
                 }
                 else
                 {
                     //they are not overlapping. no collision can be occuring.
-                    GameManager.Log.debug("NO OVERLAP");
                     colliding = false;
                     break;
                 }
@@ -137,26 +151,25 @@ namespace Whiskey2D.Core
             }
 
 
-            GameManager.Log.debug("colliding = " + cCount + " " + colliding);
 
-
-            return colliding; //todo.
+            CollisionInfo collInfo = new CollisionInfo(mtv);
+            if (!colliding)
+            {
+                return null;
+            }
+            else return collInfo;
         }
 
         
 
 
-        private void ensurePrimitiveBatch(GraphicsDevice gDevice)
-        {
-            if (primBatch == null)
-                primBatch = new PrimitiveBatch(gDevice);
-        }
-
+        
         
 
         public void render(SpriteBatch spriteBatch, Matrix transform, RenderHints hints)
         {
-            ensurePrimitiveBatch(spriteBatch.GraphicsDevice);
+
+            PrimitiveBatch primBatch = PrimitiveBatch.getInstance(spriteBatch.GraphicsDevice);
             primBatch.Transform = transform;
             primBatch.Begin(hints.PrimitiveType);
             VectorSet vSet = calculateTrans();

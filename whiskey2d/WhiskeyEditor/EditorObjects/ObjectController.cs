@@ -52,6 +52,7 @@ namespace WhiskeyEditor.EditorObjects
             addScript(new CopyPasteScript());
             addScript(new CameraMovementScript());
             addScript(new ScaleScript());
+            addScript(new RotateScript());
         }
     }
 

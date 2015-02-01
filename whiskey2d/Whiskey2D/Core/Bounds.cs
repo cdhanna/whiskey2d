@@ -110,7 +110,10 @@ namespace Whiskey2D.Core
 
         }
 
-     
+        public CollisionInfo getCollisionInfo(Bounds bound)
+        {
+            return convex.getCollisionInfo(bound.convex);
+        }
 
         public virtual Vector getNormalOfCollision(Bounds other)
         {

@@ -149,10 +149,25 @@ namespace WhiskeyEditor.MonoHelp
             Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
             Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
 
-            
 
-            XnaColor lineColor = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.DarkGray, .8f);
-            lineColor = XnaColor.Lerp(lineColor, XnaColor.Transparent, .7f);
+            float intensity = Level.BackgroundColor.intensity();
+            XnaColor lineColor = Level.BackgroundColor.invert();
+            if (intensity > .4f && intensity < .6f)
+            {
+                lineColor = XnaColor.Lerp(lineColor, XnaColor.White,1-  Math.Abs(.5f - intensity));
+            }
+            //XnaColor lineColor = new XnaColor(32, 32, 32);
+            //if (intensity < .5f)
+            //{
+            //    lineColor = new XnaColor(232, 232, 232);
+            //}
+
+            
+           // lineColor = XnaColor.Lerp(lineColor, XnaColor.Transparent, .7f);
+            
+            
+            
+            
             //lineColor = XnaColor.Lerp(lineColor, Level.BackgroundColor, .5f);
 
             //draw grid

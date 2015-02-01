@@ -44,7 +44,10 @@ namespace WhiskeyEditor.MonoHelp
             winToMono.Add(Keys.Space, MonoKeys.Space);
             winToMono.Add(Keys.ControlKey, MonoKeys.LeftControl);
             winToMono.Add(Keys.V, MonoKeys.V);
+            winToMono.Add(Keys.E, MonoKeys.E);
+            winToMono.Add(Keys.R, MonoKeys.R);
             winToMono.Add(Keys.C, MonoKeys.C);
+            winToMono.Add(Keys.T, MonoKeys.T);
             winToMono.Add(Keys.ShiftKey, MonoKeys.LeftShift);
 
             winDown = new Dictionary<Keys, bool>();

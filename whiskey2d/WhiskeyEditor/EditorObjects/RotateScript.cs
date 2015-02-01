@@ -25,6 +25,17 @@ namespace WhiskeyEditor.EditorObjects
 
                 if (WhiskeyControl.InputManager.isKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
                 {
+                    float dir = 0;
+                    if (WhiskeyControl.InputManager.isNewKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
+                    {
+                        dir = 1;
+                    }
+                    if (WhiskeyControl.InputManager.isNewKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
+                    {
+                        dir = -1;
+                    }
+
+                    Gob.Selected.Sprite.Rotation += (float)(Math.PI / 12) * dir;
 
                 }
 

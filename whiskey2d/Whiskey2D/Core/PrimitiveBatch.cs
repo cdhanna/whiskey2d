@@ -26,6 +26,17 @@ namespace Whiskey2D.Core
     // retro scene.
     public class PrimitiveBatch : IDisposable
     {
+        private static PrimitiveBatch instance;
+        public static PrimitiveBatch getInstance(GraphicsDevice graphicsDevice)
+        {
+            if (instance == null)
+            {
+                instance = new PrimitiveBatch(graphicsDevice);
+            }
+            return instance;
+        }
+
+
         #region Constants and Fields
 
         // this constant controls how large the vertices buffer is. Larger buffers will
