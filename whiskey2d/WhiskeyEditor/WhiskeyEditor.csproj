@@ -140,11 +140,14 @@
     <Compile Include="compile-types\CoreDescriptor.cs" />
     <Compile Include="compile-types\Scripts\TriggerActivate.cs" />
     <Compile Include="compile-types\Types\DebugObject.cs" />
+    <Compile Include="compile-types\Types\SimpleLight.cs" />
     <Compile Include="compile-types\Types\SimpleObject.cs" />
     <Compile Include="compile-types\CoreTypes.cs" />
     <Compile Include="compile-types\Types\TriggerZone.cs" />
     <Compile Include="EditorObjects\CameraMovementScript.cs" />
     <Compile Include="EditorObjects\CopyPasteScript.cs" />
+    <Compile Include="EditorObjects\GridSizeScript.cs" />
+    <Compile Include="EditorObjects\LightScaleScript.cs" />
     <Compile Include="EditorObjects\ObjectController.cs" />
     <Compile Include="EditorObjects\DragControllerScript.cs" />
     <Compile Include="EditorObjects\EditorGameObject.cs" />
@@ -174,6 +177,9 @@
     <Compile Include="UI\Dockable\DockControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\Actions\DecreaseGridSnapAction.cs" />
+    <Compile Include="UI\Documents\Actions\IncreaseGridSnapAction.cs" />
+    <Compile Include="UI\Documents\Actions\ToggleLightingAction.cs" />
     <Compile Include="UI\Documents\Actions\ViewLevelLayersAction.cs" />
     <Compile Include="UI\Documents\ArtDocument.cs">
       <SubType>Component</SubType>
@@ -273,6 +279,7 @@
     <Compile Include="UI\Properties\Converters\ConvertManager.cs" />
     <Compile Include="UI\Properties\Converters\KeyConverter.cs" />
     <Compile Include="UI\Properties\Converters\LayerTypeConverter.cs" />
+    <Compile Include="UI\Properties\Converters\LightTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\SpriteTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\VectorConverter.cs" />
     <Compile Include="UI\Properties\Converters\WhiskeyTypeConverters.cs" />
@@ -320,6 +327,7 @@
     </Compile>
     <Compile Include="UI\Properties\KeyTypeEditor.cs" />
     <Compile Include="UI\Properties\LayerPicker.cs" />
+    <Compile Include="UI\Properties\LightColorPicker.cs" />
     <Compile Include="UI\Properties\PropertyAdapter.cs" />
     <Compile Include="UI\Properties\PropertyDescriptorEditor.cs">
       <SubType>Component</SubType>
@@ -379,6 +387,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="compile-media\GaussianBlur.fx" />
+    <Content Include="compile-media\light.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="compile-media\lightIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="compile-media\selection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -631,6 +645,10 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -18,6 +18,7 @@ namespace WhiskeyEditor.Backend
         public const string PROP_NAME = "Name";
         public const string PROP_ACTIVE = "Active";
         public const string PROP_ISDEBUG = "IsDebug";
+        public const string PROP_LIGHT = "Light";
 
         private bool initialized;
         private TypeDescriptor typeDesc;
@@ -96,7 +97,7 @@ namespace WhiskeyEditor.Backend
             {
                 base.Y = (float)lookUpPropertyDescriptor(PROP_Y).TypeVal.Value;
             };
-
+            
             
 
             Name = objectManager.getDefaultNameFor(this);
@@ -343,6 +344,28 @@ namespace WhiskeyEditor.Backend
             }
         }
 
+        public override Light Light
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.Light;
+                }
+                else return (Light)getTypeValOfName(PROP_LIGHT).Value;
+            }
+            set
+            {
+                base.Light = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_LIGHT).Value = value;
+                }
+
+            }
+        }
+
+
         public override string Name
         {
             get
@@ -374,6 +397,7 @@ namespace WhiskeyEditor.Backend
             //none at the moment
         }
 
+        
 
         public InstanceDescriptor clone(ObjectManager objectManager)
         {
@@ -381,6 +405,7 @@ namespace WhiskeyEditor.Backend
 
             inst.X = X;
             inst.Y = Y;
+            inst.Light = new Light(Light);
             inst.Sprite = new Sprite(Sprite.getRenderer(), Sprite.getResources(), Sprite);
             inst.Layer = Layer;
             inst.IsDebug = IsDebug;

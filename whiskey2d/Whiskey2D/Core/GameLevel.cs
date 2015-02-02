@@ -18,6 +18,7 @@ namespace Whiskey2D.Core
     {
 
         public Color BackgroundColor { get; set; }
+        public Color AmbientLight { get; set; }
         public string Name { get; private set; }
         public Camera Camera { get; set; }
         public BloomSettings BloomSettings { get; set; }
@@ -25,6 +26,8 @@ namespace Whiskey2D.Core
         public GameLevel(string name)
             : base()
         {
+            BackgroundColor = Color.White;
+            AmbientLight = Color.White;
             Camera = new Camera();
             Name = name;
             BloomSettings = BloomSettings.PresetSettings[0];

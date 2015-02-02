@@ -27,12 +27,20 @@ namespace WhiskeyEditor.EditorObjects
         public ObjectControlPoint ControlPointLeftBot { get; set; }
         public ObjectControlPoint ControlPointBot { get; set; }
         public ObjectControlPoint ControlPointRightBot { get; set; }
+
+        public ObjectControlPoint ControlPointLightRadius { get; set; }
+
+        private Whiskey2D.Core.Convex convex;
+
         public ObjectControlPoint[] ControlPoints {get; set;} 
 
         public ObjectController(ObjectManager manager) : base(manager)
         {
             Sprite = new Sprite();
             Unselect = false;
+            convex = new Convex(Vector.Zero, 0, VectorSet.Dodecahedren);
+
+            ControlPointLightRadius = new ObjectControlPoint(manager);
 
             ControlPointRight = new ObjectControlPoint(manager);
             ControlPointRightTop = new ObjectControlPoint(manager);
@@ -53,7 +61,33 @@ namespace WhiskeyEditor.EditorObjects
             addScript(new CameraMovementScript());
             addScript(new ScaleScript());
             addScript(new RotateScript());
+            addScript(new LightScaleScript());
+            addScript(new GridSizeScript());
         }
+
+        public void setControlPointVisibility(bool vis, ObjectControlPoint ocp)
+        {
+
+            ocp.Sprite.Visible = vis;
+            ocp.Sprite.Depth = Sprite.Depth + .01f;
+            ocp.Sprite.Color = Sprite.Color;//Gob.CurrentLevel.BackgroundColor.invert().lerp(Microsoft.Xna.Framework.Color.Black, .5f);
+
+        }
+
+        public bool isSelectingControlPoint(Vector mousePos)
+        {
+            return ControlPointRight.Bounds.vectorWithin(mousePos)
+                                    || ControlPointRightTop.Bounds.vectorWithin(mousePos)
+                                    || ControlPointTop.Bounds.vectorWithin(mousePos)
+                                    || ControlPointLeftTop.Bounds.vectorWithin(mousePos)
+                                    || ControlPointLeft.Bounds.vectorWithin(mousePos)
+                                    || ControlPointLeftBot.Bounds.vectorWithin(mousePos)
+                                    || ControlPointBot.Bounds.vectorWithin(mousePos)
+                                    || ControlPointRightBot.Bounds.vectorWithin(mousePos)
+                                    || ControlPointLightRadius.Bounds.vectorWithin(mousePos);
+
+        }
+        
     }
 
     [Serializable]
@@ -65,7 +99,7 @@ namespace WhiskeyEditor.EditorObjects
         {
             Sprite = new Sprite();
             Sprite.setRender(WhiskeyEditor.MonoHelp.WhiskeyControl.Renderer);
-            Sprite.Scale = new Vector(12);
+            Sprite.Scale = new Vector(24);
             Sprite.Depth = .3f;
             
         }

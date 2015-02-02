@@ -39,28 +39,34 @@ namespace WhiskeyEditor.EditorObjects
             if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
 
-                List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();
-
-                float highestDepth = 0f;
-
-                foreach (InstanceDescriptor obj in objs)
+                //make sure no control points are being selected
+                if (!Gob.isSelectingControlPoint(mousePos))
                 {
-                    if (!obj.Layer.Locked && obj.Layer.Visible)
+
+
+
+                    List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();
+
+                    float highestDepth = 0f;
+
+                    foreach (InstanceDescriptor obj in objs)
                     {
-                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos))
+                        if (!obj.Layer.Locked && obj.Layer.Visible)
                         {
-                            if (obj.Sprite.Depth > highestDepth)
+                            if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos) || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos))
                             {
-                                highestDepth = obj.Sprite.Depth;
-                                Gob.Dragging = obj;
-                                grabOffset = Gob.Dragging.Position - mousePos;
-                                //break;
+                                if (obj.Sprite.Depth > highestDepth)
+                                {
+                                    highestDepth = obj.Sprite.Depth;
+                                    Gob.Dragging = obj;
+                                    grabOffset = Gob.Dragging.Position - mousePos;
+                                    //break;
+                                }
                             }
                         }
+
                     }
-
                 }
-
 
             }
 
@@ -75,7 +81,9 @@ namespace WhiskeyEditor.EditorObjects
 
                 if (WhiskeyControl.InputManager.isKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
                 {
-                    Gob.Dragging.Position = GridManager.Instance.snapRound(Gob.Dragging.Position);
+                    Vector topLeft = Gob.Dragging.Bounds.TopLeft;
+                    topLeft = GridManager.Instance.snap(topLeft);
+                    Gob.Dragging.Position = topLeft + Gob.Dragging.Sprite.ScaledOffset;
                 }
 
                 Gob.Dragging.X = Gob.Dragging.Position.X;

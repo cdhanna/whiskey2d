@@ -18,6 +18,7 @@ namespace WhiskeyEditor.EditorObjects
         Vector startDrag = Vector.Zero;
         Vector startScale = Vector.Zero;
         Vector startPos = Vector.Zero;
+        Vector startDragMod = Vector.Zero;
 
         ObjectControlPoint draggedOCP = null;
         public override void onStart()
@@ -68,9 +69,37 @@ namespace WhiskeyEditor.EditorObjects
                     {
                         if (ocp.Bounds.vectorWithin(mousePos))
                         {
+                            
+
                             startDrag = mousePos;
+                            startDragMod = startDrag;
+                            if (ocp == Gob.ControlPointRight || ocp == Gob.ControlPointRightTop || ocp == Gob.ControlPointRightBot)
+                            {
+                                startDragMod.X = Gob.Selected.Bounds.Right;
+                            }
+                            if (ocp == Gob.ControlPointLeft || ocp == Gob.ControlPointLeftTop || ocp == Gob.ControlPointLeftBot)
+                            {
+                                startDragMod.X = Gob.Selected.Bounds.Left;
+                            }
+                            if (ocp == Gob.ControlPointTop || ocp == Gob.ControlPointRightTop || ocp == Gob.ControlPointLeftTop)
+                            {
+                                startDragMod.Y = Gob.Selected.Bounds.Top;
+                            }
+                            if (ocp == Gob.ControlPointBot || ocp == Gob.ControlPointRightBot || ocp == Gob.ControlPointRightBot)
+                            {
+                                startDragMod.Y = Gob.Selected.Bounds.Bottam;
+                            }
+
                             startScale = Gob.Selected.Sprite.Scale;
                             startPos = Gob.Selected.Position;
+
+                            
+                            //if (WhiskeyEditor.MonoHelp.WhiskeyControl.InputManager.isKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                            //{
+                            //    mousePos = GridManager.Instance.snap(mousePos);
+                            //    //mousePos = GridManager.Instance.snapRound(mousePos);
+                            //}
+
                             draggedOCP = ocp;
                             
                             break;
@@ -118,7 +147,21 @@ namespace WhiskeyEditor.EditorObjects
             m *= Matrix.CreateRotationZ(Gob.Sprite.Rotation);
 
 
+            if (WhiskeyEditor.MonoHelp.WhiskeyControl.InputManager.isKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+            {
+
+                startDrag = startDragMod;
+                //mousePos = GridManager.Instance.snap(mousePos);
+                mousePos = GridManager.Instance.snap(mousePos);
+                
+
+            }
+
             Vector diff = mousePos - startDrag;
+
+            
+
+
             Vector scaleDiff = new Vector(diff.X / Gob.Selected.Sprite.FrameWidth, diff.Y / Gob.Selected.Sprite.FrameHeight);
 
             //diff = Vector2.Transform(diff, m);
@@ -201,25 +244,18 @@ namespace WhiskeyEditor.EditorObjects
 
         }
 
-        private void setControlPointVisibility(bool vis, ObjectControlPoint ocp)
-        {
-
-            ocp.Sprite.Visible = vis;
-            ocp.Sprite.Depth = Gob.Sprite.Depth + .01f;
-            ocp.Sprite.Color = Gob.CurrentLevel.BackgroundColor.invert().lerp(Microsoft.Xna.Framework.Color.Black, .5f);
-        
-        }
+       
 
         private void setControlPointsVisibility(bool visible)
         {
-            setControlPointVisibility(visible, Gob.ControlPointRight);
-            setControlPointVisibility(visible, Gob.ControlPointRightTop);
-            setControlPointVisibility(visible, Gob.ControlPointTop);
-            setControlPointVisibility(visible, Gob.ControlPointLeftTop);
-            setControlPointVisibility(visible, Gob.ControlPointLeft);
-            setControlPointVisibility(visible, Gob.ControlPointLeftBot);
-            setControlPointVisibility(visible, Gob.ControlPointBot);
-            setControlPointVisibility(visible, Gob.ControlPointRightBot);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointRight);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointRightTop);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointTop);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointLeftTop);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointLeft);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointLeftBot);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointBot);
+            Gob.setControlPointVisibility(visible, Gob.ControlPointRightBot);
         }
 
         private void hideControlPoints()

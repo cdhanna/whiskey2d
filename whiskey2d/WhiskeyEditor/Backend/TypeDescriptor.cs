@@ -82,9 +82,17 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "Y", new RealType(typeof(float), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "ID", new RealType(typeof(int), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
+
+            Light l = new Light();
+            l.Visible = false;
+            addPropertyDescriptor(new PropertyDescriptor(true, "Light", new RealType(typeof(Light), l)));
+            
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
             addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));
+
+
+
         }
 
 

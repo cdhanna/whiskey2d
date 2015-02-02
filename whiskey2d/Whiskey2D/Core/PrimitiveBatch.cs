@@ -33,6 +33,7 @@ namespace Whiskey2D.Core
             {
                 instance = new PrimitiveBatch(graphicsDevice);
             }
+            instance.updateProjection(graphicsDevice);
             return instance;
         }
 
@@ -97,6 +98,14 @@ namespace Whiskey2D.Core
 
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter
+                (0, graphicsDevice.Viewport.Width,
+                graphicsDevice.Viewport.Height, 0,
+                0, 1);
+        }
+
+        public void updateProjection(GraphicsDevice graphicsDevice)
+        {
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter
                 (0, graphicsDevice.Viewport.Width,
                 graphicsDevice.Viewport.Height, 0,
@@ -263,6 +272,9 @@ namespace Whiskey2D.Core
             }
 
             // submit the draw call to the graphics card
+
+            
+
             device.DrawUserPrimitives<VertexPositionColor>(primitiveType, vertices, 0,
                 primitiveCount);
             

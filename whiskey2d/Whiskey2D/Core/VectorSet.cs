@@ -7,6 +7,22 @@ namespace Whiskey2D.Core
     [Serializable]
     public class VectorSet
     {
+        public static VectorSet Dodecahedren
+        {
+            get
+            {
+                VectorSet vecSet = new VectorSet();
+                int sides = 12;
+                float angleInc = ((float)Math.PI*2) / sides;
+                for (int i = 0; i < sides; i++)
+                {
+                    float angle = i * angleInc;
+                    Vector v = new Vector((float)Math.Cos(angle), (float)Math.Sin(angle));
+                    vecSet.add(v);
+                }
+                return vecSet;
+            }
+        }
         public static VectorSet Diamond
         {
             get
@@ -62,6 +78,10 @@ namespace Whiskey2D.Core
         public void remove(Vector v)
         {
             vecs.Remove(v);
+        }
+        public Vector get(int index)
+        {
+            return vecs[index];
         }
 
         public void forEachVector(Action<Vector> action)

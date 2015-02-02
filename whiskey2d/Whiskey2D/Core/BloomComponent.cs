@@ -29,7 +29,9 @@ namespace Whiskey2D.Core
         RenderTarget2D sceneRenderTarget;
         RenderTarget2D renderTarget1;
         RenderTarget2D renderTarget2;
+        RenderTarget2D outputTarget;
 
+        public RenderTarget2D OutputTarget { get { return outputTarget; } }
 
         // Choose what display settings the bloom should use.
         public BloomSettings Settings
@@ -127,7 +129,7 @@ namespace Whiskey2D.Core
             sceneRenderTarget = checkRenderTarget(sceneRenderTarget, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
             renderTarget1 = checkRenderTarget(renderTarget1, GraphicsDevice.PresentationParameters.BackBufferWidth / 2, GraphicsDevice.PresentationParameters.BackBufferHeight / 2);
             renderTarget2 = checkRenderTarget(renderTarget2, GraphicsDevice.PresentationParameters.BackBufferWidth / 2, GraphicsDevice.PresentationParameters.BackBufferHeight / 2);
-
+            outputTarget = checkRenderTarget(outputTarget, GraphicsDevice.PresentationParameters.BackBufferWidth , GraphicsDevice.PresentationParameters.BackBufferHeight );
         }
 
 
@@ -141,7 +143,7 @@ namespace Whiskey2D.Core
         //}
         private RenderTarget2D checkRenderTarget(RenderTarget2D target, int width, int height)
         {
-            if (height != target.Height || width != target.Width)
+            if (target == null || height != target.Height || width != target.Width)
             {
                 return new RenderTarget2D(GraphicsDevice, width, height);
             }
@@ -171,6 +173,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void BeginDraw()
         {
+            ensureRenderTargetSize();
             //if (Visible)
             {
                 GraphicsDevice.SetRenderTarget(sceneRenderTarget);
@@ -184,6 +187,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public void draw()
         {
+            
             GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
 
             // Pass 1: draw the scene into rendertarget 1, using a
@@ -214,7 +218,7 @@ namespace Whiskey2D.Core
             // Pass 4: draw both rendertarget 1 and the original scene
             // image back into the main backbuffer, using a shader that
             // combines them to produce the final bloomed result.
-            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(outputTarget);
 
             EffectParameterCollection parameters = bloomCombineEffect.Parameters;
 

@@ -31,27 +31,27 @@ namespace Whiskey2D.Core
         /// <summary>
         /// Tthe bottam Y location of the bound
         /// </summary>
-        public float Bottam { get { return position.Y + size.Y; } }
+        public float Bottam { get { return BottomLeft.Y; } }
 
         /// <summary>
         /// Tthe top Y location of the bound
         /// </summary>
-        public float Top { get { return position.Y; } }
+        public float Top { get { return TopRight.Y; } }
 
         /// <summary>
         /// Tthe right X location of the bound
         /// </summary>
-        public float Right { get { return position.X + size.X; } }
+        public float Right { get { return TopRight.X; } }
 
         /// <summary>
         /// Tthe left X location of the bound
         /// </summary>
-        public float Left { get { return position.X; } }
+        public float Left { get { return TopLeft.X; } }
 
-        public Vector TopLeft { get { return Position; } }
-        public Vector TopRight { get { return TopLeft + Vector.UnitX * Size.X; } }
-        public Vector BottomLeft { get { return TopLeft + Vector.UnitY * Size.Y; } }
-        public Vector BottomRight { get { return TopLeft + Size; } }
+        public Vector TopLeft { get { return convex.TranslatedVectors.get(0); } }
+        public Vector TopRight { get { return convex.TranslatedVectors.get(1); } }
+        public Vector BottomLeft { get { return convex.TranslatedVectors.get(3); } }
+        public Vector BottomRight { get { return convex.TranslatedVectors.get(2); } }
 
 
 

@@ -32,11 +32,14 @@ namespace Whiskey2D.Core.Managers.Impl
         //}
         
       
-        private GraphicsDevice graphicsDevice;
+        private GraphicsDevice GraphicsDevice;
         private SpriteBatch spriteBatch;
         private static Texture2D pixel;
         private BloomComponent bloomComponent;
-       
+        private Effect lightEffect;
+        private RenderTarget2D lightMapTarget;
+
+
         /// <summary>
         /// Creates a new RenderManager
         /// </summary>
@@ -52,13 +55,14 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void init(GraphicsDevice graphicsDevice)
         {
-            this.graphicsDevice = graphicsDevice;
+            this.GraphicsDevice = graphicsDevice;
             if (graphicsDevice != null)
             {
                 
                 bloomComponent = new BloomComponent(graphicsDevice, GameManager.Instance.Content);
                 bloomComponent.loadContent();
-                this.spriteBatch = new SpriteBatch(this.graphicsDevice);
+                this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+                lightEffect = GameManager.Resources.Content.Load<Effect>("light.mgfx");
             }
         }
 
@@ -70,6 +74,18 @@ namespace Whiskey2D.Core.Managers.Impl
 
         }
 
+        private RenderTarget2D checkRenderTarget(RenderTarget2D target, int width, int height)
+        {
+            if (target == null || height != target.Height || width != target.Width)
+            {
+                PresentationParameters pp = GraphicsDevice.PresentationParameters;
+                return new RenderTarget2D(GraphicsDevice, width, height, false,
+                                                   pp.BackBufferFormat, pp.DepthStencilFormat, pp.MultiSampleCount,
+                                                   RenderTargetUsage.DiscardContents);
+            }
+            else return target;
+        }
+
         /// <summary>
         /// Renders the Game
         /// </summary>
@@ -78,10 +94,18 @@ namespace Whiskey2D.Core.Managers.Impl
             //ActiveCamera.Position = Vector.Zero;
             Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
 
+            int bbWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            int bbHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
+            lightMapTarget = checkRenderTarget(lightMapTarget, bbWidth, bbHeight);
             bloomComponent.Settings = GameManager.Level.BloomSettings;
+
+
+            //DRAW LIGHTMAP
+            renderLightMap(GameManager.Objects.getAllObjects().Where(g => g.Active).ToList() );
+
             bloomComponent.BeginDraw();
 
-            graphicsDevice.Clear(GameManager.Level.BackgroundColor);
+            GraphicsDevice.Clear(GameManager.Level.BackgroundColor);
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
             //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
@@ -92,7 +116,7 @@ namespace Whiskey2D.Core.Managers.Impl
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-
+                   
                     //if (spr.getImage() == GameManager.Renderer.getPixel())
                     //{
                     //    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
@@ -112,8 +136,42 @@ namespace Whiskey2D.Core.Managers.Impl
             spriteBatch.End();
 
             bloomComponent.draw();
-            
 
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Textures[1] = lightMapTarget;
+            // GraphicsDevice.Clear(XnaColor.TransparentBlack);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, lightEffect);
+            spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
+
+            spriteBatch.End();
+
+        }
+        private void setShaderValue(EffectParameter parameter, float val)
+        {
+            if (parameter != null)
+                parameter.SetValue(val);
+        }
+        public void renderLightMap(List<GameObject> gobs)
+        {
+
+            EffectParameter widthParameter = lightEffect.Parameters["screenWidth"];
+            EffectParameter heightParameter = lightEffect.Parameters["screenHeight"];
+
+
+            setShaderValue(widthParameter, lightMapTarget.Width);
+            setShaderValue(heightParameter, lightMapTarget.Height);
+
+            GraphicsDevice.SetRenderTarget(lightMapTarget);
+            GraphicsDevice.Clear(GameManager.Level.AmbientLight);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+
+            gobs.ForEach(i =>
+            {
+                i.renderLight(RenderInfo);
+            });
+
+            spriteBatch.End();
         }
 
         /// <summary>
@@ -151,9 +209,9 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns></returns>
         public Texture2D getPixel()
         {
-            if (pixel == null && graphicsDevice != null)
+            if (pixel == null && GraphicsDevice != null)
             {
-                pixel = new Texture2D(this.graphicsDevice, 1, 1, false, SurfaceFormat.Color);
+                pixel = new Texture2D(this.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
                 pixel.SetData<XnaColor>(new XnaColor[] { XnaColor.White });
             }
             return pixel;
@@ -176,7 +234,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             get
             {
-                return new RenderInfo(spriteBatch, CameraTransform, this, GameManager.Resources);
+                return new RenderInfo(GraphicsDevice, spriteBatch, CameraTransform, this, GameManager.Resources);
             }
         }
 

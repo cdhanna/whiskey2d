@@ -87,8 +87,7 @@ namespace Whiskey2D.Core
         public InputManager InputManager { get; protected set; }
         public InputSourceManager InputSourceManager { get; protected set; }
         public LogManager LogManager { get; protected set; }
-        
-        
+
         public ObjectManager ObjectManager { get; protected set; }
 
        
@@ -120,7 +119,6 @@ namespace Whiskey2D.Core
         public static GameLevel Level { get { return Instance.ActiveLevel; } }
 
 
-
         /// <summary>
         /// Create singleton instance.
         /// Auto sets up basic managers
@@ -138,7 +136,6 @@ namespace Whiskey2D.Core
             LogManager = DefaultLogManager.getInstance();
             
             HudManager = HudManager.getInstance();
-
             //LogManager.init();
             ObjectManager.init();
             InputManager.init();
@@ -267,14 +264,16 @@ namespace Whiskey2D.Core
             InputSourceManager = inputSourceMan;
             LogManager = logger;
             ObjectManager = objectMan;
-            RenderManager = renderMan;
             ResourceManager = resourceMan;
+            RenderManager = renderMan;
+            
             HudManager = HudManager.getInstance();
 
             //initialize
+            ResourceManager.init(content);
             RenderManager.init(graphicsDevice);
             ObjectManager.init();
-            ResourceManager.init(content);
+            
             InputManager.init();
             LogManager.init();
             HudManager.init();

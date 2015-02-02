@@ -73,7 +73,7 @@ namespace WhiskeyEditor.UI.Documents
             {
                 if (SelectionManager.Instance.SelectedInstance != null)
                 {
-                    requestPropertyChange(SelectionManager.Instance.SelectedInstance); //TODO fix how slow this is
+                   // requestPropertyChange(SelectionManager.Instance.SelectedInstance); //TODO fix how slow this is
                 }
                 else
                 {
@@ -92,7 +92,10 @@ namespace WhiskeyEditor.UI.Documents
             base.addAction<ToolStripDropDownButton>(new ViewLevelLayersAction(Descriptor));
             base.addAction(new CopyInstanceAction());
             base.addAction(new PasteInstanceAction(Descriptor));
-
+           // base.addAction<ToolStripDropDownButton>(new ToggleLightingAction(Descriptor));
+            base.addAction<ToolStripDropDownButton>(new ToggleLightingAction(Descriptor));
+            base.addAction(new IncreaseGridSnapAction());
+            base.addAction(new DecreaseGridSnapAction());
         }
 
 
@@ -149,14 +152,15 @@ namespace WhiskeyEditor.UI.Documents
 
             if (tDesc != null)
             {
-                InstanceDescriptor inst = new InstanceDescriptor(tDesc, Descriptor.Level);
+                InstanceDescriptor inst = new InstanceDescriptor( Descriptor.Level);
                 inst.Sprite = new Sprite(WhiskeyControl.Renderer, WhiskeyControl.Resources, inst.Sprite);
-               
+                inst.Light.Visible = false;
+                inst.initialize(tDesc);
 
                 //inst.Sprite.Scale *= 50;
                 Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
-                
-                inst.Position = new Vector(p.X, p.Y) - inst.Bounds.Size/2;
+
+                inst.Position = new Vector(p.X, p.Y);// -inst.Bounds.Size / 2;
                 inst.Position = WhiskeyControl.ActiveCamera.getGameCoordinate(inst.Position);
 
                 inst.X = inst.Position.X;

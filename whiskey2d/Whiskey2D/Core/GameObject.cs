@@ -15,6 +15,7 @@ namespace Whiskey2D.Core
         private static int idCounter = 0;
 
         private Sprite sprite;
+        private Light light;
         private int id;
         private bool active;
 
@@ -22,6 +23,9 @@ namespace Whiskey2D.Core
         /// The list of Scripts that the GameObject is currently running
         /// </summary>
         protected List<Script> scripts;
+
+
+        
 
         /// <summary>
         /// The ObjectManager that this GameObject belongs to
@@ -45,10 +49,12 @@ namespace Whiskey2D.Core
         public GameObject(ObjectManager objMan)
         {
             scripts = new List<Script>();
-
+           
             ID = idCounter++;
             Position = Vector.Zero;
             Sprite = new Sprite();
+            Light = new Light();
+            Light.Visible = false;
 
             active = true;
             this.initProperties();
@@ -146,6 +152,20 @@ namespace Whiskey2D.Core
                 sprite = value;
             }
         }
+
+        public virtual Light Light
+        {
+            get
+            {
+                return light;
+            }
+            set
+            {
+                light = value;
+            }
+
+        }
+
 
         /// <summary>
         /// Get or Set the unique ID of the GameObject
@@ -261,6 +281,9 @@ namespace Whiskey2D.Core
             this.scripts.Add(script);
         }
 
+
+        
+
         /// <summary>
         /// Update all of the GameObject's scripts, as well as the GameObject's Sprite
         /// </summary>
@@ -276,13 +299,24 @@ namespace Whiskey2D.Core
         /// Override if needed to draw something fancy.
         /// </summary>
         /// <param name="info">The info needed to render</param>
-        public virtual void render(RenderInfo info)
+        public virtual void renderImage(RenderInfo info)
         {
             if (Sprite != null)
             {
                 Sprite.setRender(info.Renderer);
                 Sprite.setResources(info.Resources);
                 Sprite.draw(info.SpriteBatch, info.Transform, Position);
+            }
+            
+        }
+
+        public virtual void renderLight(RenderInfo info)
+        {
+            if (Light != null)
+            {
+                Light.Position = Position;
+                //Light.Scale = Sprite.Scale;
+                Light.render(info);
             }
         }
 

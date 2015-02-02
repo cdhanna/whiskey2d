@@ -15,7 +15,7 @@ namespace WhiskeyEditor.MonoHelp
 {
     public class EditorResourceManager : ResourceManager
     {
-        private ContentManager content;
+        public ContentManager Content { get; private set; }
 
         private SpriteFont defaultFont;
 
@@ -29,7 +29,7 @@ namespace WhiskeyEditor.MonoHelp
         /// <param name="content">The content pipeline to use for loading resources</param>
         public void init(ContentManager content)
         {
-            this.content = content;
+            this.Content = content;
             if (content != null)
             {
                 
@@ -64,7 +64,7 @@ namespace WhiskeyEditor.MonoHelp
             {
                 File.Copy(fullPath, destPath, true);
             }
-            Texture2D texture = content.Load<Texture2D>(filePath);
+            Texture2D texture = Content.Load<Texture2D>(filePath);
             return texture;
         }
 

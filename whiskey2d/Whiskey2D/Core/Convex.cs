@@ -14,8 +14,9 @@ namespace Whiskey2D.Core
 
         public Vector Origin { get; set; }
         public float Rotation { get; set; }
+       
         public VectorSet Vectors { get; set; }
-
+        public VectorSet TranslatedVectors { get { return calculateTrans(); } }
        
         
         public Convex()
@@ -35,6 +36,7 @@ namespace Whiskey2D.Core
             this.Origin = origin;
             this.Vectors = set;
             this.Rotation = rotation;
+           
         }
 
 
@@ -169,7 +171,12 @@ namespace Whiskey2D.Core
         public void render(SpriteBatch spriteBatch, Matrix transform, RenderHints hints)
         {
 
-            PrimitiveBatch primBatch = PrimitiveBatch.getInstance(spriteBatch.GraphicsDevice);
+            render(spriteBatch.GraphicsDevice, transform, hints);
+        }
+        public void render(GraphicsDevice graphicsDevice, Matrix transform, RenderHints hints)
+        {
+            
+            PrimitiveBatch primBatch = PrimitiveBatch.getInstance(graphicsDevice);
             primBatch.Transform = transform;
             primBatch.Begin(hints.PrimitiveType);
             VectorSet vSet = calculateTrans();
@@ -179,7 +186,6 @@ namespace Whiskey2D.Core
             });
             primBatch.End();
         }
-
 
     }
 }

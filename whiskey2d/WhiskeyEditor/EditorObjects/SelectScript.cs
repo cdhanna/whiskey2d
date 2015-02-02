@@ -37,60 +37,60 @@ namespace WhiskeyEditor.EditorObjects
         {
             if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
-                Gob.Selected = null;
-                Gob.Sprite.Color = Color.Transparent;
-                //GameManager.Controller.SelectedGob = null;
-                List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
+                Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+                mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
+                //check if selection already exists. If so, check for controlPoints
                
-                float highestDepth = 0;
-
-                foreach (InstanceDescriptor obj in objs)
                 {
-                    if (!obj.Layer.Locked && obj.Layer.Visible)
+
+
+                    Gob.Selected = null;
+                    Gob.Sprite.Color = Color.Transparent;
+                    //GameManager.Controller.SelectedGob = null;
+                    List<InstanceDescriptor> objs = Gob.CurrentLevel.getInstances();//GameManager.Objects.getAllObjectsNotOfType<EditorGameObject>();
+
+
+                    float highestDepth = 0;
+
+                    foreach (InstanceDescriptor obj in objs)
                     {
-
-                        Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
-                        mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
-
-                        if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos)
-                            || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos)
-
-
-                            || obj == Gob.ControlPointObject && (
-                                   Gob.ControlPointRight.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointRightTop.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointTop.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointLeftTop.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointLeft.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointLeftBot.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointBot.Bounds.vectorWithin(mousePos)
-                                || Gob.ControlPointRightBot.Bounds.vectorWithin(mousePos))
-
-                            )
+                        if (!obj.Layer.Locked && obj.Layer.Visible)
                         {
-                           
-                            
 
-                            if (obj.Sprite.Depth > highestDepth)
+
+
+                            if (obj.Sprite != null && obj.Bounds.vectorWithin(mousePos)
+                                || new Bounds(obj.Position - Vector.One * 8, Vector.One * 16, 0).vectorWithin(mousePos)
+
+
+                                || obj == Gob.ControlPointObject && (
+                                    Gob.isSelectingControlPoint(mousePos))
+
+                                )
                             {
-                                Gob.Selected = obj;
-                                highestDepth = obj.Sprite.Depth;
-                                Gob.ControlPointObject = Gob.Selected;
-                                SelectionManager.Instance.SelectedInstance = obj;
-                            }
 
-                            //break;
+
+
+                                if (obj.Sprite.Depth > highestDepth)
+                                {
+                                    Gob.Selected = obj;
+                                    highestDepth = obj.Sprite.Depth;
+                                    Gob.ControlPointObject = Gob.Selected;
+                                    SelectionManager.Instance.SelectedInstance = obj;
+                                }
+
+                                //break;
+                            }
                         }
+
                     }
 
+                    if (Gob.Selected == null)
+                    {
+                        SelectionManager.Instance.SelectedInstance = null;
+                    }
                 }
-
-                if (Gob.Selected == null)
-                {
-                    SelectionManager.Instance.SelectedInstance = null;
-                }
-
             }
 
             

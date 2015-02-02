@@ -23,6 +23,8 @@ namespace WhiskeyEditor.Backend
         public string LevelName { get; private set; }
         public Color BackgroundColor { get; set; }
         public Color BackgroundColorCompliment { get { return BackgroundColor.invert(); } }
+        public Color AmbientLight { get; set; }
+        public bool PreviewLighting { get; set; }
         public Camera Camera { get; set; }
         public List<Layer> Layers { get; set; }
 
@@ -34,7 +36,9 @@ namespace WhiskeyEditor.Backend
         {
             init();
             Camera = new Camera();
-            BackgroundColor = Color.BurlyWood;
+            BackgroundColor = Color.Orange ;
+            AmbientLight = Color.White;
+            PreviewLighting = true;
             BloomSettings = BloomSettings.PresetSettings[5];
             LevelName = name;
             Layers = new List<Layer>();

@@ -13,6 +13,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
     {
 
         private GeneralPropertyDescriptor ColorDesc;
+        private GeneralPropertyDescriptor AmbientDesc;
 
         private GeneralPropertyDescriptor CameraTruePosDesc;
         private GeneralPropertyDescriptor CameraZoomDesc;
@@ -77,7 +78,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
             };
             
             ColorDesc = WhiskeyPropertyListGrid.addOtherProperty("Color", "Details", Descriptor.Color);
-            
+            AmbientDesc = WhiskeyPropertyListGrid.addOtherProperty("Ambient Light", "Details", Descriptor.Level.AmbientLight);
+
             CameraZoomDesc = WhiskeyPropertyListGrid.addOtherProperty("Zoom", "Camera", Descriptor.Level.Camera.Zoom);
             CameraTruePosDesc = WhiskeyPropertyListGrid.addOtherProperty("Position", "Camera", Descriptor.Level.Camera.TruePosition);
 
@@ -100,7 +102,10 @@ namespace WhiskeyEditor.UI.Properties.Editors
             {
                 Descriptor.Color = (Whiskey2D.Core.Color) ColorDesc.PropValue;
             };
-
+            AmbientDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.AmbientLight = (Whiskey2D.Core.Color)AmbientDesc.PropValue;
+            };
 
             CameraTruePosDesc.ValueChanged += (s, a) =>
             {

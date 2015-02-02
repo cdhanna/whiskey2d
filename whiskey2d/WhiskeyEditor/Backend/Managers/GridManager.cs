@@ -17,7 +17,7 @@ namespace WhiskeyEditor.Backend.Managers
         private static GridManager instance = new GridManager();
         private GridManager() 
         {
-            setGridSize(120, 120);
+            setGridSize(128, 128);
         }
 
         /// <summary>
@@ -48,6 +48,18 @@ namespace WhiskeyEditor.Backend.Managers
             }
         }
 
+
+        public void increase()
+        {
+            setGridSize(GridSizeX * 2, GridSizeY * 2);
+
+        }
+
+        public void decrease()
+        {
+            setGridSize(Math.Max(2, GridSizeX / 2), Math.Max(2, GridSizeY / 2));
+        }
+
         /// <summary>
         /// set the grid size
         /// </summary>
@@ -76,7 +88,7 @@ namespace WhiskeyEditor.Backend.Managers
         /// <returns>the snapped value</returns>
         public float snapX(float sample)
         {
-            return sample - (sample % GridSizeX);
+            return (float)Math.Floor(sample / GridSizeX) * GridSizeX;
         }
 
         /// <summary>

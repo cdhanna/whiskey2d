@@ -33,8 +33,7 @@ namespace Whiskey2D.Core.Managers.Impl
         }
 
 
-        private ContentManager content;
-
+        public ContentManager Content { get; private set; }
         private SpriteFont defaultFont;
 
         private DefaultResourceManager()
@@ -47,7 +46,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <param name="content">The content pipeline to use for loading resources</param>
         public void init(ContentManager content)
         {
-            this.content = content;
+            this.Content = content;
             if (content != null)
             {
                 
@@ -66,12 +65,12 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
-            return content.Load<Texture2D>(filePath);
+            return Content.Load<Texture2D>(filePath);
         }
 
         public SoundEffect loadSound(string filePath)
         {
-            return content.Load<SoundEffect>(filePath);
+            return Content.Load<SoundEffect>(filePath);
         }
 
 

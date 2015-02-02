@@ -20,6 +20,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
 
             map.Add("Sprite", new SpriteTypeConverter());
             map.Add("Boolean", new BoolTypeConverter());
+            map.Add("Light", new LightTypeConverter());
             map.Add("InstanceDescriptor", new WhiskeyInstanceTypeConverter());
             map.Add("Layer", new LayerTypeConverter());
             map.Add("Keys", new KeyConverter());
