@@ -18,7 +18,7 @@ namespace Whiskey2D.Core
         private Light light;
         private int id;
         private bool active;
-
+        private bool shadowCaster;
         /// <summary>
         /// The list of Scripts that the GameObject is currently running
         /// </summary>
@@ -49,7 +49,7 @@ namespace Whiskey2D.Core
         public GameObject(ObjectManager objMan)
         {
             scripts = new List<Script>();
-           
+            shadowCaster = false;
             ID = idCounter++;
             Position = Vector.Zero;
             Sprite = new Sprite();
@@ -166,7 +166,17 @@ namespace Whiskey2D.Core
 
         }
 
-
+        public virtual bool ShadowCaster
+        {
+            get
+            {
+                return shadowCaster;
+            }
+            set
+            {
+                shadowCaster = value;
+            }
+        }
         /// <summary>
         /// Get or Set the unique ID of the GameObject
         /// </summary>

@@ -93,7 +93,10 @@ namespace Whiskey2D.Core
         {
             getAllEdges().ForEach(action);
         }
-
+        public Vector[] toArray()
+        {
+            return findAll(v => true).ToArray();
+        }
         public List<Vector> findAll(Predicate<Vector> action)
         {
             return vecs.FindAll(action);
@@ -111,7 +114,17 @@ namespace Whiskey2D.Core
             }
             return edges;
         }
-
+        public VectorSet transform(Matrix m)
+        {
+            VectorSet s = new VectorSet();
+            vecs.ForEach(v => s.add(Vector2.Transform(v, m)));
+            return s;
+        }
+        public VectorSet rotate(float angle)
+        {
+            Matrix m = Matrix.Identity * Matrix.CreateRotationZ(angle);
+            return transform(m);
+        }
 
         public static VectorSet operator * (VectorSet vSet, float mag){
 

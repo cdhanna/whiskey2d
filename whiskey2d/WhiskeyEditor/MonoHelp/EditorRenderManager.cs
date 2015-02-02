@@ -35,7 +35,7 @@ namespace WhiskeyEditor.MonoHelp
         private BloomSettings bloomSettings;
         private RenderTarget2D hudTarget;
 
-
+        private Texture2D alphaClearTexture;
         private RenderTarget2D lightMapTarget;
         private RenderTarget2D sceneTarget;
 
@@ -353,33 +353,19 @@ namespace WhiskeyEditor.MonoHelp
             render(gobsToRender);
             bloomComponent.draw();
 
-            //COMBINE GAMEOBJECTS AND LIGHTMAP
-           // GraphicsDevice.SetRenderTarget(sceneTarget);
-
-           //// GraphicsDevice.Clear(XnaColor.TransparentBlack);
-           // spriteBatch.Begin();//SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null);
-           // spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
-           // spriteBatch.End();
-
 
             //DRAW LIGHTMAP
             renderLightMap(gobs, insts);
             
-           // DefaultLightManager.Instance.AmbientColor = Level.BackgroundColor;
-            //l.Position = new Vector(100 ,100);
-            
-           // DefaultLightManager.Instance.renderLightMap(RenderInfo, lightMapTarget, lightEffect);
-            
-
+            //DRAW SCENE WITH LIGHTMAP
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = lightMapTarget;
-           // GraphicsDevice.Clear(XnaColor.TransparentBlack);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, Level.PreviewLighting ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
        
             spriteBatch.End();
 
-
+            //DRAW HUD
             spriteBatch.Begin();
             spriteBatch.Draw(hudTarget, Vector.Zero, XnaColor.White);
             spriteBatch.End();
@@ -393,6 +379,7 @@ namespace WhiskeyEditor.MonoHelp
 
         public void renderLightMap(List<GameObject> gobs, List<InstanceDescriptor> insts)
         {
+            ConvexHull.InitializeStaticMembers(GraphicsDevice);
 
             EffectParameter widthParameter = lightEffect.Parameters["screenWidth"];
             EffectParameter heightParameter = lightEffect.Parameters["screenHeight"];
@@ -403,15 +390,51 @@ namespace WhiskeyEditor.MonoHelp
 
             GraphicsDevice.SetRenderTarget(lightMapTarget);
             GraphicsDevice.Clear(Level.AmbientLight);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
 
             insts.ForEach(i =>
             {
+                ClearAlphaToOne();
+
+
+                GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
+
+                //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
+                if (Level.PreviewShadowing)
+                {
+                    insts.ForEach(hull =>
+                    {
+                        if (hull.ShadowCaster)
+                        {
+                            Convex convex = hull.Bounds.Convex;
+                            convex.Origin = hull.Position;
+                            convex.Rotation = hull.Sprite.Rotation;
+                            ConvexHull convexHull = new ConvexHull(convex, WhiskeyColor.White);
+                            convexHull.DrawShadows(i.Light, CameraTransform);
+                        }
+                    });
+                }
+
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
                 i.renderLight(RenderInfo);
+                spriteBatch.End();
             });
+            ClearAlphaToOne();
             
+        }
+
+        private void ClearAlphaToOne()
+        {
+            if (alphaClearTexture == null)
+            {
+                alphaClearTexture = WhiskeyControl.Resources.Content.Load<Texture2D>("AlphaOne");
+            }
+            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.WriteToAlpha);
+            spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), WhiskeyColor.White);
             spriteBatch.End();
         }
+
 
         /// <summary>
         /// Renders the HUD

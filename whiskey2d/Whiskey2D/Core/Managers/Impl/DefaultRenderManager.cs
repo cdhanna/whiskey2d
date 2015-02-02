@@ -38,7 +38,7 @@ namespace Whiskey2D.Core.Managers.Impl
         private BloomComponent bloomComponent;
         private Effect lightEffect;
         private RenderTarget2D lightMapTarget;
-
+        private Texture2D alphaClearTexture;
 
         /// <summary>
         /// Creates a new RenderManager
@@ -141,7 +141,7 @@ namespace Whiskey2D.Core.Managers.Impl
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = lightMapTarget;
             // GraphicsDevice.Clear(XnaColor.TransparentBlack);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, lightEffect);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, GameManager.Level.LightingEnabled ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
 
             spriteBatch.End();
@@ -155,6 +155,8 @@ namespace Whiskey2D.Core.Managers.Impl
         public void renderLightMap(List<GameObject> gobs)
         {
 
+            ConvexHull.InitializeStaticMembers(GraphicsDevice);
+
             EffectParameter widthParameter = lightEffect.Parameters["screenWidth"];
             EffectParameter heightParameter = lightEffect.Parameters["screenHeight"];
 
@@ -164,13 +166,48 @@ namespace Whiskey2D.Core.Managers.Impl
 
             GraphicsDevice.SetRenderTarget(lightMapTarget);
             GraphicsDevice.Clear(GameManager.Level.AmbientLight);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
 
             gobs.ForEach(i =>
             {
-                i.renderLight(RenderInfo);
-            });
+                ClearAlphaToOne();
 
+
+                GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
+
+                //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
+                if (GameManager.Level.ShadowsEnabled)
+                {
+                    gobs.ForEach(hull =>
+                    {
+                        if (hull.ShadowCaster)
+                        {
+                            Convex convex = hull.Bounds.Convex;
+                            convex.Origin = hull.Position;
+                            convex.Rotation = hull.Sprite.Rotation;
+                            ConvexHull convexHull = new ConvexHull(convex, Color.White);
+                            convexHull.DrawShadows(i.Light, CameraTransform);
+                        }
+                    });
+                }
+
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+                i.renderLight(RenderInfo);
+                spriteBatch.End();
+            });
+            ClearAlphaToOne();
+        }
+
+
+        private void ClearAlphaToOne()
+        {
+            if (alphaClearTexture == null)
+            {
+                alphaClearTexture = GameManager.Resources.Content.Load<Texture2D>("AlphaOne");
+            }
+            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.WriteToAlpha);
+            spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             spriteBatch.End();
         }
 

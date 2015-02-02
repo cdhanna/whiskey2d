@@ -86,7 +86,7 @@ namespace WhiskeyEditor.Backend
             Light l = new Light();
             l.Visible = false;
             addPropertyDescriptor(new PropertyDescriptor(true, "Light", new RealType(typeof(Light), l)));
-            
+            addPropertyDescriptor(new PropertyDescriptor(true, "ShadowCaster", new RealType(typeof(Boolean), false)));
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
             addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));

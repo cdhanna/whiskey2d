@@ -110,6 +110,9 @@ namespace Whiskey2D.Core
 
         }
 
+
+        public Convex Convex { get { return convex; } }
+
         public CollisionInfo getCollisionInfo(Bounds bound)
         {
             return convex.getCollisionInfo(bound.convex);

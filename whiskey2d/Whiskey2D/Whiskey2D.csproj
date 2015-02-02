@@ -51,6 +51,8 @@
     <Compile Include="Core\CollisionUtil.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\Convex.cs" />
+    <Compile Include="Core\ConvexHull.cs" />
+    <Compile Include="Core\CustomBlendStates.cs" />
     <Compile Include="Core\Edge.cs" />
     <Compile Include="Core\GameController.cs" />
     <Compile Include="Core\GameProperties.cs" />

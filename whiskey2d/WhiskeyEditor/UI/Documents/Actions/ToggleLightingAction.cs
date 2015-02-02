@@ -19,9 +19,9 @@ namespace WhiskeyEditor.UI.Documents.Actions
         public LevelDescriptor Descriptor { get; private set; }
 
 
-        private Panel mainPanel;
         private ToolStripControlHost host;
-        private CheckBox chkBoxLightMap;
+        private LightSettingsControl control;
+
 
         public ToggleLightingAction(LevelDescriptor levelDescriptor)
             : base("Lighting", AssetManager.ICON_FILE_PICTURE)
@@ -31,33 +31,37 @@ namespace WhiskeyEditor.UI.Documents.Actions
 
         protected override void setupDropDown(ToolStripDropDownButton btn)
         {
-            mainPanel = new Panel();
-            chkBoxLightMap = new CheckBox();
-            chkBoxLightMap.Text = "PreviewLighting";
-            chkBoxLightMap.CheckAlign = ContentAlignment.MiddleRight;
-            chkBoxLightMap.Checked = Descriptor.Level.PreviewLighting; 
-            
-            chkBoxLightMap.CheckedChanged += (s, a) =>
-            {
-                Descriptor.Level.PreviewLighting = chkBoxLightMap.Checked;
-            };
-            mainPanel.AutoSize = true;
-            mainPanel.Controls.Add(chkBoxLightMap);
-            
+            control = new LightSettingsControl();
 
+            control.ShadowingEnabledBox.CheckedChanged += (s, a) =>
+            {
+                Descriptor.Level.ShadowingEnabled = control.ShadowingEnabledBox.Checked;
+            };
+            control.PreviewShadowingBox.CheckedChanged += (s, a) =>
+            {
+                Descriptor.Level.PreviewShadowing = control.PreviewShadowingBox.Checked;
+            };
+            control.LightingEnabledBox.CheckedChanged += (s, a) =>
+            {
+                Descriptor.Level.LightingEnabled = control.LightingEnabledBox.Checked;
+            };
+            control.PreviewLightingBox.CheckedChanged += (s, a) =>
+            {
+                Descriptor.Level.PreviewLighting = control.PreviewLightingBox.Checked;
+            };
 
             ToolStripDropDown dropDown = btn.DropDown;
 
             //dropDown.AutoSize = false;
             dropDown.Margin = Padding.Empty;
             dropDown.Padding = Padding.Empty;
-            host = new ToolStripControlHost(mainPanel);
+            host = new ToolStripControlHost(control);
 
             host.Margin = Padding.Empty;
             host.Padding = Padding.Empty;
             host.AutoSize = false;
-            host.Size = mainPanel.Size;
-            dropDown.Size = mainPanel.Size;
+            host.Size = control.Size;
+            dropDown.Size = control.Size;
             //((ToolStripDropDownMenu)btn.DropDown).ShowImageMargin = false;
             //((ToolStripDropDownMenu)btn.DropDown).ShowItemToolTips = false;
             dropDown.Items.Add(host);
@@ -80,7 +84,7 @@ namespace WhiskeyEditor.UI.Documents.Actions
 
         protected override void run()
         {
-            
+            control.setFromLevel(Descriptor);
         }
     }
 }

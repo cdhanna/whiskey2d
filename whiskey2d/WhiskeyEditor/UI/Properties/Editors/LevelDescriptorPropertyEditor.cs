@@ -44,17 +44,17 @@ namespace WhiskeyEditor.UI.Properties.Editors
         {
 
 
-            //Point p = WhiskeyPropertyListGrid.PropertyGrid.PointToClient(Cursor.Position);
-            //if (p.X > 0 && p.Y > 0 && p.X < WhiskeyPropertyListGrid.Width && p.Y < WhiskeyPropertyListGrid.Height)
-            //{
+            Point p = WhiskeyPropertyListGrid.PropertyGrid.PointToClient(Cursor.Position);
+            if (p.X > 0 && p.Y > 0 && p.X < WhiskeyPropertyListGrid.Width && p.Y < WhiskeyPropertyListGrid.Height)
+            {
 
-            //}
-            //else
-            //{
-            //    CameraTruePosDesc.PropValue = Descriptor.Level.Camera.TruePosition;
-            //    CameraZoomDesc.PropValue = Descriptor.Level.Camera.Zoom;
-            //    WhiskeyPropertyListGrid.Refresh();
-            //}
+            }
+            else
+            {
+                CameraTruePosDesc.PropValue = Descriptor.Level.Camera.TruePosition;
+                CameraZoomDesc.PropValue = Descriptor.Level.Camera.Zoom;
+                WhiskeyPropertyListGrid.Refresh();
+            }
         }
 
         private void initControls()

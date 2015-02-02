@@ -21,7 +21,7 @@ namespace Whiskey2D.Core
             Size = new Vector(1280, 720);
             Position = Vector.Zero;
             ZoomMin = .5f;
-            ZoomMax = 1.5f;
+            ZoomMax = 2.5f;
             Zoom = 1;
             buildTransform();
         }

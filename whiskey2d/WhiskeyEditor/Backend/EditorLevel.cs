@@ -24,7 +24,13 @@ namespace WhiskeyEditor.Backend
         public Color BackgroundColor { get; set; }
         public Color BackgroundColorCompliment { get { return BackgroundColor.invert(); } }
         public Color AmbientLight { get; set; }
+        
+        
         public bool PreviewLighting { get; set; }
+        public bool PreviewShadowing { get; set; }
+        public bool LightingEnabled { get; set; }
+        public bool ShadowingEnabled { get; set; }
+
         public Camera Camera { get; set; }
         public List<Layer> Layers { get; set; }
 
@@ -38,7 +44,12 @@ namespace WhiskeyEditor.Backend
             Camera = new Camera();
             BackgroundColor = Color.Orange ;
             AmbientLight = Color.White;
+
             PreviewLighting = true;
+            PreviewShadowing = true;
+            LightingEnabled = true;
+            ShadowingEnabled = true;
+
             BloomSettings = BloomSettings.PresetSettings[5];
             LevelName = name;
             Layers = new List<Layer>();

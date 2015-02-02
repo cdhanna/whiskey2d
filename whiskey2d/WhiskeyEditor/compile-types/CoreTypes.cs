@@ -40,6 +40,7 @@ namespace WhiskeyEditor.compile_types
 
             addCoreScript<TriggerActivate>();
             addCoreType<SimpleObject>();
+            addCoreType<ShadowCaster>();
             addCoreType<SimpleLight>();
             addCoreType<DebugObject>();
             addCoreType<TriggerZone>();

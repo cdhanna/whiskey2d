@@ -23,6 +23,9 @@ namespace Whiskey2D.Core
         public Camera Camera { get; set; }
         public BloomSettings BloomSettings { get; set; }
 
+        public bool LightingEnabled { get; set; }
+        public bool ShadowsEnabled { get; set; }
+
         public GameLevel(string name)
             : base()
         {

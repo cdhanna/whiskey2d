@@ -140,6 +140,7 @@
     <Compile Include="compile-types\CoreDescriptor.cs" />
     <Compile Include="compile-types\Scripts\TriggerActivate.cs" />
     <Compile Include="compile-types\Types\DebugObject.cs" />
+    <Compile Include="compile-types\Types\ShadowCaster.cs" />
     <Compile Include="compile-types\Types\SimpleLight.cs" />
     <Compile Include="compile-types\Types\SimpleObject.cs" />
     <Compile Include="compile-types\CoreTypes.cs" />
@@ -179,6 +180,12 @@
     </Compile>
     <Compile Include="UI\Documents\Actions\DecreaseGridSnapAction.cs" />
     <Compile Include="UI\Documents\Actions\IncreaseGridSnapAction.cs" />
+    <Compile Include="UI\Documents\Actions\LightSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Documents\Actions\LightSettingsControl.Designer.cs">
+      <DependentUpon>LightSettingsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Documents\Actions\ToggleLightingAction.cs" />
     <Compile Include="UI\Documents\Actions\ViewLevelLayersAction.cs" />
     <Compile Include="UI\Documents\ArtDocument.cs">
@@ -381,6 +388,9 @@
     <Compile Include="UI\Documents\ContentFactories\TypeContentFactory.cs" />
     <Compile Include="UI\Documents\Info\TypeDocumentInfo.cs" />
     <Compile Include="UI\UIManager.cs" />
+    <Content Include="compile-media\AlphaOne.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="compile-media\BloomCombine.fx" />
     <Content Include="compile-media\BloomExtract.fx" />
     <Content Include="compile-media\debug.png">
@@ -552,6 +562,9 @@
     <Content Include="compile-exe\WhiskeyRunner.exe.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UI\Documents\Actions\LightSettingsControl.resx">
+      <DependentUpon>LightSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Documents\CoreDescriptorControl.resx">
       <DependentUpon>CoreDescriptorControl.cs</DependentUpon>
     </EmbeddedResource>
