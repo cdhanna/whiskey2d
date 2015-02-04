@@ -94,6 +94,7 @@
     <Compile Include="Core\Inputs\ReplayService.cs" />
     <Compile Include="Core\RenderHints.cs" />
     <Compile Include="Core\ServiceContainer.cs" />
+    <Compile Include="Core\ShadowProperties.cs" />
     <Compile Include="Core\SimpleGameObject.cs" />
     <Compile Include="Core\Sound.cs" />
     <Compile Include="Core\State.cs" />

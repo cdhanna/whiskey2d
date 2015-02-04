@@ -172,11 +172,11 @@ namespace WhiskeyEditor.UI.Library
 
                     //CORE-TYPES
 
-                    LibraryTreeNode nodeCoreTypes = new LibraryTreeNode("Common Types", WhiskeyEditor.compile_types.CoreTypes.corePathTypes);
+                    LibraryTreeNode nodeCoreTypes = new LibraryTreeNode("Shared Objects", WhiskeyEditor.compile_types.CoreTypes.corePathTypes);
                     nodeCoreTypes.populate();
                     root.Nodes.Add(nodeCoreTypes);
 
-                    LibraryTreeNode nodeCoreScripts = new LibraryTreeNode("Common Scripts", WhiskeyEditor.compile_types.CoreTypes.corePathScripts);
+                    LibraryTreeNode nodeCoreScripts = new LibraryTreeNode("Shared Scripts", WhiskeyEditor.compile_types.CoreTypes.corePathScripts);
                     nodeCoreScripts.populate();
                     root.Nodes.Add(nodeCoreScripts);
 
@@ -187,7 +187,7 @@ namespace WhiskeyEditor.UI.Library
                     root.ExpandAll();
 
                     //close common scripts
-                    nodeCoreScripts.Collapse();
+                   // nodeCoreScripts.Collapse();
 
 
                     //fileTree.Update();

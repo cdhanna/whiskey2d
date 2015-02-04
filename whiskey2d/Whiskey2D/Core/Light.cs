@@ -38,12 +38,16 @@ namespace Whiskey2D.Core
         public Light(Light other)
             : this(other.Position, other.Color)
         { }
-        public Light(Vector position, Color color)
+        public Light(Vector position, Color color) : this(position, color, 512, true)
         {
-            Visible = true;
+            
+        }
+        public Light(Vector position, Color color, float radius, bool visible)
+        {
+            Visible = visible;
             Position = position;
             Color = color;
-            Radius = 512;
+            Radius = radius;
         }
 
         public void render(RenderInfo info)

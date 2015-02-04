@@ -19,7 +19,7 @@ namespace WhiskeyEditor.Backend
         public const string PROP_ACTIVE = "Active";
         public const string PROP_ISDEBUG = "IsDebug";
         public const string PROP_LIGHT = "Light";
-        public const string PROP_SHADOWCASTER = "ShadowCaster";
+        public const string PROP_SHADOWS = "Shadows";
         private bool initialized;
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
@@ -282,22 +282,22 @@ namespace WhiskeyEditor.Backend
                 }
             }
         }
-        public override Boolean ShadowCaster
+        public override ShadowProperties Shadows
         {
             get
             {
                 if (!initialized)
                 {
-                    return base.ShadowCaster;
+                    return base.Shadows;
                 }
-                else return (Boolean)getTypeValOfName(PROP_SHADOWCASTER).Value;
+                else return (ShadowProperties)getTypeValOfName(PROP_SHADOWS).Value;
             }
             set
             {
-                base.IsDebug = value;
+                base.Shadows = value;
                 if (initialized)
                 {
-                    getTypeValOfName(PROP_SHADOWCASTER).Value = value;
+                    getTypeValOfName(PROP_SHADOWS).Value = value;
                 }
             }
         }
@@ -427,7 +427,7 @@ namespace WhiskeyEditor.Backend
             inst.Sprite = new Sprite(Sprite.getRenderer(), Sprite.getResources(), Sprite);
             inst.Layer = Layer;
             inst.IsDebug = IsDebug;
-            inst.ShadowCaster = ShadowCaster;
+            inst.Shadows = Shadows;
 
             for (int i = 0 ; i < getPropertySet().Count ; i ++)
             {

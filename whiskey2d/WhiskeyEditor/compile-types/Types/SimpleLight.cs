@@ -23,10 +23,12 @@ namespace WhiskeyEditor.compile_types.Types
             Sprite spr = (Sprite)rt.Value;
             spr.ImagePath = "lightIcon.png";
             spr.Depth = 1;
+            spr.Scale *= .5f;
 
             TypeVal lt = this.getTypeValOfName("Light");
             Light light = (Light)lt.Value;
             light.Visible = true;
+            
 
             getTypeValOfName("IsDebug").Value = true;
             

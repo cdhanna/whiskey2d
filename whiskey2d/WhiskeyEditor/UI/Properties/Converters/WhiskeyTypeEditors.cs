@@ -30,6 +30,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
 
             map.Add("Color", new ColorPicker());
             map.Add("Light", new LightColorPicker());
+            map.Add("ShadowProperties", new ShadowPropertiesPicker());
             map.Add("Sprite", new SpritePathPicker());
             map.Add("Boolean", new BoolPicker());
             map.Add("InstanceDescriptor", new InstancePicker());

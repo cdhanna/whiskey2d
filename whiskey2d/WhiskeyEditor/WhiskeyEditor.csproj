@@ -287,6 +287,7 @@
     <Compile Include="UI\Properties\Converters\KeyConverter.cs" />
     <Compile Include="UI\Properties\Converters\LayerTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\LightTypeConverter.cs" />
+    <Compile Include="UI\Properties\Converters\ShadowPropertyTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\SpriteTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\VectorConverter.cs" />
     <Compile Include="UI\Properties\Converters\WhiskeyTypeConverters.cs" />
@@ -350,6 +351,7 @@
     <Compile Include="UI\Properties\RestrictedFloatPickerControl.Designer.cs">
       <DependentUpon>RestrictedFloatPickerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Properties\ShadowPropertiesPicker.cs" />
     <Compile Include="UI\Properties\SpriteButtonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -602,6 +604,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="compile-media\GaussianBlur.mgfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="compile-media\light.mgfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

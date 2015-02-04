@@ -103,7 +103,7 @@ namespace Whiskey2D.Core
         //    }
         //}
 
-        public void DrawShadows(Light lightSource, Matrix transform)
+        public void DrawShadows(Light lightSource, Matrix transform, bool includeLight)
         {
             //compute facing of each edge, using N*L
             for (int i = 0; i < primitiveCount; i++)
@@ -120,9 +120,9 @@ namespace Whiskey2D.Core
                 N.Y = secondVertex.X - firstVertex.X;
 
                 if (Vector2.Dot(N, L) > 0)
-                    backFacing[i] = false;
+                    backFacing[i] = includeLight;
                 else
-                    backFacing[i] = true;
+                    backFacing[i] = !includeLight;
             }
 
             //find beginning and ending vertices which

@@ -180,13 +180,19 @@ namespace Whiskey2D.Core.Managers.Impl
                 {
                     gobs.ForEach(hull =>
                     {
-                        if (hull.ShadowCaster)
+                        Boolean pass = hull != i;
+                        if (i.Shadows.SelfShadows)
+                        {
+                            pass = true;
+                        }
+
+                        if (pass)
                         {
                             Convex convex = hull.Bounds.Convex;
                             convex.Origin = hull.Position;
                             convex.Rotation = hull.Sprite.Rotation;
                             ConvexHull convexHull = new ConvexHull(convex, Color.White);
-                            convexHull.DrawShadows(i.Light, CameraTransform);
+                            convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight);
                         }
                     });
                 }

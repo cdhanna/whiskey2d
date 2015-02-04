@@ -393,32 +393,45 @@ namespace WhiskeyEditor.MonoHelp
 
             insts.ForEach(i =>
             {
-                ClearAlphaToOne();
-
-
-                GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
-
-                //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
-                if (Level.PreviewShadowing)
+                if (i.Light.Visible)
                 {
-                    insts.ForEach(hull =>
+
+                    ClearAlphaToOne();
+
+
+                    GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                    GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
+
+                    //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
+                    if (Level.PreviewShadowing)
                     {
-                        if (hull.ShadowCaster)
+                        insts.ForEach(hull =>
                         {
-                            Convex convex = hull.Bounds.Convex;
-                            convex.Origin = hull.Position;
-                            convex.Rotation = hull.Sprite.Rotation;
-                            ConvexHull convexHull = new ConvexHull(convex, WhiskeyColor.White);
-                            convexHull.DrawShadows(i.Light, CameraTransform);
-                        }
-                    });
+                            if (hull.Shadows.CastsShadows)
+                            {
+                                Boolean pass = hull != i;
+                                if (i.Shadows.SelfShadows)
+                                {
+                                    pass = true;
+                                }
+                                
+                                if (pass)
+                                {
+                                    Convex convex = hull.Bounds.Convex;
+                                    convex.Origin = hull.Position;
+                                    convex.Rotation = hull.Sprite.Rotation;
+                                    ConvexHull convexHull = new ConvexHull(convex, WhiskeyColor.White);
+                                    convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight);
+                                }
+                            }
+                        });
+                    }
+
+
+                    spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+                    i.renderLight(RenderInfo);
+                    spriteBatch.End();
                 }
-
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
-                i.renderLight(RenderInfo);
-                spriteBatch.End();
             });
             ClearAlphaToOne();
             
@@ -477,10 +490,10 @@ namespace WhiskeyEditor.MonoHelp
 
                 //controller.Bounds.draw(RenderInfo, new RenderHints().setColor(controller.Sprite.Color).setPrimitiveType(PrimitiveType.LineStrip));
 
-                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.TopLeft, controller.Bounds.TopRight, 6);
-                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.TopLeft, controller.Bounds.BottomLeft, 6);
-                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.BottomLeft, controller.Bounds.BottomRight, 6);
-                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.BottomRight, controller.Bounds.TopRight, 6);
+                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.TopLeft, controller.Bounds.TopRight, 6 / Level.Camera.Zoom);
+                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.TopLeft, controller.Bounds.BottomLeft, 6 / Level.Camera.Zoom);
+                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.BottomLeft, controller.Bounds.BottomRight, 6 / Level.Camera.Zoom);
+                drawLine(spriteBatch, controller.Sprite.Color, .3f, controller.Bounds.BottomRight, controller.Bounds.TopRight, 6 / Level.Camera.Zoom);
 
 
                

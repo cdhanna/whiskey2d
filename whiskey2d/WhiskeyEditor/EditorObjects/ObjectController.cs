@@ -71,7 +71,7 @@ namespace WhiskeyEditor.EditorObjects
             ocp.Sprite.Visible = vis;
             ocp.Sprite.Depth = Sprite.Depth + .01f;
             ocp.Sprite.Color = Sprite.Color;//Gob.CurrentLevel.BackgroundColor.invert().lerp(Microsoft.Xna.Framework.Color.Black, .5f);
-
+            ocp.Sprite.Scale = Vector.One * Math.Min(35, Math.Max(6, 20 / (CurrentLevel.Camera.Zoom*1.2f)));
         }
 
         public bool isSelectingControlPoint(Vector mousePos)

@@ -25,8 +25,8 @@ namespace WhiskeyEditor.compile_types.Types
             spr.Color = Color.Black;
             spr.Scale = Vector.One * 50;
 
-           
-            getTypeValOfName("ShadowCaster").Value = true;
+            ShadowProperties shadowProps = getTypeValOfName("Shadows").Value as ShadowProperties;
+            shadowProps.CastsShadows = true;
             
             base.configure();
         }

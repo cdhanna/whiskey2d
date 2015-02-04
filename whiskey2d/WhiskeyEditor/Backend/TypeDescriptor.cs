@@ -86,7 +86,7 @@ namespace WhiskeyEditor.Backend
             Light l = new Light();
             l.Visible = false;
             addPropertyDescriptor(new PropertyDescriptor(true, "Light", new RealType(typeof(Light), l)));
-            addPropertyDescriptor(new PropertyDescriptor(true, "ShadowCaster", new RealType(typeof(Boolean), false)));
+            addPropertyDescriptor(new PropertyDescriptor(true, "Shadows", new RealType(typeof(ShadowProperties), new ShadowProperties())));
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
             addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));
@@ -279,13 +279,23 @@ namespace WhiskeyEditor.Backend
             else if (typeName.Equals(typeof(Vector).Name))
             {
                 Vector vec = (Vector) val;
-                return "new Vector(" + vec.X + ", " + vec.Y + ")";
+                return "new Vector(" + vec.X + "f, " + vec.Y + "f)";
             }
             else if (typeName.Equals(typeof(Sprite).Name))
             {
                 Sprite spr = (Sprite)val;
                 return "new Sprite(" + getCodeFor(spr.ImagePath) + ", " + getCodeFor(spr.Scale) + ", " + getCodeFor(spr.Offset) + ", " + getCodeFor(spr.Depth) + ", " + getCodeFor(spr.Color) + ", " + getCodeFor(spr.Rotation) + ")";
 
+            }
+            else if (typeName.Equals(typeof(Light).Name))
+            {
+                Light light = (Light)val;
+                return "new Light(" + getCodeFor(light.Position) +", " + getCodeFor(light.Color) + ", " + getCodeFor(light.Radius) + ", " + getCodeFor(light.Visible) +")";
+            }
+            else if (typeName.Equals(typeof(ShadowProperties).Name))
+            {
+                ShadowProperties shadows = (ShadowProperties)val;
+                return "new ShadowProperties(" + getCodeFor(shadows.CastsShadows) + ", " + getCodeFor(shadows.IncludeLight) + ", " + getCodeFor(shadows.SelfShadows) + ")";
             }
             else if (typeName.Equals(typeof(Color).Name))
             {
