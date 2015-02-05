@@ -12,12 +12,10 @@ namespace Whiskey2D.Core
     [Serializable]
     public abstract class GameObject 
     {
-        private static int idCounter = 0;
 
         private Sprite sprite;
         private Light light;
-        private int id;
-        private bool active;
+       
         private ShadowProperties shadows;
 
         /// <summary>
@@ -51,13 +49,13 @@ namespace Whiskey2D.Core
         {
             scripts = new List<Script>();
             shadows = new ShadowProperties();
-            ID = idCounter++;
             Position = Vector.Zero;
             Sprite = new Sprite();
             Light = new Light();
             Light.Visible = false;
 
-            active = true;
+            Active = true;
+            HudObject = false;
             this.initProperties();
             this.addInitialScripts();
 
@@ -123,14 +121,14 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual Boolean Active
         {
-            get
-            {
-                return active;
-            }
-            set
-            {
-                active = value;
-            }
+            get;
+            set;
+        }
+
+        public virtual Boolean HudObject
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -178,21 +176,7 @@ namespace Whiskey2D.Core
                 shadows = value;
             }
         }
-        /// <summary>
-        /// Get or Set the unique ID of the GameObject
-        /// </summary>
-        [System.ComponentModel.ReadOnly(true)]
-        public int ID
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = value;
-            }
-        }
+        
 
 
         /// <summary>
@@ -394,6 +378,7 @@ namespace Whiskey2D.Core
         //    return collisionInfos;
         //}
 
+        //public Collisions
 
         public List<ObjectCollisionInfo<G>> currentCollisions<G>() where G : GameObject
         {

@@ -101,46 +101,29 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
             //DRAW LIGHTMAP
-            renderLightMap(GameManager.Objects.getAllObjects().Where(g => g.Active).ToList() );
+            renderLightMap(GameManager.Objects.getAllObjects().Where(g => g.Active && !g.HudObject).ToList() );
 
             bloomComponent.BeginDraw();
 
             GraphicsDevice.Clear(GameManager.Level.BackgroundColor);
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
-            //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
-            
+
             List<GameObject> allGobs = GameManager.Objects.getAllObjects();
-            foreach (GameObject gob in allGobs.Where(g => g.Active) )
+            foreach (GameObject gob in allGobs.Where(g => g.Active && !g.HudObject) )
             {
                 Sprite spr = gob.Sprite;
                 if (spr != null)
                 {
-                   
-                    //if (spr.getImage() == GameManager.Renderer.getPixel())
-                    //{
-                    //    spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
-                    //}
-
-
-
-                    {
-                        spr.draw(spriteBatch,transform, gob.Position);
-                        //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth / 2);
-                        //GameManager.Log.debug(spr.ImagePath);
-                    }
-
+                    spr.draw(spriteBatch, transform, gob.Position);
                 }
             }
 
             spriteBatch.End();
 
             bloomComponent.draw();
-
-
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = lightMapTarget;
-            // GraphicsDevice.Clear(XnaColor.TransparentBlack);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, GameManager.Level.LightingEnabled ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
 
@@ -173,7 +156,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
                 GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
+                GraphicsDevice.BlendState = CustomBlendStates.MultiplyShadows;
 
                 //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
                 if (GameManager.Level.ShadowsEnabled)
@@ -192,7 +175,7 @@ namespace Whiskey2D.Core.Managers.Impl
                             convex.Origin = hull.Position;
                             convex.Rotation = hull.Sprite.Rotation;
                             ConvexHull convexHull = new ConvexHull(convex, Color.White);
-                            convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight);
+                            convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight, hull.Shadows.Solidness, hull.Shadows.Height);
                         }
                     });
                 }
@@ -212,7 +195,7 @@ namespace Whiskey2D.Core.Managers.Impl
             {
                 alphaClearTexture = GameManager.Resources.Content.Load<Texture2D>("AlphaOne");
             }
-            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.WriteToAlpha);
+            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.AlphaOnly);
             spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             spriteBatch.End();
         }
@@ -222,6 +205,16 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void renderHud()
         {
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+            List<GameObject> hudGobs = GameManager.Objects.getAllObjects().Where(g => g.HudObject).ToList();
+            hudGobs.ForEach(h =>
+            {
+                h.renderImage(RenderInfo);
+            });
+            spriteBatch.End();
+
+
+
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
             List<Box> boxes = HudManager.getInstance().getAllBoxes();

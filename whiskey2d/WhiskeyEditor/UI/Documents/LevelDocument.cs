@@ -96,6 +96,7 @@ namespace WhiskeyEditor.UI.Documents
             base.addAction<ToolStripDropDownButton>(new ToggleLightingAction(Descriptor));
             base.addAction(new IncreaseGridSnapAction());
             base.addAction(new DecreaseGridSnapAction());
+            base.addAction(new ToggleHudAction(Descriptor));
         }
 
 
@@ -155,9 +156,9 @@ namespace WhiskeyEditor.UI.Documents
                 InstanceDescriptor inst = new InstanceDescriptor( Descriptor.Level);
                 inst.Sprite = new Sprite(WhiskeyControl.Renderer, WhiskeyControl.Resources, inst.Sprite);
                 inst.Light.Visible = false;
+                
                 inst.initialize(tDesc);
 
-                //inst.Sprite.Scale *= 50;
                 Point p = PointToClient(new Point(args.X, args.Y - ToolStrip.Height));
 
                 inst.Position = new Vector(p.X, p.Y);// -inst.Bounds.Size / 2;
@@ -178,7 +179,6 @@ namespace WhiskeyEditor.UI.Documents
                 }
 
                 Descriptor.Level.updateAll();
-
             }
 
             

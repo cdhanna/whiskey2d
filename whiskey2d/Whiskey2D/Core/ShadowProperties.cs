@@ -12,16 +12,21 @@ namespace Whiskey2D.Core
         public Boolean CastsShadows { get; set; }
         public Boolean IncludeLight { get; set; }
         public Boolean SelfShadows { get; set; }
-        public ShadowProperties() : this(false, true, false)
+        public float Solidness { get; set; }
+        public float Height { get; set; }
+
+        public ShadowProperties() : this(false, true, false, 1, 100)
         {
            
         }
 
-        public ShadowProperties(Boolean castsShadows, Boolean includeLight, Boolean selfShadows)
+        public ShadowProperties(Boolean castsShadows, Boolean includeLight, Boolean selfShadows, float solidness, float height)
         {
             CastsShadows = castsShadows;
             IncludeLight = includeLight;
             SelfShadows = selfShadows;
+            Solidness = solidness;
+            Height = height;
         }
 
     }

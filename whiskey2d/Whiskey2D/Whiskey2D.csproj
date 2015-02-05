@@ -48,6 +48,7 @@
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\CollisionInfo.cs" />
+    <Compile Include="Core\Collisions.cs" />
     <Compile Include="Core\CollisionUtil.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\Convex.cs" />

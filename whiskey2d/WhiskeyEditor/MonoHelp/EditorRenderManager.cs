@@ -34,7 +34,7 @@ namespace WhiskeyEditor.MonoHelp
         private BloomComponent bloomComponent;
         private BloomSettings bloomSettings;
         private RenderTarget2D hudTarget;
-
+        private RenderTarget2D hudObjectsTarget;
         private Texture2D alphaClearTexture;
         private RenderTarget2D lightMapTarget;
         private RenderTarget2D sceneTarget;
@@ -71,63 +71,6 @@ namespace WhiskeyEditor.MonoHelp
             this.spriteBatch.Dispose();
         }
 
-        ///// <summary>
-        ///// Renders the Game
-        ///// </summary>
-        //public void render(List<GameObject> descs)
-        //{
-
-        //    Matrix transform = ActiveCamera != null ? ActiveCamera.TranformMatrix : Matrix.Identity;
-
-
-        //    //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
-
-
-        //    //    //draw grid
-        //    //    if (ActiveCamera != null)
-        //    //    {
-
-
-        //    //        Vector topLeft =  (Vector.Zero);
-        //    //        Vector botRight =  (new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
-
-        //    //        int gridSize = 100;
-        //    //        drawLine(spriteBatch, new Vector(topLeft.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom, new Vector(botRight.X, -ActiveCamera.Position.Y + 100) * ActiveCamera.Zoom);
-        //    //        //float currY = topLeft.Y - (topLeft.Y % gridSize);
-        //    //        //while (currY < botRight.Y)
-        //    //        //{
-        //    //        //    drawLine(spriteBatch, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
-
-        //    //        //    currY += gridSize;
-        //    //        //}
-
-                    
-
-
-        //    //    }
-
-        //    //spriteBatch.End();
-
-
-        //    spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
-            
-        //    foreach (GameObject gob in descs)
-        //    {
-        //        Sprite spr = gob.Sprite;
-        //        if (spr != null)
-        //        {
-        //            spr.draw(spriteBatch, gob.Position);
-        //            //spriteBatch.Draw(spr.getImage(), gob.Position, null, spr.Color, spr.Rotation, spr.Offset, spr.Scale, SpriteEffects.None, spr.Depth/2);
-        //        }
-        //    }
-
-            
-            
-
-
-        //    spriteBatch.End();
-        //}
-
         private void drawBoxes()
         {
 
@@ -138,6 +81,8 @@ namespace WhiskeyEditor.MonoHelp
             Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
 
 
+            
+
             //draw screen-box
             int screenWidth = 1280;
             int screenHeight = 720;
@@ -146,41 +91,34 @@ namespace WhiskeyEditor.MonoHelp
 
             Vector screenTopLeft = center - screenSize / 2;
             Vector screenBotRight = center + screenSize / 2;
+            Vector screenBoxSize = screenBotRight - screenTopLeft;
 
+
+            
 
             drawBox(spriteBatch, screenBox, .02f, screenTopLeft, screenBotRight);
             drawBox(spriteBatch, constantBox, .03f, Vector.Zero, Vector.Zero + screenSize);
 
+            if (Level.PreviewHud)
+            {
+                spriteBatch.Draw(hudObjectsTarget, screenTopLeft, null, XnaColor.White);
+            }
         }
 
         private void drawGrid()
         {
             Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
             Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
+            Vector size = botRight - topLeft;
 
-
+            
             float intensity = Level.BackgroundColor.intensity();
             XnaColor lineColor = Level.BackgroundColor.invert();
             if (intensity > .4f && intensity < .6f)
             {
                 lineColor = XnaColor.Lerp(lineColor, XnaColor.White,1-  Math.Abs(.5f - intensity));
             }
-            //XnaColor lineColor = new XnaColor(32, 32, 32);
-            //if (intensity < .5f)
-            //{
-            //    lineColor = new XnaColor(232, 232, 232);
-            //}
-
             
-           // lineColor = XnaColor.Lerp(lineColor, XnaColor.Transparent, .7f);
-            
-            
-            
-            
-            //lineColor = XnaColor.Lerp(lineColor, Level.BackgroundColor, .5f);
-
-            //draw grid
-            //int gridSize = 120;
 
             float currY = GridManager.Instance.snapY(topLeft.Y);//topLeft.Y - (topLeft.Y % gridSize);
             while (currY < botRight.Y)
@@ -190,7 +128,7 @@ namespace WhiskeyEditor.MonoHelp
                 if (currY == 0)
                     color = Level.BackgroundColor.invert();
 
-                drawLine(spriteBatch, color, .3f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
+                drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
                 spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
 
                 currY += GridManager.Instance.GridSizeY;
@@ -202,7 +140,7 @@ namespace WhiskeyEditor.MonoHelp
                 XnaColor color = lineColor;
                 if (currX == 0)
                     color = Level.BackgroundColor.invert();
-                drawLine(spriteBatch, color, .3f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
+                drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
                 spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
                 currX += GridManager.Instance.GridSizeX;
             }
@@ -326,12 +264,13 @@ namespace WhiskeyEditor.MonoHelp
             hudTarget = checkRenderTarget(hudTarget, bbWidth, bbHeight);
             lightMapTarget = checkRenderTarget(lightMapTarget, bbWidth, bbHeight);
             sceneTarget = checkRenderTarget(sceneTarget, bbWidth, bbHeight);
+            hudObjectsTarget = checkRenderTarget(hudObjectsTarget, 1280, 720);
 
             //get game objects, and ui gameobjects
             List<GameObject> uiGameObjects = new List<GameObject>();
             List<GameObject> gobsToRender = new List<GameObject>();
             gobs.ForEach(g => uiGameObjects.Add(g));
-            insts.ForEach(g => gobsToRender.Add(g));
+            insts.Where(g => !g.HudObject).ToList().ForEach(g => gobsToRender.Add(g));
 
             //DRAW HUD
             renderHud();
@@ -355,14 +294,13 @@ namespace WhiskeyEditor.MonoHelp
 
 
             //DRAW LIGHTMAP
-            renderLightMap(gobs, insts);
+            renderLightMap(gobs, insts.Where(g => !g.HudObject).ToList());
             
             //DRAW SCENE WITH LIGHTMAP
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = lightMapTarget;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, Level.PreviewLighting ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
-       
             spriteBatch.End();
 
             //DRAW HUD
@@ -400,7 +338,7 @@ namespace WhiskeyEditor.MonoHelp
 
 
                     GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                    GraphicsDevice.BlendState = CustomBlendStates.WriteToAlpha;
+                    GraphicsDevice.BlendState = CustomBlendStates.MultiplyShadows;
 
                     //shadowing algorithm taken from http://www.catalinzima.com/xna/samples/dynamic-2d-shadows/
                     if (Level.PreviewShadowing)
@@ -421,7 +359,7 @@ namespace WhiskeyEditor.MonoHelp
                                     convex.Origin = hull.Position;
                                     convex.Rotation = hull.Sprite.Rotation;
                                     ConvexHull convexHull = new ConvexHull(convex, WhiskeyColor.White);
-                                    convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight);
+                                    convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight, hull.Shadows.Solidness, hull.Shadows.Height);
                                 }
                             }
                         });
@@ -443,7 +381,9 @@ namespace WhiskeyEditor.MonoHelp
             {
                 alphaClearTexture = WhiskeyControl.Resources.Content.Load<Texture2D>("AlphaOne");
             }
-            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.WriteToAlpha);
+
+           
+            spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.AlphaOnly);
             spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), WhiskeyColor.White);
             spriteBatch.End();
         }
@@ -454,10 +394,23 @@ namespace WhiskeyEditor.MonoHelp
         /// </summary>
         public void renderHud()
         {
+            GraphicsDevice.SetRenderTarget(hudObjectsTarget);
+            GraphicsDevice.Clear(XnaColor.Transparent);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
+            List<GameObject> hudGobs = Level.getAllObjects().Where(g => g.HudObject).ToList();
+            hudGobs.ForEach(h =>
+            {
+                h.renderImage(RenderInfo);
+            });
+            spriteBatch.End();
+
             GraphicsDevice.SetRenderTarget(hudTarget);
             GraphicsDevice.Clear(XnaColor.Transparent);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, CameraTransform);
             //spriteBatch.Begin();
+
+            spriteBatch.Draw(hudObjectsTarget, Vector.Zero, null, XnaColor.White);
+
             ObjectController controller = WhiskeyControl.Active.ObjectController;
             List<GameObject> uiGobs = new List<GameObject>();
             uiGobs.Add(controller.ControlPointBot);
@@ -507,7 +460,10 @@ namespace WhiskeyEditor.MonoHelp
 
 
             spriteBatch.End();
-            
+
+
+
+
         }
 
 

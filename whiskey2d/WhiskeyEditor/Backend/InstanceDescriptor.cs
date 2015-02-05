@@ -20,6 +20,7 @@ namespace WhiskeyEditor.Backend
         public const string PROP_ISDEBUG = "IsDebug";
         public const string PROP_LIGHT = "Light";
         public const string PROP_SHADOWS = "Shadows";
+        public const string PROP_HUD = "HudObject";
         private bool initialized;
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
@@ -263,6 +264,26 @@ namespace WhiskeyEditor.Backend
             }
         }
 
+        public override Boolean HudObject
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.HudObject;
+                }
+                else return (Boolean)getTypeValOfName(PROP_HUD).Value;
+            }
+            set
+            {
+                base.HudObject = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_HUD).Value = value;
+                }
+            }
+        }
+
         public override Boolean IsDebug
         {
             get
@@ -428,7 +449,7 @@ namespace WhiskeyEditor.Backend
             inst.Layer = Layer;
             inst.IsDebug = IsDebug;
             inst.Shadows = Shadows;
-
+            inst.HudObject = HudObject;
             for (int i = 0 ; i < getPropertySet().Count ; i ++)
             {
                 inst.propDescs[i] = lookUpPropertyDescriptor(propDescs[i].Name).clone();

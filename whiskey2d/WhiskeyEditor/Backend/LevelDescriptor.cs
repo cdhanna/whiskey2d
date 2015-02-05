@@ -30,7 +30,7 @@ namespace WhiskeyEditor.Backend
                 ProjectManager.Instance.ActiveProject.saveGameData();
             }
         }
-
+        
         public EditorLevel Level { get; private set; }
         //private State state;
 
@@ -79,6 +79,7 @@ namespace WhiskeyEditor.Backend
             
             //colorProperty.TypeVal.Value = Level.BackgroundColor;
             Level.BackgroundColor = Color;
+            
             //State.serialize(Level.getInstanceLevelState(), FilePath);
 
             //state = State.deserialize(FilePath);

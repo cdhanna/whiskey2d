@@ -80,7 +80,7 @@ namespace WhiskeyEditor.Backend
         {
             addPropertyDescriptor(new PropertyDescriptor(true, "X", new RealType(typeof(float), 0)));
             addPropertyDescriptor(new PropertyDescriptor(true, "Y", new RealType(typeof(float), 0)));
-            addPropertyDescriptor(new PropertyDescriptor(true, "ID", new RealType(typeof(int), 0)));
+            
             addPropertyDescriptor(new PropertyDescriptor(true, "Sprite", new RealType(typeof(Sprite), new Sprite())));
 
             Light l = new Light();
@@ -89,6 +89,7 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true, "Shadows", new RealType(typeof(ShadowProperties), new ShadowProperties())));
             addPropertyDescriptor(new PropertyDescriptor(true,false, "Name", new RealType(typeof(String), "???")));
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
+            addPropertyDescriptor(new PropertyDescriptor(true, "HudObject", new RealType(typeof(Boolean), false)));
             addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));
 
 
@@ -295,7 +296,7 @@ namespace WhiskeyEditor.Backend
             else if (typeName.Equals(typeof(ShadowProperties).Name))
             {
                 ShadowProperties shadows = (ShadowProperties)val;
-                return "new ShadowProperties(" + getCodeFor(shadows.CastsShadows) + ", " + getCodeFor(shadows.IncludeLight) + ", " + getCodeFor(shadows.SelfShadows) + ")";
+                return "new ShadowProperties(" + getCodeFor(shadows.CastsShadows) + ", " + getCodeFor(shadows.IncludeLight) + ", " + getCodeFor(shadows.SelfShadows) + ", " + getCodeFor(shadows.Solidness) + ", " + getCodeFor(shadows.Height) + ")";
             }
             else if (typeName.Equals(typeof(Color).Name))
             {

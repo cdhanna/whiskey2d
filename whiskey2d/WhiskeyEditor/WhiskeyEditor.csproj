@@ -186,6 +186,7 @@
     <Compile Include="UI\Documents\Actions\LightSettingsControl.Designer.cs">
       <DependentUpon>LightSettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Documents\Actions\ToggleHudAction.cs" />
     <Compile Include="UI\Documents\Actions\ToggleLightingAction.cs" />
     <Compile Include="UI\Documents\Actions\ViewLevelLayersAction.cs" />
     <Compile Include="UI\Documents\ArtDocument.cs">

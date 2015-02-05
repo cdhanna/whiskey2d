@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core.Managers.Impl;
+using Whiskey2D.Core.Managers;
 
 namespace Whiskey2D.Core
 {
@@ -12,8 +13,10 @@ namespace Whiskey2D.Core
     public class Light 
     {
         private static Texture2D defaultImage;
-        
-        
+
+       
+
+
         public virtual Vector Position { get; set; }
 
 
@@ -25,7 +28,7 @@ namespace Whiskey2D.Core
 
         public virtual Boolean Visible { get; set; }
 
-
+        
 
         public Light()
             : this(Vector.Zero, Color.White)
@@ -38,16 +41,17 @@ namespace Whiskey2D.Core
         public Light(Light other)
             : this(other.Position, other.Color)
         { }
+
         public Light(Vector position, Color color) : this(position, color, 512, true)
-        {
-            
-        }
+        { }
+        
         public Light(Vector position, Color color, float radius, bool visible)
         {
             Visible = visible;
             Position = position;
             Color = color;
             Radius = radius;
+           
         }
 
         public void render(RenderInfo info)
@@ -58,6 +62,7 @@ namespace Whiskey2D.Core
             if (defaultImage == null){
                 defaultImage = LightTextureBuilder.CreatePointLight(info.GraphicsDevice, 512);
             }
+           
             
             Vector offset = new Vector(256, 256);
 

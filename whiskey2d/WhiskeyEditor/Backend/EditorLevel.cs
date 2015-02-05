@@ -24,8 +24,8 @@ namespace WhiskeyEditor.Backend
         public Color BackgroundColor { get; set; }
         public Color BackgroundColorCompliment { get { return BackgroundColor.invert(); } }
         public Color AmbientLight { get; set; }
-        
-        
+
+        public Boolean PreviewHud { get; set; }
         public bool PreviewLighting { get; set; }
         public bool PreviewShadowing { get; set; }
         public bool LightingEnabled { get; set; }

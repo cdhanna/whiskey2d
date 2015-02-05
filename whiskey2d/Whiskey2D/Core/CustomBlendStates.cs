@@ -16,16 +16,24 @@ namespace Whiskey2D.Core
             Multiplicative.ColorDestinationBlend = Multiplicative.AlphaDestinationBlend = Blend.SourceColor;
             Multiplicative.ColorBlendFunction = Multiplicative.AlphaBlendFunction = BlendFunction.Add;
 
-            WriteToAlpha = new BlendState();
-            WriteToAlpha.ColorWriteChannels = ColorWriteChannels.Alpha;
+            MultiplyShadows = new BlendState();
+            MultiplyShadows.ColorWriteChannels = ColorWriteChannels.Alpha;
+            MultiplyShadows.AlphaDestinationBlend = Blend.SourceAlpha;
+            MultiplyShadows.AlphaSourceBlend = Blend.Zero;
+            MultiplyShadows.AlphaBlendFunction = BlendFunction.Add;
 
             MultiplyWithAlpha = new BlendState();
             MultiplyWithAlpha.ColorDestinationBlend = MultiplyWithAlpha.AlphaDestinationBlend = Blend.One;
             MultiplyWithAlpha.ColorSourceBlend = MultiplyWithAlpha.AlphaSourceBlend = Blend.DestinationAlpha;
+
+            AlphaOnly = new BlendState();
+            AlphaOnly.ColorWriteChannels = ColorWriteChannels.Alpha;
+
         }
         public static BlendState Multiplicative { get; private set; }
-        public static BlendState WriteToAlpha { get; private set; }
+        public static BlendState MultiplyShadows { get; private set; }
         public static BlendState MultiplyWithAlpha { get; private set; }
+        public static BlendState AlphaOnly { get; private set; }
 
 
 

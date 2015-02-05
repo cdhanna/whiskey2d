@@ -87,6 +87,8 @@ namespace WhiskeyEditor.UI.Properties.Editors
             PropertyGrid.PropertyList = pList;
 
 
+            
+
             LayerProperty = PropertyGrid.addOtherProperty("Layer", "Base Properties", Descriptor.Layer);
             LayerProperty.ValueChanged += (s, a) =>
             {

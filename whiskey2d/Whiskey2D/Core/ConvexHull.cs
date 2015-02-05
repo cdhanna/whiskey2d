@@ -103,8 +103,10 @@ namespace Whiskey2D.Core
         //    }
         //}
 
-        public void DrawShadows(Light lightSource, Matrix transform, bool includeLight)
+        public void DrawShadows(Light lightSource, Matrix transform, bool includeLight, float solidness, float height)
         {
+            Color alphaColor = new Color(0, 0, 0, 1 - MathHelper.Clamp(solidness, 0, 1));
+
             //compute facing of each edge, using N*L
             for (int i = 0; i < primitiveCount; i++)
             {
@@ -161,15 +163,16 @@ namespace Whiskey2D.Core
 
                 //one vertex on the hull
                 shadowVertices[svCount] = new VertexPositionColor();
-                shadowVertices[svCount].Color = Color.Transparent;
+                shadowVertices[svCount].Color = alphaColor;
                 shadowVertices[svCount].Position = vertexPos;
 
                 //one extruded by the light direction
                 shadowVertices[svCount + 1] = new VertexPositionColor();
-                shadowVertices[svCount + 1].Color = Color.Transparent;
+                shadowVertices[svCount + 1].Color = alphaColor;
                 Vector3 L2P = vertexPos - new Vector3(lightSource.Position, 0);
+                Vector3 L2Plong = L2P;// new Vector3(((Vector2)vertexPos) - ((Vector2)lightSource.Position), 0);
                 L2P.Normalize();
-                shadowVertices[svCount + 1].Position = new Vector3(lightSource.Position, 0) + L2P * 9000;
+                shadowVertices[svCount + 1].Position = new Vector3(lightSource.Position, 0) + L2P * L2Plong.Length() * (1f + height);
 
                 svCount += 2;
                 currentIndex = (currentIndex + 1) % primitiveCount;
