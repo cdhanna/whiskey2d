@@ -33,6 +33,7 @@ namespace WhiskeyEditor.MonoHelp
 
         private BloomComponent bloomComponent;
         private BloomSettings bloomSettings;
+        private BloomComponent lightBloomComponent;
         private RenderTarget2D hudTarget;
         private RenderTarget2D hudObjectsTarget;
         private Texture2D alphaClearTexture;
@@ -253,12 +254,24 @@ namespace WhiskeyEditor.MonoHelp
                 bloomSettings = BloomSettings.PresetSettings[0];
                 bloomComponent.Settings = bloomSettings;
             }
+            if (lightBloomComponent == null)
+            {
+                lightBloomComponent = new BloomComponent(GraphicsDevice, WhiskeyControl.Content);
+                lightBloomComponent.loadContent();
+                lightBloomComponent.Settings = BloomSettings.PresetSettings[5];
+            }
 
             //load bloom settings
             if (Level.BloomSettings != null)
             {
                 bloomComponent.Settings = Level.BloomSettings;
             }
+
+            if (Level.LightBloomSettings != null)
+            {
+                lightBloomComponent.Settings = Level.LightBloomSettings;
+            }
+
 
             //ensure render targets are correctly sized
             hudTarget = checkRenderTarget(hudTarget, bbWidth, bbHeight);
@@ -372,7 +385,13 @@ namespace WhiskeyEditor.MonoHelp
                 }
             });
             ClearAlphaToOne();
-            
+
+            lightBloomComponent.BeginDraw();
+            spriteBatch.Begin();
+            spriteBatch.Draw(lightMapTarget, Vector.Zero, null, XnaColor.White);
+            spriteBatch.End();
+            lightBloomComponent.draw();
+            lightMapTarget = lightBloomComponent.OutputTarget;
         }
 
         private void ClearAlphaToOne()

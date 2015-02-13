@@ -434,16 +434,7 @@ namespace WhiskeyEditor.Backend
                 GameStartScene = level.LevelName;
             }
 
-            string[] states = Directory.GetFiles(PathStates);
-            foreach (string stateName in states)
-            {
-                State s = State.deserialize(stateName);
-              //  InstanceManager.Instance.setState(s);
-              //  InstanceManager.Instance.convertToGobs(dll, "default");
-            }
-           // DirectoryCopy(PathStates, PathBuildStates, true);
-            
-            
+         
             
             DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
 

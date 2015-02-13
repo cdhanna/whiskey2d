@@ -22,7 +22,7 @@ namespace Whiskey2D.Core
         public string Name { get; private set; }
         public Camera Camera { get; set; }
         public BloomSettings BloomSettings { get; set; }
-
+        public BloomSettings BloomLightSettings { get; set; }
         public bool LightingEnabled { get; set; }
         public bool ShadowsEnabled { get; set; }
 
@@ -34,6 +34,7 @@ namespace Whiskey2D.Core
             Camera = new Camera();
             Name = name;
             BloomSettings = BloomSettings.PresetSettings[0];
+            BloomLightSettings = BloomSettings.PresetSettings[0];
         }
 
 

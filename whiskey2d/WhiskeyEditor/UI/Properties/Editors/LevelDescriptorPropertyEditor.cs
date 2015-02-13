@@ -27,6 +27,13 @@ namespace WhiskeyEditor.UI.Properties.Editors
         private GeneralPropertyDescriptor ShaderBloomSatDesc;
         private GeneralPropertyDescriptor ShaderBaseSatDesc;
 
+        private GeneralPropertyDescriptor ShaderLightBloomThresholdDesc;
+        private GeneralPropertyDescriptor ShaderLightBlurdDesc;
+        private GeneralPropertyDescriptor ShaderLightBloomDesc;
+        private GeneralPropertyDescriptor ShaderLightBaseDesc;
+        private GeneralPropertyDescriptor ShaderLightBloomSatDesc;
+        private GeneralPropertyDescriptor ShaderLightBaseSatDesc;
+
 
         public LevelDescriptorPropertyEditor(LevelDescriptor lDesc)
             : base(lDesc)
@@ -96,6 +103,21 @@ namespace WhiskeyEditor.UI.Properties.Editors
             ShaderBaseDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderBaseDesc, 0, 2, .1f);
             ShaderBloomSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderBloomSatDesc, 0, 1, .05f);
             ShaderBaseSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderBaseSatDesc, 0, 1, .05f);
+
+
+            ShaderLightBloomThresholdDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Threshold", "Light Effects", Descriptor.Level.LightBloomSettings.BloomThreshold);
+            ShaderLightBlurdDesc = WhiskeyPropertyListGrid.addOtherProperty("Blur Amount", "Light Effects", Descriptor.Level.LightBloomSettings.BlurAmount);
+            ShaderLightBloomDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BloomIntensity);
+            ShaderLightBaseDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BaseIntensity);
+            ShaderLightBloomSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BloomSaturation);
+            ShaderLightBaseSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BaseSaturation);
+
+            ShaderLightBloomThresholdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBloomThresholdDesc, 0, 1, .05f);
+            ShaderLightBlurdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBlurdDesc, 0, 12, .1f);
+            ShaderLightBloomDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBloomDesc, 0, 2, .1f);
+            ShaderLightBaseDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBaseDesc, 0, 2, .1f);
+            ShaderLightBloomSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBloomSatDesc, 0, 1, .05f);
+            ShaderLightBaseSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBaseSatDesc, 0, 1, .05f);
             
 
             ColorDesc.ValueChanged += (s, a) =>
@@ -147,6 +169,37 @@ namespace WhiskeyEditor.UI.Properties.Editors
                 WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
             };
 
+
+            ShaderLightBloomThresholdDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BloomThreshold = (float)ShaderLightBloomThresholdDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
+            ShaderLightBlurdDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BlurAmount = (float)ShaderLightBlurdDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
+            ShaderLightBloomDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BloomIntensity = (float)ShaderLightBloomDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
+            ShaderLightBaseDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BaseIntensity = (float)ShaderLightBaseDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
+            ShaderLightBloomSatDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BloomSaturation = (float)ShaderLightBloomSatDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
+            ShaderLightBaseSatDesc.ValueChanged += (s, a) =>
+            {
+                Descriptor.Level.LightBloomSettings.BaseSaturation = (float)ShaderLightBaseSatDesc.PropValue;
+                WhiskeyEditor.MonoHelp.WhiskeyControl.forceRedraw();
+            };
 
 
 

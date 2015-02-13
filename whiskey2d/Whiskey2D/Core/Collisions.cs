@@ -19,7 +19,9 @@ namespace Whiskey2D.Core
     //    }
 
 
-
+    // CollisionsWith wallColls = Gob.currentCollisionsWith()){
+    // foreach (Collision c in wallColls){ if (c is Wall) { }}
+    //}
 
 
     //    public IEnumerator<ObjectCollisionInfo<G>> GetEnumerator()

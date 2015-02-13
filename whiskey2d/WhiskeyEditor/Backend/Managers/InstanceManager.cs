@@ -210,6 +210,7 @@ namespace WhiskeyEditor.Backend.Managers
                         level.AmbientLight = eLevel.AmbientLight;
                         level.LightingEnabled = eLevel.LightingEnabled;
                         level.ShadowsEnabled = eLevel.ShadowingEnabled;
+                        level.BloomLightSettings = eLevel.LightBloomSettings;
                         string filename = GameLevel.serialize(level, appStatePath);
 
                         //TempFilePath = filename;

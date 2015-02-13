@@ -24,6 +24,7 @@ namespace Whiskey2D.Core
 
             MultiplyWithAlpha = new BlendState();
             MultiplyWithAlpha.ColorDestinationBlend = MultiplyWithAlpha.AlphaDestinationBlend = Blend.One;
+            MultiplyWithAlpha.ColorBlendFunction = BlendFunction.Add;
             MultiplyWithAlpha.ColorSourceBlend = MultiplyWithAlpha.AlphaSourceBlend = Blend.DestinationAlpha;
 
             AlphaOnly = new BlendState();

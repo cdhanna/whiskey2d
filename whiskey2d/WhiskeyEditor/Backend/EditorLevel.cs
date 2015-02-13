@@ -35,7 +35,9 @@ namespace WhiskeyEditor.Backend
         public List<Layer> Layers { get; set; }
 
         //Thresh  Blur Bloom  Base  BloomSat BaseSat
-        public BloomSettings BloomSettings { get; set; }    
+        public BloomSettings BloomSettings { get; set; }
+
+        public BloomSettings LightBloomSettings { get; set; }
 
 
         public EditorLevel(string name)
@@ -51,6 +53,7 @@ namespace WhiskeyEditor.Backend
             ShadowingEnabled = true;
 
             BloomSettings = BloomSettings.PresetSettings[5];
+            LightBloomSettings = BloomSettings.PresetSettings[5];
             LevelName = name;
             Layers = new List<Layer>();
             Layers.Add(defaultLayer);

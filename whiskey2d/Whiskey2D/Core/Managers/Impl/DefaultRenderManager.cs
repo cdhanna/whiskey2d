@@ -36,6 +36,7 @@ namespace Whiskey2D.Core.Managers.Impl
         private SpriteBatch spriteBatch;
         private static Texture2D pixel;
         private BloomComponent bloomComponent;
+        private BloomComponent bloomLightComponent;
         private Effect lightEffect;
         private RenderTarget2D lightMapTarget;
         private Texture2D alphaClearTexture;
@@ -61,6 +62,10 @@ namespace Whiskey2D.Core.Managers.Impl
                 
                 bloomComponent = new BloomComponent(graphicsDevice, GameManager.Instance.Content);
                 bloomComponent.loadContent();
+
+                bloomLightComponent = new BloomComponent(graphicsDevice, GameManager.Instance.Content);
+                bloomLightComponent.loadContent();
+
                 this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
                 lightEffect = GameManager.Resources.Content.Load<Effect>("light.mgfx");
             }
@@ -98,10 +103,13 @@ namespace Whiskey2D.Core.Managers.Impl
             int bbHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
             lightMapTarget = checkRenderTarget(lightMapTarget, bbWidth, bbHeight);
             bloomComponent.Settings = GameManager.Level.BloomSettings;
-
+            bloomLightComponent.Settings = GameManager.Level.BloomLightSettings;
 
             //DRAW LIGHTMAP
+          
             renderLightMap(GameManager.Objects.getAllObjects().Where(g => g.Active && !g.HudObject).ToList() );
+            
+
 
             bloomComponent.BeginDraw();
 
@@ -123,7 +131,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
             bloomComponent.draw();
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Textures[1] = lightMapTarget;
+            GraphicsDevice.Textures[1] = bloomLightComponent.OutputTarget ;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, GameManager.Level.LightingEnabled ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
 
@@ -169,7 +177,7 @@ namespace Whiskey2D.Core.Managers.Impl
                             pass = true;
                         }
 
-                        if (pass)
+                        if (pass && hull.Shadows.CastsShadows)
                         {
                             Convex convex = hull.Bounds.Convex;
                             convex.Origin = hull.Position;
@@ -185,7 +193,17 @@ namespace Whiskey2D.Core.Managers.Impl
                 i.renderLight(RenderInfo);
                 spriteBatch.End();
             });
+
+
             ClearAlphaToOne();
+
+            bloomLightComponent.BeginDraw();
+            spriteBatch.Begin();
+            spriteBatch.Draw(lightMapTarget, Vector.Zero, null, XnaColor.White);
+            spriteBatch.End();
+            bloomLightComponent.draw();
+            lightMapTarget = bloomLightComponent.OutputTarget;
+
         }
 
 
