@@ -27,13 +27,14 @@ namespace Whiskey2D.Core
                 drawingEffect.VertexColorEnabled = true;
                 drawingEffect.LightingEnabled = false;
 
-                PresentationParameters pp = device.PresentationParameters;
-                Matrix proj = Matrix.CreateOrthographicOffCenter(0, pp.BackBufferWidth, pp.BackBufferHeight, 0, 1, 50);
-                Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-                drawingEffect.World = Matrix.Identity;
-                drawingEffect.Projection = proj;
-                drawingEffect.View = viewMatrix;
+               
             }
+            PresentationParameters pp = device.PresentationParameters;
+            Matrix proj = Matrix.CreateOrthographicOffCenter(0, pp.BackBufferWidth, pp.BackBufferHeight, 0, 1, 50);
+            Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            drawingEffect.World = Matrix.Identity;
+            drawingEffect.Projection = proj;
+            drawingEffect.View = viewMatrix;
         }
 
 

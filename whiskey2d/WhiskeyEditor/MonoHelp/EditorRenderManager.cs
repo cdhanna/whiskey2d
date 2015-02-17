@@ -371,6 +371,7 @@ namespace WhiskeyEditor.MonoHelp
                                     Convex convex = hull.Bounds.Convex;
                                     convex.Origin = hull.Position;
                                     convex.Rotation = hull.Sprite.Rotation;
+                                    
                                     ConvexHull convexHull = new ConvexHull(convex, WhiskeyColor.White);
                                     convexHull.DrawShadows(i.Light, CameraTransform, hull.Shadows.IncludeLight, hull.Shadows.Solidness, hull.Shadows.Height);
                                 }
@@ -403,7 +404,7 @@ namespace WhiskeyEditor.MonoHelp
 
            
             spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.AlphaOnly);
-            spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), WhiskeyColor.White);
+            spriteBatch.Draw(alphaClearTexture, new Rectangle(0, 0, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight), WhiskeyColor.White);
             spriteBatch.End();
         }
 
