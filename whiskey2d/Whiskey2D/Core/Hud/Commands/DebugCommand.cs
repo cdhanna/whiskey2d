@@ -22,9 +22,9 @@ namespace Whiskey2D.Core.Hud.Commands
                 arg = arg.ToLower();
 
                 if (arg.Equals("0") || arg.Equals("n") || arg.Equals("off") || arg.Equals("no"))
-                    HudManager.getInstance().DebugVisible = false;
+                    HudManager.Instance.DebugVisible = false;
                 else if (arg.Equals("1") || arg.Equals("y") || arg.Equals("yes") || arg.Equals("on"))
-                    HudManager.getInstance().DebugVisible = true;
+                    HudManager.Instance.DebugVisible = true;
             }
 
             

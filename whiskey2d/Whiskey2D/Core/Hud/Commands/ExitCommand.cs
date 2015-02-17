@@ -19,7 +19,7 @@ namespace Whiskey2D.Core.Hud.Commands
         {
             console.writeLine("SYS EXIT");
             console.writeLine("not yet impled");
-            //GameManager.getInstance().close();
+            //GameManager.Instance.close();
         }
     }
 }

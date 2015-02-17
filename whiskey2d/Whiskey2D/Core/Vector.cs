@@ -80,6 +80,11 @@ namespace Whiskey2D.Core
             return v;
         }
 
+        public Vector reflect(Vector axis)
+        {
+            return VectorX.Reflect(this, axis);
+        }
+
         public float dot(Vector v)
         {
             return (X * v.x) + (Y * v.Y);

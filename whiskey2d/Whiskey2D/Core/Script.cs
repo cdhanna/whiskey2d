@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Whiskey2D.Core.Managers;
 
 namespace Whiskey2D.Core
 {
@@ -16,6 +17,20 @@ namespace Whiskey2D.Core
         {
             Active = true;
         }
+
+        public InputManager Input { get { return GameManager.Instance.InputManager; } }
+        public InputSourceManager InputSource { get { return GameManager.Instance.InputSourceManager; } }
+        public LogManager Log { get { return GameManager.Instance.LogManager; } }
+        public ObjectManager Objects { get { return GameManager.Instance.ObjectManager; } }
+        public RenderManager Renderer { get { return GameManager.Instance.RenderManager; } }
+        public ResourceManager Resources { get { return GameManager.Instance.ResourceManager; } }
+        public GameController Controller { get { return GameManager.Instance.GameController; } }
+        public GameLevel Level { get { return GameManager.Instance.ActiveLevel; } }
+        public int ScreenWidth { get { return GameManager.Instance.WindowScreenWidth; } }
+        public int ScreenHeight { get { return GameManager.Instance.WindowScreenHeight; } }
+
+
+
 
         public virtual Type GobType
         {

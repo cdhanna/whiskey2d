@@ -49,7 +49,6 @@
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\CollisionInfo.cs" />
     <Compile Include="Core\Collisions.cs" />
-    <Compile Include="Core\CollisionUtil.cs" />
     <Compile Include="Core\Color.cs" />
     <Compile Include="Core\Convex.cs" />
     <Compile Include="Core\ConvexHull.cs" />
@@ -102,34 +101,6 @@
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\VectorSet.cs" />
     <Compile Include="Core\WhiskeyRunTimeException.cs" />
-    <Compile Include="ex2\Gob.cs" />
-    <Compile Include="ex2\GobImpl.cs" />
-    <Compile Include="ex2\Script.cs" />
-    <Compile Include="ex2\ScriptImpl.cs" />
-    <Compile Include="Core\GameObjectConfigurator.cs" />
-    <Compile Include="PourGames\Game2\Background.cs" />
-    <Compile Include="PourGames\Game2\BackgroundScript.cs" />
-    <Compile Include="PourGames\Game2\Floor.cs" />
-    <Compile Include="PourGames\Game2\FloorControlScript.cs" />
-    <Compile Include="PourGames\Game2\FloorScript.cs" />
-    <Compile Include="PourGames\Game2\GameControl.cs" />
-    <Compile Include="PourGames\Game2\LaunchPour2.cs" />
-    <Compile Include="PourGames\Game2\Particle.cs" />
-    <Compile Include="PourGames\Game2\ParticleScript.cs" />
-    <Compile Include="PourGames\Game2\Player.cs" />
-    <Compile Include="PourGames\Game2\PlayerMoveScript.cs" />
-    <Compile Include="PourGames\Game2\PlayerScaleScript.cs" />
-    <Compile Include="PourGames\Game3\BadGuy.cs" />
-    <Compile Include="PourGames\Game3\BadGuyScript.cs" />
-    <Compile Include="PourGames\Game3\Bullet.cs" />
-    <Compile Include="PourGames\Game3\BulletScript.cs" />
-    <Compile Include="PourGames\Game3\Crosshair.cs" />
-    <Compile Include="PourGames\Game3\CrosshairScript.cs" />
-    <Compile Include="PourGames\Game3\Game3Launch.cs" />
-    <Compile Include="PourGames\Game3\Player.cs" />
-    <Compile Include="PourGames\Game3\PlayerScript.cs" />
-    <Compile Include="PourGames\TestImpl\MouseScript.cs" />
-    <Compile Include="PourGames\TestImpl\MouseTester.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\Managers\Impl\DefaultInputManager.cs" />
     <Compile Include="Core\Managers\Impl\DefaultObjectManager.cs" />
@@ -140,13 +111,6 @@
     <Compile Include="Core\Starter.cs" />
     <Compile Include="Core\GameManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PourGames\TestImpl\StarField.cs" />
-    <Compile Include="PourGames\TestImpl\StarFieldMoveScript.cs" />
-    <Compile Include="PourGames\TestImpl\Floor.cs" />
-    <Compile Include="PourGames\TestImpl\Launch.cs" />
-    <Compile Include="PourGames\TestImpl\Player.cs" />
-    <Compile Include="PourGames\TestImpl\PlayerMoveScript.cs" />
-    <Compile Include="PourGames\TestImpl\PlayerScaleScript.cs" />
     <Compile Include="Core\RenderInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +151,7 @@
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>onBuiltUtil.bat</PostBuildEvent>

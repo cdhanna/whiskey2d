@@ -31,13 +31,13 @@ namespace Whiskey2D.Core.Hud
         {
             this.textBox = new TextBox();
             this.textBox.Position = new Vector2(2, 2);
-            this.textBox.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 200);
+            this.textBox.Size = new Vector2(GameManager.Instance.WindowScreenWidth - 4, 200);
             this.textBox.TextSize = .8f;
             this.textBox.BackGroundColor = new Color(80, 20, 40, 70);
 
             this.inputBox = new TextBox();
             this.inputBox.Position = new Vector2(2, 210);
-            this.inputBox.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 40);
+            this.inputBox.Size = new Vector2(GameManager.Instance.WindowScreenWidth - 4, 40);
             this.inputBox.TextSize = .8f;
             this.inputBox.BackGroundColor = new Color(80, 20, 40, 70);
             keyBoard = new RealKeyBoard();

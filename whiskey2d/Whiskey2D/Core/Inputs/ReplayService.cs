@@ -44,7 +44,7 @@ namespace Whiskey2D.Core.Inputs
             updatesLeft = getUpdateCount();
 
             RandCommand rc = (RandCommand) LogCommand.parse(allLines[0]);
-            Rand.getInstance().setSeed(rc.Seed);
+            Rand.Instance.setSeed(rc.Seed);
 
 
             lineNumber = 1;
@@ -184,7 +184,7 @@ namespace Whiskey2D.Core.Inputs
             if (index >= allLines.Length)
             {
                 replayOver = true;
-                GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
+                GameManager.Instance.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
                 throw new LogOverException();
                 
             }

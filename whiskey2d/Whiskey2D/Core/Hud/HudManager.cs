@@ -16,10 +16,7 @@ namespace Whiskey2D.Core.Hud
     public class HudManager
     {
         private static HudManager instance = new HudManager();
-        public static HudManager getInstance()
-        {
-            return instance;
-        }
+        public static HudManager Instance { get { return instance; } }
 
         private List<TextLine> textLines;
         private List<Box> boxes;
@@ -46,8 +43,8 @@ namespace Whiskey2D.Core.Hud
             DebugLevel = LogLevel.DEBUG;
 
             debugWindow = new TextBox();
-            debugWindow.Position = new Vector2(2, GameManager.getInstance().ScreenHeight- 100);
-            debugWindow.Size = new Vector2(GameManager.getInstance().ScreenWidth-4, 98);
+            debugWindow.Position = new Vector2(2, GameManager.Instance.WindowScreenHeight- 100);
+            debugWindow.Size = new Vector2(GameManager.Instance.WindowScreenWidth-4, 98);
             debugWindow.BackGroundColor = Color.Transparent;
             debugWindow.BorderColor = Color.Transparent;
             debugWindow.TextColor = Color.White;

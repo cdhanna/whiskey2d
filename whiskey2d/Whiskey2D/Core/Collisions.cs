@@ -7,16 +7,40 @@ using System.Threading.Tasks;
 
 namespace Whiskey2D.Core
 {
-    //[Serializable]
-    //public class Collisions<G> : IEnumerable<ObjectCollisionInfo<G>>, IEnumerator<G> where G : GameObject
-    //{
+    /*
+     * 
+     * Collisions<Wall> colls = Gob.currentCollisions<Wall>();
+     * colls.process( c => {
+     * 
+     *      c.Info.MTV;....
+     * 
+     * });
+     * 
+     */
+
+
+   
+
+    [Serializable]
+    public class Collisions<G> : List<Collision<G>> where G : GameObject
+    {
+
+        public void process(Action<Collision<G>> action)
+        {
+            
+            foreach (Collision<G> c in this)
+            {
+                action(c);
+            }
+        }
+
     //    public virtual List<ObjectCollisionInfo<G>> Infos { get; protected set; }
 
     //    public Collisions(List<ObjectCollisionInfo<G>> infos)
     //    {
     //        Infos = infos;
 
-    //    }
+    }
 
 
     // CollisionsWith wallColls = Gob.currentCollisionsWith()){

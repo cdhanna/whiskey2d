@@ -21,7 +21,7 @@ namespace Whiskey2D.Core.Hud
             Size = Vector2.One;
             Color = Color.White;
             Depth = .9f;
-            HudManager.getInstance().addBox(this);
+            HudManager.Instance.addBox(this);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Whiskey2D.Core.Hud
         /// </summary>
         public void close()
         {
-            HudManager.getInstance().removeBox(this);
+            HudManager.Instance.removeBox(this);
         }
 
     }

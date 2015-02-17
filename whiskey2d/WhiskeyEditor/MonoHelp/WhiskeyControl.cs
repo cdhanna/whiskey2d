@@ -16,7 +16,6 @@ using System.Runtime.Serialization;
 using System.ComponentModel;
 using System.Drawing.Design;
 using WhiskeyEditor.Backend.Managers;
-using Whiskey2D.PourGames.Game3;
 using WhiskeyEditor.Backend;
 using WhiskeyEditor.EditorObjects;
 using System.Threading;
@@ -55,7 +54,7 @@ namespace WhiskeyEditor.MonoHelp
         public static WhiskeyControl Active { get; private set; }
         private static Camera defaultCamera = new Camera();
 
-        //private static GameManager gameMan = GameManager.getInstance();     //The game manager
+        //private static GameManager gameMan = GameManager.Instance;     //The game manager
         //private static ContentManager content;                              //A content manager
         //private static bool gameManInitialized = false;                     //true once the game manager has initialized, false until then
         //private static Thread whiskeyThread;                                //the thread that represents the main ticking of the whiskey engine
@@ -187,10 +186,10 @@ namespace WhiskeyEditor.MonoHelp
         //        gameMan.Initialize(this, content, GraphicsDevice,
         //            new DefaultInputManager(),
         //            new DefaultInputSourceManager(),
-        //            DefaultLogManager.getInstance(),
+        //            DefaultLogManager.Instance,
         //            new DefaultObjectManager(),
         //            new DefaultRenderManager(),
-        //            DefaultResourceManager.getInstance()
+        //            DefaultResourceManager.Instance
         //            );
         //        gameMan.CurrentScene = null;
         //        launchWhiskeyThread();

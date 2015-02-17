@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.Core;
-using Whiskey2D.PourGames.Game3;
+
 using System.IO;
 
 namespace WhiskeyRunner
@@ -54,7 +54,7 @@ namespace WhiskeyRunner
             window.Y = 50;
             this.graphics.ApplyChanges();
 
-            gameMan = GameManager.getInstance();
+            gameMan = GameManager.Instance;
 
             if (gameMan.IsFullScreen)
                 graphics.IsFullScreen = true;
@@ -62,10 +62,10 @@ namespace WhiskeyRunner
             gameMan.Initialize(this, Content, GraphicsDevice,
                 new DefaultInputManager(),
                 new DefaultInputSourceManager(),
-                DefaultLogManager.getInstance(),
+                DefaultLogManager.Instance,
                 new DefaultObjectManager(),
                 new DefaultRenderManager(),
-                DefaultResourceManager.getInstance()
+                DefaultResourceManager.Instance
             );
             base.Initialize();
 

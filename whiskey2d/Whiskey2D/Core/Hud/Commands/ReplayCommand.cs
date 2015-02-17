@@ -17,14 +17,14 @@ namespace Whiskey2D.Core.Hud.Commands
         public override void run(WhiskeyConsole console, string[] args)
         {
             GameManager.InputSource.requestReplay();
-            HudManager.getInstance().ConsoleMode = false;
+            HudManager.Instance.ConsoleMode = false;
 
             if (args.Length == 2)
             {
                 try
                 {
                     int m = int.Parse(args[1]);
-                    GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, m);
+                    GameManager.Instance.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, m);
                 }
                 catch (Exception e)
                 {

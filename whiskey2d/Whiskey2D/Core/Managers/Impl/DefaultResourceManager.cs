@@ -16,21 +16,14 @@ namespace Whiskey2D.Core.Managers.Impl
     public class DefaultResourceManager : ResourceManager
     {
 
-        private static DefaultResourceManager instance;
+        private static DefaultResourceManager instance = new DefaultResourceManager();
 
 
         /// <summary>
         /// Retrives the ResourceManager
         /// </summary>
         /// <returns>The ResourceManager</returns>
-        public static DefaultResourceManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new DefaultResourceManager();
-            }
-            return instance;
-        }
+        public static DefaultResourceManager Instance { get { return instance; } }
 
 
         public ContentManager Content { get; private set; }

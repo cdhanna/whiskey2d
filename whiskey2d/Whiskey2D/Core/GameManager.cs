@@ -11,9 +11,7 @@ using System.Reflection;
 using Whiskey2D.Core.Hud;
 using Whiskey2D.Core.Managers;
 using Whiskey2D.Core.Managers.Impl;
-using Whiskey2D.PourGames.TestImpl;
-using Whiskey2D.PourGames.Game2;
-using Whiskey2D.PourGames.Game3;
+
 
 #endregion
 
@@ -28,15 +26,7 @@ namespace Whiskey2D.Core
 
         private static GameManager instance;
         public static GameManager Instance { get { if (instance == null) instance = new GameManager(); return instance; } }
-        public static GameManager getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new GameManager();
-            }
-            return instance;
-        }
-
+  
         PropertiesFiles settings;
         public string StartScene
         {
@@ -117,7 +107,18 @@ namespace Whiskey2D.Core
         public static ResourceManager Resources { get { return Instance.ResourceManager; } }
         public static GameController Controller { get { return Instance.GameController; } }
         public static GameLevel Level { get { return Instance.ActiveLevel; } }
+        public static int ScreenWidth { get { return Instance.WindowScreenWidth; } }
+        public static int ScreenHeight { get { return Instance.WindowScreenHeight; } }
 
+        public static void SetLevel(string levelName)
+        {
+            Instance.loadLevel(levelName);
+        }
+
+        public static void Quit()
+        {
+            Instance.Exit();
+        }
 
         /// <summary>
         /// Create singleton instance.
@@ -133,9 +134,10 @@ namespace Whiskey2D.Core
             //RenderManager = new DefaultRenderManager();
             InputManager = new DefaultInputManager();
             InputSourceManager = new DefaultInputSourceManager();
-            LogManager = DefaultLogManager.getInstance();
+            LogManager = DefaultLogManager.Instance;
+                
             
-            HudManager = HudManager.getInstance();
+            HudManager = HudManager.Instance;
             //LogManager.init();
             ObjectManager.init();
             InputManager.init();
@@ -150,12 +152,12 @@ namespace Whiskey2D.Core
         /// <summary>
         /// The width of the window, or -1 if the graphics device is null
         /// </summary>
-        public int ScreenWidth { get { return (GraphicsDevice!=null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferWidth : -1; } }
+        public int WindowScreenWidth { get { return (GraphicsDevice!=null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferWidth : -1; } }
 
         /// <summary>
         /// The height of the window, or -1 if the graphics device is null
         /// </summary>
-        public int ScreenHeight { get { return (GraphicsDevice != null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferHeight : -1; } }
+        public int WindowScreenHeight { get { return (GraphicsDevice != null && GraphicsDevice.PresentationParameters != null) ? GraphicsDevice.PresentationParameters.BackBufferHeight : -1; } }
 
         public TimeSpan TargetElapsedTime { get; set; }
 
@@ -200,7 +202,7 @@ namespace Whiskey2D.Core
         {
             close();
 
-            Rand.getInstance().reSeed();
+            Rand.Instance.reSeed();
 
             InputSourceManager.getSource().init();
             RenderManager.init(GraphicsDevice);
@@ -267,7 +269,7 @@ namespace Whiskey2D.Core
             ResourceManager = resourceMan;
             RenderManager = renderMan;
             
-            HudManager = HudManager.getInstance();
+            HudManager = HudManager.Instance;
 
             //initialize
             ResourceManager.init(content);
@@ -285,7 +287,7 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual void LoadContent()
         {
-            HudManager.getInstance().DebugColor = Color.RoyalBlue;
+            HudManager.Instance.DebugColor = Color.RoyalBlue;
             start();
         }
 

@@ -235,7 +235,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied);
 
-            List<Box> boxes = HudManager.getInstance().getAllBoxes();
+            List<Box> boxes = HudManager.Instance.getAllBoxes();
             foreach (Box box in boxes)
             {
                 if (box.Visible)
@@ -244,7 +244,7 @@ namespace Whiskey2D.Core.Managers.Impl
                 }
             }
 
-            List<TextLine> lines = HudManager.getInstance().getAllTextLines();
+            List<TextLine> lines = HudManager.Instance.getAllTextLines();
             foreach (TextLine line in lines)
             {
                 if (line.Visible)

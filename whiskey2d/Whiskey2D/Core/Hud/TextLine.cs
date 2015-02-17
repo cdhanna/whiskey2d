@@ -26,7 +26,7 @@ namespace Whiskey2D.Core.Hud
             Color = Color.White;
             Visible = true;
             Size = Vector2.One;
-            HudManager.getInstance().addTextLine(this);
+            HudManager.Instance.addTextLine(this);
 
         }
 
@@ -65,7 +65,7 @@ namespace Whiskey2D.Core.Hud
         /// </summary>
         public void close()
         {
-            HudManager.getInstance().removeTextLine(this);
+            HudManager.Instance.removeTextLine(this);
         }
 
     }

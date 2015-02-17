@@ -17,8 +17,8 @@ namespace Whiskey2D.Core.Hud.Commands
         public override void run(WhiskeyConsole console, string[] args)
         {
             GameManager.InputSource.requestRegular();
-            HudManager.getInstance().ConsoleMode = false;
-            GameManager.getInstance().TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
+            HudManager.Instance.ConsoleMode = false;
+            GameManager.Instance.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 17);
         }
     }
 }

@@ -86,88 +86,10 @@ namespace WhiskeyEditor.UI
             return factory;
         }
 
-        //public DocumentTab getDocumentTabFor(DocumentView parent, FileDescriptor file)
-        //{
-        //    if (file is CodeDescriptor)
-        //    {
-        //        return new CodeDocument( (CodeDescriptor) file, parent);
-        //    }
-        //    else if (file is LevelDescriptor)
-        //    {
-        //        return new LevelDocument((LevelDescriptor)file, parent);
-        //    }
-        //    else return new DocumentTab(file.FilePath, parent);
-        //}
-
-        //public PropertyContent getPropertyEditor(Object propObj)
-        //{
-        //    if (propObj is TypeDescriptor)
-        //    {
-        //        return new TypeDescriptorPropertyEditor((TypeDescriptor)propObj);
-        //    }
-        //    else if (propObj is LevelDescriptor)
-        //    {
-        //        return new LevelDescriptorPropertyEditor((LevelDescriptor)propObj);
-        //    }
-        //    else if (propObj is InstanceDescriptor)
-        //    {
-        //        return new InstanceDescriptorPropertyEditor((InstanceDescriptor)propObj);
-        //    }
-        //    else if (propObj is ScriptDescriptor)
-        //    {
-        //        return new ScriptDescriptorPropertyEditor((ScriptDescriptor)propObj);
-        //    }
-        //    else return null;//throw new WhiskeyException("???");
-        //}
-
-        //public PropertyContent getPropertyEditor(string code)
-        //{
-        //    PropertyContent propContent = null; //default value
-
-        //    FileDescriptor descriptor = FileManager.Instance.lookUp(code);
-
-        //    //if the code given represents a file descriptor, return one of those editors
-        //    if (descriptor != null)
-        //    {
-        //        if (descriptor is TypeDescriptor)
-        //            propContent = new TypeDescriptorPropertyEditor((TypeDescriptor)descriptor);
-        //        else if (descriptor is LevelDescriptor)
-        //            propContent = new LevelDescriptorPropertyEditor((LevelDescriptor)descriptor);
-        //        else if (descriptor is ScriptDescriptor)
-        //            propContent = new ScriptDescriptorPropertyEditor((ScriptDescriptor)descriptor);
-        //    }
-
-
-
-        //    return propContent;
-        //}
-
-
-
-
         public string normalizePath(string path)
         {
             while (path.Contains("\\\\"))
                 path.Replace("\\\\", "\\");
-            //path = Path.GetFullPath(path).ToLower();
-            //if (path.Contains(Path.DirectorySeparatorChar))
-            //{
-            //    int i = path.LastIndexOf(Path.DirectorySeparatorChar);
-            //    if (i == path.Length - 1)
-            //    {
-            //        path = path.Substring(0, 1).ToUpper() + path.Substring(1);
-            //    }
-            //    else
-            //    {
-            //        path = path.Substring(0, i + 1) + path.Substring(i + 1, 1).ToUpper() + path.Substring(i + 2);
-            //    }
-            //}
-            //else if (path.Length > 0)
-            //{
-            //    path = path.Substring(0, 1).ToUpper() + path.Substring(1);
-            //}
-            
-            //TODO the above code is commented out because it works being commented out.... no need to cause a fuss. It is also responsible for uppercasing the first letter and lower casing all else. 
             return path;
         }
 

@@ -59,9 +59,9 @@ namespace Whiskey2D.Core.Managers.Impl
         /// </summary>
         public void requestReplay()
         {
-            replSource = new ReplayService(DefaultLogManager.getInstance().getOldLogPath());
+            replSource = new ReplayService(DefaultLogManager.Instance.getOldLogPath());
             activeSource = replSource;
-            GameManager.getInstance().reset();
+            GameManager.Instance.reset();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Whiskey2D.Core.Managers.Impl
         public void requestRegular()
         {
             activeSource = defaultSource;
-            GameManager.getInstance().reset();
+            GameManager.Instance.reset();
         }
 
         public void hotSwapInput(InputSource source)

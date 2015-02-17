@@ -14,8 +14,6 @@ namespace Whiskey2D.Core
         public Vector MTV { get; private set; }
         public float Overlap { get; private set; }
 
-        
-
         internal CollisionInfo(Vector MTV)
         {
             this.MTV = MTV;
@@ -25,11 +23,17 @@ namespace Whiskey2D.Core
     }
 
     [Serializable]
-    public class ObjectCollisionInfo<G> where G : GameObject
+    public class Collision<G> where G : GameObject
     {
         public G Gob { get; private set; }
-        public CollisionInfo Info { get; private set; }
-        internal ObjectCollisionInfo(CollisionInfo info, G gob)
+        private CollisionInfo Info { get; set; }
+
+        public Vector MTV { get { return Info.MTV; } }
+        public Vector Normal { get { return Info.Normal; } }
+        public float Overlap { get { return Info.Overlap; } }
+
+
+        internal Collision(CollisionInfo info, G gob)
         {
             Gob = gob;
             Info = info;

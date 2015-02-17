@@ -10,10 +10,7 @@ namespace Whiskey2D.Core
     {
 
         private static Rand instance = new Rand();
-        public static Rand getInstance()
-        {
-            return instance;
-        }
+        public static Rand Instance { get { return instance; } }
 
 
         private int seed;

@@ -43,10 +43,7 @@ namespace Whiskey2D.Core.Managers.Impl
 
 
         private static DefaultLogManager instance = new DefaultLogManager();
-        public static DefaultLogManager getInstance()
-        {
-            return instance;
-        }
+        public static DefaultLogManager Instance { get { return instance; } }
 
         private Dictionary<Keys, bool> oldState, currentState;
         private long masterCount;
@@ -84,7 +81,7 @@ namespace Whiskey2D.Core.Managers.Impl
             writer = File.CreateText( getCurrentLogPath() );
             writer.AutoFlush = true;
             
-            this.writeCommand(new RandCommand(-1, Rand.getInstance().getSeed()));
+            this.writeCommand(new RandCommand(-1, Rand.Instance.getSeed()));
         }
 
         /// <summary>
@@ -214,7 +211,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             LogMessage msg = new LogMessage(masterCount, LogLevel.DEBUG, message);
             writeCommand(msg);
-            HudManager.getInstance().writeMessage(msg);
+            HudManager.Instance.writeMessage(msg);
         }
 
         /// <summary>
@@ -225,7 +222,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             LogMessage msg = new LogMessage(masterCount, LogLevel.ERROR, message);
             writeCommand(msg);
-            HudManager.getInstance().writeMessage(msg);
+            HudManager.Instance.writeMessage(msg);
         }
 
         /// <summary>
@@ -236,7 +233,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             LogMessage msg = new LogMessage(masterCount, LogLevel.WARNING, message);
             writeCommand(msg);
-            HudManager.getInstance().writeMessage(msg);
+            HudManager.Instance.writeMessage(msg);
         }
 
         /// <summary>
@@ -247,7 +244,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             LogMessage msg = new LogMessage(masterCount, LogLevel.RELEASE, message);
             writeCommand(msg);
-            HudManager.getInstance().writeMessage(msg);
+            HudManager.Instance.writeMessage(msg);
         }
 
     }
