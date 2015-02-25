@@ -16,8 +16,8 @@ namespace Whiskey2D.Core
         {
             V1 = v1;
             V2 = v2;
-            Unit = (v2 - v1).normalize();
-            Normal = Unit.getPerpendicular();
+            Unit = (v2 - v1).Normal;
+            Normal = Unit.Perpendicular;
         }
 
     }

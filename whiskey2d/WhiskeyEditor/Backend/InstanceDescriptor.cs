@@ -441,6 +441,7 @@ namespace WhiskeyEditor.Backend
         public InstanceDescriptor clone(ObjectManager objectManager)
         {
             InstanceDescriptor inst = new InstanceDescriptor(TypeDescriptorInFileManager, objectManager);
+            string name = inst.Name;
 
             inst.X = X;
             inst.Y = Y;
@@ -458,6 +459,8 @@ namespace WhiskeyEditor.Backend
             {
                 inst.addScript(scriptName);
             }
+
+            inst.Name = name;
 
             return inst;
         }

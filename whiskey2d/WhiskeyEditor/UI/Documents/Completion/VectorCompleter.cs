@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WhiskeyEditor
+namespace WhiskeyEditor.UI.Documents.Completion
 {
-    public delegate void NoArgFunction();
-    public delegate void OneArgFunction(Object x);
+    class VectorCompleter
+    {
+    }
 }

@@ -24,29 +24,30 @@ namespace WhiskeyEditor.Backend
         }
 
 
-
+        private static readonly object gameDataLocker = new Object();
         public static string serialize(GameData data, string filePath)
         {
-
-            FileStream fs = new FileStream(filePath, FileMode.Create);
-            StreamWriter writer = new StreamWriter(fs);
-
-            BinaryFormatter formatter = new BinaryFormatter();
-            try
+            lock (gameDataLocker)
             {
-                formatter.Serialize(fs, data);
-            }
-            catch (SerializationException e)
-            {
-                throw new WhiskeyException("Could not serialize game data " + e.Message);
-            }
-            finally
-            {
-                fs.Close();
-            }
+                FileStream fs = new FileStream(filePath, FileMode.Create);
+                StreamWriter writer = new StreamWriter(fs);
 
-            return filePath;
-
+                BinaryFormatter formatter = new BinaryFormatter();
+                try
+                {
+                    formatter.Serialize(fs, data);
+                }
+                catch (SerializationException e)
+                {
+                    throw new WhiskeyException("Could not serialize game data " + e.Message);
+                }
+                finally
+                {
+                    fs.Close();
+                }
+            
+                return filePath;
+            }
         }
 
         public static GameData deserialize(string filePath)

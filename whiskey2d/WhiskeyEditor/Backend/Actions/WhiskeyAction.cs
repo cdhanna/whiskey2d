@@ -29,7 +29,7 @@ namespace WhiskeyEditor.Backend.Actions
         /// <summary>
         /// The actual content of the action. 
         /// </summary>
-        NoArgFunction Effect { get; }
+        OneArgFunction Effect { get; }
 
         C generateControl<C>();
     }

@@ -100,7 +100,10 @@ namespace WhiskeyEditor.UI
             Application.SetCompatibleTextRenderingDefault(false);
 
             TopView = new TopView();
-            Application.Run(TopView);
+
+            
+                Application.Run(TopView);
+            
         }
 
         public void requestClose()
@@ -123,5 +126,23 @@ namespace WhiskeyEditor.UI
             return new Whiskey2D.Core.Color(color.R, color.G, color.B, color.A);
         }
 
+
+        public void writeException(Exception message)
+        {
+            
+            if (TopView != null)
+            {
+                TopView.writeException(message);
+            }
+        }
+
+        public void writeWarning(WhiskeyEditor.Backend.WhiskeyWarning message)
+        {
+
+            if (TopView != null)
+            {
+                TopView.writeWarning(message);
+            }
+        }
     }
 }

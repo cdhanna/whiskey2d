@@ -17,8 +17,8 @@ namespace Whiskey2D.Core
         internal CollisionInfo(Vector MTV)
         {
             this.MTV = MTV;
-            Normal = MTV.normalize();
-            Overlap = MTV.Length();
+            Normal = MTV.Normal;
+            Overlap = MTV.Length;
         }
     }
 

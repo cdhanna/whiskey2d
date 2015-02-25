@@ -100,7 +100,7 @@ namespace Whiskey2D.Core
             foreach (Vector a in axisSet)
             {
                 //create the axis
-                Vector axis = a.normalize();
+                Vector axis = a.Normal;
 
                 float aMin = float.MaxValue, aMax = float.MinValue;
                 float bMin = float.MaxValue, bMax = float.MinValue;
@@ -137,7 +137,7 @@ namespace Whiskey2D.Core
                     }
                     
 
-                    if (Math.Abs(overlap) < mtv.Length())
+                    if (Math.Abs(overlap) < mtv.Length)
                     {
                         mtv = axis * overlap;
                     }

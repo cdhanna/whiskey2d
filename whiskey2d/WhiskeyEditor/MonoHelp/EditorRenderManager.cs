@@ -156,7 +156,7 @@ namespace WhiskeyEditor.MonoHelp
         {
             Vector diff = end - start;
 
-            spriteBatch.Draw(getPixel(), start, null, color, (float)Math.Atan2(diff.Y, diff.X), new Vector2(0, .5f) , new Vector(diff.Length(), thickness), SpriteEffects.None, depth);
+            spriteBatch.Draw(getPixel(), start, null, color, (float)Math.Atan2(diff.Y, diff.X), new Vector2(0, .5f) , new Vector(diff.Length, thickness), SpriteEffects.None, depth);
         }
 
         private void drawBox(SpriteBatch spriteBatch, XnaColor color, float depth, Vector topLeft, Vector botRight)

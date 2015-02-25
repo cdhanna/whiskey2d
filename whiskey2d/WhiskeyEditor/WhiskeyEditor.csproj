@@ -195,6 +195,9 @@
     <Compile Include="UI\Documents\BlankDocument.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Documents\Completion\Completor.cs" />
+    <Compile Include="UI\Documents\Completion\DataProvider.cs" />
+    <Compile Include="UI\Documents\Completion\VectorCompleter.cs" />
     <Compile Include="UI\Documents\ContentFactories\ArtContentFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\CoreContentFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\InstanceContentFactory.cs" />

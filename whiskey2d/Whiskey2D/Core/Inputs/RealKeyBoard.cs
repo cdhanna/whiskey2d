@@ -16,6 +16,10 @@ namespace Whiskey2D.Core.Inputs
 
         static RealKeyBoard()
         {
+
+           
+            ks.Add(Keys.OemPeriod, ".");
+         
             ks.Add(Keys.A, "a");
             ks.Add(Keys.B, "b");
             ks.Add(Keys.C, "c");
@@ -97,11 +101,16 @@ namespace Whiskey2D.Core.Inputs
         /// </summary>
         /// <param name="k"></param>
         /// <returns></returns>
-        public static String keyToString(Keys k)
+        public static String keyToString(Keys k, bool isShift)
         {
+            String s = "";
             if (ks.ContainsKey(k))
-                return ks[k];
-            else return "";
+                s =  ks[k];
+
+            if (isShift)
+                s = s.ToUpper();
+
+            return s;
         }
 
     }

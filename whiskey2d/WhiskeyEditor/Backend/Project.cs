@@ -331,17 +331,28 @@ namespace WhiskeyEditor.Backend
         /// </summary>
         public void cleanProject()
         {
-            if (Directory.Exists(PathBuild))
+
+            try
             {
-                Directory.Delete(PathBuild, true);
+
+              
+                if (Directory.Exists(PathBuild))
+                {
+                    Directory.Delete(PathBuild, true);
+                }
+            
+
+                DirectoryInfo buildInfo = Directory.CreateDirectory(PathBuild);
+
+                Directory.CreateDirectory(PathBuildLib);
+                Directory.CreateDirectory(PathBuildMedia);
+                Directory.CreateDirectory(PathBuildStates);
             }
-
-
-            DirectoryInfo buildInfo = Directory.CreateDirectory(PathBuild);
-
-            Directory.CreateDirectory(PathBuildLib);
-            Directory.CreateDirectory(PathBuildMedia);
-            Directory.CreateDirectory(PathBuildStates);
+            catch (Exception e)
+            {
+                WhiskeyWarning we = new WhiskeyWarning("The game is already running. Please close it, and try again.", e.Message);
+                throw we;
+            }
         }
 
         public void testLevel(LevelDescriptor level)
@@ -350,65 +361,79 @@ namespace WhiskeyEditor.Backend
         }
         public void testLevel(LevelDescriptor level, ProgressNotifier pn)
         {
-            string origStartScene = GameStartScene;
-            pn.Progress = .2f;
+            try
+            {
+                string origStartScene = GameStartScene;
+                pn.Progress = .2f;
 
-            cleanProject();
-            pn.Progress = .3f;
+                cleanProject();
+                pn.Progress = .3f;
 
-            CompileManager.Instance.compile();
-            DirectoryCopy(PathLib, PathBuildLib, true);
-            DirectoryCopy(PathMedia, PathBuildMedia, true);
-            
-            pn.Progress = .6f;
+                CompileManager.Instance.compile();
+                DirectoryCopy(PathLib, PathBuildLib, true);
+                DirectoryCopy(PathMedia, PathBuildMedia, true);
 
-            string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level.Level);
-            GameStartScene = level.Name;
+                pn.Progress = .6f;
 
-            pn.Progress = .7f;
+                string statePath = InstanceManager.Instance.convertToGobs(FileGameDataLibrary, level.Level);
+                GameStartScene = level.Name;
 
-            DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
-            DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
-            File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
-            File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
-            createGameSettings();
+                pn.Progress = .7f;
 
-            pn.Progress = .8f;
-            runGame();
-            pn.Progress = 1;
+                DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+                DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
+                File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
+                File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+                createGameSettings();
 
-            GameStartScene = origStartScene;
+                pn.Progress = .8f;
+                runGame();
+                pn.Progress = 1;
+
+                GameStartScene = origStartScene;
+            }
+            catch (WhiskeyException we)
+            {
+                we.displayMessageBox();
+            }
         }
 
 
         public void testGame(ProgressNotifier pn)
         {
-           
-            pn.Progress = .2f;
+            try
+            {
+                pn.Progress = .2f;
 
-            cleanProject();
-            pn.Progress = .3f;
+                cleanProject();
+                pn.Progress = .3f;
 
-            CompileManager.Instance.compile();
-            DirectoryCopy(PathLib, PathBuildLib, true);
-            DirectoryCopy(PathMedia, PathBuildMedia, true);
+                CompileManager.Instance.compile();
+                DirectoryCopy(PathLib, PathBuildLib, true);
+                DirectoryCopy(PathMedia, PathBuildMedia, true);
 
-            InstanceManager.Instance.Levels.ForEach(l => InstanceManager.Instance.convertToGobs(FileGameDataLibrary, l));
+                InstanceManager.Instance.Levels.ForEach(l => InstanceManager.Instance.convertToGobs(FileGameDataLibrary, l));
 
 
-            pn.Progress = .6f;
+                pn.Progress = .6f;
 
-            pn.Progress = .7f;
+                pn.Progress = .7f;
 
-            DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
-            DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
-            File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
-            File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
-            createGameSettings();
+                DirectoryCopy(ResourceFiles.CompileLib, PathBuildLib, true);
+                DirectoryCopy(ResourceFiles.CompileMedia, PathBuildMedia, true);
+                File.Copy(ResourceFiles.LibExe, FileBuildGameExePath);
+                File.Copy(PATH_COMPILE_EXE_CONFIG, FileBuildGameConfigPath);
+                createGameSettings();
 
-            pn.Progress = .8f;
-            runGame();
-            pn.Progress = 1;
+                pn.Progress = .8f;
+                runGame();
+                pn.Progress = 1;
+
+            }
+            catch (WhiskeyException we)
+            {
+                we.displayMessageBox();
+            }
 
         }
 
@@ -458,6 +483,9 @@ namespace WhiskeyEditor.Backend
         }
 
 
+
+        private static object dirCopyLock = new object();
+
         /// <summary>
         /// Taken from http://msdn.microsoft.com/en-us/library/bb762914(v=vs.110).aspx
         /// </summary>
@@ -466,40 +494,52 @@ namespace WhiskeyEditor.Backend
         /// <param name="copySubDirs"></param>
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
-            // Get the subdirectories for the specified directory.
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
-            DirectoryInfo[] dirs = dir.GetDirectories();
-
-            if (!dir.Exists)
+            try
             {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
-            }
-
-            // If the destination directory doesn't exist, create it. 
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
-
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirName, file.Name);
-                
-                file.CopyTo(temppath, true);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location. 
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
+                lock (dirCopyLock)
                 {
-                    string temppath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+
+                    // Get the subdirectories for the specified directory.
+                    DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+                    DirectoryInfo[] dirs = dir.GetDirectories();
+
+                    if (!dir.Exists)
+                    {
+                        throw new DirectoryNotFoundException(
+                            "Source directory does not exist or could not be found: "
+                            + sourceDirName);
+                    }
+
+                    // If the destination directory doesn't exist, create it. 
+                    if (!Directory.Exists(destDirName))
+                    {
+                        Directory.CreateDirectory(destDirName);
+                    }
+
+                    // Get the files in the directory and copy them to the new location.
+                    FileInfo[] files = dir.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        string temppath = Path.Combine(destDirName, file.Name);
+
+                        file.CopyTo(temppath, true);
+                    }
+
+                    // If copying subdirectories, copy them and their contents to new location. 
+                    if (copySubDirs)
+                    {
+                        foreach (DirectoryInfo subdir in dirs)
+                        {
+                            string temppath = Path.Combine(destDirName, subdir.Name);
+                            DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                        }
+                    }
                 }
+
+            }
+            catch (IOException e)
+            {
+                throw new WhiskeyException(e.Message);
             }
         }
     }

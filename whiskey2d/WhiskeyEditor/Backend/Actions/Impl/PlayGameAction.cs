@@ -17,8 +17,14 @@ namespace WhiskeyEditor.Backend.Actions.Impl
         }
         protected override void run()
         {
+            
+
             ProjectManager.Instance.ActiveProject.testGame(this);
+
+
+            
         }
+
 
     }
 }

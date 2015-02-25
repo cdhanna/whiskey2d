@@ -19,9 +19,11 @@ namespace Whiskey2D.Core
         public Camera()
         {
             Size = new Vector(1280, 720);
+            
             Position = Vector.Zero;
-            ZoomMin = .5f;
+            ZoomMin = .1f;
             ZoomMax = 2.5f;
+            
             Zoom = 1;
             buildTransform();
         }
@@ -145,14 +147,24 @@ namespace Whiskey2D.Core
             }
             set
             {
-                Vector originNew = getGameCoordinate(value);
-                origin = originNew;
-                updateTransform();
-                originNew = getScreenCoordinate(origin);
-                position += (value - originNew);
+                
+
+                origin = value;
+
                 updateTransform();
             }
         }
+
+        public void setOriginLockPosition(Vector nextOrigin)
+        {
+            Vector originNew = getGameCoordinate(nextOrigin);
+            origin = originNew;
+            updateTransform();
+            originNew = getScreenCoordinate(origin);
+            position += (nextOrigin - originNew);
+            updateTransform();
+        }
+
 
         private float zoom;
         /// <summary>
@@ -230,11 +242,20 @@ namespace Whiskey2D.Core
 
         private Matrix buildTransform()
         {
+
+            ZoomMin = .5f;
+            //Origin = new Vector(1280, 720) / 2f;
             Matrix t = Matrix.Identity
-            * Matrix.CreateTranslation(toVec3(-origin))
-            * Matrix.CreateScale(zoom)
-            * Matrix.CreateTranslation(toVec3(position))
-            * Matrix.CreateTranslation(toVec3(origin))
+
+                 * Matrix.CreateTranslation(toVec3(Position))
+
+            * Matrix.CreateTranslation(toVec3(Origin))
+            * Matrix.CreateScale(Zoom)
+            * Matrix.CreateTranslation(toVec3(-Origin))
+
+           
+            
+            
             ;
             return t;
         }

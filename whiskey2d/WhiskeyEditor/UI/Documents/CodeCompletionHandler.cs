@@ -16,16 +16,18 @@ namespace WhiskeyEditor.UI.Documents
         Form mainForm;
         TextEditorControl editor;
         CodeCompletionWindow codeCompletionWindow;
+        string fileName;
 
-        private CodeCompletionKeyHandler(Form mainForm, TextEditorControl editor)
+        private CodeCompletionKeyHandler(Form mainForm, TextEditorControl editor, string fileName)
         {
+            this.fileName = fileName;
             this.mainForm = mainForm;
             this.editor = editor;
         }
 
-        public static CodeCompletionKeyHandler Attach(Form mainForm, TextEditorControl editor)
+        public static CodeCompletionKeyHandler Attach(Form mainForm, TextEditorControl editor, string fileName)
         {
-            CodeCompletionKeyHandler h = new CodeCompletionKeyHandler(mainForm, editor);
+            CodeCompletionKeyHandler h = new CodeCompletionKeyHandler(mainForm, editor, fileName);
 
 
 
@@ -55,7 +57,7 @@ namespace WhiskeyEditor.UI.Documents
                 codeCompletionWindow = CodeCompletionWindow.ShowCompletionWindow(
                     mainForm,					// The parent window for the completion window
                     editor, 					// The text editor to show the window for
-                    "sdf",		// Filename - will be passed back to the provider
+                    fileName,		// Filename - will be passed back to the provider
                     completionDataProvider,		// Provider to get the list of possible completions
                     key							// Key pressed - will be passed to the provider
                 );

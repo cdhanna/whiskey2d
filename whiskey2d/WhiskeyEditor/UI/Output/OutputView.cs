@@ -13,9 +13,11 @@ namespace WhiskeyEditor.UI.Output
 {
     class OutputView : Control
     {
+       
 
         private DataGridView grid;
         private BindingSource data;
+        
 
         public OutputView()
         {
@@ -40,7 +42,7 @@ namespace WhiskeyEditor.UI.Output
                 data.Clear();
                 foreach (CompilerError err in args.Errors)
                 {
-                  
+                   
                     string fileName = err.FileName;
                     try
                     {
@@ -66,6 +68,9 @@ namespace WhiskeyEditor.UI.Output
        
         private void initControls()
         {
+
+           
+
             data = new BindingSource();
 
             
@@ -100,14 +105,75 @@ namespace WhiskeyEditor.UI.Output
             column.FillWeight = .6f;
             grid.Columns.Add(column);
 
+        
 
-            
+
+           
         }
 
         private void addControls()
         {
             this.Controls.Add(grid);
+            
         }
+
+        
+        public void writeException(Exception e)
+        {
+            if (e == null)
+            {
+                MessageBox.Show("Unknown Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                string err = "ERROR: type{" + e.GetType().Name + "} "
+                    + Environment.NewLine + "msg{ " + e.Message + "} "
+                    + Environment.NewLine + "src{ " + e.Source + "} "
+                    + Environment.NewLine + "trace{ " + e.StackTrace + "} ";
+                string msg = "An error occured. If this problem continues, please contact the developers with the information below.";// +Environment.NewLine + err;
+
+                //MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                writeError("Error", msg, err);
+            }
+        }
+
+        public void writeWarning(WhiskeyEditor.Backend.WhiskeyWarning e)
+        {
+
+            if (e == null)
+            {
+                MessageBox.Show("Unknown Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                //string err = e.Warning;
+                //string msg = "Warning! " + Environment.NewLine + err;
+
+                //MessageBox.Show(msg, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+
+                // Get reference to the dialog type.
+                writeError("Warning", e.Warning, e.Message);
+            }
+        }
+
+        public void writeError(string title, string message, string details)
+        {
+            var dialogTypeName = "System.Windows.Forms.PropertyGridInternal.GridErrorDlg";
+            var dialogType = typeof(Form).Assembly.GetType(dialogTypeName);
+
+            // Create dialog instance.
+            var dialog = (Form)Activator.CreateInstance(dialogType, new PropertyGrid());
+
+            // Populate relevant properties on the dialog instance.
+            dialog.Text = title;
+            dialogType.GetProperty("Details").SetValue(dialog, details, null);
+            dialogType.GetProperty("Message").SetValue(dialog, message, null);
+
+            // Display dialog.
+            var result = dialog.ShowDialog();
+        }
+
+        
 
     }
 }

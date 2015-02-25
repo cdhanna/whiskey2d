@@ -81,6 +81,24 @@ namespace WhiskeyEditor.UI
             }
         }
 
+        public void writeException(Exception message)
+        {
+            
+            Invoke(new NoArgFunction(() =>
+            {
+                outputView.writeException(message);
+            }));
+        }
+
+        public void writeWarning(WhiskeyWarning message)
+        {
+
+            Invoke(new NoArgFunction(() =>
+            {
+                outputView.writeWarning(message);
+            }));
+        }
+
 
         public DockControl lookUpDockControl(string name)
         {

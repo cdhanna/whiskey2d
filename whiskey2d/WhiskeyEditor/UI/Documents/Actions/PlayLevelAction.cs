@@ -23,7 +23,9 @@ namespace WhiskeyEditor.UI.Documents.Actions
 
         protected override void run()
         {
+           
             ProjectManager.Instance.ActiveProject.testLevel(LevelDesc, this);
+            
         }
     }
 }

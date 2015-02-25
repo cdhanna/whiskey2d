@@ -107,14 +107,25 @@ namespace WhiskeyEditor.Backend.Managers
             {
                 CompilerResults results = compiler.CompileAssemblyFromFile(options, filePaths.ToArray());
 
-                fireCompiled( new CompileEventArgs(results.Errors));
+                fireCompiled(new CompileEventArgs(results.Errors));
                 
+              
                 return options.OutputAssembly;
 
             }
+            catch (FileNotFoundException e)
+            {
+                WhiskeyException ws = new WhiskeyException("Compiler Error " + e.Message);
+                ws.displayMessageBox();
+                //throw ws;
+                return dllOutputPath;
+            }
             catch (Exception e)
             {
-                throw new WhiskeyException("Compiler Error " + e.Message);
+                WhiskeyException ws = new WhiskeyException("Compiler Error " + e.Message);
+                ws.displayMessageBox();
+                //throw ws;
+                return dllOutputPath;
                 //return "CouldNotBuild";
             }
 

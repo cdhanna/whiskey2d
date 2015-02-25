@@ -158,10 +158,13 @@ namespace Whiskey2D.Core.Managers.Impl
             GraphicsDevice.SetRenderTarget(lightMapTarget);
             GraphicsDevice.Clear(GameManager.Level.AmbientLight);
 
-            gobs.ForEach(i =>
+            List<GameObject> lightGobs = gobs.Where(i => i.Light.Visible).ToList();
+            lightGobs.ForEach(i =>
             {
                 ClearAlphaToOne();
 
+
+                Bounds lightBounds = new Bounds(i.Position - Vector.One * i.Light.Radius, Vector.One * 2 * i.Light.Radius, 0);
 
                 GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 GraphicsDevice.BlendState = CustomBlendStates.MultiplyShadows;

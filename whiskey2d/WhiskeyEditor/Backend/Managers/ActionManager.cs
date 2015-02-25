@@ -38,30 +38,44 @@ namespace WhiskeyEditor.Backend.Managers
           //  backActions.Start();
         }
 
-        private void process()
+      
+
+
+        /// <summary>
+        /// Run an action
+        /// </summary>
+        /// <param name="action"></param>
+        public void run(WhiskeyAction action)
         {
-            while (true)
+            if (action == null)
+                throw new ArgumentNullException("Action");
+            // actions.Enqueue(action);
+            //TODO: put the action on a thread system (so that only one runs at a time)
+            action.Progress = 0;
+            ActionChanged(this, new ActionChangedEventArgs(action));
+
+            ActionChangedEventHandler actionHand = new ActionChangedEventHandler((s, a) =>
             {
+                ActionChanged(this, a);
+            });
 
-                if (actions.Count > 0)
-                {
-                    WhiskeyAction action = actions.Dequeue();
-                    action.Progress = 0;
-                    ActionChanged(this, new ActionChangedEventArgs(action));
+            action.Changed += actionHand;
 
-                    ActionChangedEventHandler actionHand = new ActionChangedEventHandler((s, a) =>
-                    {
-                        ActionChanged(this, a);
-                    });
+            Thread actionThread = new Thread(() =>
+            {
+                action.Effect(null);
+                action.Changed -= actionHand;
 
-                    action.Changed += actionHand;
-                    action.Effect();
-                    action.Changed -= actionHand;
-                    ActionChanged(this, new ActionChangedEventArgs(null));
+                action.Progress = 1;
+                ActionChanged(this, new ActionChangedEventArgs(action));
+                ActionChanged(this, new ActionChangedEventArgs(null));
+
+            });
+            actionThread.Name = "ACTION: " + action.Name;
+            actionThread.SetApartmentState(ApartmentState.STA);
+            actionThread.Start();
 
 
-                }
-            }
 
         }
 
@@ -69,7 +83,7 @@ namespace WhiskeyEditor.Backend.Managers
         /// Run an action
         /// </summary>
         /// <param name="action"></param>
-        public void run(WhiskeyAction action)
+        public void run(WhiskeyAction action, Object src)
         {
             if (action == null)
                 throw new ArgumentNullException("Action");
@@ -87,7 +101,9 @@ namespace WhiskeyEditor.Backend.Managers
 
             Thread actionThread = new Thread(() =>
             {
-                action.Effect();
+                
+                action.Effect(src);
+                
                 action.Changed -= actionHand;
 
                 action.Progress = 1;

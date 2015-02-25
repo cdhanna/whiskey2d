@@ -53,7 +53,7 @@ namespace WhiskeyEditor.EditorObjects
                 {
 
                     Vector diff = mousePos - startDrag;
-                    Gob.Selected.Light.Radius = diff.Length() * 2;
+                    Gob.Selected.Light.Radius = diff.Length * 2;
 
 
                     if (!WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))

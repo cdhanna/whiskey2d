@@ -101,7 +101,7 @@ namespace WhiskeyEditor.UI.Properties
 
                 service.DropDownControl(control);
                 //service.DropDownControl(list);
-                if (selectedName != null && oldSelected != selectedName)
+                if (selectedName != null )
                 {
                     value = selectedName;
                 }

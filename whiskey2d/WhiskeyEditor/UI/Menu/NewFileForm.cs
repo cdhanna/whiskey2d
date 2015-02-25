@@ -87,6 +87,10 @@ namespace WhiskeyEditor.UI.Menu
                 Close();
             };
             okayBtn.Enabled = false;
+
+
+            pathBox.Visible = false;
+            pathLabel.Visible = false;
         }
 
         private void validateClassName()

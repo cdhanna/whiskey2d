@@ -57,6 +57,7 @@ namespace Whiskey2D.Core.Hud
             addCommand(new ReplayCommand());
             addCommand(new ResetCommand());
             addCommand(new DebugCommand());
+            addCommand(new ReadValueCommand());
             addCommand(new GameObjectCounterCommand());
         }
 
@@ -112,11 +113,13 @@ namespace Whiskey2D.Core.Hud
             currentKeys = keyBoard.getAllKeysDown();
 
             Keys[] allkeys = (Keys[])Enum.GetValues(typeof(Keys));
+            bool isShift = currentKeys.Where(x => x.Key == Keys.LeftShift && x.Value).Count() == 1;
             foreach (Keys k in allkeys)
             {
                 if (isNewKey(k))
                 {
-                    inputBox.append(RealKeyBoard.keyToString(k));
+                  
+                    inputBox.append(RealKeyBoard.keyToString(k, isShift));
                 }
                 if (currentKeys[k])
                 {

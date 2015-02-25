@@ -17,7 +17,7 @@ namespace WhiskeyEditor.Backend.Managers
         private static GridManager instance = new GridManager();
         private GridManager() 
         {
-            setGridSize(128, 128);
+            setGridSize(100);
         }
 
         /// <summary>

@@ -110,6 +110,8 @@ namespace WhiskeyEditor.UI.Documents
 
             editor.ShowLineNumbers = true;
 
+            //CodeCompletionKeyHandler.Attach(UIManager.Instance.TopView, editor, FileName);
+            //editor.KeyDown += new CodeCompletionKeyHandler();
             
         }
 
