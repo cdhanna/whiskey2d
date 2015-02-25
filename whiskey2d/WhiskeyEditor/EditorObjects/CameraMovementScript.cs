@@ -61,8 +61,8 @@ namespace WhiskeyEditor.EditorObjects
 
             
             Vector screenOrigin = new Vector(WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferWidth, WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferHeight) /2;
-            //camera.Origin = WhiskeyControl.InputManager.getMousePosition();
-            camera.setOriginLockPosition(WhiskeyControl.InputManager.getMousePosition());
+            camera.Origin = WhiskeyControl.InputManager.getMousePosition();
+           // camera.setOriginLockPosition(WhiskeyControl.InputManager.getMousePosition());
 
 
             //camera.Origin = WhiskeyControl.InputManager.getMousePosition();

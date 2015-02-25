@@ -100,10 +100,11 @@ namespace WhiskeyEditor.UI
             Application.SetCompatibleTextRenderingDefault(false);
 
             TopView = new TopView();
-
+            TopView.WindowState = FormWindowState.Maximized;
+            TopView.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             
                 Application.Run(TopView);
-            
+               
         }
 
         public void requestClose()

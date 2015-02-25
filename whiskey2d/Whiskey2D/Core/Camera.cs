@@ -147,22 +147,19 @@ namespace Whiskey2D.Core
             }
             set
             {
-                
 
-                origin = value;
-
+                Vector originNew = getGameCoordinate(value);
+                origin = originNew;
+                updateTransform();
+                originNew = getScreenCoordinate(origin);
+                position += (value - originNew);
                 updateTransform();
             }
         }
 
         public void setOriginLockPosition(Vector nextOrigin)
         {
-            Vector originNew = getGameCoordinate(nextOrigin);
-            origin = originNew;
-            updateTransform();
-            originNew = getScreenCoordinate(origin);
-            position += (nextOrigin - originNew);
-            updateTransform();
+           
         }
 
 
@@ -240,6 +237,8 @@ namespace Whiskey2D.Core
             return new Vector2((float)Math.Round((double)v2.X), (float)Math.Round((double)v2.Y));
         }
 
+        
+
         private Matrix buildTransform()
         {
 
@@ -247,10 +246,10 @@ namespace Whiskey2D.Core
             //Origin = new Vector(1280, 720) / 2f;
             Matrix t = Matrix.Identity
 
-                 * Matrix.CreateTranslation(toVec3(Position))
+                 * Matrix.CreateTranslation(toVec3(-Position))
 
-            //* Matrix.CreateTranslation(toVec3(Origin))
-          //  * Matrix.CreateScale(Zoom)
+           // * Matrix.CreateTranslation(toVec3(-Origin))
+            * Matrix.CreateScale(new Vector3(Zoom, Zoom, 1))
             * Matrix.CreateTranslation(toVec3(Origin))
 
            
@@ -263,10 +262,15 @@ namespace Whiskey2D.Core
         private Matrix buildBackwardsTransform()
         {
             Matrix t = Matrix.Identity
+
             * Matrix.CreateTranslation(toVec3(-position))
+            
            // * Matrix.CreateTranslation(toVec3(origin))
-            //* Matrix.CreateScale(1 / zoom)
-            * Matrix.CreateTranslation(toVec3(origin))
+            * Matrix.CreateScale(1 / zoom)
+            * Matrix.CreateTranslation(toVec3(-origin))
+
+            
+
             ;
             return t;
         }
