@@ -249,9 +249,9 @@ namespace Whiskey2D.Core
 
                  * Matrix.CreateTranslation(toVec3(Position))
 
+            //* Matrix.CreateTranslation(toVec3(Origin))
+          //  * Matrix.CreateScale(Zoom)
             * Matrix.CreateTranslation(toVec3(Origin))
-            * Matrix.CreateScale(Zoom)
-            * Matrix.CreateTranslation(toVec3(-Origin))
 
            
             
@@ -264,8 +264,8 @@ namespace Whiskey2D.Core
         {
             Matrix t = Matrix.Identity
             * Matrix.CreateTranslation(toVec3(-position))
-            * Matrix.CreateTranslation(toVec3(-origin))
-            * Matrix.CreateScale(1 / zoom)
+           // * Matrix.CreateTranslation(toVec3(origin))
+            //* Matrix.CreateScale(1 / zoom)
             * Matrix.CreateTranslation(toVec3(origin))
             ;
             return t;

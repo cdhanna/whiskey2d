@@ -16,7 +16,11 @@ namespace WhiskeyEditor.Backend
 
         public FileDescriptor(string filePath, string name)
         {
-            this.filePath = UIManager.Instance.normalizePath(filePath);
+
+            FilePath = filePath;
+           // this.filePath = UIManager.Instance.normalizePath(filePath);
+
+           // this.filePath = this.filePath.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
 
             this.name = name;
             
@@ -27,11 +31,17 @@ namespace WhiskeyEditor.Backend
         {
             get
             {
-                return this.filePath;
+                String result =  UIManager.Instance.normalizePath(ProjectManager.Instance.ActiveProject.PathBase + Path.DirectorySeparatorChar + this.filePath);
+                return result;
             }
             protected set
             {
-                this.filePath = UIManager.Instance.normalizePath(value);
+                
+                this.filePath = value.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
+                this.filePath = UIManager.Instance.normalizePath(filePath);
+                if (filePath.StartsWith("\\"))
+                    filePath = filePath.Substring(1);
+                int x;
             }
         }
 
@@ -59,7 +69,7 @@ namespace WhiskeyEditor.Backend
 
         public string[] readAllLines()
         {
-            if (File.Exists(filePath))
+            if (File.Exists(FilePath))
             {
                 return File.ReadAllLines(FilePath);
             }
@@ -81,7 +91,7 @@ namespace WhiskeyEditor.Backend
 
         public virtual void ensureFileExists()
         {
-            if (File.Exists(filePath))
+            if (File.Exists(FilePath))
             {
                 inspectFile();
             }
