@@ -42,10 +42,13 @@ namespace WhiskeyEditor.EditorObjects
             }
 
             camera.Position -= cameraVel;
-
+            camera.PositionSpring = 1;
+            camera.PositionFriction = 0;
+            camera.OriginSpring = 1;
+            camera.OriginFriction = 0;
             if (Gob.Selected == null && WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
-                
+
                 if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
                 {
                     mouseShiftStart = WhiskeyControl.InputManager.getMousePosition();
@@ -53,15 +56,19 @@ namespace WhiskeyEditor.EditorObjects
                 }
 
                 Vector mouseDelta = WhiskeyControl.InputManager.getMousePosition() - mouseShiftStart;
-
-                camera.Position = mouseShiftCameraStart + mouseDelta;
+               // camera.Origin = mouseShiftCameraStart + mouseDelta;
+                camera.TargetPosition = mouseShiftCameraStart + mouseDelta;
 
                 
-            }
+                
 
-            
-            Vector screenOrigin = new Vector(WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferWidth, WhiskeyControl.WhiskeyGraphicsDevice.PresentationParameters.BackBufferHeight) /2;
-            camera.Origin = WhiskeyControl.InputManager.getMousePosition();
+               // camera.follow(camera.getGameCoordinate(mouseShiftCameraStart + mouseDelta));
+
+            }
+            else
+            {
+                camera.Origin = WhiskeyControl.InputManager.getMousePosition();
+            }
            // camera.setOriginLockPosition(WhiskeyControl.InputManager.getMousePosition());
 
 
@@ -80,6 +87,7 @@ namespace WhiskeyEditor.EditorObjects
             //camera.Zoom = Math.Max(camera.Zoom, .5f);
             //camera.Zoom = Math.Min(camera.Zoom, 1.5f);
 
+            camera.update();
             
         }
 

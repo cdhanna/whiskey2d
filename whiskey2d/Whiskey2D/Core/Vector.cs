@@ -153,13 +153,26 @@ namespace Whiskey2D.Core
         /// Gets the normalized Vector. A normal Vector will have the same direction as the original Vector, but the length is garunteed to be equal to 1.0. 
         /// For example, the Vector {5, 0}'s Normal would be {1, 0}. 
         /// </summary>
-        public Vector Normal
+        public Vector Unit
         {
             get
             {
                 Vector v = this;
                 v.Normalize();
                 return v;
+            }
+        }
+
+        public Vector UnitSafe
+        {
+            get
+            {
+                Vector unit = Unit;
+                if (float.IsNaN(unit.X))
+                {
+                    unit = Vector.Zero;
+                }
+                return unit;
             }
         }
 

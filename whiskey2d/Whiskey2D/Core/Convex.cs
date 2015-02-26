@@ -100,7 +100,7 @@ namespace Whiskey2D.Core
             foreach (Vector a in axisSet)
             {
                 //create the axis
-                Vector axis = a.Normal;
+                Vector axis = a.Unit;
 
                 float aMin = float.MaxValue, aMax = float.MinValue;
                 float bMin = float.MaxValue, bMax = float.MinValue;

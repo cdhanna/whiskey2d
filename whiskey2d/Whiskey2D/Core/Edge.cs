@@ -16,7 +16,7 @@ namespace Whiskey2D.Core
         {
             V1 = v1;
             V2 = v2;
-            Unit = (v2 - v1).Normal;
+            Unit = (v2 - v1).Unit;
             Normal = Unit.Perpendicular;
         }
 

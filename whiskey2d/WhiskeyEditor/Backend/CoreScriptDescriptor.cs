@@ -20,7 +20,19 @@ namespace WhiskeyEditor.Backend
         }
 
         public String Description { get; protected set; }
-
+        public override string FilePath
+        {
+            get
+            {
+                String path = base.FilePath;
+                path = path.Substring(path.IndexOf(CoreTypes.corePathScripts));
+                return path;
+            }
+            protected set
+            {
+                base.FilePath = value;
+            }
+        }
 
         public virtual void configure()
         {

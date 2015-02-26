@@ -97,8 +97,8 @@ namespace WhiskeyEditor.MonoHelp
 
             
 
-            drawBox(spriteBatch, screenBox, .02f, screenTopLeft, screenBotRight);
-            drawBox(spriteBatch, constantBox, .03f, Vector.Zero, Vector.Zero + screenSize);
+            drawBox(spriteBatch, screenBox, .02f,4, screenTopLeft, screenBotRight);
+            drawBox(spriteBatch, constantBox, .03f,8, Vector.Zero, Vector.Zero + screenSize);
 
             if (Level.PreviewHud)
             {
@@ -159,12 +159,12 @@ namespace WhiskeyEditor.MonoHelp
             spriteBatch.Draw(getPixel(), start, null, color, (float)Math.Atan2(diff.Y, diff.X), new Vector2(0, .5f) , new Vector(diff.Length, thickness), SpriteEffects.None, depth);
         }
 
-        private void drawBox(SpriteBatch spriteBatch, XnaColor color, float depth, Vector topLeft, Vector botRight)
+        private void drawBox(SpriteBatch spriteBatch, XnaColor color, float depth,float thickness, Vector topLeft, Vector botRight)
         {
-            drawLine(spriteBatch, color, depth, topLeft, new Vector(botRight.X, topLeft.Y));
-            drawLine(spriteBatch, color, depth, topLeft, new Vector(topLeft.X, botRight.Y));
-            drawLine(spriteBatch, color, depth, botRight, new Vector(topLeft.X, botRight.Y)); //bottom line
-            drawLine(spriteBatch, color, depth, botRight, new Vector(botRight.X, topLeft.Y));
+            drawLine(spriteBatch, color, depth, topLeft, new Vector(botRight.X, topLeft.Y), thickness);
+            drawLine(spriteBatch, color, depth, topLeft, new Vector(topLeft.X, botRight.Y), thickness);
+            drawLine(spriteBatch, color, depth, botRight, new Vector(topLeft.X, botRight.Y), thickness); //bottom line
+            drawLine(spriteBatch, color, depth, botRight, new Vector(botRight.X, topLeft.Y), thickness);
         }
 
 

@@ -37,6 +37,11 @@ namespace Whiskey2D.Core
             BloomLightSettings = BloomSettings.PresetSettings[0];
         }
 
+        public override void updateAll()
+        {
+            Camera.update();
+            base.updateAll();
+        }
 
         public static string serialize(GameLevel lvl, string fileName)
         {

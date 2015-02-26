@@ -27,17 +27,30 @@ namespace WhiskeyEditor.Backend
            
         }
 
-        public String FilePath
+        public virtual String FilePath
         {
             get
             {
+
+                string str = filePath;
+                while (str.Contains(ProjectManager.Instance.ActiveProject.PathBase))
+                {
+                    str = str.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
+                    if (str.StartsWith("\\"))
+                        str = str.Substring(1);
+                }
+                this.filePath = str;
+
                 String result =  UIManager.Instance.normalizePath(ProjectManager.Instance.ActiveProject.PathBase + Path.DirectorySeparatorChar + this.filePath);
                 return result;
             }
             protected set
             {
-                
-                this.filePath = value.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
+                string str = value;
+                while (str.Contains(ProjectManager.Instance.ActiveProject.PathBase))
+                    str = str.Replace(ProjectManager.Instance.ActiveProject.PathBase, "");
+                this.filePath = str;
+
                 this.filePath = UIManager.Instance.normalizePath(filePath);
                 if (filePath.StartsWith("\\"))
                     filePath = filePath.Substring(1);
