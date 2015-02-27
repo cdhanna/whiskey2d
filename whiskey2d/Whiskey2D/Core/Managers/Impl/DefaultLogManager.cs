@@ -26,14 +26,20 @@ namespace Whiskey2D.Core.Managers.Impl
             public void init()
             {
             }
-            public Dictionary<Keys, bool> getAllKeysDown()
+            public Dictionary<Keys, bool> AllDownKeys
             {
-                return new Dictionary<Keys, bool>();
+                get
+                {
+                    return new Dictionary<Keys, bool>();
+                }
             }
 
-            public MouseState getMouseState()
+            public MouseState MouseState
             {
-                return new MouseState();
+                get
+                {
+                    return new MouseState();
+                }
             }
         }
 
@@ -68,7 +74,7 @@ namespace Whiskey2D.Core.Managers.Impl
         {
 
             sourceMan = GameManager.InputSource;
-            currentState = sourceMan.getSource().getAllKeysDown();
+            currentState = sourceMan.getSource().AllDownKeys;
             oldActiveKeys = new List<Keys>();
             currentActiveKeys = new List<Keys>();
             oldActiveKeys.Clear();
@@ -76,7 +82,7 @@ namespace Whiskey2D.Core.Managers.Impl
             activeKeyCounter = 0;
             masterCount = 0;
 
-            currentMouse = sourceMan.getSource().getMouseState();
+            currentMouse = sourceMan.getSource().MouseState;
 
             writer = File.CreateText( getCurrentLogPath() );
             writer.AutoFlush = true;
@@ -132,12 +138,12 @@ namespace Whiskey2D.Core.Managers.Impl
             
             //KEYBOARD
             oldState = currentState;
-            currentState = sourceMan.getSource().getAllKeysDown();
+            currentState = sourceMan.getSource().AllDownKeys;
 
 
             //MOUSE
             oldMouse = currentMouse;
-            currentMouse = sourceMan.getSource().getMouseState();
+            currentMouse = sourceMan.getSource().MouseState;
 
 
 

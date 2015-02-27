@@ -55,8 +55,8 @@ namespace Whiskey2D.Core.Managers.Impl
         {
             sourceMan = source;
 
-            currentMouse = sourceMan.getSource().getMouseState();
-            currentState = sourceMan.getSource().getAllKeysDown();
+            currentMouse = sourceMan.getSource().MouseState;
+            currentState = sourceMan.getSource().AllDownKeys;
         }
 
         /// <summary>
@@ -74,8 +74,8 @@ namespace Whiskey2D.Core.Managers.Impl
             oldState = currentState;
             oldMouse = currentMouse;
 
-            currentMouse = sourceMan.getSource().getMouseState();
-            currentState = sourceMan.getSource().getAllKeysDown();
+            currentMouse = sourceMan.getSource().MouseState;
+            currentState = sourceMan.getSource().AllDownKeys;
         }
 
         /// <summary>

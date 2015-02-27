@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Whiskey2D.Core.Managers
 {
+
+    /// <summary>
+    /// The LogManager allows messages to be sent to the log file, and to the screen. 
+    /// </summary>
     public interface LogManager
     {
 
@@ -18,7 +22,16 @@ namespace Whiskey2D.Core.Managers
         /// </summary>
         void close();
 
+        /// <summary>
+        /// Get the current log path
+        /// </summary>
+        /// <returns></returns>
         string getCurrentLogPath();
+
+        /// <summary>
+        /// Get the old log path
+        /// </summary>
+        /// <returns></returns>
         string getOldLogPath();
 
 

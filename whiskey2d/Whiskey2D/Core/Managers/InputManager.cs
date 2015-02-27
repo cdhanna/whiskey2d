@@ -19,6 +19,12 @@ namespace Whiskey2D.Core.Managers
         void init();
 
         /// <summary>
+        /// Initializes the InputManager
+        /// </summary>
+        /// <param name="source">A custom InputSourceManager to provide an Input source. By default, the GameManager's InputSourceManager is used</param>
+        void init(InputSourceManager source);
+
+        /// <summary>
         /// Closes the InputManager
         /// </summary>
         void close();

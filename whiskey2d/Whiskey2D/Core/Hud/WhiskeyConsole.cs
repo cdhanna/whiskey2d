@@ -41,7 +41,7 @@ namespace Whiskey2D.Core.Hud
             this.inputBox.TextSize = .8f;
             this.inputBox.BackGroundColor = new Color(80, 20, 40, 70);
             keyBoard = new RealKeyBoard();
-            oldKeys = keyBoard.getAllKeysDown();
+            oldKeys = keyBoard.AllDownKeys;
             currentKeys = oldKeys;
             keyTimes = new Dictionary<Keys, int>();
             foreach (Keys k in currentKeys.Keys)
@@ -110,7 +110,7 @@ namespace Whiskey2D.Core.Hud
         public void update()
         {
             oldKeys = currentKeys;
-            currentKeys = keyBoard.getAllKeysDown();
+            currentKeys = keyBoard.AllDownKeys;
 
             Keys[] allkeys = (Keys[])Enum.GetValues(typeof(Keys));
             bool isShift = currentKeys.Where(x => x.Key == Keys.LeftShift && x.Value).Count() == 1;

@@ -71,28 +71,33 @@ namespace Whiskey2D.Core.Inputs
         /// Get all keys that are being pressed.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<Keys, bool> getAllKeysDown()
+        public Dictionary<Keys, bool> AllDownKeys
         {
-
-            KeyboardState state = Keyboard.GetState();
-            
-            Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
-            Dictionary<Keys, bool> keyMap = new Dictionary<Keys, bool>();
-            foreach (Keys key in all)
+            get
             {
-                keyMap.Add(key, state.IsKeyDown(key));
+
+                KeyboardState state = Keyboard.GetState();
+
+                Keys[] all = (Keys[])Enum.GetValues(typeof(Keys));
+                Dictionary<Keys, bool> keyMap = new Dictionary<Keys, bool>();
+                foreach (Keys key in all)
+                {
+                    keyMap.Add(key, state.IsKeyDown(key));
+                }
+
+
+                return keyMap;
             }
-
-
-            return keyMap;
         }
 
-        public MouseState getMouseState()
+        public MouseState MouseState
         {
-            MouseState state = Mouse.GetState();
+            get
+            {
+                MouseState state = Mouse.GetState();
 
-            return state;
-
+                return state;
+            }
         }
 
 

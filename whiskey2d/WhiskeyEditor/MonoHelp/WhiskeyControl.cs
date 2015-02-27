@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Whiskey2D.Core;
+using Whiskey2D.Core.Managers;
 using Whiskey2D.Core.Managers.Impl;
 using Whiskey2D.Core.Inputs;
 using System.IO;
@@ -45,7 +46,7 @@ namespace WhiskeyEditor.MonoHelp
         public static ContentManager Content { get; private set; }
 
 
-        public static DefaultInputManager InputManager { get; private set; }
+        public static InputManager InputManager { get; private set; }
         public static DefaultInputSourceManager InputSourceManager { get; private set; }
 
         public static GameController Controller { get; private set; }
@@ -53,44 +54,6 @@ namespace WhiskeyEditor.MonoHelp
         private static List<WhiskeyControl> allControls = new List<WhiskeyControl>();
         public static WhiskeyControl Active { get; private set; }
         private static Camera defaultCamera = new Camera();
-
-        //private static GameManager gameMan = GameManager.Instance;     //The game manager
-        //private static ContentManager content;                              //A content manager
-        //private static bool gameManInitialized = false;                     //true once the game manager has initialized, false until then
-        //private static Thread whiskeyThread;                                //the thread that represents the main ticking of the whiskey engine
-        //private static bool whiskeyThreadRunKey = true;                     //true for as long as the whiskey engine should tick. set to false to turn it off
-        //private static Stopwatch timer;                                     //a time to use to make sure the game doesn't run too fast
-        //private static TimeSpan TargetElapsedTime;                          //target time per tick
-        //private static InputSource whiskeyInput = null;                     //the latest input system
-        //private static InputSource requestedWhiskeyInput = null;            //the desired input system. Set this one to change the real input system
-
-        //protected static void launchWhiskeyThread()
-        //{
-        //    // Start the animation timer.
-        //    timer = Stopwatch.StartNew();
-        //    TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 8);
-        //    whiskeyThreadRunKey = true;
-        //    whiskeyThread = new Thread(() =>
-        //    {
-        //        while (whiskeyThreadRunKey)
-        //        {
-        //            if (timer.ElapsedMilliseconds > TargetElapsedTime.Milliseconds)
-        //            {
-        //                if (whiskeyInput != requestedWhiskeyInput)
-        //                {
-        //                    gameMan.InputSourceManager.hotSwapInput(requestedWhiskeyInput);
-        //                    whiskeyInput = requestedWhiskeyInput;
-        //                }
-                        
-        //               // gameMan.Update(null); //todo fix nullgametime
-        //                timer.Restart();
-        //            }
-        //            Thread.Sleep(2);
-        //        }
-        //    });
-        //    whiskeyThread.Name = "WHISKEYVIEW_MAIN";
-        //    whiskeyThread.Start();
-        //}
 
         
         public EditorInputSource InputSource { get; private set; }
@@ -101,7 +64,6 @@ namespace WhiskeyEditor.MonoHelp
 
         private Stopwatch timer;                                     //a time to use to make sure the game doesn't run too fast
         private TimeSpan TargetElapsedTime;                          //target time per tick
-        //private EditorRenderManager renderer;
 
        
         private int id;
@@ -109,7 +71,6 @@ namespace WhiskeyEditor.MonoHelp
         private bool backThreadRunKey = true;
 
         public event EventHandler BecameDirty = new EventHandler((s, a) => { });
-        //public event WhiskeyControlEventHandler SelectionChanged = new WhiskeyControlEventHandler((s, a) => { });
         
         
         /// <summary>
@@ -135,17 +96,6 @@ namespace WhiskeyEditor.MonoHelp
                 if (ObjectController != null)
                     ObjectController.CurrentLevel = level;
 
-                //ensureGameManInitialized();
-                //gameMan.ObjectManager.close();
-                //gameMan.ObjectManager.init();
-                //foreach (GameObject gob in editorObjects.getAllObjects()){
-                //    gameMan.ObjectManager.addObject(gob);
-                //}
-                
-                //foreach (InstanceDescriptor instance in level.Descriptors)
-                //{
-                //    gameMan.ObjectManager.addObject(instance);
-                //}
 
             }
         }
@@ -175,30 +125,7 @@ namespace WhiskeyEditor.MonoHelp
             allControls.Add(this);
         }
 
-        /// <summary>
-        /// Make sure that the game manager has been initialized to at least one control. 
-        /// </summary>
-        //private void ensureGameManInitialized()
-        //{
-        //    if (!gameManInitialized)
-        //    {
-        //        content = new ContentManager(Services, "media");
-        //        gameMan.Initialize(this, content, GraphicsDevice,
-        //            new DefaultInputManager(),
-        //            new DefaultInputSourceManager(),
-        //            DefaultLogManager.Instance,
-        //            new DefaultObjectManager(),
-        //            new DefaultRenderManager(),
-        //            DefaultResourceManager.Instance
-        //            );
-        //        gameMan.CurrentScene = null;
-        //        launchWhiskeyThread();
-        //    }
-            
-        //    gameManInitialized = true;
-
-        //}
-
+     
         /// <summary>
         /// called to set this control as the one that recieves input and updates objects
         /// </summary>

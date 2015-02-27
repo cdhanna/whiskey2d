@@ -126,37 +126,42 @@ namespace WhiskeyEditor.MonoHelp
             
         }
 
-        public Dictionary<MonoKeys, bool> getAllKeysDown()
+        public Dictionary<MonoKeys, bool> AllDownKeys
         {
-            Dictionary<MonoKeys, bool> map = new Dictionary<MonoKeys, bool>();
-            MonoKeys[] all = (MonoKeys[]) Enum.GetValues(typeof(MonoKeys));
-            foreach (MonoKeys k in all)
+            get
             {
-                map.Add(k, false);
+                Dictionary<MonoKeys, bool> map = new Dictionary<MonoKeys, bool>();
+                MonoKeys[] all = (MonoKeys[])Enum.GetValues(typeof(MonoKeys));
+                foreach (MonoKeys k in all)
+                {
+                    map.Add(k, false);
+                }
+
+                foreach (Keys k in winToMono.Keys)
+                {
+                    map[winToMono[k]] = winDown[k];
+                }
+
+
+                return map;
             }
-
-            foreach (Keys k in winToMono.Keys)
-            {
-                map[ winToMono[k] ] = winDown[k];
-            }
-
-
-            return map;
         }
 
 
-
-        public MonoMouse getMouseState()
+        public MonoMouse MouseState
         {
-            MonoMouse m = new MonoMouse(mouseX, mouseY, 
-                mouseScroll,
-                winMouseState[WinMouse.Left],
-                winMouseState[WinMouse.Middle],
-                winMouseState[WinMouse.Right],
-                winMouseState[WinMouse.XButton1],
-                winMouseState[WinMouse.XButton2]);
+            get
+            {
+                MonoMouse m = new MonoMouse(mouseX, mouseY,
+                    mouseScroll,
+                    winMouseState[WinMouse.Left],
+                    winMouseState[WinMouse.Middle],
+                    winMouseState[WinMouse.Right],
+                    winMouseState[WinMouse.XButton1],
+                    winMouseState[WinMouse.XButton2]);
 
-            return m;
+                return m;
+            }
         }
     }
 }

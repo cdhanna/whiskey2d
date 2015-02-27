@@ -169,12 +169,9 @@ namespace Whiskey2D.Core.Inputs
 
         }
 
-        public MouseState MouseState
+        public MouseState MouseState()
         {
-            get
-            {
-                return getInputOnLine().MouseState;
-            }
+            return getInputOnLine().MouseState;
         }
 
 

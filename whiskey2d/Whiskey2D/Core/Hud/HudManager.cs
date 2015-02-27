@@ -122,7 +122,7 @@ namespace Whiskey2D.Core.Hud
         /// </summary>
         public void update()
         {
-            newKeys = keyboard.getAllKeysDown();
+            newKeys = keyboard.AllDownKeys;
 
             if (newKeys[Keys.OemTilde] && !oldKeys[Keys.OemTilde])
             {
