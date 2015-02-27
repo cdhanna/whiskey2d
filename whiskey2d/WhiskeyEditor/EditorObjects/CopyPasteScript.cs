@@ -24,7 +24,7 @@ namespace WhiskeyEditor.EditorObjects
         }
         public override void onUpdate()
         {
-            Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+            Vector mousePos = WhiskeyControl.InputManager.MousePosition;
             mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
             

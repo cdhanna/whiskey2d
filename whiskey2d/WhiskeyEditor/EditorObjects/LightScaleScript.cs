@@ -24,7 +24,7 @@ namespace WhiskeyEditor.EditorObjects
         {
             if (Gob.Selected != null)
             {
-                Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+                Vector mousePos = WhiskeyControl.InputManager.MousePosition;
                 mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
                 ObjectControlPoint cp = Gob.ControlPointLightRadius;

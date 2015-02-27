@@ -15,8 +15,8 @@ namespace Whiskey2D.Core
         public Vector Origin { get; set; }
         public float Rotation { get; set; }
        
-        public VectorSet Vectors { get; set; }
-        public VectorSet TranslatedVectors { get { return calculateTrans(); } }
+        internal VectorSet Vectors { get; set; }
+        internal VectorSet TranslatedVectors { get { return calculateTrans(); } }
        
         
         public Convex()

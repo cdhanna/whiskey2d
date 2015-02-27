@@ -53,11 +53,11 @@ namespace WhiskeyEditor.EditorObjects
 
                 if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
                 {
-                    mouseShiftStart = WhiskeyControl.InputManager.getMousePosition();
+                    mouseShiftStart = WhiskeyControl.InputManager.MousePosition;
                     mouseShiftCameraStart = camera.Position;
                 }
 
-                Vector mouseDelta = WhiskeyControl.InputManager.getMousePosition() - mouseShiftStart;
+                Vector mouseDelta = WhiskeyControl.InputManager.MousePosition - mouseShiftStart;
                // camera.Origin = mouseShiftCameraStart + mouseDelta;
                 camera.TargetPosition = mouseShiftCameraStart + mouseDelta;
                 camera.PositionSpeed = mouseDelta.Length;
@@ -69,18 +69,18 @@ namespace WhiskeyEditor.EditorObjects
             }
             else
             {
-                camera.Origin = WhiskeyControl.InputManager.getMousePosition();
+                camera.Origin = WhiskeyControl.InputManager.MousePosition;
             }
-           // camera.setOriginLockPosition(WhiskeyControl.InputManager.getMousePosition());
+           // camera.setOriginLockPosition(WhiskeyControl.InputManager.MousePosition());
 
 
-            //camera.Origin = WhiskeyControl.InputManager.getMousePosition();
-            if (WhiskeyControl.InputManager.scrolledDown())
+            //camera.Origin = WhiskeyControl.InputManager.MousePosition();
+            if (WhiskeyControl.InputManager.ScrolledDown)
             {
                 //camera.Origin = origin;
                 camera.TargetZoom -= .1f;
             }
-            if (WhiskeyControl.InputManager.scrolledUp())
+            if (WhiskeyControl.InputManager.ScrolledUp)
             {
                 //camera.Origin = origin;
                 camera.TargetZoom += .1f;

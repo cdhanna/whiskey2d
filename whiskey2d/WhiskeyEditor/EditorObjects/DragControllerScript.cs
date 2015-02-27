@@ -31,7 +31,7 @@ namespace WhiskeyEditor.EditorObjects
         {
 
 
-            Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+            Vector mousePos = WhiskeyControl.InputManager.MousePosition;
             mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
             mousePos = new Vector((int)mousePos.X, (int)mousePos.Y);

@@ -37,7 +37,7 @@ namespace WhiskeyEditor.EditorObjects
         {
             if (WhiskeyControl.InputManager.isNewMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
-                Vector mousePos = WhiskeyControl.InputManager.getMousePosition();
+                Vector mousePos = WhiskeyControl.InputManager.MousePosition;
                 mousePos = WhiskeyControl.ActiveCamera.getGameCoordinate(mousePos);
 
                 //check if selection already exists. If so, check for controlPoints

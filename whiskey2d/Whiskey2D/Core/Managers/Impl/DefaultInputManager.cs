@@ -100,26 +100,37 @@ namespace Whiskey2D.Core.Managers.Impl
         }
 
 
-        public int getMouseWheelDelta()
+        public int MouseWheelDelta
         {
+            get
+            {
+                return currentMouse.ScrollWheelValue;
+            }
+        }
 
-            return currentMouse.ScrollWheelValue;
+        public bool ScrolledUp
+        {
+            get
+            {
+                return currentMouse.ScrollWheelValue > oldMouse.ScrollWheelValue;
+            }
+        }
+        public bool ScrolledDown 
+        {
+            get
+            {
+                return currentMouse.ScrollWheelValue < oldMouse.ScrollWheelValue;
+            }
             
         }
 
-        public bool scrolledUp()
-        {
-            return currentMouse.ScrollWheelValue > oldMouse.ScrollWheelValue;
-        }
-        public bool scrolledDown()
-        {
-            return currentMouse.ScrollWheelValue < oldMouse.ScrollWheelValue;
-        }
 
-
-        public Vector getMousePosition()
+        public Vector MousePosition
         {
-            return new Vector(currentMouse.Position.X, currentMouse.Position.Y);
+            get
+            {
+                return new Vector(currentMouse.Position.X, currentMouse.Position.Y);
+            }
         }
 
 
