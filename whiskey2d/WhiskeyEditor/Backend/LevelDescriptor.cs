@@ -74,7 +74,7 @@ namespace WhiskeyEditor.Backend
         public override void inspectFile()
         {
             Level = EditorLevel.deserialize(FilePath);
-            
+            Level.Camera = new Camera();
             //Level.setInstanceLevelState(State.deserialize(FilePath));
             
             //colorProperty.TypeVal.Value = Level.BackgroundColor;

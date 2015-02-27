@@ -48,6 +48,12 @@ namespace Whiskey2D.Core
         private Vector positionAcceleration = Vector.Zero;
         private Vector targetPosition = Vector.Zero;
 
+        private float zoomSpring = .5f;
+        private float zoomFriction = .5f;
+        private float zoomVelocity = 0;
+        private float zoomAcceleration = 0;
+        private float targetZoom = 1;
+
         private float originSpring = .5f;
         private float originFriction = .5f;
         private Vector originVelocity = Vector.Zero;
@@ -63,6 +69,10 @@ namespace Whiskey2D.Core
             get;
             set;
         }
+
+        public float TargetZoom { get { return targetZoom; } set { targetZoom = (value); } }
+        public float ZoomSpring { get { return zoomSpring; } set { zoomSpring = value; } }
+        public float ZoomFriction { get { return zoomFriction; } set { zoomFriction = value; } }
 
         public Vector TargetPosition { get { return targetPosition; } set { targetPosition = (value); } }
         public float PositionSpring { get { return positionSpring; } set { positionSpring = value; } }
@@ -283,7 +293,7 @@ namespace Whiskey2D.Core
         private Matrix buildTransform()
         {
 
-            ZoomMin = .5f;
+            ZoomMin = .1f;
             //Origin = new Vector(1280, 720) / 2f;
             Matrix t = Matrix.Identity
 
@@ -322,8 +332,8 @@ namespace Whiskey2D.Core
 
         public void follow(Vector spot)
         {
-            
-            targetOrigin = getScreenCoordinate(spot);
+            Origin = getScreenCoordinate(spot);
+          //  targetOrigin = getScreenCoordinate(spot);
             targetPosition = -spot + Size / 2;
             //targetPosition = -spot + Size / 2;
             //Origin = getScreenCoordinate(spot);
@@ -438,25 +448,34 @@ namespace Whiskey2D.Core
         public void update()
         {
 
-           // Vector toTarget = (Position - TranslationActual).UnitSafe;
 
-
-            //positionVelocity = Vector.Zero;
+            //SPRING MECH //////////////////////////////////////////////////////////
+            positionVelocity = Vector.Zero;
             positionVelocity *= PositionFriction;
             originVelocity *= OriginFriction;
-            
-            positionAcceleration =  PositionSpring* (targetPosition - Position) ;
+            zoomVelocity *= ZoomFriction;
+
+            positionAcceleration = PositionSpring * (targetPosition - Position);
             originAcceleration = OriginSpring * (targetOrigin - Origin);
-            
+            zoomAcceleration = ZoomSpring * (targetZoom - Zoom);
+
             positionVelocity += positionAcceleration;
             originVelocity += originAcceleration;
+            zoomVelocity += zoomAcceleration;
+            ////////////////////////////////////////////////////////////////////////
+
+            //positionVelocity = Math.Min(PositionSpring, (targetPosition - Position).Length) * (targetPosition - Position).Unit;
+            //zoomVelocity = Math.Min(ZoomSpring, Math.Abs(TargetZoom - Zoom)) * (targetZoom - Zoom);
+
+
 
             if (originFriction != 0)
             {
-                Origin += originVelocity;
+               // Origin += originVelocity;
             }
             Position += positionVelocity;
-            
+            Zoom += zoomVelocity;
+
             //Position = TargetPosition;
            // center(Position);
             updateTransform();

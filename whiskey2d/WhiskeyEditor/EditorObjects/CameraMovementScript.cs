@@ -46,6 +46,8 @@ namespace WhiskeyEditor.EditorObjects
             camera.PositionFriction = 0;
             camera.OriginSpring = 1;
             camera.OriginFriction = 0;
+            camera.ZoomSpring = 1;
+            camera.ZoomFriction = 0;
             if (Gob.Selected == null && WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
             {
 
@@ -76,12 +78,12 @@ namespace WhiskeyEditor.EditorObjects
             if (WhiskeyControl.InputManager.scrolledDown())
             {
                 //camera.Origin = origin;
-                camera.Zoom -= .1f;
+                camera.TargetZoom -= .1f;
             }
             if (WhiskeyControl.InputManager.scrolledUp())
             {
                 //camera.Origin = origin;
-                camera.Zoom += .1f;
+                camera.TargetZoom += .1f;
             }
 
             //camera.Zoom = Math.Max(camera.Zoom, .5f);
