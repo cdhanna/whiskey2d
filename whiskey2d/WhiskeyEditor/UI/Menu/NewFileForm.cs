@@ -89,8 +89,6 @@ namespace WhiskeyEditor.UI.Menu
             okayBtn.Enabled = false;
 
 
-            pathBox.Visible = false;
-            pathLabel.Visible = false;
         }
 
         private void validateClassName()
@@ -142,7 +140,11 @@ namespace WhiskeyEditor.UI.Menu
 
         public void setPath(string path)
         {
-            pathBox.Text = path;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
     }

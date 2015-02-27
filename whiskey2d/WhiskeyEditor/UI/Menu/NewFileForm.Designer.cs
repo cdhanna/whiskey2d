@@ -33,8 +33,6 @@
             this.okayBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pathBox = new System.Windows.Forms.TextBox();
-            this.pathLabel = new System.Windows.Forms.Label();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.scriptBox = new System.Windows.Forms.ComboBox();
             this.typeBox = new System.Windows.Forms.ComboBox();
@@ -56,9 +54,9 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.66666F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 150);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.93007F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.06993F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 143);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -66,11 +64,12 @@
             this.panel1.Controls.Add(this.okayBtn);
             this.panel1.Controls.Add(this.cancelBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(2, 117);
+            this.panel1.Location = new System.Drawing.Point(2, 101);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(190, 31);
+            this.panel1.Size = new System.Drawing.Size(190, 40);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // okayBtn
             // 
@@ -95,8 +94,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.pathBox);
-            this.panel2.Controls.Add(this.pathLabel);
             this.panel2.Controls.Add(this.nameBox);
             this.panel2.Controls.Add(this.scriptBox);
             this.panel2.Controls.Add(this.typeBox);
@@ -107,31 +104,12 @@
             this.panel2.Location = new System.Drawing.Point(2, 2);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(190, 111);
+            this.panel2.Size = new System.Drawing.Size(190, 95);
             this.panel2.TabIndex = 1;
-            // 
-            // pathBox
-            // 
-            this.pathBox.Location = new System.Drawing.Point(53, 7);
-            this.pathBox.Margin = new System.Windows.Forms.Padding(2);
-            this.pathBox.Name = "pathBox";
-            this.pathBox.ReadOnly = true;
-            this.pathBox.Size = new System.Drawing.Size(134, 20);
-            this.pathBox.TabIndex = 7;
-            // 
-            // pathLabel
-            // 
-            this.pathLabel.AutoSize = true;
-            this.pathLabel.Location = new System.Drawing.Point(8, 7);
-            this.pathLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.pathLabel.Name = "pathLabel";
-            this.pathLabel.Size = new System.Drawing.Size(29, 13);
-            this.pathLabel.TabIndex = 6;
-            this.pathLabel.Text = "Path";
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(53, 59);
+            this.nameBox.Location = new System.Drawing.Point(53, 32);
             this.nameBox.Margin = new System.Windows.Forms.Padding(2);
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(134, 20);
@@ -141,7 +119,7 @@
             // 
             this.scriptBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.scriptBox.FormattingEnabled = true;
-            this.scriptBox.Location = new System.Drawing.Point(53, 82);
+            this.scriptBox.Location = new System.Drawing.Point(53, 55);
             this.scriptBox.Margin = new System.Windows.Forms.Padding(2);
             this.scriptBox.Name = "scriptBox";
             this.scriptBox.Size = new System.Drawing.Size(134, 21);
@@ -151,7 +129,7 @@
             // 
             this.typeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.typeBox.FormattingEnabled = true;
-            this.typeBox.Location = new System.Drawing.Point(53, 36);
+            this.typeBox.Location = new System.Drawing.Point(53, 9);
             this.typeBox.Margin = new System.Windows.Forms.Padding(2);
             this.typeBox.Name = "typeBox";
             this.typeBox.Size = new System.Drawing.Size(134, 21);
@@ -160,7 +138,7 @@
             // scriptLabel
             // 
             this.scriptLabel.AutoSize = true;
-            this.scriptLabel.Location = new System.Drawing.Point(8, 84);
+            this.scriptLabel.Location = new System.Drawing.Point(8, 57);
             this.scriptLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.scriptLabel.Name = "scriptLabel";
             this.scriptLabel.Size = new System.Drawing.Size(22, 13);
@@ -170,7 +148,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(8, 62);
+            this.nameLabel.Location = new System.Drawing.Point(8, 35);
             this.nameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(35, 13);
@@ -180,7 +158,7 @@
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(8, 38);
+            this.typeLabel.Location = new System.Drawing.Point(8, 11);
             this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(31, 13);
@@ -195,7 +173,7 @@
             this.CancelButton = this.cancelBtn;
             this.ClientSize = new System.Drawing.Size(202, 154);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "NewFileForm";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -219,7 +197,5 @@
         private System.Windows.Forms.Label scriptLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label typeLabel;
-        private System.Windows.Forms.TextBox pathBox;
-        private System.Windows.Forms.Label pathLabel;
     }
 }

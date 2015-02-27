@@ -92,11 +92,13 @@ namespace Whiskey2D.Core.Managers.Impl
             if (writer == null)
                 return;
 
+           
+                writer.Close();
 
-            writer.Close();
-
-            File.Delete(getOldLogPath());
-            File.Copy(getCurrentLogPath(), getOldLogPath());
+           
+                File.Delete(getOldLogPath());
+                File.Copy(getCurrentLogPath(), getOldLogPath());
+            
         }
 
         public string getCurrentLogPath()

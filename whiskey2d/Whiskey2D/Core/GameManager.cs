@@ -297,15 +297,21 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual void UnloadContent()
         {
-            LogManager.debug("SHUTTING DOWN MANAGERS");
-            RenderManager.close();
-            ObjectManager.close();
-            ResourceManager.close();
-            InputManager.close();
-            HudManager.close();
-            LogManager.debug("CLOSING");
-            LogManager.close();
-           
+            try
+            {
+                LogManager.debug("SHUTTING DOWN MANAGERS");
+                RenderManager.close();
+                ObjectManager.close();
+                ResourceManager.close();
+                InputManager.close();
+                HudManager.close();
+                LogManager.debug("CLOSING");
+                LogManager.close();
+            }
+            catch (Exception e)
+            {
+                // this is pure sin
+            }
         }
 
         public virtual void Exit()
