@@ -87,7 +87,7 @@ namespace WhiskeyEditor.EditorObjects
                             }
                             if (ocp == Gob.ControlPointBot || ocp == Gob.ControlPointRightBot || ocp == Gob.ControlPointRightBot)
                             {
-                                startDragMod.Y = Gob.Selected.Bounds.Bottam;
+                                startDragMod.Y = Gob.Selected.Bounds.Bottom;
                             }
 
                             startScale = Gob.Selected.Sprite.Scale;

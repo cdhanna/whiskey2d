@@ -22,10 +22,7 @@ namespace Whiskey2D.Core
         /// The list of Scripts that the GameObject is currently running
         /// </summary>
         protected List<Script> scripts;
-
-
         
-
         /// <summary>
         /// The ObjectManager that this GameObject belongs to
         /// </summary>
@@ -125,6 +122,9 @@ namespace Whiskey2D.Core
             set;
         }
 
+        /// <summary>
+        /// Gets or Sets if the GameObject is a HudObject. If the GameObject is a HudObject, then it will appear on the HUD, and not in GameSpace
+        /// </summary>
         public virtual Boolean HudObject
         {
             get;
@@ -152,6 +152,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Get or Sets the Light of the GameObject
+        /// </summary>
         public virtual Light Light
         {
             get
@@ -165,6 +168,9 @@ namespace Whiskey2D.Core
 
         }
 
+        /// <summary>
+        /// Gets or Sets the Shadows of the GameObject
+        /// </summary>
         public virtual ShadowProperties Shadows
         {
             get
@@ -305,16 +311,20 @@ namespace Whiskey2D.Core
             
         }
 
+        /// <summary>
+        /// Render the GameObject's Light. If the GameObject has a Light, it will be rendered here.
+        /// This is called from the RenderManager.
+        /// Override fi needed to render a fancy light.
+        /// </summary>
+        /// <param name="info">The info needed to render</param>
         public virtual void renderLight(RenderInfo info)
         {
             if (Light != null)
             {
                 Light.Position = Position;
-                //Light.Scale = Sprite.Scale;
                 Light.render(info);
             }
         }
-
 
         /// <summary>
         /// Get the set of all Scripts that are currently set to Active. 
@@ -349,37 +359,11 @@ namespace Whiskey2D.Core
 
 
 
-
         /// <summary>
-        /// Every GameObject has a set of Bounds that can be used to collect collision info.
-        /// This function returns a list of collision information objects with a particular other kind of GameObject
-        /// 
-        /// An example way to call this function looks like
-        /// List\GameObject, G/ collInfos = Gob.currentCollisions \G/ ();
+        /// Get a set of Collisions with a given kind of GameObejct
         /// </summary>
-        /// <typeparam name="G">The kind of GameObject to check for collisions with</typeparam>
-        /// <returns>The list of COllisionInfo</returns>
-        //public List<CollisionInfo<GameObject, G>> currentCollisions<G>() where G : GameObject
-        //{
-        //    List<CollisionInfo<GameObject, G>> collisionInfos = new List<CollisionInfo<GameObject, G>>();
-
-        //    List<G> all = objectManager.getAllObjectsOfType<G>();
-        //    all.ForEach((gob) =>
-        //    {
-        //        if (gob != this)
-        //        {
-        //            Vector normal = gob.Bounds.getNormalOfCollision(Bounds);
-        //            if (normal != Vector.Zero)
-        //            {
-        //                collisionInfos.Add(new CollisionInfo<GameObject, G>(this, gob, normal));
-        //            }
-        //        }
-        //    });
-        //    return collisionInfos;
-        //}
-
-
-
+        /// <typeparam name="G">Some type of GameObject</typeparam>
+        /// <returns>A set of Collisions</returns>
         public Collisions<G> currentCollisions<G>() where G : GameObject
         {
             Collisions<G> collList = new Collisions<G>();
@@ -397,44 +381,6 @@ namespace Whiskey2D.Core
             });
             return collList;
         }
-
-        //public List<ObjectCollisionInfo<G>> currentCollisions<G>() where G : GameObject
-        //{
-        //    List<ObjectCollisionInfo<G>> collList = new List<ObjectCollisionInfo<G>>();
-        //    List<G> all = objectManager.getAllObjectsOfType<G>();
-        //    all.ForEach((gob) =>
-        //    {
-        //        if (gob != this)
-        //        {
-        //            CollisionInfo info = gob.Bounds.getCollisionInfo(Bounds);
-        //            if (info != null)
-        //            {
-        //                collList.Add(new ObjectCollisionInfo<G>(info, gob));
-        //            }
-        //        }
-        //    });
-        //    return collList;
-        //}
-
-        //public List<G> currentCollisions<G>() where G : GameObject
-        //{
-        //    List<G> collList = new List<G>();
-
-        //    List<G> all = objectManager.getAllObjectsOfType<G>();
-        //    all.ForEach((gob) =>
-        //    {
-        //        if (gob != this)
-        //        {
-        //            if (gob.Bounds.boundWithin(Bounds))
-        //            {
-        //                collList.Add(gob);
-        //            }
-        //        }
-
-        //    });
-
-        //    return collList;
-        //}
 
     }
 }

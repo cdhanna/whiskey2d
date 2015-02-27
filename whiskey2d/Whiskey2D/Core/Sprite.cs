@@ -17,17 +17,27 @@ namespace Whiskey2D.Core
     {
         public const string PIXEL = "__PIXEL__";
 
-        /// <summary>
-        /// The Image that the Sprite is linked to
-        /// </summary>
-        //public Texture2D Image { get; set; }
         [NonSerialized]
         private Texture2D image;
         
-
         [NonSerialized]
         private RenderManager renderer;
 
+        [NonSerialized]
+        private ResourceManager resources;
+
+      
+
+        private string imagePath;
+        private bool newImage = false;
+        private int rows = 1;
+        private int columns = 1;
+        private int frame = 0;
+
+        /// <summary>
+        /// Retrieve the Renderer the Sprite is using
+        /// </summary>
+        /// <returns>Some Renderer</returns>
         public RenderManager getRenderer()
         {
             if (renderer == null){
@@ -36,14 +46,20 @@ namespace Whiskey2D.Core
 
             return renderer;
         }
+
+        /// <summary>
+        /// Sets the Renderer that the Sprite will use
+        /// </summary>
+        /// <param name="renderer">Some Renderer</param>
         public void setRender(RenderManager renderer)
         {
             this.renderer = renderer;
         }
 
-
-        [NonSerialized]
-        private ResourceManager resources;
+        /// <summary>
+        /// Retrieves the ResourceManager the Sprite is using
+        /// </summary>
+        /// <returns>Some resourceManager</returns>
         public ResourceManager getResources()
         {
             if (resources == null)
@@ -52,12 +68,20 @@ namespace Whiskey2D.Core
             }
             return resources;
         }
+
+        /// <summary>
+        /// Sets the Resourcemanager the sprite will use
+        /// </summary>
+        /// <param name="resources">some resourceManager</param>
         public void setResources(ResourceManager resources)
         {
             this.resources = resources;
         }
 
-
+        /// <summary>
+        /// Get the Image that the Sprite is using
+        /// </summary>
+        /// <returns>An Image</returns>
         public Texture2D getImage()
         {
             if (getRenderer() == null)
@@ -85,23 +109,14 @@ namespace Whiskey2D.Core
                 Center();
             }
 
-            
-
+           
             return image;
         }
 
-        //public void setImage(Texture2D image)
-        //{
-        //    this.image = image;
-        //}
-
-        private Convex _convex;
-        public Convex Convex { get { if (_convex == null) buildConvex(); return _convex; } set { _convex = value; } }
-
-
-        private string imagePath;
-        private bool newImage = false;
-       // public String ImagePath { get { return this.imagePath; } }
+      
+        /// <summary>
+        /// The path to the Image the Sprite is using
+        /// </summary>
         [System.ComponentModel.ReadOnly(true)]
         public String ImagePath
         {
@@ -128,12 +143,17 @@ namespace Whiskey2D.Core
         [System.ComponentModel.Browsable(false)]
         public Vector ImageSize { get { return new Vector(ImageWidth * Scale.X, ImageHeight * Scale.Y); } }
 
+        /// <summary>
+        /// The width of the Image being used
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public float ImageWidth { get { return (getImage() == null) ? 0 : getImage().Width; } }
 
+        /// <summary>
+        /// The height of the Image being used
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public float ImageHeight { get { return (getImage() == null) ? 0 : getImage().Height; } }
-
 
         /// <summary>
         /// The rotation the Sprite will be drawn at. The Rotation is in radians. 
@@ -150,12 +170,9 @@ namespace Whiskey2D.Core
         /// </summary>
         public float Depth { get; set; }
 
-        private int rows = 1;
-        private int columns = 1;
-        private int frame = 0;
-
-        
-
+        /// <summary>
+        /// Gets or Sets the number of Frame-Rows the Sprite has.
+        /// </summary>
         public int Rows
         {
             get
@@ -168,6 +185,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets or Sets the number of Frame-Columns the Sprite has.
+        /// </summary>
         public int Columns
         {
             get
@@ -180,6 +200,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the total number of Frames in the Sprite. FrameCount equals Rows * Columns
+        /// </summary>
         public int FrameCount
         {
             get
@@ -188,6 +211,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets or Sets the current displaying frame.
+        /// </summary>
         public int Frame
         {
             get
@@ -200,26 +226,33 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the width of one frame in the image. This is unscaled.
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public float FrameWidth
         {
             get
             {
                 return ImageWidth / Columns;
-                //return ImageSize.X / Columns;
             }
         }
 
+        /// <summary>
+        /// Gets the height of one frame in the image. This is unscaled.
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public float FrameHeight
         {
             get
             {
                 return ImageHeight / Rows;
-                //return ImageSize.Y / Rows;
             }
         }
 
+        /// <summary>
+        /// Gets the size of one frame in the image. This is unscaled.
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Vector FrameSize
         {
@@ -229,6 +262,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the height of one frame in the image. This is scaled
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Vector FrameSizeScaled
         {
@@ -238,6 +274,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the offset of one frame in the image.
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Vector FrameOffset
         {
@@ -247,6 +286,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the offset of one frame in the image. This is scaled
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Vector FrameOffsetScaled
         {
@@ -256,6 +298,9 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets a Rectangle representing the current frame of the sprite, in ImageCoordinates
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Rectangle FrameRectangle
         {
@@ -267,8 +312,6 @@ namespace Whiskey2D.Core
             }
         }
 
-
-
         /// <summary>
         /// The offset of the sprite. By default, the offset is (0,0), which means all sprites will be drawn from their top-left corner.
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
@@ -276,29 +319,22 @@ namespace Whiskey2D.Core
         [System.ComponentModel.Browsable(false)]
         public Vector Offset { get; private set; }
 
+        /// <summary>
+        /// Gets the offset of the sprite, but scaled
+        /// </summary>
         [System.ComponentModel.Browsable(false)]
         public Vector ScaledOffset { get { return new Vector(Offset.X * Scale.X, Offset.Y * Scale.Y); } }
 
-        public bool Tiled { get; set; }
-        public bool Visible { get; set; }
         /// <summary>
-        /// Creates a sprite with a given Image.
+        /// Get or Set if the Sprite tiles itself when the scale is not {1, 1}
         /// </summary>
-        /// <param name="image">A non-null Image</param>
-        //public Sprite(Texture2D image)
-        //{
-        //    this.image = image;
-        //    Scale = Vector.One;
-        //    Offset = Vector.Zero;
-        //    Depth = .5f;
-        //    Color = Microsoft.Xna.Framework.Color.White;
-        //    Rotation = 0;
-        //}
+        public bool Tiled { get; set; }
 
-        private void buildConvex()
-        {
-            Convex = new Convex();
-        }
+        /// <summary>
+        /// Get or Set if the Sprite is visible
+        /// </summary>
+        public bool Visible { get; set; }
+  
 
         public Sprite(string imagePath)
         {
@@ -311,7 +347,6 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Visible = true;
             Rotation = 0;
-            buildConvex();
         }
         public Sprite()
         {
@@ -323,7 +358,6 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
             Visible = true;
-            buildConvex();
         }
 
         public Sprite(RenderManager renderer)
@@ -338,31 +372,18 @@ namespace Whiskey2D.Core
             Color = Microsoft.Xna.Framework.Color.White;
             Rotation = 0;
             Visible = true;
-            buildConvex();
         }
 
 
-        public Sprite( Sprite other)
-        {
-            setRender(other.getRenderer());
-            setResources(other.getResources());
-            ImagePath = other.ImagePath;
-            // image = other.getImage();
-            Scale = other.Scale;
-            Offset = other.Offset;
-            Depth = other.Depth;
-            Color = other.Color;
-            Tiled = other.Tiled;
-            Rotation = other.Rotation;
-            Visible = other.Visible;
-            buildConvex();
-        }
+        public Sprite( Sprite other) 
+            : this(other.getRenderer(), other.getResources(), other)
+        { }
+
         public Sprite(RenderManager renderer, ResourceManager resources, Sprite other)
         {
             setRender(renderer);
             setResources(resources);
             ImagePath = other.ImagePath;
-           // image = other.getImage();
             Scale = other.Scale;
             Offset = other.Offset;
             Depth = other.Depth;
@@ -370,7 +391,6 @@ namespace Whiskey2D.Core
             Tiled = other.Tiled;
             Rotation = other.Rotation;
             Visible = other.Visible;
-            buildConvex();
 
         }
 
@@ -384,7 +404,6 @@ namespace Whiskey2D.Core
             Color = color;
             Visible = true;
             Rotation = rotation;
-            buildConvex();
         }
 
         public Sprite(RenderManager renderer, string imagePath, Vector scale, Vector offset, float depth, Color color, float rotation)
@@ -398,7 +417,6 @@ namespace Whiskey2D.Core
             Depth = depth;
             Color = color;
             Rotation = rotation;
-            buildConvex();
         }
 
         /// <summary>
@@ -410,14 +428,17 @@ namespace Whiskey2D.Core
         }
 
 
-
+        /// <summary>
+        /// Draw the Sprite
+        /// </summary>
+        /// <param name="spriteBatch">The spriteBatch to draw with</param>
+        /// <param name="transform">The camera transform</param>
+        /// <param name="position">the position to draw the sprite</param>
         public void draw(SpriteBatch spriteBatch, Matrix transform, Vector position)
         {
             if (!Visible)
                 return;
 
-           // Convex.Origin = position;
-           // Convex.render(spriteBatch, transform);
             
             if (Tiled)
             {
@@ -427,27 +448,34 @@ namespace Whiskey2D.Core
             }
             else
             {
-
-                //Texture2D frameTex = getImage().
-
                 float destRectWidth = FrameSize.X * Scale.X;
                 float destRectHeight = FrameSize.Y * Scale.Y;
                 Rectangle destRect = new Rectangle((int)position.X, (int)position.Y, (int)destRectWidth, (int)destRectHeight);
 
                 Vector off = FrameOffset;
                 spriteBatch.Draw(getImage(), destRect, FrameRectangle, Color, Rotation, off, SpriteEffects.None, Depth / 2);
-                //spriteBatch.Draw(getImage(), position, FrameRectangle, Color, Rotation, new Vector(Offset.X * (Scale.X), Offset.Y * (Scale.Y)), Scale, SpriteEffects.None, Depth / 2);
-
-               // Bounds b = new Bounds(position - new Vector(Offset.X * Scale.X, Offset.Y), ImageSize);
-               // spriteBatch.Draw(getRenderer().getPixel(), b.Position, null, Color.Green, 0, Vector.Zero, b.Size, SpriteEffects.None, 1);
             }
         }
 
-
+        /// <summary>
+        /// Create an Animation from the start frame, to the end frame
+        /// </summary>
+        /// <param name="startFrame">Some starting frame</param>
+        /// <param name="endFrame">Some ending frame</param>
+        /// <returns>A new animation</returns>
         public Animation createAnimation(int startFrame, int endFrame)
         {
             return createAnimation(startFrame, endFrame, 7, true);
         }
+
+        /// <summary>
+        /// Create an Animation from the start frame, to the end frame
+        /// </summary>
+        /// <param name="startFrame">Some starting frame</param>
+        /// <param name="endFrame">Some ending frame</param>
+        /// <param name="speed">How many ticks go by before the next frame of animation is played</param>
+        /// <param name="looped">If the animation will loop automatically or not</param>
+        /// <returns>A new animation</returns>
         public Animation createAnimation(int startFrame, int endFrame, int speed, bool looped)
         {
 
@@ -459,8 +487,6 @@ namespace Whiskey2D.Core
             anim.EndFrame = MathHelper.Clamp(endFrame, 0, FrameCount);
             anim.CurrentFrame = anim.StartFrame;
 
-           
-            
             return anim;
         }
 
@@ -468,6 +494,10 @@ namespace Whiskey2D.Core
         internal Animation ActiveAnimation { get; set; }
 
         internal List<Animation> recentAnims = new List<Animation>();
+
+        /// <summary>
+        /// Updates the Sprite
+        /// </summary>
         public void update()
         {
             recentAnims.Clear();
@@ -475,6 +505,18 @@ namespace Whiskey2D.Core
 
     }
 
+    /// <summary>
+    /// An Animation holds data about how to play a certain segment of frames in a Sprite
+    /// An example of an Animation being used in a Script may look like
+    /// 
+    /// Animation a = Gob.Sprite.createAnimation(0, 12);
+    /// 
+    /// public override void onUpdate(){
+    ///     a.advanceFrame();
+    /// }
+    /// 
+    /// 
+    /// </summary>
     [Serializable]
     public class Animation
     {
@@ -485,6 +527,10 @@ namespace Whiskey2D.Core
 
         private int currentFrame, startFrame, endFrame;
 
+        /// <summary>
+        /// Create an Animation from a Sprite
+        /// </summary>
+        /// <param name="sprite">Some sprite</param>
         public Animation(Sprite sprite)
         {
             if (sprite == null) throw new ArgumentNullException("sprite");
@@ -492,6 +538,9 @@ namespace Whiskey2D.Core
             this.sprite = sprite;
         }
 
+        /// <summary>
+        /// Get or Set the current frame of the Animation
+        /// </summary>
         public int CurrentFrame
         {
             get
@@ -503,6 +552,10 @@ namespace Whiskey2D.Core
                 currentFrame = MathHelper.Clamp(value, 0, sprite.FrameCount);
             }
         }
+
+        /// <summary>
+        /// Get or Set the start frame of the Animation
+        /// </summary>
         public int StartFrame
         {
             get
@@ -514,6 +567,10 @@ namespace Whiskey2D.Core
                 startFrame = MathHelper.Clamp(value, 0, sprite.FrameCount - 1);
             }
         }
+
+        /// <summary>
+        /// Get or Set the end frame of the Animation
+        /// </summary>
         public int EndFrame
         {
             get
@@ -526,36 +583,28 @@ namespace Whiskey2D.Core
             }
         }
 
-
+        /// <summary>
+        /// Get or set the Speed of the Animation. The lower the speed, the fast the animation will play
+        /// </summary>
         public int Speed { get; set; }
+
+        /// <summary>
+        /// Get or set the automatic loopness of the Animation
+        /// </summary>
         public bool Looped { get; set; }
 
-        //public void update()
-        //{
-        //    if (!frameAdvanced)
-        //        ticks = Speed;
-
-        //    frameAdvanced = false;
-        //}
-
+        /// <summary>
+        /// Advance the frame if enough time has gone by. Call this to use the Animation
+        /// </summary>
         public void advanceFrame()
         {
 
-
-            //if (!sprite.recentAnims.Contains(this))
-            //{
-            //    sprite.recentAnims.Add(this);
-                
-            //}
 
             if (sprite.ActiveAnimation != this)
             {
                 sprite.ActiveAnimation = this;
                 ticks = Speed;
             }
-
-            
-
 
             ticks++;
             if (ticks >= Speed)

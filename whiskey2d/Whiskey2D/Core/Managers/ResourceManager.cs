@@ -8,8 +8,16 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Whiskey2D.Core.Managers
 {
+
+    /// <summary>
+    /// The ResourceManager can load in Textures and Sounds
+    /// </summary>
     public interface ResourceManager
     {
+
+        /// <summary>
+        /// Gets the MonoGame ContentManager
+        /// </summary>
         ContentManager Content { get; }
 
         /// <summary>
@@ -17,6 +25,10 @@ namespace Whiskey2D.Core.Managers
         /// </summary>
         /// <param name="content">The content pipeline to use for loading resources</param>
         void init(ContentManager content);
+
+        /// <summary>
+        /// Closes the ResourceManager
+        /// </summary>
         void close();
 
         /// <summary>
@@ -33,7 +45,10 @@ namespace Whiskey2D.Core.Managers
         /// <returns></returns>
         SoundEffect loadSound(string filePath);
 
-
+        /// <summary>
+        /// Get the default font
+        /// </summary>
+        /// <returns></returns>
         SpriteFont getDefaultFont();
 
 

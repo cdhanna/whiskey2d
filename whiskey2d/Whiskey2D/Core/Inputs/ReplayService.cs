@@ -44,7 +44,7 @@ namespace Whiskey2D.Core.Inputs
             updatesLeft = getUpdateCount();
 
             RandCommand rc = (RandCommand) LogCommand.parse(allLines[0]);
-            Rand.Instance.setSeed(rc.Seed);
+            Rand.Instance.Seed = rc.Seed;
 
 
             lineNumber = 1;

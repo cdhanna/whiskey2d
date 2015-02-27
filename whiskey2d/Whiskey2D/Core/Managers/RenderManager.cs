@@ -7,10 +7,21 @@ using Whiskey2D.Core;
 
 namespace Whiskey2D.Core.Managers
 {
+
+    /// <summary>
+    /// The RenderManager is responsible for drawing everything to the screen
+    /// </summary>
     public interface RenderManager
     {
 
+        /// <summary>
+        /// Gets or Sets the Camera that the RenderManager is using to display
+        /// </summary>
         Camera ActiveCamera { get; set; }
+
+        /// <summary>
+        /// Gets the important RenderInfo for the rendering process
+        /// </summary>
         RenderInfo RenderInfo { get; }
 
 

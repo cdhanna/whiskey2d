@@ -31,7 +31,7 @@ namespace Whiskey2D.Core
         /// <summary>
         /// Tthe bottam Y location of the bound
         /// </summary>
-        public float Bottam { get { return BottomLeft.Y; } }
+        public float Bottom { get { return BottomLeft.Y; } }
 
         /// <summary>
         /// Tthe top Y location of the bound
@@ -48,18 +48,43 @@ namespace Whiskey2D.Core
         /// </summary>
         public float Left { get { return TopLeft.X; } }
 
+
+        /// <summary>
+        /// Gets the TopLeft coordinate of the Bound
+        /// </summary>
         public Vector TopLeft { get { return convex.TranslatedVectors.get(0); } }
+
+        /// <summary>
+        /// Gets the TopRight coordinate of the Bound
+        /// </summary>
         public Vector TopRight { get { return convex.TranslatedVectors.get(1); } }
+
+        /// <summary>
+        /// Gets the BottomLeft coordinate fo the Bound
+        /// </summary>
         public Vector BottomLeft { get { return convex.TranslatedVectors.get(3); } }
+
+        /// <summary>
+        /// Gets the BottomRight coordinate of the Bounds
+        /// </summary>
         public Vector BottomRight { get { return convex.TranslatedVectors.get(2); } }
 
+        /// <summary>
+        /// Gets the Center coordinate of the Bound
+        /// </summary>
+        public Vector Center { get { return position + (size / 2); } }
 
+        /// <summary>
+        /// Gets the Convex associated with this Bound
+        /// </summary>
+        public Convex Convex { get { return convex; } }
 
         /// <summary>
         /// Create a Bound from a top-left position, and a width-height
         /// </summary>
         /// <param name="position">The top-left position of the bounds</param>
         /// <param name="size">The width-height of the bounds, in terms of X and Y</param>
+        /// <param name="rotation">The rotation of the Bound, in radians</param>
         public Bounds(Vector position, Vector size, float rotation)
         {
             this.position = position;
@@ -85,87 +110,51 @@ namespace Whiskey2D.Core
         public virtual Boolean vectorWithin(Vector vec)
         {
             return convex.isWithin(vec);
-            //return vec.X > position.X
-            //    && vec.X < position.X + size.X
-            //    && vec.Y > position.Y
-            //    && vec.Y < position.Y + size.Y;
-                
         }
 
-        public Vector Center
-        {
-            get
-            {
-                return position + (size / 2);
-            }
-        }
 
+        /// <summary>
+        /// Determines if a given Bound is within this Bound
+        /// </summary>
+        /// <param name="bound">some other Bound</param>
+        /// <returns>True, if the bounds overlap, False otherwise</returns>
         public virtual Boolean boundWithin(Bounds bound)
         {
-            //return !getNormalOfCollision(bound).Equals(Vector.Zero);
-
             return convex.isWithin(bound.convex);
-            
-            //return _inBound(this, bound) || _inBound(bound, this);
-
         }
 
 
-        public Convex Convex { get { return convex; } }
-
+        /// <summary>
+        /// Retrieve the CollisionInfo for a collision between another Bounds. 
+        /// </summary>
+        /// <param name="bound">some other Bound</param>
+        /// <returns>The collision info between the two Bounds, or null, if no Collision is happening</returns>
         public CollisionInfo getCollisionInfo(Bounds bound)
         {
             return convex.getCollisionInfo(bound.convex);
         }
 
-        public virtual Vector getNormalOfCollision(Bounds other)
-        {
-            Bounds A = this;
-            Bounds B = other;
-
-            float w = 0.5f * (A.size.X + B.size.X);
-            float h = 0.5f * (A.size.Y  + B.size.Y);
-            float dx = (A.Center - B.Center).X;
-            float dy = (A.Center - B.Center).Y;
-            Vector normal = Vector.Zero;
-            if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
-            {
-                /* collision! */
-                
-                float wy = w * dy;
-                float hx = h * dx;
-
-                if (wy > hx)
-                    if (wy > -hx)
-                        normal = -Vector.UnitY; //top
-                    else
-                        normal = -Vector.UnitX; //left
-                else
-                    if (wy > -hx)
-                        normal = Vector.UnitX; /* on the right */
-                    else
-                        normal = Vector.UnitY; /* at the bottom */
-            }
-            return normal;
-        }
-
+        /// <summary>
+        /// Draws the Bound
+        /// </summary>
+        /// <param name="info">The RenderInfo needed to draw an object</param>
+        /// <param name="hints">any special instructions for drawing</param>
         public void draw(RenderInfo info, RenderHints hints)
         {
             convex.render(info.SpriteBatch, info.Transform, hints);
         }
+
+
+        /// <summary>
+        /// Draws the Bound
+        /// </summary>
+        /// <param name="info">The RenderInfo needed to draw an object</param>
         public void draw(RenderInfo info)
         {
             this.draw(info, new RenderHints());
         }
 
 
-        private static Boolean _inBound(Bounds a, Bounds b)
-        {
-            return (a.vectorWithin(b.TopLeft) ||
-                    a.vectorWithin(b.TopRight) ||
-                    a.vectorWithin(b.BottomLeft) ||
-                    a.vectorWithin(b.BottomRight));
 
-        }
     }
 }

@@ -87,7 +87,7 @@ namespace Whiskey2D.Core.Managers.Impl
             writer = File.CreateText( getCurrentLogPath() );
             writer.AutoFlush = true;
             
-            this.writeCommand(new RandCommand(-1, Rand.Instance.getSeed()));
+            this.writeCommand(new RandCommand(-1, Rand.Instance.Seed));
         }
 
         /// <summary>
