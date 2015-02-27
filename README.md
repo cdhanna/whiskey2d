@@ -10,6 +10,8 @@ Whiskey2D uses GameObjects, Scripts, and Levels to create games. A GameObject ho
 
 http://www.youtube.com/watch?v=sVJHYpwkpFI
 
+To see more about Whiskey2D, go to cdhanna.com/whiskey
+
 ### To Build
 --------
 
