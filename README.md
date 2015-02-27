@@ -1,7 +1,7 @@
-# Whiskey2d
+# Whiskey2D
 =========
 
-Whiskey2d is an open-source 2d game editor. It was written on MonoGame and winForms for a Major Qualifying Project at Worcester Polytechnic Institute. Whiskey2D was written by Chris Hanna and Daniel True. 
+Whiskey2D is an open-source 2D game editor. It was written on MonoGame and winForms for a Major Qualifying Project at Worcester Polytechnic Institute. Whiskey2D was written by Chris Hanna and Daniel True. 
 
 ### About
 -------

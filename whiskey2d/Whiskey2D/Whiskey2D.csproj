@@ -111,7 +111,6 @@
     <Compile Include="Core\Managers\Impl\DefaultResourceManager.cs" />
     <Compile Include="Core\Script.cs" />
     <Compile Include="Core\Sprite.cs" />
-    <Compile Include="Core\Starter.cs" />
     <Compile Include="Core\GameManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\RenderInfo.cs" />

@@ -7,60 +7,20 @@ using System.Threading.Tasks;
 
 namespace Whiskey2D.Core
 {
-    /*
-     * 
-     * Collisions<Wall> colls = Gob.currentCollisions<Wall>();
-     * colls.process( c => {
-     * 
-     *      c.Info.MTV;....
-     * 
-     * });
-     * 
-     */
-
-
-   
-
+  
+    /// <summary>
+    /// Collisions is a collection of Collision objects. Collisions is a sub-clss of the standard List type in System.Collections.Generic, so
+    /// all of the List functions you are used to will still work. 
+    /// </summary>
+    /// <typeparam name="G">G must a GameObject. The type of G represents what kind of GameObjects the Collisions are in concern to.
+    /// For example, if G is some GameObject, Car, then all Collisions will be about Car objects. </typeparam>
     [Serializable]
     public class Collisions<G> : List<Collision<G>> where G : GameObject
     {
 
-        public void process(Action<Collision<G>> action)
-        {
-            
-            foreach (Collision<G> c in this)
-            {
-                action(c);
-            }
-        }
-
-    //    public virtual List<ObjectCollisionInfo<G>> Infos { get; protected set; }
-
-    //    public Collisions(List<ObjectCollisionInfo<G>> infos)
-    //    {
-    //        Infos = infos;
+        
 
     }
-
-
-    // CollisionsWith wallColls = Gob.currentCollisionsWith()){
-    // foreach (Collision c in wallColls){ if (c is Wall) { }}
-    //}
-
-
-    //    public IEnumerator<ObjectCollisionInfo<G>> GetEnumerator()
-    //    {
-    //        for (int i = 0; i < Infos.Count; i++)
-    //        {
-    //            yield return Infos[i];
-    //        }
-    //    }
-
-    //    IEnumerator IEnumerable.GetEnumerator()
-    //    {
-    //        return GetEnumerator();
-    //    }
-    //}
 
     
 

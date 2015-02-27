@@ -75,8 +75,8 @@ namespace WhiskeyEditor.MonoHelp
         private void drawBoxes()
         {
 
-            XnaColor constantBox = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.Red, .5f);
-            XnaColor screenBox = XnaColor.Lerp(Level.BackgroundColor.invert(), XnaColor.Blue, .5f);
+            XnaColor constantBox = XnaColor.Lerp(Level.BackgroundColor.Inverted, XnaColor.Red, .5f);
+            XnaColor screenBox = XnaColor.Lerp(Level.BackgroundColor.Inverted, XnaColor.Blue, .5f);
 
             Vector topLeft = ActiveCamera.getGameCoordinate(Vector.Zero);
             Vector botRight = ActiveCamera.getGameCoordinate(new Vector(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight));
@@ -113,8 +113,8 @@ namespace WhiskeyEditor.MonoHelp
             Vector size = botRight - topLeft;
 
             
-            float intensity = Level.BackgroundColor.intensity();
-            XnaColor lineColor = Level.BackgroundColor.invert();
+            float intensity = Level.BackgroundColor.Intensity;
+            XnaColor lineColor = Level.BackgroundColor.Inverted;
             if (intensity > .4f && intensity < .6f)
             {
                 lineColor = XnaColor.Lerp(lineColor, XnaColor.White,1-  Math.Abs(.5f - intensity));
@@ -127,7 +127,7 @@ namespace WhiskeyEditor.MonoHelp
 
                 XnaColor color = lineColor;
                 if (currY == 0)
-                    color = Level.BackgroundColor.invert();
+                    color = Level.BackgroundColor.Inverted;
 
                 drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
                 spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
@@ -140,7 +140,7 @@ namespace WhiskeyEditor.MonoHelp
             {
                 XnaColor color = lineColor;
                 if (currX == 0)
-                    color = Level.BackgroundColor.invert();
+                    color = Level.BackgroundColor.Inverted;
                 drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
                 spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
                 currX += GridManager.Instance.GridSizeX;
@@ -293,7 +293,7 @@ namespace WhiskeyEditor.MonoHelp
                 if (g.Light.Visible)
                 {
                     Convex convex = new Convex(g.Position, 0, VectorSet.Dodecahedren * (g.Light.Radius / 2));
-                    convex.render(GraphicsDevice, CameraTransform, new RenderHints().setColor(Level.BackgroundColor.invert()));
+                    convex.render(GraphicsDevice, CameraTransform, new RenderHints().setColor(Level.BackgroundColor.Inverted));
                 }
 
             });

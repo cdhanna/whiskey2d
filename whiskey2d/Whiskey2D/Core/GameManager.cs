@@ -18,16 +18,25 @@ using Whiskey2D.Core.Managers.Impl;
 namespace Whiskey2D.Core
 {
     /// <summary>
-    /// The GameManager is the core part of every Whiskey Game. It is a derivation of the monoGame class.
-    /// GameManager will control all of the game components
+    /// The GameManager is the core part of every Whiskey Game.
+    /// GameManager will control all of the game components, and provide the services required for Designers ,such as Input, Objects, and Level data.
     /// </summary>
     public class GameManager
     {
 
         private static GameManager instance;
+
+
+        /// <summary>
+        /// Get the GameManager instance
+        /// </summary>
         public static GameManager Instance { get { if (instance == null) instance = new GameManager(); return instance; } }
   
         PropertiesFiles settings;
+
+        /// <summary>
+        /// Gets the start scene name of the game. The start scene is the first level that is run when the game launches
+        /// </summary>
         public string StartScene
         {
             get
@@ -35,7 +44,10 @@ namespace Whiskey2D.Core
                 return settings.get(GameProperties.START_SCENE);
             }
         }
-
+    
+        /// <summary>
+        /// Gets the value of IsFullScreen. If IsFullScreen is true, then the Game should be running in full screen mode
+        /// </summary>
         public bool IsFullScreen
         {
             get
@@ -45,12 +57,15 @@ namespace Whiskey2D.Core
         }
 
 
-        public string CurrentScene
+        private string CurrentScene
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets the current scene's file path
+        /// </summary>
         public string CurrentScenePath
         {
             get
@@ -58,6 +73,10 @@ namespace Whiskey2D.Core
                 return "states\\" + CurrentScene;
             }
         }
+
+        /// <summary>
+        /// Gets the start scene's file path
+        /// </summary>
         public string StartScenePath
         {
             get
@@ -66,23 +85,66 @@ namespace Whiskey2D.Core
             }
         }
 
-       // private Color BackgroundColor { get; set; }
 
-
-        //Core pieces of MonoGame
+        /// <summary>
+        /// Gets the ContentManager. The ContentManager gives direct access to MonoGame's asset loading features
+        /// </summary>
         public ContentManager Content { get; private set; }
+
+        /// <summary>
+        /// Gets the GraphicsDevice. The GraphicsDevice gives direct access to MonoGame's rendering
+        /// </summary>
         public GraphicsDevice GraphicsDevice { get; private set; }
 
-        //non static manager properties
+        /// <summary>
+        /// Gets the InputManager. The InputManager is what provides all of the Input assessment. Use InputManager to determine if specific keys are
+        /// being pressed.
+        /// </summary>
         public InputManager InputManager { get; protected set; }
+
+        /// <summary>
+        /// Gets the InputSourceManager. The InputSourceManager is what provides the InputManager with an InputSource. An InputSource can be a Log file,
+        /// a keyboard+mouse, or something else.
+        /// </summary>
         public InputSourceManager InputSourceManager { get; protected set; }
+
+        /// <summary>
+        /// Gets the LogManager. The LogManager can be used to display messages to the game's log file, as well as the game
+        /// </summary>
         public LogManager LogManager { get; protected set; }
 
+        /// <summary>
+        /// Gets the ObjectManager. The ObjectManager is what controls all of the currently loaded GameObjects
+        /// </summary>
         public ObjectManager ObjectManager { get; protected set; }
 
-       
+        /// <summary>
+        /// Gets the RenderManager. The RenderManager is what draws all GameObjects to the screen.
+        /// </summary>
+        public RenderManager RenderManager { get; protected set; }
+
+        /// <summary>
+        /// Gets the ResourceManager. The ResourceManager is an abstraction of MonoGame's ContentManager, and gives specific functions for
+        /// loading sounds and sprites.
+        /// </summary>
+        public ResourceManager ResourceManager { get; protected set; }
+
+        /// <summary>
+        /// Gets the object that is controlling the Game. In most cases, this will be the WhiskeyLauncher.exe 
+        /// </summary>
+        public GameController GameController { get; protected set; }
+
+        /// <summary>
+        /// Gets the HudManager. The HudManager draws all of the HUD GameObejcts to screen
+        /// </summary>
+        public HudManager HudManager { get; protected set; }
+
 
         private GameLevel _level;
+
+        /// <summary>
+        /// Gets the currently active Level.
+        /// </summary>
         public GameLevel ActiveLevel
         {
             get
@@ -91,34 +153,82 @@ namespace Whiskey2D.Core
             }
         }
 
-        public RenderManager RenderManager { get; protected set; }
-        public ResourceManager ResourceManager { get; protected set; }
-        
-        
-        public GameController GameController { get; protected set; }
-        public HudManager HudManager { get; protected set; }
 
-         //static accessors
+
+
+
+        /// <summary>
+        /// Gets the InputManager. The InputManager is what provides all of the Input assessment. Use InputManager to determine if specific keys are
+        /// being pressed.
+        /// </summary>
         public static InputManager Input { get { return Instance.InputManager; } }
+
+        /// <summary>
+        /// Gets the InputSourceManager. The InputSourceManager is what provides the InputManager with an InputSource. An InputSource can be a Log file,
+        /// a keyboard+mouse, or something else.
+        /// </summary>
         public static InputSourceManager InputSource { get { return Instance.InputSourceManager; } }
+
+        /// <summary>
+        /// Gets the LogManager. The LogManager can be used to display messages to the game's log file, as well as the game
+        /// </summary>
         public static LogManager Log { get { return Instance.LogManager; } }
+
+        /// <summary>
+        /// Gets the ObjectManager. The ObjectManager is what controls all of the currently loaded GameObjects
+        /// </summary>
         public static ObjectManager Objects { get { return Instance.ObjectManager; } }
+
+        /// <summary>
+        /// Gets the RenderManager. The RenderManager is what draws all GameObjects to the screen.
+        /// </summary>
         public static RenderManager Renderer { get { return Instance.RenderManager; } }
+
+        /// <summary>
+        /// Gets the ResourceManager. The ResourceManager is an abstraction of MonoGame's ContentManager, and gives specific functions for
+        /// loading sounds and sprites.
+        /// </summary>
         public static ResourceManager Resources { get { return Instance.ResourceManager; } }
+
+        /// <summary>
+        /// Gets the object that is controlling the Game. In most cases, this will be the WhiskeyLauncher.exe 
+        /// </summary>
         public static GameController Controller { get { return Instance.GameController; } }
+        
+        /// <summary>
+        /// Gets the currently active Level.
+        /// </summary>
         public static GameLevel Level { get { return Instance.ActiveLevel; } }
+        
+        /// <summary>
+        /// Gets the screen width of the game window, or -1 if there is an error
+        /// </summary>
         public static int ScreenWidth { get { return Instance.WindowScreenWidth; } }
+        
+        /// <summary>
+        /// Gets the screen height of the game window, or -1 if there is an error
+        /// </summary>
         public static int ScreenHeight { get { return Instance.WindowScreenHeight; } }
 
+
+        /// <summary>
+        /// Changes the active level of the game
+        /// </summary>
+        /// <param name="levelName">The name of the level to load. Make sure to include the .state extension</param>
         public static void SetLevel(string levelName)
         {
             Instance.loadLevel(levelName);
         }
 
+        /// <summary>
+        /// Closes the game
+        /// </summary>
         public static void Quit()
         {
             Instance.Exit();
         }
+
+
 
         /// <summary>
         /// Create singleton instance.
@@ -128,24 +238,15 @@ namespace Whiskey2D.Core
         {
             settings = new PropertiesFiles(".gameprops");
             instance = this;
-            //BackgroundColor = Color.SkyBlue;
-            //create all default managers
             ObjectManager = new DefaultObjectManager();
-            //RenderManager = new DefaultRenderManager();
             InputManager = new DefaultInputManager();
             InputSourceManager = new DefaultInputSourceManager();
             LogManager = DefaultLogManager.Instance;
                 
             
             HudManager = HudManager.Instance;
-            //LogManager.init();
             ObjectManager.init();
             InputManager.init();
-
-
-            
-
-            //HudManager.init();
 
         }
 
@@ -161,22 +262,23 @@ namespace Whiskey2D.Core
 
         public TimeSpan TargetElapsedTime { get; set; }
 
-
+        /// <summary>
+        /// Loads a new game level
+        /// </summary>
+        /// <param name="name">The name of the new level, with the .state extension</param>
+        /// <returns></returns>
         public GameLevel loadLevel(string name) //input comes as "myLevel.state"
         {
             string path ="states\\" + name ;
 
             GameLevel level = GameLevel.deserialize(path);
-
             ObjectManager.close();
-
             ObjectManager = level;
             _level = level;
             level.Camera.Position = Vector.Zero;
             return level;
-            //level.init();
-
         }
+
 
         /// <summary>
         /// Shuts down all managers
@@ -214,11 +316,7 @@ namespace Whiskey2D.Core
             //RUN THE START CODE
             if (CurrentScene != null)
             {
-                //State RunningState = State.deserialize(CurrentScenePath);
-                //BackgroundColor = RunningState.BackgroundColor;
-                //GameManager.Objects.setState(RunningState);
                 GameLevel lvl = loadLevel(CurrentScene);
-                //BackgroundColor = lvl.BackgroundColor;
             }
         }
 
@@ -226,11 +324,7 @@ namespace Whiskey2D.Core
         {
             if (StartScene != null)
             {
-                //State RunningState = State.deserialize(StartScenePath);
-                //BackgroundColor = RunningState.BackgroundColor;
-                //GameManager.Objects.setState(RunningState);
                 GameLevel lvl = loadLevel(StartScene);
-                //BackgroundColor = lvl.BackgroundColor;
             }
             CurrentScene = StartScene;
         }
@@ -356,9 +450,6 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Draw(GameTime gameTime)
         {
-            
-           //GraphicsDevice.Clear(ActiveLevel.BackgroundColor);
-
             this.RenderManager.render();
             this.RenderManager.renderHud();
         }

@@ -21,8 +21,6 @@ namespace Project
 
 			Level.Camera.Zoom = 1f;
 			Level.Camera.PositionSpring = 20f;
-			Level.Camera.OriginSpring = 20f;
-			Level.Camera.PositionFriction = .1f;
 			Level.Camera.ZoomSpring = .01f;
 			Level.Camera.ZoomFriction = .1f;
 			
@@ -91,6 +89,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

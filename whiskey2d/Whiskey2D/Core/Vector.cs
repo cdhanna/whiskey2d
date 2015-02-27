@@ -163,6 +163,10 @@ namespace Whiskey2D.Core
             }
         }
 
+        /// <summary>
+        /// Gets the normalized Vector, or Vector.Zero if there is no valid Unit vector. A Zero Vector does not have a direction, and cannot have a Unit vector.
+        /// In this case, Unit will return a Vector that is {NaN, NaN}, but UnitSafe will simply return a Zero Vector.
+        /// </summary>
         public Vector UnitSafe
         {
             get

@@ -22,7 +22,7 @@ namespace WhiskeyEditor.Backend
         //public List<InstanceDescriptor> Descriptors { get; private set; }
         public string LevelName { get; private set; }
         public Color BackgroundColor { get; set; }
-        public Color BackgroundColorCompliment { get { return BackgroundColor.invert(); } }
+        public Color BackgroundColorCompliment { get { return BackgroundColor.Inverted; } }
         public Color AmbientLight { get; set; }
 
         public Boolean PreviewHud { get; set; }

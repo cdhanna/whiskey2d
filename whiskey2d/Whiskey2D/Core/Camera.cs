@@ -13,15 +13,29 @@ namespace Whiskey2D.Core
     public class Camera
     {
 
+
+        private float positionSpeed = .5f;
+        private Vector positionVelocity = Vector.Zero;
+        private Vector targetPosition = Vector.Zero;
+        private Vector position;
+        private Vector origin;
+        private float zoomSpring = .5f;
+        private float zoomFriction = .5f;
+        private float zoomVelocity = 0;
+        private float zoomAcceleration = 0;
+        private float targetZoom = 1;
+        private float zoom;
+
+        [NonSerialized]
+        private Matrix transform;
+
         /// <summary>
         /// Create a new camera with default values. 
         /// </summary>
         public Camera()
         {
            
-
             Size = new Vector(1280, 720);
-            
             Position = Vector.Zero;
             ZoomMin = .1f;
             ZoomMax = 2.5f;
@@ -41,25 +55,6 @@ namespace Whiskey2D.Core
             reset(Vector.Zero, 1);
         }
 
-
-        private float positionSpring = .5f;
-        private float positionFriction = .5f;
-        private Vector positionVelocity = Vector.Zero;
-        private Vector positionAcceleration = Vector.Zero;
-        private Vector targetPosition = Vector.Zero;
-
-        private float zoomSpring = .5f;
-        private float zoomFriction = .5f;
-        private float zoomVelocity = 0;
-        private float zoomAcceleration = 0;
-        private float targetZoom = 1;
-
-        private float originSpring = .5f;
-        private float originFriction = .5f;
-        private Vector originVelocity = Vector.Zero;
-        private Vector originAcceleration = Vector.Zero;
-        private Vector targetOrigin = Vector.Zero;
-
      
         /// <summary>
         /// get or set the screen size the camera is representing
@@ -70,17 +65,33 @@ namespace Whiskey2D.Core
             set;
         }
 
+        /// <summary>
+        /// Gets or Sets the target zoom level of the Camera. The Camera will try to interpolate to the target zoom value using a spring model.
+        /// The amount that the camera zoom changes will be determined by the zoom force, (ZoomTarget - Zoom) * ZoomSpring.
+        /// The force will then be inversly dapended by ZoomFriction.
+        /// </summary>
         public float TargetZoom { get { return targetZoom; } set { targetZoom = (value); } }
+
+        /// <summary>
+        /// Gets or Sets the zoom springyness. The ZoomSpring controls the spring constant value used in the zoom calculations
+        /// </summary>
         public float ZoomSpring { get { return zoomSpring; } set { zoomSpring = value; } }
+
+        /// <summary>
+        /// Gets or Sets the zoom friction. The ZoomFriction controls the friction value used in the zoom calculations
+        /// </summary>
         public float ZoomFriction { get { return zoomFriction; } set { zoomFriction = value; } }
 
+        /// <summary>
+        /// Gets or Sets the target position of the Camera. The Camera will try to interpolate to the target position value using a linear model.
+        /// The amount that the camera position changes will be determined by (PositionTarget - Position).Unit * PositionSpeed.
+        /// </summary>
         public Vector TargetPosition { get { return targetPosition; } set { targetPosition = (value); } }
-        public float PositionSpring { get { return positionSpring; } set { positionSpring = value; } }
-        public float PositionFriction { get { return positionFriction; } set { positionFriction = value; } }
-
-        public Vector TargerOrigin { get { return targetOrigin; } set { targetOrigin = (value); } }
-        public float OriginSpring { get { return originSpring; } set { originSpring = value; } }
-        public float OriginFriction { get { return originFriction; } set { originFriction = value; } }
+        
+        /// <summary>
+        /// Gets or sets the PositionSpeed. PositionSpeed controls how fast the Camera moves towards the target position.
+        /// </summary>
+        public float PositionSpeed { get { return positionSpeed; } set { positionSpeed = value; } }
 
         /// <summary>
         /// get or set the game coordinate in the center of the screen
@@ -95,18 +106,12 @@ namespace Whiskey2D.Core
 
             set
             {
-                
                 origin = Vector.Zero;
                 Position = -value + Size/2;
-
                 updateTransform();
             }
         }
 
-       
-
-
-        private Vector position;
 
         /// <summary>
         /// get or set the camera position
@@ -125,7 +130,7 @@ namespace Whiskey2D.Core
             }
         }
 
-        private Vector origin;
+        
         /// <summary>
         /// get or set the camera origin 
         /// </summary>
@@ -139,7 +144,6 @@ namespace Whiskey2D.Core
             {
 
                 Vector val = (value);
-
                 Vector originNew = (getGameCoordinate(val));
                 origin = originNew;
                 updateTransform();
@@ -147,22 +151,11 @@ namespace Whiskey2D.Core
                 TargetPosition += (val - originNew);
                 Position += (val - originNew);
                 
-               // updateTransform();
-                
-               
-
-                
-
             }
         }
 
-        public void setOriginLockPosition(Vector nextOrigin)
-        {
-           
-        }
 
-
-        private float zoom;
+        
         /// <summary>
         /// get or set the camera zoom. The larger the zoom value, the more zoomed in the camera will be.
         /// </summary>
@@ -177,9 +170,6 @@ namespace Whiskey2D.Core
                 zoom = value;
                 zoom = MathHelper.Clamp(zoom, ZoomMin, ZoomMax);
                 zoom = (float) Math.Round(zoom, 3);
-
-                //if (zoom < .001f) zoom = .001f;
-
                 updateTransform();
             }
         }
@@ -201,10 +191,7 @@ namespace Whiskey2D.Core
             get;
             set;
         }
-
-
-        [NonSerialized]
-        private Matrix transform;
+        
 
         /// <summary>
         /// get the transform matrix that has been created as a result of position, origin, zoom, and rotation
@@ -294,23 +281,12 @@ namespace Whiskey2D.Core
         {
 
             ZoomMin = .1f;
-            //Origin = new Vector(1280, 720) / 2f;
             Matrix t = Matrix.Identity
-
-
-
-
-             * Matrix.CreateTranslation(toVec3(-Origin))
-            * Matrix.CreateScale(new Vector3(Zoom, Zoom, 1))
-            * Matrix.CreateTranslation(toVec3(Origin))
-
-            * Matrix.CreateTranslation(toVec3(Position))
-            
-            ;
-
-            
-           
-
+                * Matrix.CreateTranslation(toVec3(-Origin))
+                * Matrix.CreateScale(new Vector3(Zoom, Zoom, 1))
+                * Matrix.CreateTranslation(toVec3(Origin))
+                * Matrix.CreateTranslation(toVec3(Position))
+                ;
 
             return t;
         }
@@ -318,48 +294,96 @@ namespace Whiskey2D.Core
         private Matrix buildBackwardsTransform()
         {
             Matrix t = Matrix.Invert(buildTransform());
-          
             return t;
         }
 
+
+        /// <summary>
+        /// Center the camera around the given spot. This happens instantly.
+        /// </summary>
+        /// <param name="spot">The spot to center around, in GameCoordinates</param>
         public void center(Vector spot)
         {
             Origin = getScreenCoordinate(spot);
             Position = -spot + Size / 2;
         }
 
-      
-
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// </summary>
+        /// <param name="spot">The spot to center around, in GameCoordinates</param>
         public void follow(Vector spot)
         {
             Origin = getScreenCoordinate(spot);
-            //targetOrigin = getScreenCoordinate(spot);
             targetPosition = -spot + Size / 2;
-            //targetPosition = -spot + Size / 2;
-            //Origin = getScreenCoordinate(spot);
-            //targetPosition = -spot + Size / 2;
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// </summary>
+        /// <param name="gob">The GameObject to center around</param>
         public void follow(GameObject gob)
         {
             follow(gob.Position);
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="gob">The GameObject to center around</param>
+        /// <param name="left">The left bound, in GameCoordinates</param>
+        /// <param name="top">The top bound, in GameCoordinates</param>
+        /// <param name="right">The right bound, in GameCoordinates</param>
+        /// <param name="bottom">THe bottam bound, in GameCoordinates</param>
         public void followClamped(GameObject gob, float left, float top, float right, float bottom)
         {
             followClamped(gob.Position, left, top, right, bottom);
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="gob">The GameObject to center around</param>
+        /// <param name="left">The left bound, in GameCoordinates</param>
+        /// <param name="right">The right bound, in GameCoordinates</param>
         public void followClampedX(GameObject gob, float left, float right)
         {
             followClampedX(gob.Position, left, right);
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="gob">The GameObject to center around</param>
+        /// <param name="top">The top bound, in GameCoordinates</param>
+        /// <param name="bottom">THe bottam bound, in GameCoordinates</param>
         public void followClampedY(GameObject gob, float top, float bottom)
         {
             followClampedY(gob.Position, top, bottom);
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="clampSpot">The spot to center around, in GameCoordinates</param>
+        /// <param name="left">The left bound, in GameCoordinates</param>
+        /// <param name="right">The right bound, in GameCoordinates</param>
         public void followClampedX(Vector clampSpot, float left, float right)
         {
             float invZoom = 1 / Zoom;
@@ -381,6 +405,16 @@ namespace Whiskey2D.Core
 
         }
 
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="clampSpot">The spot to center around, in GameCoordinates</param>
+        /// <param name="top">The top bound, in GameCoordinates</param>
+        /// <param name="bottom">THe bottam bound, in GameCoordinates</param>
         public void followClampedY(Vector clampSpot, float top, float bottom)
         {
             float invZoom = 1 / Zoom;
@@ -403,7 +437,18 @@ namespace Whiskey2D.Core
 
         }
 
-
+        /// <summary>
+        /// Track the given spot. Calling this function will ask the Camera to interpolate to the target position.
+        /// Using this function instead of regular follow, will ask the Camera to try and keep the view restricted to the 
+        /// given constraints. If the camera is zoomed too far out, then this function is worthless. However, if the camera is zoomed in,
+        /// then it will not move past the constraint values. This is useful for having a camera track a GameObject, but not revealing anything
+        /// outside of the room or level segment that the gameobject is in.
+        /// </summary>
+        /// <param name="clampSpot">The spot to center around, in GameCoordinates</param>
+        /// <param name="left">The left bound, in GameCoordinates</param>
+        /// <param name="top">The top bound, in GameCoordinates</param>
+        /// <param name="right">The right bound, in GameCoordinates</param>
+        /// <param name="bottom">THe bottam bound, in GameCoordinates</param>
         public void followClamped(Vector clampSpot, float left, float top, float right, float bottom)
         {
             Vector camTopLeft = getGameCoordinate(Size/2);
@@ -444,54 +489,23 @@ namespace Whiskey2D.Core
 
 
         
-
+        /// <summary>
+        /// Updates the Camera
+        /// </summary>
         public void update()
         {
 
 
-            //SPRING MECH //////////////////////////////////////////////////////////
-            //positionVelocity = Vector.Zero;
-            //positionVelocity *= PositionFriction;
-            //originVelocity *= OriginFriction;
             zoomVelocity *= ZoomFriction;
-
-            //positionAcceleration = PositionSpring * (targetPosition - Position);
-            //originAcceleration = OriginSpring * (targetOrigin - Origin);
             zoomAcceleration = ZoomSpring * (targetZoom - Zoom);
-
-            //positionVelocity += positionAcceleration;
-            //originVelocity += originAcceleration;
             zoomVelocity += zoomAcceleration;
 
-            //if (positionVelocity.Length > 35)
-            //    positionVelocity = 35 * positionVelocity.Unit;
-
-            //if (Math.Abs(zoomVelocity) > .01f)
-            //    zoomVelocity = .01f * Math.Sign(zoomVelocity);
-
-            ////////////////////////////////////////////////////////////////////////
-
-            positionVelocity = Math.Min(PositionSpring, (targetPosition - Position).Length) * (targetPosition - Position).UnitSafe;
-            originVelocity = Math.Min(OriginSpring, (targetOrigin - Origin).Length) * (targetOrigin - Origin).UnitSafe;
-            
-            //zoomVelocity = Math.Min(ZoomSpring, Math.Abs(TargetZoom - Zoom)) *  (targetZoom - Zoom);
-
-            
-           
-            if (originFriction != 0)
-            {
-               // Origin += originVelocity;
-            }
-
+            positionVelocity = Math.Min(PositionSpeed, (targetPosition - Position).Length) * (targetPosition - Position).UnitSafe;
             
             Position += positionVelocity;
             Zoom += zoomVelocity;
 
-            //Position = TargetPosition;
-           // center(Position);
             updateTransform();
-
-            
 
         }
 

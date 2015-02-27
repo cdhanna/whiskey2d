@@ -8,6 +8,9 @@ namespace Whiskey2D.Core
 {
     using XnaColor = Microsoft.Xna.Framework.Color;
 
+    /// <summary>
+    /// A Color is a collection of R, G, B, A values. It is taken from MonoGame's Color class, and can be used interchangeably in most cases.
+    /// </summary>
     [Serializable]
     public struct Color
     {
@@ -161,11 +164,43 @@ namespace Whiskey2D.Core
 
         private int r, g, b, a;
 
+        /// <summary>
+        /// Gets or Sets the Red color component. The value can range from 0, to 255.
+        /// </summary>
         public int R { get { return r; } set { r = value; } }
+
+        /// <summary>
+        /// Gets or Sets the Green color component. The value can range from 0, to 255.
+        /// </summary>
         public int G { get { return g; } set { g = value; } }
+
+        /// <summary>
+        /// Gets or Sets the Blue color component. The value can range from 0, to 255.
+        /// </summary>
         public int B { get { return b; } set { b = value; } }
+
+        /// <summary>
+        /// Gets or Sets the Alpha color component. The value can range from 0, to 255.
+        /// </summary>
         public int A { get { return a; } set { a = value; } }
 
+        /// <summary>
+        /// Creates a new Color with an alpha value of 1f.
+        /// </summary>
+        /// <param name="r">The red component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        /// <param name="g">The green component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        /// <param name="b">The blue component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        public Color(float r, float g, float b)
+            : this(r, g, b, 1)
+        { }
+
+        /// <summary>
+        /// Creates a new Color
+        /// </summary>
+        /// <param name="r">The red component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        /// <param name="g">The green component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        /// <param name="b">The blue component of the Color. 0f denotes 0, and 1f denotes 255 </param>
+        /// <param name="a">The alpha component of the Color. 0f denotes 0, and 1f denotes 255 </param>
         public Color(float r, float g, float b, float a)
         {
             this.r = (int)(255 * r);
@@ -174,6 +209,23 @@ namespace Whiskey2D.Core
             this.a = (int)(255 * a);
         }
 
+        /// <summary>
+        /// Creates a new Color with an alpha value of 255
+        /// </summary>
+        /// <param name="r">The red component of the Color. </param>
+        /// <param name="g">The green component of the Color. </param>
+        /// <param name="b">The blue component of the Color. </param>
+        public Color(int r, int g, int b)
+            : this(r, g, b, 255)
+        { }
+
+        /// <summary>
+        /// Creates a new Color
+        /// </summary>
+        /// <param name="r">The red component of the Color. </param>
+        /// <param name="g">The green component of the Color. </param>
+        /// <param name="b">The blue component of the Color. </param>
+        /// <param name="a">The alpha component of the Color. </param>
         public Color(int r, int g, int b, int a)
         {
             this.r = r;
@@ -182,29 +234,48 @@ namespace Whiskey2D.Core
             this.a = a;
         }
 
-        public Color invert()
+        /// <summary>
+        /// Gets the inverted Color. The alpha value will be the same as the original, but all color components of the inverted color will be 255 - n, where n is the color component
+        /// </summary>
+        public Color Inverted
         {
-            return new Color(255 - R, 255 - G, 255 - B, A);
+            get { return new Color(255 - R, 255 - G, 255 - B, A); }
         }
 
+        /// <summary>
+        /// Gets the intensity of the Color. The intensity is equal to the R, G, B color's sum, divided by 3.
+        /// </summary>
+        public float Intensity
+        {
+            get
+            {
+                float i = R + G + B;
+                i /= 3;
+                i /= 255f;
+                return i;
+            }
+        }
+
+        /// <summary>
+        /// Multiply the Color by a given amount. The alpha value remains unchanged. 
+        /// </summary>
+        /// <param name="amount">The amount to multiply the color by</param>
+        /// <returns>A new Color, whose R, G, B values have been multiplied. </returns>
         public Color multiply(float amount)
         {
             return new Color(R / 255f * amount, G / 255f * amount, B / 255f * amount, A);
         }
 
+        /// <summary>
+        /// Linear interpolate to another color, by a given amount.
+        /// </summary>
+        /// <param name="other">Another color to interpolate to</param>
+        /// <param name="amount">The amount to interpolate by. A value of 1 will result in a complete interpolation, and a value of 0 will result in no interpolation</param>
+        /// <returns>The interpolated Color</returns>
         public Color lerp(Color other, float amount)
         {
             return new Color((int)MathHelper.Lerp(R, other.R, amount), (int)MathHelper.Lerp(G, other.G, amount), (int)MathHelper.Lerp(B, other.B, amount), (int)MathHelper.Lerp(A, other.A, amount));
         }
-
-        public float intensity()
-        {
-            float i = R + G + B;
-            i /= 3;
-            i /= 255f;
-            return i;
-        }
-
         
 
 

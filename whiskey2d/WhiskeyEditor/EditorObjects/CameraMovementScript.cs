@@ -42,10 +42,10 @@ namespace WhiskeyEditor.EditorObjects
             }
 
             camera.Position -= cameraVel;
-            camera.PositionSpring = 1;
-            camera.PositionFriction = 0;
-            camera.OriginSpring = 1;
-            camera.OriginFriction = 0;
+            camera.PositionSpeed = 1;
+           // camera.PositionFriction = 0;
+            //camera.OriginSpring = 1;
+            //camera.OriginFriction = 0;
             camera.ZoomSpring = 1;
             camera.ZoomFriction = 0;
             if (Gob.Selected == null && WhiskeyControl.InputManager.isMouseDown(Whiskey2D.Core.Inputs.MouseButtons.Left))
@@ -60,7 +60,7 @@ namespace WhiskeyEditor.EditorObjects
                 Vector mouseDelta = WhiskeyControl.InputManager.getMousePosition() - mouseShiftStart;
                // camera.Origin = mouseShiftCameraStart + mouseDelta;
                 camera.TargetPosition = mouseShiftCameraStart + mouseDelta;
-                camera.PositionSpring = mouseDelta.Length;
+                camera.PositionSpeed = mouseDelta.Length;
                 
                 
 
