@@ -60,7 +60,7 @@ namespace WhiskeyEditor.EditorObjects
                 Vector mouseDelta = WhiskeyControl.InputManager.getMousePosition() - mouseShiftStart;
                // camera.Origin = mouseShiftCameraStart + mouseDelta;
                 camera.TargetPosition = mouseShiftCameraStart + mouseDelta;
-
+                camera.PositionSpring = mouseDelta.Length;
                 
                 
 

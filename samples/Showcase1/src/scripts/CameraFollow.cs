@@ -20,9 +20,10 @@ namespace Project
 		{
 
 			Level.Camera.Zoom = 1f;
-			Level.Camera.PositionSpring = .1f;
+			Level.Camera.PositionSpring = 20f;
+			Level.Camera.OriginSpring = 20f;
 			Level.Camera.PositionFriction = .1f;
-			Level.Camera.ZoomSpring = .1f;
+			Level.Camera.ZoomSpring = .01f;
 			Level.Camera.ZoomFriction = .1f;
 			
 			
@@ -38,17 +39,11 @@ namespace Project
 				lastZone = zones[0].Gob;
 				lastZoneFlag = false;
 				
-				Level.Camera.PositionSpring = .1f;
-				Level.Camera.PositionFriction = .1f;
-				Level.Camera.ZoomSpring = .1f;
-				Level.Camera.ZoomFriction = .1f;
+				
 				
 			} else if (zones.Count == 2){
 				
-				Level.Camera.PositionSpring = .01f;
-				Level.Camera.PositionFriction = .5f;
-				Level.Camera.ZoomSpring = .01f;
-				Level.Camera.ZoomFriction = .1f;
+				
 				
 				if (!lastZoneFlag){
 					lastZoneFlag = true;
@@ -96,6 +91,20 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

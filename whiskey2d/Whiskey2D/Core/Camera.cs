@@ -333,7 +333,7 @@ namespace Whiskey2D.Core
         public void follow(Vector spot)
         {
             Origin = getScreenCoordinate(spot);
-          //  targetOrigin = getScreenCoordinate(spot);
+            //targetOrigin = getScreenCoordinate(spot);
             targetPosition = -spot + Size / 2;
             //targetPosition = -spot + Size / 2;
             //Origin = getScreenCoordinate(spot);
@@ -450,37 +450,52 @@ namespace Whiskey2D.Core
 
 
             //SPRING MECH //////////////////////////////////////////////////////////
-            positionVelocity = Vector.Zero;
-            positionVelocity *= PositionFriction;
-            originVelocity *= OriginFriction;
+            //positionVelocity = Vector.Zero;
+            //positionVelocity *= PositionFriction;
+            //originVelocity *= OriginFriction;
             zoomVelocity *= ZoomFriction;
 
-            positionAcceleration = PositionSpring * (targetPosition - Position);
-            originAcceleration = OriginSpring * (targetOrigin - Origin);
+            //positionAcceleration = PositionSpring * (targetPosition - Position);
+            //originAcceleration = OriginSpring * (targetOrigin - Origin);
             zoomAcceleration = ZoomSpring * (targetZoom - Zoom);
 
-            positionVelocity += positionAcceleration;
-            originVelocity += originAcceleration;
+            //positionVelocity += positionAcceleration;
+            //originVelocity += originAcceleration;
             zoomVelocity += zoomAcceleration;
+
+            //if (positionVelocity.Length > 35)
+            //    positionVelocity = 35 * positionVelocity.Unit;
+
+            //if (Math.Abs(zoomVelocity) > .01f)
+            //    zoomVelocity = .01f * Math.Sign(zoomVelocity);
+
             ////////////////////////////////////////////////////////////////////////
 
-            //positionVelocity = Math.Min(PositionSpring, (targetPosition - Position).Length) * (targetPosition - Position).Unit;
-            //zoomVelocity = Math.Min(ZoomSpring, Math.Abs(TargetZoom - Zoom)) * (targetZoom - Zoom);
+            positionVelocity = Math.Min(PositionSpring, (targetPosition - Position).Length) * (targetPosition - Position).UnitSafe;
+            originVelocity = Math.Min(OriginSpring, (targetOrigin - Origin).Length) * (targetOrigin - Origin).UnitSafe;
+            
+            //zoomVelocity = Math.Min(ZoomSpring, Math.Abs(TargetZoom - Zoom)) *  (targetZoom - Zoom);
 
-
-
+            
+           
             if (originFriction != 0)
             {
                // Origin += originVelocity;
             }
+
+            
             Position += positionVelocity;
             Zoom += zoomVelocity;
 
             //Position = TargetPosition;
            // center(Position);
             updateTransform();
+
+            
+
         }
 
+        
 
     }
 }

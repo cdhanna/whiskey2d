@@ -15,7 +15,7 @@ namespace Project
 		Vector surface = Vector.Zero;
 		bool jumping = false;
 		int jumpCounter = 0;
-		Vector gravity = Vector.UnitY;
+		Vector gravity = Vector.UnitY * 2;
 		
 		public override void onStart()
 		{
@@ -88,6 +88,7 @@ namespace Project
 		
 	}
 }
+
 
 
 
