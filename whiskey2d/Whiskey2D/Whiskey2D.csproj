@@ -45,10 +45,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\Animation.cs" />
     <Compile Include="Core\BloomComponent.cs" />
     <Compile Include="Core\BloomSettings.cs" />
     <Compile Include="Core\Bounds.cs" />
     <Compile Include="Core\Camera.cs" />
+    <Compile Include="Core\Collision.cs" />
     <Compile Include="Core\CollisionInfo.cs" />
     <Compile Include="Core\Collisions.cs" />
     <Compile Include="Core\Color.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Core\Inputs\RealKeyBoard.cs" />
     <Compile Include="Core\Inputs\ReplayService.cs" />
     <Compile Include="Core\RenderHints.cs" />
+    <Compile Include="Core\ScriptMaster.cs" />
     <Compile Include="Core\ServiceContainer.cs" />
     <Compile Include="Core\ShadowProperties.cs" />
     <Compile Include="Core\SimpleGameObject.cs" />

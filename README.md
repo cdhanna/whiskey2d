@@ -6,9 +6,9 @@ Whiskey2D is an open-source 2D game editor. It was written on MonoGame and winFo
 ### About
 -------
 
-Whiskey2D uses GameObjects, Scripts, and Levels to create games. A GameObject holds data about an object, and Scripts control it. See this video for a basic tutorial on how to use the program
+Whiskey2D uses GameObjects, Scripts, and Levels to create games. A GameObject holds data about an object, and Scripts control it. See this video for a basic tutorial on how to use the program http://www.youtube.com/watch?v=sVJHYpwkpFI
 
-http://www.youtube.com/watch?v=sVJHYpwkpFI
+Read this doxygen to learn about the commands available to game designers http://www.cdhanna.com/whiskey/docs/api/doxyapi
 
 To see more about Whiskey2D, go to cdhanna.com/whiskey
 
