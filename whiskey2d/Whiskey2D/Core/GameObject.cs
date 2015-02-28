@@ -357,6 +357,36 @@ namespace Whiskey2D.Core
             return GetType().Name;
         }
 
+        public RayCollisions<G> currentRayCollisions<G>(Vector offset, Vector direction) where G : GameObject
+        {
+            Vector rayStart = Position + offset;
+            Vector rayDir = direction.UnitSafe;
+
+            RayCollisions<G> rayList = new RayCollisions<G>();
+
+            List<G> all = objectManager.getAllObjectsOfType<G>();
+            all.ForEach(gob =>
+            {
+                if (gob != this)
+                {
+                    RayCollisionInfo info = gob.Bounds.getRayCollisionInfo(rayStart, rayDir);
+                    if (info != null)
+                    {
+                        rayList.Add(new RayCollision<G>(info, gob));
+                    }
+                }
+            });
+
+            rayList.Sort((rc1, rc2) => { if (rc1.Length > rc2.Length) return 1; else return -1; });
+
+            return rayList;
+        }
+
+        public RayCollisions<G> currentRayCollisions<G>(Vector direction) where G : GameObject
+        {
+            return this.currentRayCollisions<G>(Vector.Zero, direction);
+        }
+
 
 
         /// <summary>

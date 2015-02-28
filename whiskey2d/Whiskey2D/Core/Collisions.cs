@@ -22,6 +22,18 @@ namespace Whiskey2D.Core
 
     }
 
-    
+
+
+    /// <summary>
+    /// RayCollisions is a collection of RayCollision objects. RayCollisions is a sub-clss of the standard List type in System.Collections.Generic, so
+    /// all of the List functions you are used to will still work. 
+    /// </summary>
+    /// <typeparam name="G">G must a GameObject. The type of G represents what kind of GameObjects the RayCollisions are in concern to.
+    /// For example, if G is some GameObject, Car, then all RayCollisions will be about Car objects. </typeparam>
+    [Serializable]
+    public class RayCollisions<G> : List<RayCollision<G>> where G : GameObject
+    {
+
+    }
 
 }

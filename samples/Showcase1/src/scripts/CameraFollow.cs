@@ -20,7 +20,7 @@ namespace Project
 		{
 
 			Level.Camera.Zoom = 1f;
-			Level.Camera.PositionSpring = 20f;
+			Level.Camera.PositionSpeed = 20f;
 			Level.Camera.ZoomSpring = .01f;
 			Level.Camera.ZoomFriction = .1f;
 			
@@ -56,7 +56,7 @@ namespace Project
 			l = lastZone.Bounds.Left;
 			r = lastZone.Bounds.Right;
 			t = lastZone.Bounds.Top;
-			b = lastZone.Bounds.Bottam;
+			b = lastZone.Bounds.Bottom;
 			z = lastZone.Zoom;
 			
 			
@@ -89,6 +89,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

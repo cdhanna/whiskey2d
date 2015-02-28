@@ -40,6 +40,48 @@ namespace Whiskey2D.Core
         }
     }
 
+    /// <summary>
+    /// RayCollisionInfo keeps track of useful information about a ray collision. 
+    /// </summary>
+    [Serializable]
+    public class RayCollisionInfo
+    {
+
+        /// <summary>
+        /// Gets the Normal of the collision. The Normal is a unit a vector that points in the direction of the collision. For example, if an object hit
+        /// the floor, then the Normal would be the vector, {0, -1}
+        /// </summary>
+        public Vector Normal { get; private set; }
+
+        /// <summary>
+        /// Gets the ContactPoint, The ContactPoint is the vector where the ray collides
+        /// </summary>
+        public Vector ContactPoint { get; private set; }
+
+        /// <summary>
+        /// Gets the start position of the Ray
+        /// </summary>
+        public Vector RayStart { get; private set; }
+
+        /// <summary>
+        /// Gets the direction of the Ray
+        /// </summary>
+        public Vector RayDirection { get; private set; }
+
+        /// <summary>
+        /// Gets the Length from the ray start, to the contact point
+        /// </summary>
+        public float Length { get { return (RayStart - ContactPoint).Length; } }
+
+        internal RayCollisionInfo(Vector rayStart, Vector rayDir, Vector Normal, Vector ContactPoint)
+        {
+            this.RayStart = rayStart;
+            this.RayDirection = rayDir;
+            this.Normal = Normal;
+            this.ContactPoint = ContactPoint;
+        }
+    }
+
 
 
 }

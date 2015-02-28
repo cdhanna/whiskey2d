@@ -134,6 +134,13 @@ namespace Whiskey2D.Core
             return convex.getCollisionInfo(bound.convex);
         }
 
+
+        public RayCollisionInfo getRayCollisionInfo(Vector rayStart, Vector rayDir)
+        {
+            return convex.getRayCollisionInfo(rayStart, rayDir);
+
+        }
+
         /// <summary>
         /// Draws the Bound
         /// </summary>

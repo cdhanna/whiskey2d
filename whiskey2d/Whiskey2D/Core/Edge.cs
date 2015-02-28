@@ -11,6 +11,8 @@ namespace Whiskey2D.Core
         public Vector V2 { get; private set; }
         public Vector Unit { get; private set; }
         public Vector Normal { get; private set; }
+        public float Length { get { return (V2 - V1).Length; } }
+
 
         public Edge(Vector v1, Vector v2)
         {

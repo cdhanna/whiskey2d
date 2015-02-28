@@ -84,6 +84,60 @@ namespace Whiskey2D.Core
             return getCollisionInfo(conv) != null;
         }
 
+        public RayCollisionInfo getRayCollisionInfo(Vector rayStart, Vector rayDir)
+        {
+
+            VectorSet set = calculateTrans();
+            Vector? pClosest = null;
+            Edge eClosest = null;
+
+            if (rayDir.Length > 0)
+            {
+
+                
+                
+                float distance = float.MaxValue;
+
+                set.forEachEdge(edge =>
+                {
+                    float x = rayStart.X * edge.Unit.Y - rayStart.Y * edge.Unit.X - edge.V1.X * edge.Unit.Y + edge.V1.Y * edge.Unit.X;
+                    x /= rayDir.Y * edge.Unit.X - rayDir.X * edge.Unit.Y;
+
+                    float y = rayStart.X * rayDir.Y - rayStart.Y * rayDir.X + rayDir.X * edge.V1.Y - rayDir.Y * edge.V1.X;
+                    y /= rayDir.Y * edge.Unit.X - rayDir.X * edge.Unit.Y;
+
+                    if (x > 0 && y > 0 && y < edge.Length)
+                    {
+
+                        Vector p = edge.V1 + y * edge.Unit;
+                        float testDistance = (p - rayStart).Length;
+
+                        if (testDistance < distance)
+                        {
+                            distance = testDistance;
+                            pClosest = p;
+                            eClosest = edge;
+                        }
+
+
+                    }
+
+
+                });
+            }
+            
+            if (pClosest.HasValue)
+            {
+                return new RayCollisionInfo(rayStart, rayDir, eClosest.Normal, pClosest.Value);
+            } else return null;
+        }
+
+
+        /// <summary>
+        /// Run an SAT test against the other convex object
+        /// </summary>
+        /// <param name="conv"></param>
+        /// <returns></returns>
         public CollisionInfo getCollisionInfo(Convex conv)
         {
 

@@ -79,6 +79,11 @@ namespace Whiskey2D.Core.Managers
         Vector MousePosition { get; }
 
         /// <summary>
+        /// Gets the position of the mouse, in GameCoordinates
+        /// </summary>
+        Vector MouseGamePosition { get; }
+
+        /// <summary>
         /// Gets the mouse wheel delta of the mouse
         /// </summary>
         int MouseWheelDelta { get; }

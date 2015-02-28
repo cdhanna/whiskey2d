@@ -133,6 +133,14 @@ namespace Whiskey2D.Core.Managers.Impl
             }
         }
 
+        public Vector MouseGamePosition
+        {
+            get
+            {
+                return GameManager.Level.Camera.getGameCoordinate(MousePosition);
+            }
+        }
+
 
         private bool mouseDown(MouseButtons b, MouseState state)
         {
