@@ -95,9 +95,19 @@ namespace Project
 		 			
 		 			
 		 			SimpleEffect fx = new SimpleEffect(Level);
-		 			fx.Effect = "smokePlume";
-		 			fx.Position = rc.ContactPoint;
-		 			
+		 			fx.Effect = "smokePlume3";
+		 			fx.Position = rc.ContactPoint - rc.rayDirection * 10;
+		 			fx.Sprite.Scale *= .4f;
+		 			fx.Frames = Vector.One * 4;
+		 			fx.Speed = 2;
+		 			fx.Sprite.Color = Color.Orange;
+		 			fx.Light.Visible = true;
+		 			fx.Light.Radius = 128;
+		 			fx.RadiusCalculator = (fn) => { 
+		 				if (fn < 10) return 128; 
+		 				else if (fn < 14) return 128f * ((16 - fn)/6f);
+		 				else return 0;
+		 			};
 		 		}
 		 		
 		 		
@@ -149,6 +159,34 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

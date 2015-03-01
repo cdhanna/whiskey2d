@@ -12,14 +12,29 @@ namespace Project
 	[Serializable] 
 	public class EffectControl : Script<SimpleEffect>
 	{
+	
+		Animation a;
+	
 		public override void onStart()
 		{
-		 //This code runs when the GameObject is initialized
+		 
+		 	Gob.Sprite.ImagePath = Gob.Effect + ".png";
+		 	Gob.Sprite.Rows = (int)Gob.Frames.X;
+		 	Gob.Sprite.Columns = (int)Gob.Frames.Y;
+		 	
+		 	a = Gob.Sprite.createAnimation(0, Gob.Sprite.FrameCount, Gob.Speed, false);
 		}
 		
 		public override void onUpdate() 
 		{
 		 //This code runs when the GameObject is updated
+		 	a.advanceFrame();
+		 	Gob.Light.Radius = Gob.RadiusCalculator(a.CurrentFrame);
+		 	if (a.CurrentFrame == a.EndFrame){
+		 		Gob.close();
+		 	}
+		 	
+		 	
 		}
 		
 		public override void onClose()  
@@ -29,3 +44,14 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

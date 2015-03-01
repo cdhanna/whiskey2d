@@ -173,7 +173,7 @@ namespace Whiskey2D.Core
                 Vector3 L2P = vertexPos - new Vector3(lightSource.Position, 0);
                 Vector3 L2Plong = L2P;// new Vector3(((Vector2)vertexPos) - ((Vector2)lightSource.Position), 0);
                 L2P.Normalize();
-                shadowVertices[svCount + 1].Position = new Vector3(lightSource.Position, 0) + L2P * L2Plong.Length() * (1f + height);
+                shadowVertices[svCount + 1].Position = new Vector3(lightSource.Position, 0) + L2P * 9000000;
 
                 svCount += 2;
                 currentIndex = (currentIndex + 1) % primitiveCount;
