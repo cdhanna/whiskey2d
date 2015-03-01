@@ -42,6 +42,15 @@ namespace Project
 					jumping = true;
 					jumpCounter = 50;
 					acc -= gravity * 15;
+					
+					
+					SimpleEffect fx = new SimpleEffect(Level);
+					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
+					fx.Effect = "smokeJump";
+					fx.Frames = Vector.One*4;
+					fx.Sprite.Scale *= .3f;
+					fx.Speed = 4;
+					
 				}
 			}
 			
@@ -88,6 +97,12 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
 
 
 

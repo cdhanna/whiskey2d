@@ -45,17 +45,9 @@ namespace Whiskey2D.Core
     }
 
 
-    /// <summary>
-    /// RayCollision keeps track of useful information about a ray collision, including the colliding object. 
-    /// </summary>
-    /// <typeparam name="G">The type of Gameobject that is colliding</typeparam>
     [Serializable]
-    public class RayCollision<G> where G : GameObject
+    public class RayCollision
     {
-        /// <summary>
-        /// Gets the GameObject that is colliding
-        /// </summary>
-        public G Gob { get; private set; }
 
         /// <summary>
         /// Gets the Normal of the collision. The Normal is a unit a vector that points in the direction of the collision. For example, if an object hit
@@ -86,9 +78,30 @@ namespace Whiskey2D.Core
 
         private RayCollisionInfo info;
 
-        internal RayCollision(RayCollisionInfo info, G gob)
+        public RayCollision(RayCollisionInfo info)
         {
+
             this.info = info;
+        }
+
+    }
+
+    /// <summary>
+    /// RayCollision keeps track of useful information about a ray collision, including the colliding object. 
+    /// </summary>
+    /// <typeparam name="G">The type of Gameobject that is colliding</typeparam>
+    [Serializable]
+    public class RayCollision<G> : RayCollision where G : GameObject
+    {
+        /// <summary>
+        /// Gets the GameObject that is colliding
+        /// </summary>
+        public G Gob { get; private set; }
+
+        internal RayCollision(RayCollisionInfo info, G gob) 
+            : base(info)
+        {
+            
             this.Gob = gob;
 
         }

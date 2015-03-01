@@ -29,7 +29,10 @@ namespace Project
 		{
 		 //This code runs when the GameObject is updated
 		 	a.advanceFrame();
-		 	Gob.Light.Radius = Gob.RadiusCalculator(a.CurrentFrame);
+		 	Log.debug((Gob.RadiusCalculator == null).ToString());
+		 	if (Gob.RadiusCalculator != null){
+		 		Gob.Light.Radius = Gob.RadiusCalculator(a.CurrentFrame);
+		 	}
 		 	if (a.CurrentFrame == a.EndFrame){
 		 		Gob.close();
 		 	}
@@ -44,6 +47,12 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
 
 
 

@@ -37,7 +37,7 @@ namespace Project
 		 	mouse = new SimpleObject(Level);
 		 	mouse.Sprite.Depth = 1;
 		 	mouse.Sprite.Color = Color.Blue;
-		 	
+		 	mouse.Sprite.Scale *= .2f;
 		 	
 		 	
 		}
@@ -55,13 +55,30 @@ namespace Project
 		 	
 		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(dir.UnitSafe * 200, dir);
 		 
+		 	RayCollision rc = null;
+		 
 		 	if (rayColls.Count > 0){
-		 		RayCollision<Wall> rc = rayColls[0];
+		 		rc = rayColls[0];
 		 		target.Position = rc.ContactPoint;
+		 	}
 		 	
-		 		
-		 		
-		 		if (Input.isNewMouseDown(MouseButtons.Left)){
+		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(dir.UnitSafe * 200, dir);
+		 	if (badguyColls.Count > 0){
+		 		if (rc == null || rc.Length > badguyColls[0].Length){
+		 			rc = badguyColls[0];
+		 			target.Position = rc.ContactPoint;
+		 		}
+		 	}
+		 	
+		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
+		 			
+		 			
+		 			if (rc is RayCollision<Badguy>){
+		 				RayCollision<Badguy> brc = (RayCollision<Badguy>) rc;
+		 				brc.Gob.close();
+		 			}
+		 			
+		 			
 		 			
 		 			float height = (Rand.Instance.nextFloat() * 20 - 10);
 		 			
@@ -75,7 +92,7 @@ namespace Project
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.DarkOrange, .1f, .1f, .1f, .2f);
 		 			tracer.Position += rc.rayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
 		 			tracer.Position += rc.rayDirection.Perpendicular * height;
-		 			tracer.Decay = 9;
+		 			tracer.Decay = 5;
 		 			
 		 			tracer = new Tracer(Level);
 		 			tracer.Light.Visible = true;
@@ -85,7 +102,7 @@ namespace Project
 		 			tracer.Sprite.Rotation = rc.rayDirection.Angle;
 		 			tracer.Position = (rc.ContactPoint + rc.RayStart) /2;
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.White, .1f, .1f, .1f, 0);
-		 			
+		 			tracer.Decay = 4;
 		 			//tracer.Position += rc.rayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
 		 			tracer.Position += -rc.rayDirection * (rc.Length/2 - tracer.Sprite.ImageSize.X/2);
 		 			
@@ -102,21 +119,24 @@ namespace Project
 		 			fx.Speed = 2;
 		 			fx.Sprite.Color = Color.Orange;
 		 			fx.Light.Visible = true;
-		 			fx.Light.Radius = 128;
+		 			fx.Light.Radius = 256f;
 		 			fx.RadiusCalculator = (fn) => { 
-		 				if (fn < 10) return 128; 
-		 				else if (fn < 14) return 128f * ((16 - fn)/6f);
+		 				if (fn < 10) return 256f; 
+		 				else if (fn < 14) return 256f * ((16 - fn)/6f);
 		 				else return 0;
 		 			};
+		 			
+		 			
+		 			fx = new SimpleEffect(Level);
+		 			fx.Effect = "muzzle";
+		 			fx.Position = rc.RayStart - rc.rayDirection * 10;
+		 			fx.Frames = new Vector(4, 2);
+		 			fx.Speed = 2;
+		 			fx.Sprite.Scale *= .4f;
+		 			fx.Sprite.Rotation = rc.rayDirection.Angle;
+		 			fx.Sprite.Color = Color.Orange;
+		 			
 		 		}
-		 		
-		 		
-		 	
-		 	}
-		 	
-		 	
-		 	
-		 	
 		 	
 		 
 		}
@@ -159,6 +179,28 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
