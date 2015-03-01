@@ -48,12 +48,12 @@ namespace Project
 		 
 		 	Vector dir = Input.MouseGamePosition - Gob.Position;
 		 	target.Position = Input.MouseGamePosition;
-		 	//mouse.Position = Input.MouseGamePosition;
+		 	mouse.Position = Input.MouseGamePosition;
 		 	
-		 	mouse.Position = Gob.Position + dir.UnitSafe * 200;
+		 	//mouse.Position = Gob.Position + dir.UnitSafe * 200;
 		 	
 		 	
-		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(dir.UnitSafe * 200, dir);
+		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(dir.UnitSafe * 100, dir);
 		 
 		 	RayCollision rc = null;
 		 
@@ -62,7 +62,7 @@ namespace Project
 		 		target.Position = rc.ContactPoint;
 		 	}
 		 	
-		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(dir.UnitSafe * 200, dir);
+		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(dir.UnitSafe * 100 , dir);
 		 	if (badguyColls.Count > 0){
 		 		if (rc == null || rc.Length > badguyColls[0].Length){
 		 			rc = badguyColls[0];
@@ -96,8 +96,8 @@ namespace Project
 		 			
 		 			tracer = new Tracer(Level);
 		 			tracer.Light.Visible = true;
-		 			scaleAmt = .9f - (Rand.Instance.nextFloat()*.45f);
-		 			scaleAmt = 1;
+		 			//scaleAmt = .9f - (Rand.Instance.nextFloat()*.45f);
+		 			//scaleAmt = (scaleAmt + 0) / 2;
 		 			tracer.Sprite.Scale = new Vector((rc.Length-0) * scaleAmt / 10f, .2f + (Rand.Instance.nextFloat()*.3f - .15f) );
 		 			tracer.Sprite.Rotation = rc.rayDirection.Angle;
 		 			tracer.Position = (rc.ContactPoint + rc.RayStart) /2;
@@ -179,6 +179,14 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
 
 
 
