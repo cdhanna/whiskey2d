@@ -14,7 +14,9 @@ namespace WhiskeyEditor.Backend
         
         private object value;
 
-        
+
+        string typeName = "";
+
         public RealType(Type type, object value)
         {
 
@@ -27,13 +29,37 @@ namespace WhiskeyEditor.Backend
 
             this.type = type;
             this.value = value;
+
+            if (this.type.GenericTypeArguments.Length > 0)
+            {
+                string name = type.Name;
+                int index = name.IndexOf('`');
+                name = index == -1 ? name : name.Substring(0, index);
+
+                typeName = name;
+
+                typeName += "<";
+                foreach (var t in type.GenericTypeArguments){
+                    typeName += t.Name + ",";
+                }
+                typeName = typeName.Substring(0, typeName.Length - 1);
+                typeName += ">";
+
+            }
+            else
+            {
+                typeName = type.Name;
+            }
+
         }
+
+       
 
         public Type Type { get { return type; } }
 
         public string TypeName
         {
-            get { return type.Name; }
+            get { return typeName; }
         }
 
         object TypeVal.Value
@@ -73,10 +99,19 @@ namespace WhiskeyEditor.Backend
 
         public TypeVal clone()
         {
+            
+
             object clone = null;
-            if (!value.GetType().IsEnum)
+            if (value != null && !value.GetType().IsEnum)
             {
-                clone = Nuclex.Cloning.ReflectionCloner.DeepPropertyClone(value);
+                try
+                {
+                    clone = Nuclex.Cloning.ReflectionCloner.DeepPropertyClone(value);
+                }
+                catch (Exception e)
+                {
+                    clone = value;
+                }
             }
             else
             {

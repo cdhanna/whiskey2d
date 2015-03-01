@@ -51,9 +51,17 @@ namespace WhiskeyEditor.Backend
         {
             return "//close code";
         }
+        public virtual string getClassCode()
+        {
+            return "";
+        }
 
         protected override void addSpecializedCode(System.IO.StreamWriter writer)
         {
+
+            writer.WriteLine("\t\t");
+            writer.WriteLine("\t\t" + getClassCode());
+            writer.WriteLine("\t\t");
 
             writer.WriteLine("\t\tpublic override void onStart()");
             writer.WriteLine("\t\t{");

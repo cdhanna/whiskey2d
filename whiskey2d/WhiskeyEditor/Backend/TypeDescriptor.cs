@@ -277,6 +277,7 @@ namespace WhiskeyEditor.Backend
             {
                 return stringify(val);
             }
+            
             else if (typeName.Equals(typeof(Vector).Name))
             {
                 Vector vec = (Vector) val;
@@ -365,7 +366,7 @@ namespace WhiskeyEditor.Backend
 
             foreach (PropertyDescriptor prop in propDescs)
             {
-
+                
                 writer.WriteLine("\t\t\t" + prop.Name + " = " + getCodeFor(prop.TypeVal.Value) + ";");
             }
 

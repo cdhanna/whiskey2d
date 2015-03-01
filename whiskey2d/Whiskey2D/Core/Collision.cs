@@ -68,7 +68,7 @@ namespace Whiskey2D.Core
         /// <summary>
         /// Gets the direction of the Ray
         /// </summary>
-        public Vector rayDirection { get { return info.RayDirection; } }
+        public Vector RayDirection { get { return info.RayDirection; } }
 
         /// <summary>
         /// Gets the Length from the ray start, to the contact point

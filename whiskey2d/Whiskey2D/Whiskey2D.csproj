@@ -106,6 +106,7 @@
     <Compile Include="Core\State.cs" />
     <Compile Include="Core\Vector.cs" />
     <Compile Include="Core\VectorSet.cs" />
+    <Compile Include="Core\WhiskeyFunctions.cs" />
     <Compile Include="Core\WhiskeyRunTimeException.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\Managers\Impl\DefaultInputManager.cs" />
