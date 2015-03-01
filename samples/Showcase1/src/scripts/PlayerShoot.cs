@@ -87,11 +87,11 @@ namespace Project
 		 			float scaleAmt = .9f - (Rand.Instance.nextFloat()*.45f);
 		 			scaleAmt = 1;
 		 			tracer.Sprite.Scale = new Vector((rc.Length-0) * scaleAmt / 10f, .5f + (Rand.Instance.nextFloat()*.3f - .15f) );
-		 			tracer.Sprite.Rotation = rc.rayDirection.Angle;
+		 			tracer.Sprite.Rotation = rc.RayDirection.Angle;
 		 			tracer.Position = (rc.ContactPoint + rc.RayStart) /2;
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.DarkOrange, .1f, .1f, .1f, .2f);
-		 			tracer.Position += rc.rayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
-		 			tracer.Position += rc.rayDirection.Perpendicular * height;
+		 			tracer.Position += rc.RayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
+		 			tracer.Position += rc.RayDirection.Perpendicular * height;
 		 			tracer.Decay = 5;
 		 			
 		 			tracer = new Tracer(Level);
@@ -99,41 +99,42 @@ namespace Project
 		 			//scaleAmt = .9f - (Rand.Instance.nextFloat()*.45f);
 		 			//scaleAmt = (scaleAmt + 0) / 2;
 		 			tracer.Sprite.Scale = new Vector((rc.Length-0) * scaleAmt / 10f, .2f + (Rand.Instance.nextFloat()*.3f - .15f) );
-		 			tracer.Sprite.Rotation = rc.rayDirection.Angle;
+		 			tracer.Sprite.Rotation = rc.RayDirection.Angle;
 		 			tracer.Position = (rc.ContactPoint + rc.RayStart) /2;
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.White, .1f, .1f, .1f, 0);
 		 			tracer.Decay = 4;
 		 			//tracer.Position += rc.rayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
-		 			tracer.Position += -rc.rayDirection * (rc.Length/2 - tracer.Sprite.ImageSize.X/2);
+		 			tracer.Position += -rc.RayDirection * (rc.Length/2 - tracer.Sprite.ImageSize.X/2);
 		 			
-		 			tracer.Position += rc.rayDirection.Perpendicular * height;
-		 			tracer.Dir = rc.rayDirection;
+		 			tracer.Position += rc.RayDirection.Perpendicular * height;
+		 			tracer.Dir = rc.RayDirection;
 		 			tracer.Speed = 1f;
 		 			
 		 			
-		 			SimpleEffect fx = new SimpleEffect(Level);
+		 			SpriteEffect fx = new SpriteEffect(Level);
 		 			fx.Effect = "smokePlume3";
-		 			fx.Position = rc.ContactPoint - rc.rayDirection * 10;
+		 			fx.Position = rc.ContactPoint - rc.RayDirection * 10;
 		 			fx.Sprite.Scale *= .4f;
 		 			fx.Frames = Vector.One * 4;
 		 			fx.Speed = 2;
 		 			fx.Sprite.Color = Color.Orange;
 		 			fx.Light.Visible = true;
 		 			fx.Light.Radius = 256f;
-		 			fx.RadiusCalculator = (fn) => { 
-		 				if (fn < 10) return 256f; 
-		 				else if (fn < 14) return 256f * ((16 - fn)/6f);
-		 				else return 0;
+		 			float f = 256f;
+		 				
+		 			fx.OnUpdate = (a) => {
+		 				f *= .95f;
+		 				fx.Light.Radius = f;
 		 			};
+
 		 			
-		 			
-		 			fx = new SimpleEffect(Level);
+		 			fx = new SpriteEffect(Level);
 		 			fx.Effect = "muzzle";
-		 			fx.Position = rc.RayStart - rc.rayDirection * 10;
+		 			fx.Position = rc.RayStart - rc.RayDirection * 10;
 		 			fx.Frames = new Vector(4, 2);
 		 			fx.Speed = 2;
 		 			fx.Sprite.Scale *= .4f;
-		 			fx.Sprite.Rotation = rc.rayDirection.Angle;
+		 			fx.Sprite.Rotation = rc.RayDirection.Angle;
 		 			fx.Sprite.Color = Color.Orange;
 		 			
 		 		}
@@ -179,6 +180,16 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

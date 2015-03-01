@@ -59,7 +59,14 @@ namespace WhiskeyEditor.Backend
 
         public string TypeName
         {
-            get { return typeName; }
+            get
+            {
+                if (typeName == null)
+                {
+                    typeName = type.Name;
+                }
+                return typeName;
+            }
         }
 
         object TypeVal.Value
