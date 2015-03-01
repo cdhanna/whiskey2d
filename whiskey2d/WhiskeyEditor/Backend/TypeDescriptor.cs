@@ -417,33 +417,35 @@ namespace WhiskeyEditor.Backend
 
         protected override void processExistingCode(string[] allLines)
         {
-
-            File.Delete(FilePath); // <-- :(
-            FileStream stream = File.Create(FilePath);
-            StreamWriter writer = new StreamWriter(stream);
-            
-            for (int i = 0 ; i < allLines.Length ; i ++)
+            lock (GameData.gameDataLocker)
             {
+                File.Delete(FilePath); // <-- :(
+                FileStream stream = File.Create(FilePath);
+                StreamWriter writer = new StreamWriter(stream);
 
-                if (allLines[i].Equals(CODE_PROP_START))
+                for (int i = 0; i < allLines.Length; i++)
                 {
 
-                    string nextLine = allLines[i++];
-                    while (!nextLine.Equals(CODE_PROP_END))
+                    if (allLines[i].Equals(CODE_PROP_START))
                     {
-                        nextLine = allLines[i++];
+
+                        string nextLine = allLines[i++];
+                        while (!nextLine.Equals(CODE_PROP_END))
+                        {
+                            nextLine = allLines[i++];
+                        }
+                        writeProperties(writer);
+                        //i++;
                     }
-                    writeProperties(writer);
-                    //i++;
+
+                    writer.WriteLine(allLines[i]);
                 }
+                writer.Flush();
+                writer.Close();
+                stream.Close();
 
-                writer.WriteLine(allLines[i]);
+                base.processExistingCode(allLines);
             }
-            writer.Flush();
-            writer.Close();
-            stream.Close();
-
-            base.processExistingCode(allLines);
         }
 
     }

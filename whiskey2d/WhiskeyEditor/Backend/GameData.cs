@@ -24,7 +24,7 @@ namespace WhiskeyEditor.Backend
         }
 
 
-        private static readonly object gameDataLocker = new Object();
+        public static readonly object gameDataLocker = new Object();
         public static string serialize(GameData data, string filePath)
         {
             lock (gameDataLocker)
