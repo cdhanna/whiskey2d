@@ -64,24 +64,9 @@ namespace Whiskey2D.Core
         {
             if (resources == null)
             {
-                GameManager.Log.debug("SPRITE DIDNT HAVE A RESOURCEMAN");
                 resources = GameManager.Resources;
 
-                //for each file in the art directory that is a .png
-                //  load it.
-                foreach (string pngFile in (System.IO.Directory.GetFiles(resources.Content.RootDirectory)))
-                {
-                    string contentFile = pngFile.Substring(resources.Content.RootDirectory.Length + 1);
-                    if (contentFile.EndsWith(".png"))
-                    {
-                        contentFile = contentFile.Replace(".png", "");
-                        GameManager.Log.debug(contentFile);
-                        resources.loadImage(contentFile);
-
-                    }
-
-
-                }
+              
             }
             return resources;
         }
@@ -334,7 +319,7 @@ namespace Whiskey2D.Core
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
         /// </summary>
         [System.ComponentModel.Browsable(false)]
-        public Vector Offset { get; private set; }
+        public Vector Offset { get; set; }
 
         /// <summary>
         /// Gets the offset of the sprite, but scaled
@@ -470,6 +455,12 @@ namespace Whiskey2D.Core
                 Rectangle destRect = new Rectangle((int)position.X, (int)position.Y, (int)destRectWidth, (int)destRectHeight);
 
                 Vector off = FrameOffset;
+
+                if (Rows == 1 && Columns == 1)
+                {
+                    off = Offset;
+                }
+
                 spriteBatch.Draw(getImage(), destRect, FrameRectangle, Color, Rotation, off, SpriteEffects.None, Depth / 2);
             }
         }

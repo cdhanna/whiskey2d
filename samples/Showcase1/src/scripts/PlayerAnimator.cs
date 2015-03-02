@@ -15,14 +15,17 @@ namespace Project
 	
 	
 		SimpleObject vis;
+		SimpleObject arm;
 		
 		Animation runLeft;
 		Animation runRight;
 		
-	
+		Vector offset = new Vector(0, 10);
+		Vector armOffset = new Vector(0, 0);
+		
 		public override void onStart()
 		{
-
+			Gob.Sprite.Color = new Color(1f, 1f, 0, .1f);
 			vis = new SimpleObject(Level);
 			vis.Sprite.ImagePath = "W2Drun2.png";
 			vis.Sprite.Columns = 8;
@@ -33,19 +36,32 @@ namespace Project
 			runRight = vis.Sprite.createAnimation(0, 7, 7, true);
 			
 			
+			arm = new SimpleObject(Level);
+			
+			arm.Sprite.ImagePath = "W2Dgunarm.png";
+			arm.Sprite.Scale = Vector.One * .6f;
+			armOffset = new Vector(0, -60);
+			
 		}
+		
+		float a = 0;
 		
 		public override void onUpdate() 
 		{
-
-			vis.Position = Gob.Position;
-
+			a  = Gob.LookAngle;
+			arm.Sprite.Rotation = a;
+			vis.Position = Gob.Position + offset;
+			
+			float armShiftAngle = a + (float)Math.PI/2;
+			arm.Position = Gob.Position + armOffset + (10/11f) * (arm.Sprite.ImageSize.Y /2) * new Vector( (float)Math.Cos(armShiftAngle), (float)Math.Sin(armShiftAngle));
 			if ( Math.Abs(Gob.Velocity.Y) < .1f){		
 				if (Gob.Acceleration.X > 0){
 					runRight.advanceFrame();
+					armOffset.X = 20;
 				}
 				if (Gob.Acceleration.X < 0){
 					runLeft.advanceFrame();
+					armOffset.X = -20;
 				}
 			}
 		
@@ -59,6 +75,32 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

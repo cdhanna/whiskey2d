@@ -10,6 +10,12 @@ using Microsoft.Xna.Framework.Audio;
 namespace Whiskey2D.Core.Managers.Impl
 {
 
+    public static class ImageCache
+    {
+        public static readonly Dictionary<string, Texture2D> Cache = new Dictionary<string, Texture2D>();
+    }
+
+
     /// <summary>
     /// Loads different Resources into the WHiskey Game
     /// </summary>
@@ -25,7 +31,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The ResourceManager</returns>
         public static DefaultResourceManager Instance { get { return instance; } }
 
-        private static Dictionary<string, Texture2D> texCache;
+        
         public ContentManager Content { get; private set; }
         private SpriteFont defaultFont;
 
@@ -39,12 +45,31 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <param name="content">The content pipeline to use for loading resources</param>
         public void init(ContentManager content)
         {
-            texCache = new Dictionary<string, Texture2D>();
+           
             this.Content = content;
             if (content != null)
             {
                 
                 this.defaultFont = content.Load<SpriteFont>("font");
+
+               
+                //for each file in the art directory that is a .png
+                //  load it.
+                foreach (string pngFile in (System.IO.Directory.GetFiles(content.RootDirectory)))
+                {
+                    string contentFile = pngFile.Substring(content.RootDirectory.Length + 1);
+                    if (contentFile.EndsWith(".png"))
+                    {
+                        //contentFile = contentFile.Replace(".png", "");
+                        //if (GameManager.Log != null)
+                        // GameManager.Log.debug(contentFile);
+                        loadImage(contentFile);
+
+                    }
+
+
+                }
+
             }
         }
 
@@ -59,17 +84,19 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
-            if (!texCache.ContainsKey(filePath))
+            if (!ImageCache.Cache.ContainsKey(filePath))
             {
-                GameManager.Log.debug("sprite " + filePath + " from disc");
+                //if (GameManager.Log != null)
+                //    GameManager.Log.debug("sprite " + filePath + " from disc");
                 Texture2D tex = Content.Load < Texture2D>(filePath);
-                texCache.Add(filePath, tex);
+                ImageCache.Cache.Add(filePath, tex);
             }
             else
             {
-                GameManager.Log.debug("sprite " + filePath + " from cache");
+                //if (GameManager.Log != null)
+                //    GameManager.Log.debug("sprite " + filePath + " from cache");
             }
-            return texCache[filePath];
+            return ImageCache.Cache[filePath];
         }
 
         public SoundEffect loadSound(string filePath)

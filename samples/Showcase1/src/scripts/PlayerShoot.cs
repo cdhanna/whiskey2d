@@ -70,6 +70,9 @@ namespace Project
 		 		}
 		 	}
 		 	
+		 	if (rc != null){
+		 		Gob.LookAngle = rc.RayDirection.Angle - (float)Math.PI/2;
+		 	}
 		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
 		 			
 		 			
@@ -180,6 +183,10 @@ namespace Project
 	
 	
 }
+
+
+
+
 
 
 
