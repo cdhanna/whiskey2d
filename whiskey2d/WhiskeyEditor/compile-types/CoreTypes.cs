@@ -40,14 +40,15 @@ namespace WhiskeyEditor.compile_types
 
             addCoreScript<TriggerActivate>();
             addCoreScript<SpriteEffectControl>();
-
+            addCoreScript<CameraMasterControl>();
             addCoreType<SimpleObject>();
             addCoreType<ShadowCaster>();
             addCoreType<SimpleLight>();
             addCoreType<DebugObject>();
             addCoreType<TriggerZone>();
             addCoreType<SpriteEffect>();
-           
+            addCoreType<CamZone>();
+            addCoreType<CameraMaster>();
 
         }
 
