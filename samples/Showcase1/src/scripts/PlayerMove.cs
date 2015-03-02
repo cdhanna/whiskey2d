@@ -27,21 +27,21 @@ namespace Project
 			//Config conf = Objects.getObject<Config>("Config");
 			
 			
-			Vector acc = Vector.Zero;
+			Gob.Acceleration = Vector.Zero;
 			Vector friction = new Vector(.08f, 0);
 			
 			if (Input.isKeyDown(Keys.A)){
-				acc -= Vector.UnitX;
+				Gob.Acceleration -= Vector.UnitX;
 			}
 			if (Input.isKeyDown(Keys.D)){
-				acc += Vector.UnitX;
+				Gob.Acceleration += Vector.UnitX;
 			}
 			
 			if (Input.isNewKeyDown(Keys.W)){
 				if (surface.Y > .8f){
 					jumping = true;
 					jumpCounter = 50;
-					acc -= gravity * 25;
+					Gob.Acceleration -= gravity * 25;
 					
 					
 					SpriteEffect fx = new SpriteEffect(Level);
@@ -57,14 +57,14 @@ namespace Project
 			
 			if (Input.isKeyDown(Keys.Up)){
 				if (jumping && jumpCounter > 0 ){
-					acc -= gravity * .02f * jumpCounter;
+					Gob.Acceleration -= gravity * .02f * jumpCounter;
 					jumpCounter --;
 				}
 			}
 		
-			acc += gravity;
+			Gob.Acceleration += gravity;
 		
-			Gob.Velocity += acc;
+			Gob.Velocity += Gob.Acceleration;
 			
 			
 			Gob.Velocity -= new Vector(Gob.Velocity.X * friction.X, Gob.Velocity.Y * friction.Y);
@@ -97,6 +97,8 @@ namespace Project
 		
 	}
 }
+
+
 
 
 
