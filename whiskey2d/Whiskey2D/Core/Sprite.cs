@@ -64,7 +64,24 @@ namespace Whiskey2D.Core
         {
             if (resources == null)
             {
+                GameManager.Log.debug("SPRITE DIDNT HAVE A RESOURCEMAN");
                 resources = GameManager.Resources;
+
+                //for each file in the art directory that is a .png
+                //  load it.
+                foreach (string pngFile in (System.IO.Directory.GetFiles(resources.Content.RootDirectory)))
+                {
+                    string contentFile = pngFile.Substring(resources.Content.RootDirectory.Length + 1);
+                    if (contentFile.EndsWith(".png"))
+                    {
+                        contentFile = contentFile.Replace(".png", "");
+                        GameManager.Log.debug(contentFile);
+                        resources.loadImage(contentFile);
+
+                    }
+
+
+                }
             }
             return resources;
         }

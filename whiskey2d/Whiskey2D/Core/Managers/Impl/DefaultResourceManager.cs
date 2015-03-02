@@ -25,7 +25,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The ResourceManager</returns>
         public static DefaultResourceManager Instance { get { return instance; } }
 
-
+        private static Dictionary<string, Texture2D> texCache;
         public ContentManager Content { get; private set; }
         private SpriteFont defaultFont;
 
@@ -39,6 +39,7 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <param name="content">The content pipeline to use for loading resources</param>
         public void init(ContentManager content)
         {
+            texCache = new Dictionary<string, Texture2D>();
             this.Content = content;
             if (content != null)
             {
@@ -58,7 +59,17 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
-            return Content.Load<Texture2D>(filePath);
+            if (!texCache.ContainsKey(filePath))
+            {
+                GameManager.Log.debug("sprite " + filePath + " from disc");
+                Texture2D tex = Content.Load < Texture2D>(filePath);
+                texCache.Add(filePath, tex);
+            }
+            else
+            {
+                GameManager.Log.debug("sprite " + filePath + " from cache");
+            }
+            return texCache[filePath];
         }
 
         public SoundEffect loadSound(string filePath)
