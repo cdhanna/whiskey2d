@@ -30,21 +30,21 @@ namespace Project
 			Vector acc = Vector.Zero;
 			Vector friction = new Vector(.08f, 0);
 			
-			if (Input.isKeyDown(Keys.Left)){
+			if (Input.isKeyDown(Keys.A)){
 				acc -= Vector.UnitX;
 			}
-			if (Input.isKeyDown(Keys.Right)){
+			if (Input.isKeyDown(Keys.D)){
 				acc += Vector.UnitX;
 			}
 			
-			if (Input.isNewKeyDown(Keys.Up)){
+			if (Input.isNewKeyDown(Keys.W)){
 				if (surface.Y > .8f){
 					jumping = true;
 					jumpCounter = 50;
 					acc -= gravity * 15;
 					
 					
-					SimpleEffect fx = new SimpleEffect(Level);
+					SpriteEffect fx = new SpriteEffect(Level);
 					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
 					fx.Effect = "smokeJump";
 					fx.Frames = Vector.One*4;
@@ -97,6 +97,8 @@ namespace Project
 		
 	}
 }
+
+
 
 
 
