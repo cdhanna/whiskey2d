@@ -16,6 +16,7 @@ namespace Project
 		public Vector Velocity { get; set; } 
 		public Vector Acceleration { get; set; } 
 		public Single LookAngle { get; set; } 
+		public Vector GunTipPosition { get; set; } 
 
 		#region INIT_VALUE_ASSIGNMENT
 		protected override void initProperties()
@@ -32,6 +33,7 @@ namespace Project
 			Velocity = new Vector(1f, 1f);
 			Acceleration = new Vector(0f, 0f);
 			LookAngle = 0f;
+			GunTipPosition = new Vector(1f, 1f);
 		}
 		#endregion
 

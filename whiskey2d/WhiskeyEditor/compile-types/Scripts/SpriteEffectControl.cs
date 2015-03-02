@@ -33,7 +33,6 @@ namespace WhiskeyEditor.compile_types.Scripts
                 + "Gob.Sprite.Rows = (int)Gob.Frames.X; " 
                 + "Gob.Sprite.Columns = (int)Gob.Frames.Y;" 
                 + "int end = Gob.EndFrame < 0 ? Gob.Sprite.FrameCount : Gob.EndFrame;"
-                + "Log.debug(\"END = \" + end);"
                 + "a = Gob.Sprite.createAnimation(Gob.StartFrame, end, Gob.Speed, Gob.Looped);";
 
             return code;

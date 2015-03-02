@@ -27,7 +27,7 @@ namespace Project
 	 			Gob.close();
 	 		}
 	 		
-	 		Gob.Position += Gob.Dir * Gob.Speed;
+	 		//Gob.Position += Gob.Dir * Gob.Speed;
 	 		
 		}
 		
@@ -38,6 +38,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

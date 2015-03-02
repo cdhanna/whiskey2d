@@ -19,6 +19,8 @@ namespace Project
 		
 		Animation runLeft;
 		Animation runRight;
+		Animation standLeft;
+		Animation standRight;
 		
 		Vector offset = new Vector(0, 10);
 		Vector armOffset = new Vector(0, 0);
@@ -27,41 +29,71 @@ namespace Project
 		{
 			Gob.Sprite.Color = new Color(1f, 1f, 0, .1f);
 			vis = new SimpleObject(Level);
-			vis.Sprite.ImagePath = "W2Drun2.png";
+			vis.Sprite.ImagePath = "W2Drobot1.png";
 			vis.Sprite.Columns = 8;
-			vis.Sprite.Rows = 2;
+			vis.Sprite.Rows = 3;
 			vis.Sprite.Scale = Vector.One * .6f;
 			
 			runLeft = vis.Sprite.createAnimation(8, 15, 7, true);
 			runRight = vis.Sprite.createAnimation(0, 7, 7, true);
-			
+			standLeft = vis.Sprite.createAnimation(16, 16, 7, true);
+			standRight = vis.Sprite.createAnimation(17, 17, 7, true);
 			
 			arm = new SimpleObject(Level);
 			
 			arm.Sprite.ImagePath = "W2Dgunarm.png";
-			arm.Sprite.Scale = Vector.One * .6f;
-			armOffset = new Vector(0, -60);
+			arm.Sprite.Scale = new Vector(-.6f, .6f);
+			armOffset = new Vector(30, -55);
 			
 		}
 		
-		float a = 0;
 		
 		public override void onUpdate() 
 		{
-			a  = Gob.LookAngle;
-			arm.Sprite.Rotation = a;
+		
+			float look = Gob.LookAngle;
+		
+			
+			arm.Sprite.Rotation = look;
 			vis.Position = Gob.Position + offset;
 			
-			float armShiftAngle = a + (float)Math.PI/2;
-			arm.Position = Gob.Position + armOffset + (10/11f) * (arm.Sprite.ImageSize.Y /2) * new Vector( (float)Math.Cos(armShiftAngle), (float)Math.Sin(armShiftAngle));
+			float lookPlus = look + (float)Math.PI/2;
+			
+			
+			if (lookPlus > (float)Math.PI/2 || lookPlus < (float)Math.PI/-2){
+				arm.Sprite.Scale = new Vector(.6f, .6f);
+			} else {
+				arm.Sprite.Scale = new Vector(-.6f, .6f);
+			}
+			
+			
+			
+			arm.Position = Gob.Position + armOffset + (10/11f) * (arm.Sprite.ImageSize.Y /2) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
+			Gob.GunTipPosition = Gob.Position + armOffset + (arm.Sprite.ImageSize.Y) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
+			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/2 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
 			if ( Math.Abs(Gob.Velocity.Y) < .1f){		
-				if (Gob.Acceleration.X > 0){
+				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
 					runRight.advanceFrame();
-					armOffset.X = 20;
-				}
-				if (Gob.Acceleration.X < 0){
+					armOffset.X = 25;
+					armOffset.Y = -55;
+					
+				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
 					runLeft.advanceFrame();
-					armOffset.X = -20;
+					armOffset.X = -25;
+					armOffset.Y = -55;
+					
+				} else if (arm.Sprite.Scale.X < 0){
+					standRight.advanceFrame();
+					armOffset.X = 12;
+					armOffset.Y = -45;
+					
+				} else if (arm.Sprite.Scale.X > 0){
+					standLeft.advanceFrame();
+					armOffset.X = 12;
+					armOffset.Y = -45;
+					
+				} else {
+					standRight.advanceFrame();
 				}
 			}
 		
@@ -75,6 +107,54 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

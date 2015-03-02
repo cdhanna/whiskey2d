@@ -319,7 +319,7 @@ namespace Whiskey2D.Core
         /// The Center() method will calculate the offset so the sprite is drawn from the center of its image.
         /// </summary>
         [System.ComponentModel.Browsable(false)]
-        public Vector Offset { get; set; }
+        public Vector Offset { get; private set; }
 
         /// <summary>
         /// Gets the offset of the sprite, but scaled
@@ -456,10 +456,7 @@ namespace Whiskey2D.Core
 
                 Vector off = FrameOffset;
 
-                if (Rows == 1 && Columns == 1)
-                {
-                    off = Offset;
-                }
+              
 
                 spriteBatch.Draw(getImage(), destRect, FrameRectangle, Color, Rotation, off, SpriteEffects.None, Depth / 2);
             }

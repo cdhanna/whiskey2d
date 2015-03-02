@@ -38,7 +38,7 @@ namespace Project
 		 	mouse.Sprite.Depth = 1;
 		 	mouse.Sprite.Color = Color.Blue;
 		 	mouse.Sprite.Scale *= .2f;
-		 	
+		 	mouse.Sprite.Visible = false;
 		 	
 		}
 		
@@ -46,14 +46,17 @@ namespace Project
 		{
 		 
 		 
-		 	Vector dir = Input.MouseGamePosition - Gob.Position;
+		 	Vector dir = Input.MousePosition - new Vector(ScreenWidth/2, ScreenHeight/2);
+		 	
+		 	
 		 	target.Position = Input.MouseGamePosition;
 		 	mouse.Position = Input.MouseGamePosition;
-		 	
+		 	Vector start = Gob.GunTipPosition - Gob.Position;
+		 	//dir = Input.MouseGamePosition - start;
 		 	//mouse.Position = Gob.Position + dir.UnitSafe * 200;
 		 	
 		 	
-		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(dir.UnitSafe * 100, dir);
+		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(start, dir);
 		 
 		 	RayCollision rc = null;
 		 
@@ -62,7 +65,7 @@ namespace Project
 		 		target.Position = rc.ContactPoint;
 		 	}
 		 	
-		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(dir.UnitSafe * 100 , dir);
+		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(start , dir);
 		 	if (badguyColls.Count > 0){
 		 		if (rc == null || rc.Length > badguyColls[0].Length){
 		 			rc = badguyColls[0];
@@ -71,8 +74,12 @@ namespace Project
 		 	}
 		 	
 		 	if (rc != null){
-		 		Gob.LookAngle = rc.RayDirection.Angle - (float)Math.PI/2;
+		 		Gob.LookAngle = rc.RayDirection.Angle - (float) Math.PI/2;
 		 	}
+		 	
+		 	
+		 	
+		 	
 		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
 		 			
 		 			
@@ -93,7 +100,7 @@ namespace Project
 		 			tracer.Sprite.Rotation = rc.RayDirection.Angle;
 		 			tracer.Position = (rc.ContactPoint + rc.RayStart) /2;
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.DarkOrange, .1f, .1f, .1f, .2f);
-		 			tracer.Position += rc.RayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
+		 			//tracer.Position += rc.RayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
 		 			tracer.Position += rc.RayDirection.Perpendicular * height;
 		 			tracer.Decay = 5;
 		 			
@@ -107,7 +114,7 @@ namespace Project
 		 			tracer.Sprite.Color = Rand.Instance.nextColorVariation(Color.White, .1f, .1f, .1f, 0);
 		 			tracer.Decay = 4;
 		 			//tracer.Position += rc.rayDirection * (0 + ((1 - scaleAmt) * (rc.Length)/2 * (Rand.Instance.nextFloat() * 2 - 1)));
-		 			tracer.Position += -rc.RayDirection * (rc.Length/2 - tracer.Sprite.ImageSize.X/2);
+		 			//tracer.Position += -rc.RayDirection * (rc.Length/2 - tracer.Sprite.ImageSize.X/2);
 		 			
 		 			tracer.Position += rc.RayDirection.Perpendicular * height;
 		 			tracer.Dir = rc.RayDirection;
@@ -183,6 +190,18 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
