@@ -41,7 +41,7 @@ namespace Project
 				if (surface.Y > .8f){
 					jumping = true;
 					jumpCounter = 50;
-					acc -= gravity * 15;
+					acc -= gravity * 25;
 					
 					
 					SpriteEffect fx = new SpriteEffect(Level);
@@ -97,6 +97,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

@@ -155,16 +155,7 @@ namespace WhiskeyEditor.MonoHelp
                     InputSourceManager.hotSwapInput(InputSource);
                 };
             }
-            //inputSource = new EditorInputSource(this);
-            //requestedWhiskeyInput = inputSource;
-            //if (objectController != null)
-            //{
-            //    objectController.Selected = null;
-            //    objectController.Unselect = true;
-            //    objectController.update();
-            
-            //    ViewedControl = true;
-            //}
+
         }
 
         /// <summary>
@@ -221,33 +212,6 @@ namespace WhiskeyEditor.MonoHelp
             ObjectController.Sprite = new Sprite(Renderer, Resources, ObjectController.Sprite);
 
 
-           // editorObjects.addObject(objectController);
-            //gameMan.ObjectManager.removeObject(objectController);
-
-            //construct the special renderer for this scene
-            //renderer = new EditorRenderManager();
-            //renderer.init(base.GraphicsDevice);
-
-            
-            //create the backthread that will do the updating for us
-            //backThread = new Thread(() =>
-            //{
-            //    while (backThreadRunKey)
-            //    {
-            //        update();
-
-            //        while (backThreadRunKey && Working)
-            //        {
-            //            Thread.Sleep(2);
-            //            waiting for the update loop to finish (it causes some other side affects that need to finish)
-            //        }
-            //    }
-            //});
-            //backThread.Name = "WHISKEYVIEW_BACK: " + id;
-            //backThread.IsBackground = true;
-            //backThread.Start();
-            
-
 
             //set the current level of the object controller
             if (ObjectController != null)
@@ -301,17 +265,6 @@ namespace WhiskeyEditor.MonoHelp
            // base.Dispose(disposing); <-calling this does bad things
         }
 
-        //protected void update()
-        //{
-        //    if (ViewedControl)
-        //    {
-        //        Working = true; //start working...
-        //        editorObjects.updateAll();
-        //        //Invoke(new NoArgFunction(() => { Refresh(); }));
-        //        //Draw();
-        //        Invalidate(); 
-        //    }
-        //}
 
         public static void forceRedraw(){
             if (Active != null)
@@ -334,20 +287,6 @@ namespace WhiskeyEditor.MonoHelp
 
 
             Renderer.renderAll(editorObjects.getAllObjects(), Level.getInstances());
-           // Renderer.render(editorObjects.getAllObjects());
-           // Renderer.render(Level.getInstances());
-            //draw things from the game manager
-            //gameMan.Draw(null);
-
-            //draw our control stuff
-            //renderer.render(editorObjects.getAllObjects());
-
-            //draw our instances
-            //if (Level != null)
-            //    //renderer.render(Level.Descriptors);
-            //    gameMan.Draw(null);
-            //else
-            //    GraphicsDevice.Clear(Whiskey2D.Core.Color.Red);
 
 
 
@@ -356,30 +295,7 @@ namespace WhiskeyEditor.MonoHelp
 
         }
 
-       
-
-        //public GameObject SelectedGob
-        //{
-        //    get
-        //    {
-        //        return selectedGob;
-        //    }
-        //    set
-        //    {
-        //        GameObject old = selectedGob;
-        //        selectedGob = value;
-        //        //BecameDirty(this, new EventArgs());
-
-        //        if (old != value)
-        //            SelectionChanged(this, new WhiskeyControlEventArgs((InstanceDescriptor)value));
-        //        //GobGrid.SelectedObject = value;
-        //        //GobGrid.Refresh();
-
-        //        //GobScriptCollection.SelectedObject = value;
-        //        //GobScriptCollection.Refresh();
-
-        //    }
-        //}
+ 
 
 
 
