@@ -83,7 +83,22 @@ namespace Project
 		 		Gob.LookAngle = rc.RayDirection.Angle - (float) Math.PI/2;
 		 	}
 		 	
-		 	
+		 	if (rayColls.Count > 0){
+		 		target.Position = rc.ContactPoint;
+		 		Vector screenPos = Level.Camera.getScreenCoordinate(Gob.GunTipPosition);
+		 		
+		 		Bounds b = new Bounds(Vector.Zero, new Vector(ScreenWidth, ScreenHeight), 0);
+		 		RayCollisionInfo info = b.getRayCollisionInfo(screenPos, (rc.RayDirection));
+		 		if (info != null){
+			 		screenPos = info.ContactPoint;
+			 		
+			 		screenPos = Level.Camera.getGameCoordinate(screenPos);
+			 		
+			 		if ((screenPos - Gob.GunTipPosition).Length < (Gob.GunTipPosition - target.Position).Length){
+			 			target.Position = screenPos;
+			 		}
+		 		}
+		 	}
 		 	
 		 	
 		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
@@ -199,6 +214,25 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

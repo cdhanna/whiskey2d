@@ -17,8 +17,8 @@ namespace Project
 	
 		public override void onStart()
 		{
-			s = new Sound("W2DDemo.wav");
-			s.play();
+			//s = new Sound("W2DDemo.wav");
+			//s.play();
 		}
 		
 		public override void onUpdate() 
@@ -33,6 +33,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

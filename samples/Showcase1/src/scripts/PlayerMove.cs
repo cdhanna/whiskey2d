@@ -68,7 +68,7 @@ namespace Project
 			
 			
 			Gob.Velocity -= new Vector(Gob.Velocity.X * friction.X, Gob.Velocity.Y * friction.Y);
-			Gob.Sprite.Scale = new Vector(100 + Math.Abs(Gob.Velocity.X*10), Gob.Sprite.Scale.Y);
+			Gob.Sprite.Scale = new Vector(85 + Math.Abs(Gob.Velocity.X*15), Gob.Sprite.Scale.Y);
 			
 			Gob.Position += Gob.Velocity;
 			
@@ -97,6 +97,8 @@ namespace Project
 		
 	}
 }
+
+
 
 
 

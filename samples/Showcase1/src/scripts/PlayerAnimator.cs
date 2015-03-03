@@ -21,6 +21,8 @@ namespace Project
 		Animation runRight;
 		Animation standLeft;
 		Animation standRight;
+		Animation jumpLeftStart, jumpLeftAirTime, jumpLeftLand;
+		Animation jumpRight;
 		
 		Vector offset = new Vector(0, 10);
 		Vector armOffset = new Vector(0, 0);
@@ -38,11 +40,15 @@ namespace Project
 			runRight = vis.Sprite.createAnimation(0, 7, 7, true);
 			standLeft = vis.Sprite.createAnimation(16, 16, 7, true);
 			standRight = vis.Sprite.createAnimation(17, 17, 7, true);
+			//jumpLeft = vis.Sprite.createAnimation(?, ?, 7, false);
+			//jumpLeftAirTime = vis.Sprite.createAnimation(?, ?, 7, true);
+			//jumpLeftLand = vis.Sprite.createAnimation(?, ?, 7, false);
 			
 			arm = new SimpleObject(Level);
 			
 			arm.Sprite.ImagePath = "W2Dgunarm.png";
 			arm.Sprite.Scale = new Vector(-.6f, .6f);
+			arm.Sprite.Depth = .6f;
 			armOffset = new Vector(30, -55);
 			
 		}
@@ -71,30 +77,48 @@ namespace Project
 			arm.Position = Gob.Position + armOffset + (10/11f) * (arm.Sprite.ImageSize.Y /2) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
 			Gob.GunTipPosition = Gob.Position + armOffset + (arm.Sprite.ImageSize.Y) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
 			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/3 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
-			if ( Math.Abs(Gob.Velocity.Y) < .1f){		
+			
+			
+			if ( Math.Abs(Gob.Velocity.Y) < .1f){
+				//The character is moving side to side, but isn't moving up or down
 				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
 					runRight.advanceFrame();
+					vis.Sprite.Scale = new Vector(.6f, .6f);
 					armOffset.X = 25;
 					armOffset.Y = -55;
 					
 				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
-					runLeft.advanceFrame();
+					//runLeft.advanceFrame();
+					runRight.advanceFrame();
+					vis.Sprite.Scale = new Vector(-.6f, .6f);
 					armOffset.X = -25;
 					armOffset.Y = -55;
 					
 				} else if (arm.Sprite.Scale.X < 0){
 					standRight.advanceFrame();
+					vis.Sprite.Scale = new Vector(.6f, .6f);
 					armOffset.X = 12;
 					armOffset.Y = -45;
 					
 				} else if (arm.Sprite.Scale.X > 0){
-					standLeft.advanceFrame();
-					armOffset.X = 12;
+					standRight.advanceFrame();
+					vis.Sprite.Scale = new Vector(-.6f, .6f);
+					armOffset.X = 0;
 					armOffset.Y = -45;
 					
 				} else {
 					standRight.advanceFrame();
 				}
+			} else {
+				//the character is moving through the air
+				
+				//is the character just jumping up?
+				if (Gob.Acceleration.Y < 0) {
+				
+				}
+				//is the character moving through the air?
+				
+			
 			}
 		
 
@@ -107,6 +131,11 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
 
 
 
