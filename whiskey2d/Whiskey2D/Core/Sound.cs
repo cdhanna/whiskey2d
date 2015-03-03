@@ -110,7 +110,7 @@ namespace Whiskey2D.Core
             {
                 //ISoundSource src = engine.AddSoundSourceFromFile("media/" + FilePath);
 
-                sound = engine.Play2D("media/"+FilePath, Looped, true, StreamMode.AutoDetect, true);
+                sound = engine.Play2D("media/"+FilePath, false, true);
                 
             }
             
@@ -140,8 +140,7 @@ namespace Whiskey2D.Core
 
             if (getEffect().Finished)
             {
-                sound = null;
-                play();
+                sound = engine.Play2D("media/" + FilePath, false, false);
             }
             else
             {

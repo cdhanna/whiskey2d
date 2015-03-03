@@ -88,7 +88,7 @@ namespace Project
 		 	
 		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
 		 			
-		 			laserSound.duplicate().setVolume(dir.UnitSafe.X + 1).play();
+		 			laserSound.duplicate().play();
 		 			//laserSound.Pan = 0;
 		 			
 		 			
@@ -199,6 +199,8 @@ namespace Project
 	
 	
 }
+
+
 
 
 
