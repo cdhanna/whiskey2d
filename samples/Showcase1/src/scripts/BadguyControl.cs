@@ -86,13 +86,13 @@ namespace Project
 				efx.Sprite.Scale *= .3f;
 				efx.Position = Gob.Position;
 				efx.Frames = new Vector(4, 2);
-				Gob.close();
 				Sound s = new Sound("punch.wav");
 				s.play();
 		}
 		
 	}
 }
+
 
 
 

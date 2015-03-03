@@ -16,7 +16,7 @@ namespace Whiskey2D.Core
     public class Sound 
     {
 
-        private static ISoundEngine engine = new ISoundEngine();
+        public static ISoundEngine engine = new ISoundEngine();
         
         //public SoundState State
         //{

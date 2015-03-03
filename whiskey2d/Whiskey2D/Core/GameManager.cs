@@ -276,6 +276,7 @@ namespace Whiskey2D.Core
             ObjectManager = level;
             _level = level;
             level.Camera.Position = Vector.Zero;
+            Sound.engine.StopAllSounds();
             return level;
         }
 
