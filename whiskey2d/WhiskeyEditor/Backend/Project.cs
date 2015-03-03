@@ -276,11 +276,11 @@ namespace WhiskeyEditor.Backend
             MediaAdded(this, new EventArgs());
 
             MediaDescriptor mDesc = null;
-            if (fullPath.EndsWith(".png"))
+            if (fullPath.ToLower().EndsWith(".png"))
             {
                 mDesc = new ArtDescriptor(destPath);
             }
-            else if (fullPath.EndsWith(".wav"))
+            else if (fullPath.ToLower().EndsWith(".wav"))
             {
                 mDesc = new SoundDescriptor(destPath);
             }

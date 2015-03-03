@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
 using Whiskey2D.Core.Managers;
+using IrrKlang;
 
 namespace Whiskey2D.Core
 {
@@ -13,23 +16,25 @@ namespace Whiskey2D.Core
     public class Sound 
     {
 
-        public SoundState State
-        {
-            get
-            {
-                return getEffect().State;
-            }
-        }
+        private static ISoundEngine engine = new ISoundEngine();
+        
+        //public SoundState State
+        //{
+        //    get
+        //    {
+        //        return getEffect().State;
+        //    }
+        //}
 
         public bool Looped
         {
             get
             {
-                return getEffect().IsLooped;
+                return getEffect().Looped;
             }
             set
             {
-                getEffect().IsLooped = value;
+                getEffect().Looped = value;
             }
         }
 
@@ -41,11 +46,7 @@ namespace Whiskey2D.Core
             }
             set
             {
-                float linear = value;
-
-                linear = (float)Math.Pow(10, (-10 + linear * 10));
-
-                getEffect().Volume = linear;
+                getEffect().Volume = value;
             }
         }
 
@@ -53,87 +54,124 @@ namespace Whiskey2D.Core
         {
             get
             {
-                return getEffect().Pan;
+                return getEffect().Pan * 2;
             }
             set
             {
-                getEffect().Pan = value;
+                
+                 float pan = MathHelper.Clamp(value, -1, 1);
+                 getEffect().Pan = pan / 2f;
             }
         }
 
-        public float Pitch
-        {
-            get
-            {
-                return getEffect().Pitch;
-            }
-            set
-            {
-                getEffect().Pitch = value;
-            }
-        }
+        //public float Pitch
+        //{
+        //    get
+        //    {
+        //        return getEffect().Pitch;
+        //    }
+        //    set
+        //    {
+        //        getEffect().Pitch = value;
+        //    }
+        //}
 
         public string FilePath { get; private set; }
 
+        //[NonSerialized]
+        //private ISoundSource effect;
+
         [NonSerialized]
-        private SoundEffectInstance effect;
+        private ISound sound;
 
-
-        public Sound(string filePath)
+        public Sound(Sound other)
+            : this(other.FilePath, false)
         {
-            FilePath = filePath;
-            getEffect();
+
         }
 
-        public Sound(Sound sound)
+        public Sound(string filePath) 
+            : this(filePath, false)
         {
-            FilePath = sound.FilePath;
-            getEffect();
+            
         }
 
+       
         public Sound(string filePath, bool looped)
         {
-            FilePath = filePath;
-            Looped = looped;
+            FilePath =  filePath;
+           
         }
 
 
-        private SoundEffectInstance getEffect()
+        private ISound getEffect()
         {
-            if (effect == null)
+            if (sound == null)
             {
-                effect = GameManager.Resources.loadSound(FilePath).CreateInstance();
+                //ISoundSource src = engine.AddSoundSourceFromFile("media/" + FilePath);
+
+                sound = engine.Play2D("media/"+FilePath, Looped, true, StreamMode.AutoDetect, true);
+                
+            }
+            
+            //sound.SoundEffectControl.EnableEchoSoundEffect()
+            return sound;
+        }
+
+        public Sound setPan(float x)
+        {
+            Pan = x;
+            return this;
+        }
+        public Sound setVolume(float x)
+        {
+            Volume = x;
+            return this;
+        }
+
+        public Sound setLooped(bool x)
+        {
+            Looped = x;
+            return this;
+        }
+
+        public Sound play()
+        {
+
+            if (getEffect().Finished)
+            {
+                sound = null;
+                play();
+            }
+            else
+            {
+                getEffect().Paused = false;
             }
 
-            
-
-            return effect;
+            return this;
         }
 
-
-        public void play()
-        {
-            getEffect().Play();
-        }
-
-        public void stop()
+        public Sound stop()
         {
             getEffect().Stop();
+            return this;
         }
 
-        public void pause()
+        public Sound pause()
         {
-            getEffect().Pause();
+            getEffect().Paused = true;
+            return this;
         }
 
-        public void resume()
+        public Sound resume()
         {
-            getEffect().Resume();
+            getEffect().Paused = false;
+            return this;
         }
 
         public Sound duplicate()
         {
-            return new Sound(FilePath);
+            return new Sound(this);
         }
 
     }

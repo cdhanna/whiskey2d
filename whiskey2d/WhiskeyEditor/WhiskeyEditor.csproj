@@ -401,6 +401,9 @@
     <Compile Include="UI\Documents\ContentFactories\TypeContentFactory.cs" />
     <Compile Include="UI\Documents\Info\TypeDocumentInfo.cs" />
     <Compile Include="UI\UIManager.cs" />
+    <Content Include="compile-lib\irrKlang.NET4.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="compile-media\AlphaOne.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

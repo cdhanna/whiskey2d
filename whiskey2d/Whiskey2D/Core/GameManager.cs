@@ -438,7 +438,16 @@ namespace Whiskey2D.Core
                 }
                 catch (Exception e)
                 {
-                    LogManager.error(e.Message);
+                    // Get stack trace for the exception with source file information
+                    var st = new System.Diagnostics.StackTrace(e, true);
+                    // Get the top stack frame
+                    var frame = st.GetFrame(1);
+                    // Get the line number from the stack frame
+                    var line = frame.GetFileName() + " at " + frame.GetFileLineNumber();
+
+
+                    LogManager.error(e.Source + ":: " + e.Message);
+                   // HudManager.ConsoleMode = true;
                 }
             }
             

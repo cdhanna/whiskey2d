@@ -120,6 +120,9 @@
     <Compile Include="Core\RenderInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>..\..\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="Lidgren.Network">
       <HintPath>..\WhiskeyEditor\compile-lib\Lidgren.Network.dll</HintPath>
     </Reference>

@@ -7,12 +7,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 
+
 namespace Whiskey2D.Core.Managers.Impl
 {
 
-    public static class ImageCache
+    public static class ResourceCache
     {
-        public static readonly Dictionary<string, Texture2D> Cache = new Dictionary<string, Texture2D>();
+        public static readonly Dictionary<string, SoundEffect> Sounds = new Dictionary<string, SoundEffect>();
+        public static readonly Dictionary<string, Texture2D> Images = new Dictionary<string, Texture2D>();
     }
 
 
@@ -66,6 +68,12 @@ namespace Whiskey2D.Core.Managers.Impl
                         loadImage(contentFile);
 
                     }
+                    if (contentFile.EndsWith(".wav"))
+                    {
+                        loadSound(contentFile);
+                        
+
+                    }
 
 
                 }
@@ -84,24 +92,30 @@ namespace Whiskey2D.Core.Managers.Impl
         /// <returns>The Image</returns>
         public Texture2D loadImage(string filePath)
         {
-            if (!ImageCache.Cache.ContainsKey(filePath))
+            if (!ResourceCache.Images.ContainsKey(filePath))
             {
                 //if (GameManager.Log != null)
                 //    GameManager.Log.debug("sprite " + filePath + " from disc");
                 Texture2D tex = Content.Load < Texture2D>(filePath);
-                ImageCache.Cache.Add(filePath, tex);
+                ResourceCache.Images.Add(filePath, tex);
             }
             else
             {
                 //if (GameManager.Log != null)
                 //    GameManager.Log.debug("sprite " + filePath + " from cache");
             }
-            return ImageCache.Cache[filePath];
+            return ResourceCache.Images[filePath];
         }
 
         public SoundEffect loadSound(string filePath)
         {
-            return Content.Load<SoundEffect>(filePath);
+
+            if (!ResourceCache.Sounds.ContainsKey(filePath))
+            {
+                SoundEffect s = Content.Load<SoundEffect>(filePath);
+                ResourceCache.Sounds.Add(filePath, s);
+            }
+            return ResourceCache.Sounds[filePath];
         }
 
 

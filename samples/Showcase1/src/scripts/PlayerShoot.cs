@@ -21,10 +21,16 @@ namespace Project
 		SimpleObject target;
 		SimpleObject mouse;
 	
+		Sound laserSound;
 		
 	
 		public override void onStart()
 		{
+		 	laserSound = new Sound("LASER.wav");
+		 
+		 	//laserSound.Looped = true;
+		 
+		 	//new Sound("gunfire.wav");
 		 
 		 	target = new SimpleObject(Level);
 		 	target.Sprite.Color = new Color(255, 0, 0, 128);
@@ -81,6 +87,9 @@ namespace Project
 		 	
 		 	
 		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
+		 			
+		 			laserSound.duplicate().setVolume(dir.UnitSafe.X + 1).play();
+		 			//laserSound.Pan = 0;
 		 			
 		 			
 		 			if (rc is RayCollision<Badguy>){
@@ -190,6 +199,45 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
