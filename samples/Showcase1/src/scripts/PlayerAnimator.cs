@@ -70,7 +70,7 @@ namespace Project
 			
 			arm.Position = Gob.Position + armOffset + (10/11f) * (arm.Sprite.ImageSize.Y /2) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
 			Gob.GunTipPosition = Gob.Position + armOffset + (arm.Sprite.ImageSize.Y) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
-			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/2 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
+			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/3 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
 			if ( Math.Abs(Gob.Velocity.Y) < .1f){		
 				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
 					runRight.advanceFrame();
@@ -107,6 +107,7 @@ namespace Project
 		
 	}
 }
+
 
 
 
