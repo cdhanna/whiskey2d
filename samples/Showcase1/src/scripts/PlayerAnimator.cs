@@ -21,34 +21,38 @@ namespace Project
 		Animation runRight;
 		Animation standLeft;
 		Animation standRight;
-		Animation jumpLeftStart, jumpLeftAirTime, jumpLeftLand;
-		Animation jumpRight;
+		Animation jumpLeftStart, jumpLeftEnd;
+		Animation jumpRightStart, jumpRightEnd;
 		
-		Vector offset = new Vector(0, 10);
+		Vector offset = new Vector(0, 5);
 		Vector armOffset = new Vector(0, 0);
 		
 		public override void onStart()
 		{
 			Gob.Sprite.Color = new Color(1f, 1f, 0, .1f);
 			vis = new SimpleObject(Level);
-			vis.Sprite.ImagePath = "W2Drobot1.png";
+			vis.Sprite.ImagePath = "W2DSpriteSheetfix2.png";
 			vis.Sprite.Columns = 8;
-			vis.Sprite.Rows = 3;
+			vis.Sprite.Rows = 6;
 			vis.Sprite.Scale = Vector.One * .6f;
-			
+			vis.Sprite.Depth = .6f;
 			runLeft = vis.Sprite.createAnimation(8, 15, 7, true);
 			runRight = vis.Sprite.createAnimation(0, 7, 7, true);
-			standLeft = vis.Sprite.createAnimation(16, 16, 7, true);
-			standRight = vis.Sprite.createAnimation(17, 17, 7, true);
-			//jumpLeft = vis.Sprite.createAnimation(?, ?, 7, false);
+			standLeft = vis.Sprite.createAnimation(40, 40, 7, true);
+			standRight = vis.Sprite.createAnimation(32, 32, 7, true);
+			
+			jumpLeftStart = vis.Sprite.createAnimation(15, 18, 7, false);
 			//jumpLeftAirTime = vis.Sprite.createAnimation(?, ?, 7, true);
-			//jumpLeftLand = vis.Sprite.createAnimation(?, ?, 7, false);
+			jumpLeftEnd = vis.Sprite.createAnimation(18, 21, 7, false);
+			
+			jumpRightStart = vis.Sprite.createAnimation(23, 26, 7, false);
+			jumpRightEnd = vis.Sprite.createAnimation(26, 29, 7, false);
 			
 			arm = new SimpleObject(Level);
 			
 			arm.Sprite.ImagePath = "W2Dgunarm.png";
 			arm.Sprite.Scale = new Vector(-.6f, .6f);
-			arm.Sprite.Depth = .6f;
+			arm.Sprite.Depth = .61f;
 			armOffset = new Vector(30, -55);
 			
 		}
@@ -79,11 +83,11 @@ namespace Project
 			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/3 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
 			
 			
-			if ( Math.Abs(Gob.Velocity.Y) < .1f){
+			if ( Math.Abs(Gob.Velocity.Y) < .01f){
 				//The character is moving side to side, but isn't moving up or down
 				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
 					runRight.advanceFrame();
-					vis.Sprite.Scale = new Vector(.6f, .6f);
+					
 					armOffset.X = 25;
 					armOffset.Y = -55;
 					
@@ -92,23 +96,23 @@ namespace Project
 					
 				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
 					//runLeft.advanceFrame();
-					runRight.advanceFrame();
-					vis.Sprite.Scale = new Vector(-.6f, .6f);
+					runLeft.advanceFrame();
+					
 					armOffset.X = -25;
 					armOffset.Y = -55;
 					runRight.Speed = 8 - (int)Math.Abs(Gob.Velocity.X)/3;
 					
 				} else if (arm.Sprite.Scale.X < 0){
 					standRight.advanceFrame();
-					vis.Sprite.Scale = new Vector(.6f, .6f);
-					armOffset.X = 12;
-					armOffset.Y = -45;
+					
+					armOffset.X = -6;
+					armOffset.Y = -50;
 					
 				} else if (arm.Sprite.Scale.X > 0){
-					standRight.advanceFrame();
-					vis.Sprite.Scale = new Vector(-.6f, .6f);
-					armOffset.X = 0;
-					armOffset.Y = -45;
+					standLeft.advanceFrame();
+					
+					armOffset.X = 6;
+					armOffset.Y = -50;
 					
 				} else {
 					standRight.advanceFrame();
@@ -116,12 +120,48 @@ namespace Project
 			} else {
 				//the character is moving through the air
 				
-				//is the character just jumping up?
-				if (Gob.Acceleration.Y < 0) {
 				
+				bool facingRight = false;
+				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
+					facingRight = true;
+				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
+					facingRight = false;
+				} else if (arm.Sprite.Scale.X < 0){
+					facingRight = true;
+				} else {
+					facingRight = false;
+				}
+				Log.debug("RIGHT: " + facingRight);
+				
+				//is the character just jumping up?
+				if (facingRight) {
+					if (Gob.Acceleration.Y < 0){
+						jumpRightStart.CurrentFrame = 23;
+					}
+					armOffset.X = 6;
+					armOffset.Y = -70;
+					if (Gob.Velocity.Y < 0) {
+						jumpRightStart.advanceFrame();
+						jumpRightEnd.CurrentFrame = 26;
+						
+					} else {
+						jumpRightEnd.advanceFrame();
+					}
 				}
 				//is the character moving through the air?
-				
+				else {
+					armOffset.X = -6;
+					armOffset.Y = -70;
+					if (Gob.Acceleration.Y < 0){
+						jumpLeftStart.CurrentFrame = 15;
+					}
+					if (Gob.Velocity.Y < 0) {
+						jumpLeftStart.advanceFrame();
+						jumpLeftEnd.CurrentFrame = 18;
+					} else {
+						jumpLeftEnd.advanceFrame();
+					}
+				}
 			
 			}
 		
@@ -135,6 +175,57 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

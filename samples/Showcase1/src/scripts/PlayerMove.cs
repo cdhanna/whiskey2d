@@ -40,8 +40,8 @@ namespace Project
 			if (Input.isNewKeyDown(Keys.W)){
 				if (surface.Y > .8f){
 					jumping = true;
-					jumpCounter = 50;
-					Gob.Acceleration -= gravity * 25;
+					jumpCounter = 40;
+					Gob.Acceleration -= gravity * 12;
 					
 					
 					SpriteEffect fx = new SpriteEffect(Level);
@@ -55,7 +55,7 @@ namespace Project
 			}
 			
 			
-			if (Input.isKeyDown(Keys.Up)){
+			if (Input.isKeyDown(Keys.W)){
 				if (jumping && jumpCounter > 0 ){
 					Gob.Acceleration -= gravity * .02f * jumpCounter;
 					jumpCounter --;
@@ -70,7 +70,7 @@ namespace Project
 			}
 			
 			Gob.Velocity -= new Vector(Gob.Velocity.X * friction.X, Gob.Velocity.Y * friction.Y);
-			Gob.Sprite.Scale = new Vector(50 + Math.Abs(Gob.Velocity.X*15), Gob.Sprite.Scale.Y);
+			Gob.Sprite.Scale = new Vector(50 + Math.Abs(Gob.Velocity.X*15), 256);
 			
 			Gob.Position += Gob.Velocity;
 			
@@ -99,6 +99,13 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
 
 
 
