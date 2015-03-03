@@ -141,12 +141,14 @@
     <Compile Include="Backend\WhiskeyException.cs" />
     <Compile Include="compile-types\CoreDescriptor.cs" />
     <Compile Include="compile-types\Scripts\CameraMasterControl.cs" />
+    <Compile Include="compile-types\Scripts\SoundZoneControl.cs" />
     <Compile Include="compile-types\Scripts\SpriteEffectControl.cs" />
     <Compile Include="compile-types\Scripts\TriggerActivate.cs" />
     <Compile Include="compile-types\Types\CameraMaster.cs" />
     <Compile Include="compile-types\Types\CamZone.cs" />
     <Compile Include="compile-types\Types\DebugObject.cs" />
     <Compile Include="compile-types\Types\ShadowCaster.cs" />
+    <Compile Include="compile-types\Types\SoundZone.cs" />
     <Compile Include="compile-types\Types\SpriteEffect.cs" />
     <Compile Include="compile-types\Types\SimpleLight.cs" />
     <Compile Include="compile-types\Types\SimpleObject.cs" />
