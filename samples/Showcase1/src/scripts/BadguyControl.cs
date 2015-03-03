@@ -29,7 +29,7 @@ namespace Project
 		{
 
 			
-			Vector gravity = new Vector(0, 2);
+			Vector gravity = new Vector(0, 1);
 			Vector acc = Vector.Zero;
 			Vector friction = new Vector(.08f, 0);
 			
@@ -37,12 +37,12 @@ namespace Project
 			if (( plr.Position - Gob.Position).Length < 1400){
 				bool isPlayerOnRight = (plr.X - Gob.X) > 0;
 				if (isPlayerOnRight){
-					acc += Vector.UnitX * .3f;
-				} else acc -= Vector.UnitX * .3f ;
+					acc += Vector.UnitX * (.4f + (surface.Y < .2 ? .5f : 0));
+				} else acc -= Vector.UnitX * (.4f + (surface.Y < .2 ? .5f : 0)) ;
 				
 				if (surface.Y > .8f){
 					jumping = true;
-					acc -= gravity * 10;
+					acc -= gravity * Math.Min(23, Math.Max( Gob.Y - plr.Y, 0));
 				}
 			
 			}
@@ -72,18 +72,49 @@ namespace Project
 				}
 			}
 
-
+			if (Gob.Bounds.getCollisionInfo(plr.Bounds)!=null){
+				Gob.close();
+			}
 		
 
 		}
 		
 		public override void onClose()  
 		{
-		 //This code runs when the GameObject is closed
+		 		SpriteEffect efx = new SpriteEffect(Level);
+				efx.Effect = "blood";
+				efx.Sprite.Scale *= .3f;
+				efx.Position = Gob.Position;
+				efx.Frames = new Vector(4, 2);
+				Gob.close();
+				Sound s = new Sound("punch.wav");
+				s.play();
 		}
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

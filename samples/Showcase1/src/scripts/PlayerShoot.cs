@@ -26,7 +26,7 @@ namespace Project
 	
 		public override void onStart()
 		{
-		 	laserSound = new Sound("LASER.wav");
+		 	laserSound = new Sound("gunfire.wav");
 		 
 		 	//laserSound.Looped = true;
 		 
@@ -214,6 +214,7 @@ namespace Project
 	
 	
 }
+
 
 
 

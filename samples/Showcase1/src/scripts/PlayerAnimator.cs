@@ -87,12 +87,16 @@ namespace Project
 					armOffset.X = 25;
 					armOffset.Y = -55;
 					
+					runRight.Speed = 8 - (int)Math.Abs(Gob.Velocity.X)/3;
+					
+					
 				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
 					//runLeft.advanceFrame();
 					runRight.advanceFrame();
 					vis.Sprite.Scale = new Vector(-.6f, .6f);
 					armOffset.X = -25;
 					armOffset.Y = -55;
+					runRight.Speed = 8 - (int)Math.Abs(Gob.Velocity.X)/3;
 					
 				} else if (arm.Sprite.Scale.X < 0){
 					standRight.advanceFrame();
@@ -131,6 +135,13 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
 
 
 
