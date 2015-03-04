@@ -95,7 +95,7 @@ namespace Whiskey2D.Core
             // set up a new basic effect, and enable vertex colors.
             basicEffect = new BasicEffect(graphicsDevice);
             basicEffect.VertexColorEnabled = true;
-
+            
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter
@@ -179,7 +179,7 @@ namespace Whiskey2D.Core
 
             // once we know there's enough room, set the vertex in the buffer,
             // and increase position.
-            vertices[positionInBuffer].Position = new Vector3(vertex, 0);
+            vertices[positionInBuffer].Position = new Vector3(vertex, 1);
             vertices[positionInBuffer].Color = color;
 
             positionInBuffer++;

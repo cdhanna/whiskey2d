@@ -24,7 +24,7 @@ namespace Project
 		Animation jumpLeftStart, jumpLeftEnd;
 		Animation jumpRightStart, jumpRightEnd;
 		
-		Vector offset = new Vector(0, 5);
+		Vector offset = new Vector(0, 0);
 		Vector armOffset = new Vector(0, 0);
 		
 		public override void onStart()
@@ -175,6 +175,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

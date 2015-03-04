@@ -227,9 +227,37 @@ namespace Whiskey2D.Core
 
             render(spriteBatch.GraphicsDevice, transform, hints);
         }
+
+        public class ConvexRenderStuff
+        {
+            public Convex Convex { get; set; }
+            public GraphicsDevice GraphcisDevice { get; set; }
+            public Matrix Transform { get; set; }
+            public RenderHints Hints { get; set; }
+
+        }
+        public static List<ConvexRenderStuff> readyToBeDrawn = new List<ConvexRenderStuff>();
+
+
+        public static void begin()
+        {
+            readyToBeDrawn.Clear();
+        }
+        public void renderWhenReady(GraphicsDevice graphicsDevice, Matrix transform, RenderHints hints)
+        {
+            ConvexRenderStuff stuff = new ConvexRenderStuff();
+            stuff.Convex = this;
+            stuff.GraphcisDevice = graphicsDevice;
+            stuff.Transform = transform;
+            stuff.Hints = hints;
+            readyToBeDrawn.Add(stuff);
+        }
+
         public void render(GraphicsDevice graphicsDevice, Matrix transform, RenderHints hints)
         {
             
+            
+
             PrimitiveBatch primBatch = PrimitiveBatch.getInstance(graphicsDevice);
             primBatch.Transform = transform;
             primBatch.Begin(hints.PrimitiveType);

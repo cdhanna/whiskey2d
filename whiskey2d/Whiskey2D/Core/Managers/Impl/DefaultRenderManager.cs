@@ -118,16 +118,31 @@ namespace Whiskey2D.Core.Managers.Impl
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
 
             List<GameObject> allGobs = GameManager.Objects.getAllObjects();
+            Convex.begin();
             foreach (GameObject gob in allGobs.Where(g => g.Active && !g.HudObject) )
             {
-                Sprite spr = gob.Sprite;
-                if (spr != null)
-                {
-                    spr.draw(spriteBatch, transform, gob.Position);
-                }
+                //Sprite spr = gob.Sprite;
+                //if (spr != null)
+                //{
+                //    spr.draw(spriteBatch, transform, gob.Position);
+                //}
+                gob.renderImage(RenderInfo);
             }
+            
 
             spriteBatch.End();
+
+
+            BlendState bs = BlendState.AlphaBlend;
+            //bs.AlphaSourceBlend = Blend.One;
+            //bs.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+            //bs.AlphaBlendFunction = BlendFunction.Add;
+            GraphicsDevice.BlendState = bs;
+            Convex.readyToBeDrawn.ForEach(c =>
+            {
+                c.Convex.render(c.GraphcisDevice, c.Transform, c.Hints);
+            });
+           
 
             bloomComponent.draw();
             GraphicsDevice.SetRenderTarget(null);
