@@ -13,7 +13,7 @@ namespace Project
 	public class PlayerMove : Script<Player>
 	{
 		Vector surface = Vector.Zero;
-		bool jumping = false;
+		bool jumping = false, doubleJumped = false;
 		int jumpCounter = 0;
 		Vector gravity = Vector.UnitY * 2;
 		
@@ -42,7 +42,7 @@ namespace Project
 					jumping = true;
 					jumpCounter = 40;
 					Gob.Acceleration -= gravity * 12;
-					
+					doubleJumped = false;
 					
 					SpriteEffect fx = new SpriteEffect(Level);
 					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
@@ -51,6 +51,16 @@ namespace Project
 					fx.Sprite.Scale *= .3f;
 					fx.Speed = 4;
 					
+				} else if (jumping && !doubleJumped ){
+					jumpCounter = 40;
+					doubleJumped = true;
+					Gob.Acceleration -= gravity * 12;
+					SpriteEffect fx = new SpriteEffect(Level);
+					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
+					fx.Effect = "smokeJump";
+					fx.Frames = Vector.One*4;
+					fx.Sprite.Scale *= .3f;
+					fx.Speed = 4;
 				}
 			}
 			
@@ -99,6 +109,12 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
 
 
 

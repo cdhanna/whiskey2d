@@ -24,7 +24,9 @@ namespace Project
 			for (float x = (float) Gob.Bounds.Left; x < (float) Gob.Bounds.Right + 16f; x += 15f){
 				WaterNode node = new WaterNode(Level, new Vector(x, Gob.Bounds.Top));
 				node.Floor = Gob.Bounds.Bottom;
-				
+				if (index == 0){
+					node.Wave = true;
+				}
 				nodes.Add(node);
 				
 				if (index > 0){
@@ -97,7 +99,8 @@ namespace Project
 		public Vector Acceleration {get; set;}
 		public Vector Velocity {get; set; }
 		public float Floor {get; set;}
-	
+		public bool Wave {get; set;}
+		
 		public WaterNode(GameLevel l, Vector pos) : base(l)
 		{
 			Position = pos;
@@ -144,7 +147,14 @@ namespace Project
 	[Serializable] 
 	public class WaterNodeControl : Script<WaterNode>
 	{
-		public override void onStart() {}
+		float waveAmplitude = 3;
+		float waveFrequency = 2;
+		float waveActuator = 0;
+	
+		public override void onStart() {
+		
+			//waveActuator = Objects.getAllObjectsOfType<WaterNode>().Count * .01f * (float)(Math.PI/2);
+		}
 		public override void onUpdate() {
 		
 	
@@ -157,12 +167,17 @@ namespace Project
 					Player plr = (Player)coll.Gob;
 					
 					
-					Gob.Acceleration += new Vector(0, .1f * plr.Velocity.Y);
+					Gob.Acceleration += new Vector(.01f * plr.Velocity.X, .1f * plr.Velocity.Y);
 					
 					
 				}
 				
 				
+			}
+		
+			if (Gob.Wave == true){
+				//Gob.Velocity += new Vector(0, waveAmplitude * (float)Math.Sin(waveFrequency * waveActuator));
+				waveActuator += .01f;
 			}
 		
 		
@@ -185,6 +200,26 @@ namespace Project
 	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
