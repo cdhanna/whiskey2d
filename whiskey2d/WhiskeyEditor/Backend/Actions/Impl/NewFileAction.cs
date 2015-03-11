@@ -68,6 +68,9 @@ namespace WhiskeyEditor.Backend.Actions.Impl
                 case NewFileForm.NEW_FOLDER:
                     FileManager.Instance.createFolder(fullPath);
                     break;
+                case NewFileForm.NEW_SHADER:
+                    FileManager.Instance.createNewShaderDescriptor(fileName);
+                    break;
                 default:
                     break;
             }

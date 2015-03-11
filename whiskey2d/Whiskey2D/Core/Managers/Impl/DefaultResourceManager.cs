@@ -15,6 +15,8 @@ namespace Whiskey2D.Core.Managers.Impl
     {
         public static readonly Dictionary<string, SoundEffect> Sounds = new Dictionary<string, SoundEffect>();
         public static readonly Dictionary<string, Texture2D> Images = new Dictionary<string, Texture2D>();
+        public static readonly Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
+        
     }
 
 
@@ -118,6 +120,19 @@ namespace Whiskey2D.Core.Managers.Impl
             return ResourceCache.Sounds[filePath];
         }
 
+
+        public Effect loadEffect(string filePath)
+        {
+            filePath = filePath.Replace(".hlsl", ".mgfx");
+
+            if (!ResourceCache.Effects.ContainsKey(filePath))
+            {
+                GameManager.Log.debug("LOADING EFFECT :" + filePath);
+                Effect e = Content.Load<Effect>(filePath);
+                ResourceCache.Effects.Add(filePath, e);
+            }
+            return ResourceCache.Effects[filePath];
+        }
 
         public SpriteFont getDefaultFont()
         {

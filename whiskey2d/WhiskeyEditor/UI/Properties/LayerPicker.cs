@@ -22,6 +22,9 @@ using WhiskeyEditor.Backend.Managers;
 
 namespace WhiskeyEditor.UI.Properties
 {
+
+    using CoreLayer = Whiskey2D.Core.Layer;
+
     class LayerPicker : UITypeEditor
     {
 
@@ -82,16 +85,16 @@ namespace WhiskeyEditor.UI.Properties
             service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
 
             // show the list box
-            if (service != null && value is Layer)
+            if (service != null && value is CoreLayer)
             {
-                Layer layer = (Layer)value;
+                CoreLayer layer = (CoreLayer)value;
                 // result = null;
                 // setArtBox();
                 result = layer.Name;
                 popupateLayers();
                 service.DropDownControl(listBox);
 
-                Layer newLayer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.Layers.Find(l => l.Name.Equals(result));
+                CoreLayer newLayer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.Layers.Find(l => l.Name.Equals(result));
                 value = newLayer;
                 
 

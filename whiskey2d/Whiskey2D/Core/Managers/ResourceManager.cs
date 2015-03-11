@@ -45,6 +45,8 @@ namespace Whiskey2D.Core.Managers
         /// <returns></returns>
         SoundEffect loadSound(string filePath);
 
+        Effect loadEffect(string filePath);
+
         /// <summary>
         /// Get the default font
         /// </summary>

@@ -36,6 +36,10 @@ namespace Whiskey2D.Core
             instance.updateProjection(graphicsDevice);
             return instance;
         }
+        public static PrimitiveBatch getInstance()
+        {
+            return instance;
+        }
 
 
         #region Constants and Fields
@@ -102,6 +106,8 @@ namespace Whiskey2D.Core
                 (0, graphicsDevice.Viewport.Width,
                 graphicsDevice.Viewport.Height, 0,
                 0, 1);
+
+            
         }
 
         public void updateProjection(GraphicsDevice graphicsDevice)
@@ -204,6 +210,8 @@ namespace Whiskey2D.Core
 
         }
 
+        public Layer CurrentLayer { get; set; }
+
         // End is called once all the primitives have been drawn using AddVertex.
         // it will call Flush to actually submit the draw call to the graphics card, and
         // then tell the basic effect to end.
@@ -214,6 +222,19 @@ namespace Whiskey2D.Core
                 throw new InvalidOperationException
                     ("Begin must be called before End can be called.");
             }
+
+            //get active shaders...
+            Layer layer = CurrentLayer;
+            if (layer != null)
+            {
+                Effect post = layer.getPostEffect();
+                if (post != null)
+                {
+                    //post.CurrentTechnique.Passes[0].Apply();
+                }
+            }
+
+
 
             // Draw whatever the user wanted us to draw
             Flush();
@@ -274,7 +295,7 @@ namespace Whiskey2D.Core
             // submit the draw call to the graphics card
 
             
-
+            
             device.DrawUserPrimitives<VertexPositionColor>(primitiveType, vertices, 0,
                 primitiveCount);
             

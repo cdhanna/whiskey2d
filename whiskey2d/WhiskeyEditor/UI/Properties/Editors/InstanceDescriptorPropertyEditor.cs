@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Documents.Actions;
+using Whiskey2D.Core;
 
 namespace WhiskeyEditor.UI.Properties.Editors
 {
@@ -22,7 +23,6 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
         protected List<GeneralPropertyDescriptor> ScriptProperties;
 
-        protected GeneralPropertyDescriptor LayerProperty;
         
 
         protected EditScriptsAction editScriptsAction;
@@ -89,12 +89,7 @@ namespace WhiskeyEditor.UI.Properties.Editors
 
             
 
-            LayerProperty = PropertyGrid.addOtherProperty("Layer", "Base Properties", Descriptor.Layer);
-            LayerProperty.ValueChanged += (s, a) =>
-            {
-                Descriptor.Layer = LayerProperty.PropValue as Layer;
-            };
-
+           
        
 
             PropertyGrid.addOtherProperty("Type", "\tBasic", Descriptor.TypeDescriptorInFileManager.Name).PropIsReadOnly = true;

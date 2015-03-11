@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using WhiskeyEditor.Backend.Managers;
 //using Whiskey2D.Core;
+using System.Drawing.Design;
 using System.CodeDom.Compiler;
 using WhiskeyEditor.UI;
 using System.Windows.Forms;
@@ -28,6 +29,13 @@ namespace WhiskeyEditor.Backend
         [STAThread]
         public static void Main()
         {
+           //[TypeConverter (typeof(WhiskeyEditor.UI.Properties.Converters.LayerTypeConverter))]
+    //[Editor (typeof(WhiskeyEditor.UI.Properties.LayerPicker), typeof(UITypeEditor))]//
+
+            System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Layer),
+                new TypeConverterAttribute(typeof(WhiskeyEditor.UI.Properties.Converters.LayerTypeConverter)),
+                new EditorAttribute(typeof(WhiskeyEditor.UI.Properties.LayerPicker), typeof(UITypeEditor)));
+
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(InstanceDescriptor), new TypeConverterAttribute(typeof(WhiskeyInstanceTypeConverter)));
             
             System.ComponentModel.TypeDescriptor.AddAttributes(typeof(Whiskey2D.Core.Sprite), new TypeConverterAttribute(typeof(ExpandableObjectConverter)));

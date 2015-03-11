@@ -20,6 +20,7 @@ namespace WhiskeyEditor.UI.Menu
         public const string NEW_SCRIPT = "Script";
         public const string NEW_LEVEL = "Level";
         public const string NEW_FOLDER = "Folder";
+        public const string NEW_SHADER = "Shader";
 
         public DialogResult DialogResult { get; private set; }
         public String SelectedType { get { return typeBox.SelectedItem.ToString(); } }
@@ -42,7 +43,7 @@ namespace WhiskeyEditor.UI.Menu
             typeBox.Items.Add(NEW_SCRIPT);
             typeBox.Items.Add(NEW_TYPE);
             typeBox.Items.Add(NEW_LEVEL);
-            typeBox.Items.Add(NEW_FOLDER);
+            typeBox.Items.Add(NEW_SHADER);
             //typeBox.Items.Add(NEW_CODE);
             typeBox.SelectedItem = NEW_TYPE;
 
@@ -130,6 +131,12 @@ namespace WhiskeyEditor.UI.Menu
         {
             setPath(path);
             typeBox.SelectedItem = NewFileForm.NEW_LEVEL;
+        }
+
+        public void setForShader(string path)
+        {
+            setPath(path);
+            typeBox.SelectedItem = NewFileForm.NEW_SHADER;
         }
 
         public void setForFolder(string path)

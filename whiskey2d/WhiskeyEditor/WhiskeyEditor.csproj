@@ -98,6 +98,7 @@
     <Compile Include="Backend\Actions\Impl\NewLevelAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewProjectAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewScriptAction.cs" />
+    <Compile Include="Backend\Actions\Impl\NewShaderAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewSoundAction.cs" />
     <Compile Include="Backend\Actions\Impl\NewTypeAction.cs" />
     <Compile Include="Backend\Actions\Impl\PlayGameAction.cs" />
@@ -110,7 +111,6 @@
     <Compile Include="Backend\Descriptor.cs" />
     <Compile Include="Backend\Expando.cs" />
     <Compile Include="Backend\EditorLevel.cs" />
-    <Compile Include="Backend\Layer.cs" />
     <Compile Include="Backend\Managers\ActionManager.cs" />
     <Compile Include="Backend\CodeDescriptor.cs" />
     <Compile Include="Backend\GameData.cs" />
@@ -132,6 +132,8 @@
     <Compile Include="Backend\PropertyDescriptor.cs" />
     <Compile Include="Backend\RealType.cs" />
     <Compile Include="Backend\ScriptDescriptor.cs" />
+    <Compile Include="Backend\ShaderBuilder.cs" />
+    <Compile Include="Backend\ShaderDescriptor.cs" />
     <Compile Include="Backend\SoundDescriptor.cs" />
     <Compile Include="Backend\TestBack.cs" />
     <Compile Include="Backend\TypeBank.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="UI\Documents\ContentFactories\CoreContentFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\InstanceContentFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\ProjectContentFactory.cs" />
+    <Compile Include="UI\Documents\ContentFactories\ShaderContentFactory.cs" />
     <Compile Include="UI\Documents\ContentFactories\SoundContentFactory.cs" />
     <Compile Include="UI\Documents\CoreDescriptorControl.cs">
       <SubType>UserControl</SubType>
@@ -244,6 +247,7 @@
     </Compile>
     <Compile Include="UI\Documents\Info\InstanceDocumentInfo.cs" />
     <Compile Include="UI\Documents\Info\ProjectSettingsDocumentInfo.cs" />
+    <Compile Include="UI\Documents\Info\ShaderDocumentInfo.cs" />
     <Compile Include="UI\Documents\Info\SoundDocumentInfo.cs" />
     <Compile Include="UI\Documents\LayerDetailsControl.cs">
       <SubType>UserControl</SubType>
@@ -263,6 +267,9 @@
       <DependentUpon>ProjectSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Documents\ProjectSettingsDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Documents\ShaderDocument.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Documents\SoundControl.cs">
@@ -334,6 +341,9 @@
     </Compile>
     <Compile Include="UI\Properties\Editors\RemovePropertyAction.cs" />
     <Compile Include="UI\Properties\Editors\ScriptDescriptorPropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Properties\Editors\ShaderDescriptorPropertyEditor.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Properties\Editors\TypeDescriptorPropertyEditor.cs">
@@ -425,6 +435,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="compile-media\triggerZone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mgfx\2MGFX.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mgfx\libmojoshader.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mgfx\libmojoshader_32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mgfx\SharpDX.D3DCompiler.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mgfx\SharpDX.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Assets\closeIcon.png">

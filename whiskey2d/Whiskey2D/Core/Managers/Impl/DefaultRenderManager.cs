@@ -39,6 +39,8 @@ namespace Whiskey2D.Core.Managers.Impl
         private BloomComponent bloomLightComponent;
         private Effect lightEffect;
         private RenderTarget2D lightMapTarget;
+        private RenderTarget2D layerScreenShader;
+        private RenderTarget2D currentLayerTarget;
         private Texture2D alphaClearTexture;
 
         /// <summary>
@@ -86,9 +88,105 @@ namespace Whiskey2D.Core.Managers.Impl
                 PresentationParameters pp = GraphicsDevice.PresentationParameters;
                 return new RenderTarget2D(GraphicsDevice, width, height, false,
                                                    pp.BackBufferFormat, pp.DepthStencilFormat, pp.MultiSampleCount,
-                                                   RenderTargetUsage.DiscardContents);
+                                                   RenderTargetUsage.PreserveContents);
             }
             else return target;
+        }
+
+
+        private void renderLayers()
+        {
+
+             GraphicsDevice.SetRenderTarget(layerScreenShader);
+                GraphicsDevice.Clear(XnaColor.Transparent);
+            
+                foreach (Layer layer in Level.Layers)
+                {
+                    if (!layer.Visible)
+                    {
+                        continue;
+                    }
+
+
+                    string shaderMode = layer.ShaderMode;
+                    BlendState blendState = BlendModeConverter.getState(layer.BlendMode);
+                    if (shaderMode != Layer.DEFAULT_SHADER_MODE && shaderMode != null)
+                    {
+                        Effect fx = GameManager.Resources.loadEffect(shaderMode);
+                        layer.setEffect(fx);
+                    }
+                    else
+                    {
+                        layer.setEffect(null);
+                    }
+
+                    string postShaderMode = layer.PostShaderMode;
+                    if (postShaderMode != Layer.DEFAULT_SHADER_MODE && postShaderMode != null)
+                    {
+                        layer.setPostEffect(GameManager.Resources.loadEffect(postShaderMode));
+                    }
+                    else
+                    {
+                        layer.setPostEffect(null);
+                    }
+
+                    Effect layerEffect = layer.getEffect();
+                    Effect post = layer.getPostEffect();
+
+                    Level.ShaderParameters.updateEffect(layerEffect);
+                    Level.ShaderParameters.updateEffect(post);
+
+                    
+                    GraphicsDevice.SetRenderTarget(currentLayerTarget);
+                    
+                    GraphicsDevice.Clear(XnaColor.Transparent);
+
+
+                    if (layer.ScreenShader)
+                    {
+                        spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, layerEffect);
+                        spriteBatch.Draw(bloomComponent.SceneTarget, Vector.Zero, XnaColor.White);
+                        spriteBatch.End();
+                    }
+                    else
+                    {
+
+
+                        spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, layerEffect, CameraTransform);
+
+                        List<GameObject> allGobs = GameManager.Objects.getAllObjects();
+                        Convex.begin();
+                        foreach (GameObject gob in allGobs.Where(g => g.Active && !g.HudObject && g.Layer.Name.Equals(layer.Name) ))
+                        {
+                            gob.renderImage(RenderInfo);
+                        }
+
+
+                        spriteBatch.End();
+
+                      //  RenderTarget2D primTarget = checkRenderTarget(null, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+                      //  GraphicsDevice.SetRenderTarget(primTarget);
+                        BlendState bs = BlendState.AlphaBlend;
+
+                        GraphicsDevice.BlendState = bs;
+                        PrimitiveBatch.getInstance(GraphicsDevice).CurrentLayer = layer;
+                        Convex.readyToBeDrawn.ForEach(c =>
+                        {
+                            c.Convex.render(c.GraphcisDevice, c.Transform, c.Hints);
+                        });
+                       // GraphicsDevice.SetRenderTarget(currentLayerTarget);
+                       // spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null);
+                       // spriteBatch.Draw(primTarget, Vector.Zero, XnaColor.White);
+                       // spriteBatch.End();
+
+                    }
+
+                    GraphicsDevice.SetRenderTarget(layerScreenShader);
+
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, post);
+                    spriteBatch.Draw(currentLayerTarget, Vector.Zero, XnaColor.White);
+                    spriteBatch.End();
+                }
         }
 
         /// <summary>
@@ -102,49 +200,25 @@ namespace Whiskey2D.Core.Managers.Impl
             int bbWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
             int bbHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
             lightMapTarget = checkRenderTarget(lightMapTarget, bbWidth, bbHeight);
+            layerScreenShader = checkRenderTarget(layerScreenShader, bbWidth, bbHeight);
+            currentLayerTarget = checkRenderTarget(currentLayerTarget, bbWidth, bbHeight);
             bloomComponent.Settings = GameManager.Level.BloomSettings;
             bloomLightComponent.Settings = GameManager.Level.BloomLightSettings;
 
             //DRAW LIGHTMAP
           
             renderLightMap(GameManager.Objects.getAllObjects().Where(g => g.Active && !g.HudObject).ToList() );
-            
 
+            renderLayers();
 
             bloomComponent.BeginDraw();
-
-            GraphicsDevice.Clear(GameManager.Level.BackgroundColor);
-
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transform);
-
-            List<GameObject> allGobs = GameManager.Objects.getAllObjects();
-            Convex.begin();
-            foreach (GameObject gob in allGobs.Where(g => g.Active && !g.HudObject) )
-            {
-                //Sprite spr = gob.Sprite;
-                //if (spr != null)
-                //{
-                //    spr.draw(spriteBatch, transform, gob.Position);
-                //}
-                gob.renderImage(RenderInfo);
-            }
-            
-
+            GraphicsDevice.Clear(Level.BackgroundColor);
+            spriteBatch.Begin();
+            spriteBatch.Draw(layerScreenShader, Vector.Zero, XnaColor.White);
             spriteBatch.End();
-
-
-            BlendState bs = BlendState.AlphaBlend;
-            //bs.AlphaSourceBlend = Blend.One;
-            //bs.AlphaDestinationBlend = Blend.InverseSourceAlpha;
-            //bs.AlphaBlendFunction = BlendFunction.Add;
-            GraphicsDevice.BlendState = bs;
-            Convex.readyToBeDrawn.ForEach(c =>
-            {
-                c.Convex.render(c.GraphcisDevice, c.Transform, c.Hints);
-            });
-           
-
             bloomComponent.draw();
+
+
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = bloomLightComponent.OutputTarget ;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, GameManager.Level.LightingEnabled ? lightEffect : null);
@@ -289,6 +363,7 @@ namespace Whiskey2D.Core.Managers.Impl
             return pixel;
         }
 
+        public GameLevel Level { get { return GameManager.Level; } }
 
 
         public Camera ActiveCamera

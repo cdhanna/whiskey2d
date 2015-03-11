@@ -48,6 +48,10 @@ namespace WhiskeyEditor.UI.Documents.Info
             {
                 info = new SoundDocumentInfo((SoundDescriptor)descriptor);
             }
+            else if (descriptor is ShaderDescriptor)
+            {
+                info = new ShaderDocumentInfo((ShaderDescriptor)descriptor);
+            }
 
             return info;
         }

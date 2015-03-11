@@ -17,10 +17,17 @@ namespace WhiskeyEditor.UI.Documents
 
         public TextBox NameBox { get { return nameBox; } }
         public Button AddBtn { get { return addBtn; } }
+        public Button CloseBtn {get{ return closeBtn;}}
+
 
         public LayerDetailsControl()
         {
             InitializeComponent();
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

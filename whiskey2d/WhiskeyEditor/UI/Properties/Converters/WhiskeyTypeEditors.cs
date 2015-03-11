@@ -35,6 +35,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map.Add("Boolean", new BoolPicker());
             map.Add("InstanceDescriptor", new InstancePicker());
             map.Add("Keys", new KeyTypeEditor());
+            map.Add("Layer", new LayerPicker());
         }
 
 

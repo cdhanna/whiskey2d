@@ -47,6 +47,11 @@ namespace WhiskeyEditor.UI.Library
             {
                 LibraryTreeNode node = new LibraryTreeNode(getFileNameWithoutExtension(path), clearExtraSlashes(path));
 
+                if (path.EndsWith(".mgfx"))
+                {
+                    continue;
+                }
+
                 int index = AssetManager.indexOf(AssetManager.FILE_ICON_FILE);
                 if (path.EndsWith(".state"))
                 {

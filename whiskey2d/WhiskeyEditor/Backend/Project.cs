@@ -291,7 +291,15 @@ namespace WhiskeyEditor.Backend
 
         }
 
-   
+        public ShaderDescriptor addShader(ShaderDescriptor sDesc)
+        {
+            MediaAdded(this, new EventArgs());
+
+            FileManager.Instance.addFileDescriptor(sDesc);
+            return sDesc;
+        }
+
+
 
         public string[] getMedia(string extension)
         {

@@ -30,10 +30,11 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.addBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.closeBtn = new System.Windows.Forms.Button();
             this.nameBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.addBtn = new System.Windows.Forms.Button();
+            this.dataGrid = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
@@ -51,38 +52,37 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.81188F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.18812F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(318, 202);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(938, 202);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.closeBtn);
             this.panel1.Controls.Add(this.nameBox);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.addBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(312, 32);
+            this.panel1.Size = new System.Drawing.Size(932, 31);
             this.panel1.TabIndex = 0;
             // 
-            // dataGrid
+            // closeBtn
             // 
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGrid.Location = new System.Drawing.Point(3, 41);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.RowTemplate.Height = 24;
-            this.dataGrid.Size = new System.Drawing.Size(312, 158);
-            this.dataGrid.TabIndex = 1;
+            this.closeBtn.Location = new System.Drawing.Point(854, 2);
+            this.closeBtn.Name = "closeBtn";
+            this.closeBtn.Size = new System.Drawing.Size(75, 29);
+            this.closeBtn.TabIndex = 3;
+            this.closeBtn.Text = "Close";
+            this.closeBtn.UseVisualStyleBackColor = true;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
-            // addBtn
+            // nameBox
             // 
-            this.addBtn.Location = new System.Drawing.Point(234, 3);
-            this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(75, 29);
-            this.addBtn.TabIndex = 0;
-            this.addBtn.Text = "Add";
-            this.addBtn.UseVisualStyleBackColor = true;
+            this.nameBox.Location = new System.Drawing.Point(97, 7);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.Size = new System.Drawing.Size(131, 22);
+            this.nameBox.TabIndex = 2;
             // 
             // label1
             // 
@@ -93,12 +93,24 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "New Layer...";
             // 
-            // nameBox
+            // addBtn
             // 
-            this.nameBox.Location = new System.Drawing.Point(97, 7);
-            this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(131, 22);
-            this.nameBox.TabIndex = 2;
+            this.addBtn.Location = new System.Drawing.Point(234, 3);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(75, 29);
+            this.addBtn.TabIndex = 0;
+            this.addBtn.Text = "Add";
+            this.addBtn.UseVisualStyleBackColor = true;
+            // 
+            // dataGrid
+            // 
+            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid.Location = new System.Drawing.Point(3, 40);
+            this.dataGrid.Name = "dataGrid";
+            this.dataGrid.RowTemplate.Height = 24;
+            this.dataGrid.Size = new System.Drawing.Size(932, 159);
+            this.dataGrid.TabIndex = 1;
             // 
             // LayerDetailsControl
             // 
@@ -106,7 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "LayerDetailsControl";
-            this.Size = new System.Drawing.Size(318, 202);
+            this.Size = new System.Drawing.Size(938, 202);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -123,5 +135,6 @@
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button addBtn;
+        private System.Windows.Forms.Button closeBtn;
     }
 }

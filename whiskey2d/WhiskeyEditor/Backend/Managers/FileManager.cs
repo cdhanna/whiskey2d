@@ -231,6 +231,14 @@ namespace WhiskeyEditor.Backend.Managers
             return lDesc;
         }
 
+        public ShaderDescriptor createNewShaderDescriptor(string name)
+        {
+            ShaderDescriptor sDesc = new ShaderDescriptor(name);
+            sDesc.ensureFileExists();
+            ProjectManager.Instance.ActiveProject.addShader(sDesc);
+            return sDesc;
+        }
+
         public virtual GameData getGameData()
         {
             GameData data = new GameData();

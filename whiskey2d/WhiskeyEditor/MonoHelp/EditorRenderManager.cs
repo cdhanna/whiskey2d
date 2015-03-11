@@ -17,6 +17,8 @@ namespace WhiskeyEditor.MonoHelp
 {
     using XnaColor = Microsoft.Xna.Framework.Color;
     using WhiskeyColor = Whiskey2D.Core.Color;
+    using CoreLayer = Whiskey2D.Core.Layer;
+
     public class EditorRenderManager : RenderManager
     {
 
@@ -39,6 +41,8 @@ namespace WhiskeyEditor.MonoHelp
         private Texture2D alphaClearTexture;
         private RenderTarget2D lightMapTarget;
         private RenderTarget2D sceneTarget;
+        private RenderTarget2D layerScreenShader;
+        private RenderTarget2D currentLayerTarget;
 
         //public Camera Camera { get; set; }
 
@@ -175,54 +179,111 @@ namespace WhiskeyEditor.MonoHelp
             if (controller != null)
             {
 
-              //  List<GameObject> uiGobs = new List<GameObject>();
+                GraphicsDevice.SetRenderTarget(layerScreenShader);
+                GraphicsDevice.Clear(XnaColor.Transparent);
 
-                spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
-                foreach (GameObject gob in descs)
+                foreach (CoreLayer layer in Level.Layers)
                 {
-                    if (gob == controller )//|| gob == controller.Selected)
-                        continue;
-
-
-                    //if (gob is ObjectControlPoint)
-                    //{
-                    //    uiGobs.Add(gob);
-                    //    continue;
-                    //}
-
-                    
-
-                    //Sprite spr = gob.Sprite;
-                    //spr.setRender(this);
-                    //spr.setResources(WhiskeyControl.Resources);
-
-
-                    Boolean shouldDraw = true;
-
-                    if (gob is InstanceDescriptor)
+                    if (!layer.Visible)
                     {
-                        shouldDraw = ((InstanceDescriptor)gob).Layer.Visible;
+                        continue;
                     }
 
 
-                    if (shouldDraw)
+                    string shaderMode = layer.ShaderMode;
+                    BlendState blendState = BlendModeConverter.getState(layer.BlendMode);
+                    if (shaderMode != CoreLayer.DEFAULT_SHADER_MODE && shaderMode != null)
                     {
-                        //if (spr != null)
+                        Effect fx = WhiskeyControl.Resources.loadEffect(shaderMode);
+                        layer.setEffect(fx);
+                    }
+                    else 
+                    {
+                        layer.setEffect(null);
+                    }
+
+                    string postShaderMode = layer.PostShaderMode;
+                    if (postShaderMode != CoreLayer.DEFAULT_SHADER_MODE && postShaderMode != null)
+                    {
+                        layer.setPostEffect(WhiskeyControl.Resources.loadEffect(postShaderMode));
+                    }
+                    else
+                    {
+                        layer.setPostEffect(null);
+                    }
+
+                    if (WhiskeyControl.InputManager != null)
+                    {
+                        Vector mouse = WhiskeyControl.InputManager.MousePosition;
+                        mouse.X /= currentLayerTarget.Width;
+                        mouse.Y /= currentLayerTarget.Height;
+                        Level.ShaderParameters.setVector(ShaderParameters.PARAM_MOUSE_POS, mouse);
+
+                        Vector3 translation = ActiveCamera.TranformMatrix.Translation;
+                        translation.X /= currentLayerTarget.Width;
+                        translation.Y /= currentLayerTarget.Height;
+                        Level.ShaderParameters.setVector(ShaderParameters.PARAM_CAMERA, new Vector(translation.X, translation.Y));
+                        Level.ShaderParameters.setFloat(ShaderParameters.PARAM_CAMERA_ZOOM, ActiveCamera.Zoom);
+                    }
+
+                    Effect layerEffect = layer.getEffect();
+                    Effect post = layer.getPostEffect();
+
+                    Level.ShaderParameters.updateEffect(layerEffect);
+                    Level.ShaderParameters.updateEffect(post);
+
+
+                    GraphicsDevice.SetRenderTarget(currentLayerTarget);
+                    
+                    GraphicsDevice.Clear(XnaColor.Transparent);
+
+
+                    if (layer.ScreenShader)
+                    {
+                        spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, layerEffect);
+                        spriteBatch.Draw(bloomComponent.SceneTarget, Vector.Zero, XnaColor.White);
+                        spriteBatch.End();
+                    }
+                    else
+                    {
+
+                        
+
+                        spriteBatch.Begin(SpriteSortMode.FrontToBack, blendState, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, layerEffect, CameraTransform);
+                        foreach (GameObject gob in descs.Where(g => (g.Layer == null && layer == Level.DefaultLayer) || layer == g.Layer))
                         {
+                            if (gob == controller)//|| gob == controller.Selected)
+                                continue;
+
+
+                           
                             Vector2 alwaysOnPos = gob.Position;
                             spriteBatch.Draw(alwaysOnSprite.getImage(), alwaysOnPos, null, alwaysOnSprite.Color, alwaysOnSprite.Rotation, alwaysOnSprite.Offset, alwaysOnSprite.Scale, SpriteEffects.None, 0);
-                           
+
                             gob.Bounds.draw(RenderInfo, new RenderHints().setColor(Level.BackgroundColorCompliment));
                             gob.renderImage(RenderInfo);
 
-                            //gob.Sprite.draw(spriteBatch,CameraTransform, gob.Position);
+                            
                         }
+
+                        spriteBatch.End();
+
+
+                       
+                        
                     }
+
+                   
+
+                    GraphicsDevice.SetRenderTarget(layerScreenShader);
+                        
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, post);
+                    spriteBatch.Draw(currentLayerTarget, Vector.Zero, XnaColor.White);
+                    spriteBatch.End();
+                    
+
                 }
-
-                spriteBatch.End();
-
-              
+               
                 
               
             }
@@ -235,7 +296,7 @@ namespace WhiskeyEditor.MonoHelp
                 PresentationParameters pp = GraphicsDevice.PresentationParameters;
                 return new RenderTarget2D(GraphicsDevice, width, height, false,
                                                    pp.BackBufferFormat, pp.DepthStencilFormat, pp.MultiSampleCount,
-                                                   RenderTargetUsage.DiscardContents);
+                                                   RenderTargetUsage.PreserveContents);
             }
             else return target;
         }
@@ -278,7 +339,8 @@ namespace WhiskeyEditor.MonoHelp
             lightMapTarget = checkRenderTarget(lightMapTarget, bbWidth, bbHeight);
             sceneTarget = checkRenderTarget(sceneTarget, bbWidth, bbHeight);
             hudObjectsTarget = checkRenderTarget(hudObjectsTarget, 1280, 720);
-
+            layerScreenShader = checkRenderTarget(layerScreenShader, bbWidth, bbHeight);
+            currentLayerTarget = checkRenderTarget(currentLayerTarget, bbWidth, bbHeight);
             //get game objects, and ui gameobjects
             List<GameObject> uiGameObjects = new List<GameObject>();
             List<GameObject> gobsToRender = new List<GameObject>();
@@ -300,9 +362,19 @@ namespace WhiskeyEditor.MonoHelp
            
 
             //DRAW GAME OBJECTS 
+          
+            
+           // bloomComponent.BeginDraw();
+           
+            render(gobsToRender);
+
             bloomComponent.BeginDraw();
             GraphicsDevice.Clear(Level.BackgroundColor);
-            render(gobsToRender);
+           
+            spriteBatch.Begin();
+            spriteBatch.Draw(layerScreenShader, Vector.Zero, XnaColor.White);
+            spriteBatch.End();
+
             bloomComponent.draw();
 
 

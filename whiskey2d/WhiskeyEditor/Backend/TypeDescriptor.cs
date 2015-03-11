@@ -91,7 +91,7 @@ namespace WhiskeyEditor.Backend
             addPropertyDescriptor(new PropertyDescriptor(true,"Active", new RealType(typeof(Boolean), true)));
             addPropertyDescriptor(new PropertyDescriptor(true, "HudObject", new RealType(typeof(Boolean), false)));
             addPropertyDescriptor(new PropertyDescriptor(true, "IsDebug", new RealType(typeof(Boolean), false)));
-
+            addPropertyDescriptor(new PropertyDescriptor(true, "Layer", new RealType(typeof(Layer), Layer.UNKNOWN)));
 
 
         }

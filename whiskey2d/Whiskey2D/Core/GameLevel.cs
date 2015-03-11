@@ -26,6 +26,45 @@ namespace Whiskey2D.Core
         public bool LightingEnabled { get; set; }
         public bool ShadowsEnabled { get; set; }
 
+
+        private List<Layer> layers;
+        public List<Layer> Layers
+        {
+            get
+            {
+                if (layers == null) layers = new List<Layer>();
+                return layers;
+            }
+            set
+            {
+                layers = value;
+            }
+        }
+
+        public Layer getLayer(String name)
+        {
+            Layer found = Layers.Find(l => l.Name.Equals(name));
+            return found == null ? Layers.Find(l => l.Name.Equals("Default")) : found;
+
+        }
+
+
+        private ShaderParameters shaderParameters;
+        public ShaderParameters ShaderParameters
+        {
+            get
+            {
+                if (shaderParameters == null) shaderParameters = new ShaderParameters();
+                return shaderParameters;
+            }
+            set
+            {
+                shaderParameters = value;
+            }
+        }
+
+        public float Time { get; set; }
+
         public GameLevel(string name)
             : base()
         {
@@ -35,10 +74,30 @@ namespace Whiskey2D.Core
             Name = name;
             BloomSettings = BloomSettings.PresetSettings[0];
             BloomLightSettings = BloomSettings.PresetSettings[0];
+            
         }
 
         public override void updateAll()
         {
+            if (Time == null)
+            {
+                Time = 0;
+            }
+            Time += .001f;
+
+            shaderParameters.setFloat(ShaderParameters.PARAM_TIME, Time);
+            Vector mouse = GameManager.Input.MousePosition;
+            mouse.X /= GameManager.ScreenWidth;
+            mouse.Y /= GameManager.ScreenHeight;
+            shaderParameters.setVector(ShaderParameters.PARAM_MOUSE_POS, mouse);
+
+            Microsoft.Xna.Framework.Vector3 translation = Camera.TranformMatrix.Translation;
+            translation.X /= GameManager.ScreenWidth;
+            translation.Y /= GameManager.ScreenHeight;
+            ShaderParameters.setVector(ShaderParameters.PARAM_CAMERA, new Vector(translation.X, translation.Y));
+            ShaderParameters.setFloat(ShaderParameters.PARAM_CAMERA_ZOOM, Camera.Zoom);
+
+
             Camera.update();
             base.updateAll();
         }

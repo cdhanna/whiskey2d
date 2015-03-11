@@ -21,13 +21,14 @@ namespace WhiskeyEditor.Backend
         public const string PROP_LIGHT = "Light";
         public const string PROP_SHADOWS = "Shadows";
         public const string PROP_HUD = "HudObject";
+        public const string PROP_LAYER = "Layer";
         private bool initialized;
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
        
 
-
+        
 
 
         public InstanceDescriptor(TypeDescriptor typeDesc, ObjectManager manager )
@@ -44,7 +45,7 @@ namespace WhiskeyEditor.Backend
         {
             propDescs = new List<PropertyDescriptor>();
             scriptNames = new List<string>();
-
+           
             initialized = false;
         }
 
@@ -82,8 +83,7 @@ namespace WhiskeyEditor.Backend
         {
             initialized = true;
             this.typeDesc = typeDesc;
-            Layer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.getLayer("Default");
-           
+           // 
             propDescs = typeDesc.getPropertySetClone();
 
             scriptNames = typeDesc.getScriptNamesClone();
@@ -102,7 +102,8 @@ namespace WhiskeyEditor.Backend
             
 
             Name = objectManager.getDefaultNameFor(this);
-
+            Layer = WhiskeyEditor.MonoHelp.WhiskeyControl.Active.Level.getLayer("Default");
+           
         }
 
         #region Event Handler Code
@@ -241,7 +242,27 @@ namespace WhiskeyEditor.Backend
             return scriptNames;
         }
 
-        public Layer Layer { get; set; }
+
+
+        public override Whiskey2D.Core.Layer Layer
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    return base.Layer;
+                }
+                else return (Layer)getTypeValOfName(PROP_LAYER).Value;
+            }
+            set
+            {
+                base.Layer = value;
+                if (initialized)
+                {
+                    getTypeValOfName(PROP_LAYER).Value = value;
+                }
+            }
+        }
 
         
         public override Boolean Active
@@ -447,7 +468,7 @@ namespace WhiskeyEditor.Backend
             inst.Y = Y;
             inst.Light = new Light(Light);
             inst.Sprite = new Sprite(Sprite.getRenderer(), Sprite.getResources(), Sprite);
-            inst.Layer = Layer;
+            
             inst.IsDebug = IsDebug;
             inst.Shadows = Shadows;
             inst.HudObject = HudObject;
@@ -461,7 +482,7 @@ namespace WhiskeyEditor.Backend
             }
 
             inst.Name = name;
-
+            inst.Layer = Layer;
             return inst;
         }
 

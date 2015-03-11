@@ -32,6 +32,8 @@ namespace Whiskey2D.Core
         RenderTarget2D outputTarget;
 
         public RenderTarget2D OutputTarget { get { return outputTarget; } }
+        public RenderTarget2D SceneTarget { get { return sceneRenderTarget; } }
+
 
         // Choose what display settings the bloom should use.
         public BloomSettings Settings

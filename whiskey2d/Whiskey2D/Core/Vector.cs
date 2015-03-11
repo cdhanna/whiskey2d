@@ -35,6 +35,11 @@ namespace Whiskey2D.Core
         /// </summary>
         public static Vector UnitY { get { return new Vector(0, 1); } }
 
+        public static Vector from(float angle, Vector guide)
+        {
+            return new Vector(guide.X * (float)Math.Cos(angle), guide.Y * (float)Math.Sin(angle));
+        }
+
 
         private float x, y;
 

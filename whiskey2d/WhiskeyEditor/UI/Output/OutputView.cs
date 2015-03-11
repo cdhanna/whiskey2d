@@ -38,11 +38,22 @@ namespace WhiskeyEditor.UI.Output
 
         private void compiledListener(object sender, CompileEventArgs args)
         {
-            this.Invoke(new NoArgFunction(() => {
+
+            setErrors(args.Errors);
+            
+
+            
+
+        }
+
+        public void setErrors(CompilerErrorCollection errors)
+        {
+            this.Invoke(new NoArgFunction(() =>
+            {
                 data.Clear();
-                foreach (CompilerError err in args.Errors)
+                foreach (CompilerError err in errors)
                 {
-                   
+
                     string fileName = err.FileName;
                     try
                     {
@@ -52,17 +63,12 @@ namespace WhiskeyEditor.UI.Output
                     {
                         err.FileName = fileName;
                     }
-                        
+
                     data.Add(err);
-                    
+
                 }
-            
+
             }));
-
-            
-
-            
-
         }
 
        

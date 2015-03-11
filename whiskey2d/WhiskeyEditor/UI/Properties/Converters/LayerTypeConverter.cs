@@ -8,11 +8,15 @@ using System.ComponentModel;
 using System.Reflection;
 using WhiskeyEditor.UI.Properties.Converters;
 using System.Globalization;
+using Whiskey2D.Core;
 
 using WhiskeyEditor.Backend;
 
 namespace WhiskeyEditor.UI.Properties.Converters
 {
+
+    using CoreLayer = Whiskey2D.Core.Layer;
+
     class LayerTypeConverter : TypeConverter
     {
 
@@ -26,9 +30,9 @@ namespace WhiskeyEditor.UI.Properties.Converters
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (value is Layer)
+            if (value is CoreLayer)
             {
-                Layer layer = (Layer)value;
+                CoreLayer layer = (CoreLayer)value;
 
 
                 if (destinationType == typeof(string))

@@ -50,6 +50,8 @@ namespace WhiskeyEditor.UI
         private ToolBarStrip toolBar;
         private WhiskeyStatusBar statBar;
 
+        public OutputView Output { get { return outputView; } }
+
         public TopView()
         {
            

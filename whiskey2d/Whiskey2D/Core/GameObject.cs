@@ -111,6 +111,25 @@ namespace Whiskey2D.Core
         /// </summary>
         public virtual string Name { get; set; }
 
+
+
+        private Layer layer;
+        public virtual Layer Layer
+        {
+            get
+            {
+                if (layer == null)
+                {
+                    return GameManager.Level.Layers.Find(l => l.Name.Equals("Default"));
+                }
+                else return layer;
+            }
+            set
+            {
+                layer = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets if the GameObject is Active.
         /// If the GameObject is Active, then it is drawn and updated by the Whiskey engine, otherwise, 

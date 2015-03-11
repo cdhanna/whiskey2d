@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using WhiskeyEditor.Backend.Managers;
+using WhiskeyEditor.Backend;
 using System.IO;
 
 namespace WhiskeyEditor.MonoHelp
@@ -16,11 +17,12 @@ namespace WhiskeyEditor.MonoHelp
     public class EditorResourceManager : ResourceManager
     {
         public ContentManager Content { get; private set; }
-
+        private Dictionary<string, Effect> effectMap;
         private SpriteFont defaultFont;
 
         public EditorResourceManager()
         {
+            effectMap = new Dictionary<string, Effect>();
         }
 
         /// <summary>
@@ -72,6 +74,58 @@ namespace WhiskeyEditor.MonoHelp
         {
             return null; //TODO FIX 
             //string destPath = "compile-media" + Path.DirectorySeparatorChar + filePath;
+        }
+
+
+
+        private static int reloadHack = 0;
+
+        public Effect loadEffect(string filePath)
+        {
+            string key = filePath;
+            //remove any leading slashes 
+            while (filePath.StartsWith("\\"))
+            {
+                filePath = filePath.Substring(1);
+            }
+
+            ShaderDescriptor shader = FileManager.Instance.lookUpFileByName<ShaderDescriptor>(filePath);
+            if (shader != null && shader.ShouldBeLoadedAgain || !effectMap.ContainsKey(key))
+            {
+                filePath = filePath.Replace(".hlsl", ".mgfx");
+                string destPath = "compile-media" + Path.DirectorySeparatorChar + filePath;
+
+
+                //file is in project space
+                string fullPath = ProjectManager.Instance.ActiveProject.PathMedia + Path.DirectorySeparatorChar + filePath;
+                if (File.Exists(fullPath))
+                {
+                    String save = destPath.Replace(".mgfx", "_" + reloadHack + ".mgfx");
+                    File.Copy(fullPath, save, true);
+                } 
+                shader.ShouldBeLoadedAgain = false;
+
+                //String root = Content.RootDirectory;
+                //ContentManager cm = new ContentManager(Content.ServiceProvider);
+               
+                //cm.RootDirectory = root;
+
+                //cm = Content;
+
+                Effect fx = Content.Load<Effect>(filePath.Replace(".mgfx", "_" + reloadHack + ".mgfx"));
+                reloadHack++;
+                if (effectMap.ContainsKey(key))
+                {
+                    effectMap[key] = fx;
+                }
+                else effectMap.Add(key, fx);
+                return fx;
+            }
+            else if (effectMap.ContainsKey(key))
+            {
+                return effectMap[key];
+            }
+            else return null;
         }
 
 

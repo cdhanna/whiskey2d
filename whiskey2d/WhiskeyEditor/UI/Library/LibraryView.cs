@@ -40,6 +40,7 @@ namespace WhiskeyEditor.UI.Library
         private NewTypeAction newTypeAction;
         private NewScriptAction newScriptAction;
         private NewArtAction newArtAction;
+        private NewShaderAction newShaderAction;
         private NewSoundAction newSoundAction;
         private NewFolderAction newFolderAction;
 
@@ -221,7 +222,7 @@ namespace WhiskeyEditor.UI.Library
             newArtAction = new NewArtAction();
             newSoundAction = new NewSoundAction();
             newFolderAction = new NewFolderAction();
-
+            newShaderAction = new NewShaderAction();
 
             folderNodeMenu = new ContextMenuStrip();
             folderNodeMenu.Width = 200;
@@ -234,6 +235,7 @@ namespace WhiskeyEditor.UI.Library
             folderNodeMenu.Items.Add( newLevelAction.generateControl<ToolStripButton>() );
             folderNodeMenu.Items.Add( newArtAction.generateControl<ToolStripButton>());
             folderNodeMenu.Items.Add( newSoundAction.generateControl<ToolStripButton>());
+            folderNodeMenu.Items.Add(newShaderAction.generateControl<ToolStripButton>());
             
             //folderNodeMenu.Items.Add(newFolderAction.generateControl<ToolStripButton>()); //TODO add folder support
 
