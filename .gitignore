@@ -5,12 +5,12 @@
 *.suo
 *.user
 *.sln.docstates
-*.exe
 *.pdb
 whiskey2d/Whiskey2D/bin/
 whiskey2d/Whiskey2D/obj/
 Whiskey2D.v11
 docs/
+whiskey2d/.nuget/NuGet.exe
 
 # Build results
 [Dd]ebug/
