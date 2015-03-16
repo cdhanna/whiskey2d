@@ -39,6 +39,9 @@ namespace Project
 				index ++;
 			}
 			
+			
+			
+			
 //			WaterNode node2 = new WaterNode(Level, new Vector(Gob.Bounds.Right, Gob.Bounds.Top));
 //			node2.Floor = Gob.Bounds.Bottom;
 //			if (index > 0){
@@ -53,7 +56,8 @@ namespace Project
 		
 		public override void onUpdate() 
 		{
-		 
+		 	int hitBottom = 0;
+		 	float speed = 3f;
 		 	nodes.ForEach( n=> {
 		 	
 		 		n.Velocity += -.01f * n.Velocity;
@@ -76,7 +80,32 @@ namespace Project
 		 			n.RightNode.Acceleration += fRight / -2;
 		 		}
 		 		
+		 		
+		 		if (Gob.Sink){
+		 			if (n.RestPosition.Y <= Gob.Bounds.Bottom){
+		 				
+		 				n.RestPosition += new Vector(0, speed);
+		 				
+		 			} else {
+		 				hitBottom ++;
+		 			}
+		 		
+		 		}
+		 		
 		 	});
+		 	
+		 	if (Gob.Sink){
+		 		Gob.Sprite.Scale = new Vector(Gob.Sprite.Scale.X, Gob.Sprite.Scale.Y - (speed / Math.Abs(Gob.Sprite.FrameHeight)));
+		 		Gob.Y += speed;
+		 	}
+		 	
+		 	if (Gob.Sprite.Scale.Y < .01f){
+		 		nodes.ForEach(n => n.close());
+		 		Gob.Sink = false;
+		 		Gob.Active = false;
+		 	
+		 	}
+		 	
 		 
 		}
 		
@@ -191,6 +220,27 @@ namespace Project
 	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

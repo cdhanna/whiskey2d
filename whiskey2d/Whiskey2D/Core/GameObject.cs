@@ -315,7 +315,24 @@ namespace Whiskey2D.Core
         /// </summary>
         public void update()
         {
-            getActiveScripts().ForEach(s => s.onUpdate());
+            List<Script> actives = getActiveScripts();
+
+            actives.ForEach(s => s.onUpdate());
+
+            //actives.RemoveAll(s => getActiveScripts().Contains(s));
+            //actives.ForEach(s => s.onStart());
+
+            getActiveScripts().ForEach(s =>
+            {
+                if (!actives.Contains(s))
+                {
+                    s.onStart();
+                }
+
+
+            });
+
+
             sprite.update();
         }
 
@@ -359,6 +376,12 @@ namespace Whiskey2D.Core
         {
             return scripts.FindAll(s => s.Active);
         }
+
+        public Script getScript(String name)
+        {
+            return scripts.Find(s => s.GetType().Name.Equals(name));
+        }
+
 
         /// <summary>
         /// Called upon initialization. Used to retrieve a set of start up scripts for the object. 

@@ -12,22 +12,172 @@ namespace Project
 	[Serializable] 
 	public class DoorTester : Script<Button>
 	{
+		Player plr;
+		Wall door;
+		WaterBlock water;
+		CameraMaster camMaster;
+		SimpleObject obj;
+		bool startDoor = false, startWater = false;
+	
+		Vector objVel;
+	
 		public override void onStart()
 		{
-			Log.debug("Hello World!");
-		 //This code runs when the GameObject is initialized
+			Log.debug("DOOR START");
+			door = Objects.getObject<Wall>("doorA");
+			water = Objects.getObject<WaterBlock>("WaterBlock1");
+			plr = Objects.getObject<Player>("Player1");
+			
+			
+			plr.getScript("PlayerMove").Active = false;
+			plr.Velocity = Vector.Zero;
+			plr.Acceleration = Vector.Zero;
+			
+			camMaster = Objects.getObject<CameraMaster>("CameraMaster1");
+			//camMaster.getScript("CameraMasterControl").Active = false;	
+			
+			obj = new SimpleObject(Level);
+			obj.Position = Gob.Position;
+			obj.Sprite.Color = Color.Red;
+			obj.Sprite.Visible = false;
+			camMaster.Target = obj.Name;
+			camMaster.ObeyCamZones = false;
+			
+			objVel = (door.Position - obj.Position).UnitSafe * 25f;
+			
 		}
 		
 		public override void onUpdate() 
 		{
-		 //This code runs when the GameObject is updated
+			if (!startDoor){
+				obj.Position += objVel;
+			}
+//			
+			if (Math.Abs(door.Position.X - obj.Position.X) < 25 && !startDoor){
+				startDoor = true;
+				//obj.close();
+				//Level.Camera.TargetZoom = 1.2f;
+				objVel = Vector.Zero;
+			}
+			if (startDoor && !startWater){
+				if (door.Y > 0){
+					door.Y -= 4;
+				} else {
+					startWater = true;
+					objVel = (new Vector(water.X, water.Bounds.Top) - obj.Position).UnitSafe * 15f;
+					
+				
+				}
+			}
+			if (startWater){
+			
+				if (Math.Abs( water.Bounds.Top - obj.Position.Y) > 3){
+					obj.Position += objVel;
+				} else {
+					if (water != null && !water.Sink){
+						water.Sink = true;
+					}
+					objVel = (new Vector(0, water.Bounds.Top - obj.Position.Y)).UnitSafe * 3f;
+					
+					
+				}
+				if (!water.Active){
+					camMaster.Target = "Player1";
+					Active = false;
+					obj.close();
+					camMaster.ObeyCamZones = true;
+					plr.getScript("PlayerMove").Active = true;
+				}
+			}
+			
+			
 		}
 		
 		public override void onClose()  
 		{
-		 //This code runs when the GameObject is closed
 		}
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

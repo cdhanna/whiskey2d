@@ -62,9 +62,11 @@ namespace WhiskeyEditor.compile_types.Scripts
             + "z = lastZone.Zoom;"
 
 
-            + "Level.Camera.TargetZoom = z;"
-            + "Level.Camera.followClamped(target, l, t, r, b);";
-
+            
+            + "if (Gob.ObeyCamZones) { "
+            + " Level.Camera.TargetZoom = z;"
+            + " Level.Camera.followClamped(target, l, t, r, b); }"
+            + "else Level.Camera.follow(target);";
             code += "}";
             
             return code;

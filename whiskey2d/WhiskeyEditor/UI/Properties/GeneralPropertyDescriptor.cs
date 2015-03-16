@@ -38,6 +38,7 @@ namespace WhiskeyEditor.UI.Properties
         }
         
         
+        
         public override string Description
         {
             get

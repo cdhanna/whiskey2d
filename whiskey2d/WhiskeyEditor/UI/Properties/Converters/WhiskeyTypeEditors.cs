@@ -36,6 +36,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map.Add("InstanceDescriptor", new InstancePicker());
             map.Add("Keys", new KeyTypeEditor());
             map.Add("Layer", new LayerPicker());
+            map.Add("InstanceScriptRhapper", new ScriptPicker());
         }
 
 

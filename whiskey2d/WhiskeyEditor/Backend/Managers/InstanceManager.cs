@@ -184,7 +184,9 @@ namespace WhiskeyEditor.Backend.Managers
                                 {
                                     Type scriptType = gameData.GetType(appScriptTable[scriptName].QualifiedName, false);
                                     object script = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
-                                    gob.addScript((Script)script);
+                                    Script megaScript = (Script)script;
+                                    megaScript.Active = iDesc.getScriptActive(scriptName);
+                                    gob.addScript(megaScript);
                                 }
 
 

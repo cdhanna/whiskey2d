@@ -14,9 +14,15 @@ namespace Project
 	{
 	
 		Player plr;
+		Script scr;
+		
+		
 		public override void onStart()
 		{
 			 plr = Objects.getObject<Player>("Player1");
+			 scr = Gob.Scripts[1];
+			 
+			 
 		}
 		
 		public override void onUpdate() 
@@ -30,11 +36,8 @@ namespace Project
 						Gob.Pressed = !Gob.Pressed;
 						
 						if (Gob.Pressed){
-							ButtonControl script = getScript<ButtonControl>("DoorTester");
-							Log.debug("SCRIPT = " + script);
-						
-							Script s = Gob.Scripts[1];
-							Log.debug("SCRIPT2 = " + s);
+							
+							scr.Active = true;
 						}
 						
 					}
@@ -59,6 +62,12 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
 
 
 

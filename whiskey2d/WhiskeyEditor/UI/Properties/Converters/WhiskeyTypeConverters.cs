@@ -25,6 +25,7 @@ namespace WhiskeyEditor.UI.Properties.Converters
             map.Add("InstanceDescriptor", new WhiskeyInstanceTypeConverter());
             map.Add("Layer", new LayerTypeConverter());
             map.Add("Keys", new KeyConverter());
+            
         }
 
         public static TypeConverter lookUp(string typeName)

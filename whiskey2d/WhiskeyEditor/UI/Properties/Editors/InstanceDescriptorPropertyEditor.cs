@@ -10,7 +10,8 @@ using System.Drawing;
 using WhiskeyEditor.UI.Library;
 using WhiskeyEditor.UI.Documents.Actions;
 using Whiskey2D.Core;
-
+using WhiskeyEditor.UI.Properties.Converters;
+using WhiskeyEditor.UI.Properties;
 namespace WhiskeyEditor.UI.Properties.Editors
 {
     class InstanceDescriptorPropertyEditor : PropertyEditor
@@ -56,14 +57,22 @@ namespace WhiskeyEditor.UI.Properties.Editors
             base.Dispose(disposing);
         }
 
+
+      
+
         public void refreshScripts()
         {
             ScriptProperties.ForEach((s) => { PropertyGrid.removeOtherProperty(s); });
             ScriptProperties.Clear();
             Descriptor.getScriptNames().ForEach((s) =>
             {
-                GeneralPropertyDescriptor gpd = PropertyGrid.addOtherProperty(s, "Scripts", 1);
-                gpd.PropIsReadOnly = true;
+                InstanceScriptRhapper dumb = new InstanceScriptRhapper();
+                dumb.Descriptor = Descriptor;
+                dumb.ScriptName = s;
+                GeneralPropertyDescriptor gpd = PropertyGrid.addOtherProperty(s, "Scripts", dumb);
+                gpd.CustomTypeEditor = WhiskeyTypeEditors.lookUp("InstanceScriptRhapper");
+               
+                //gpd.PropIsReadOnly = true;
                 ScriptProperties.Add(gpd);
             });
         }

@@ -137,38 +137,7 @@ namespace Whiskey2D.Core
         }
 
 
-        public static Script getScript(String name)
-        {
-            try
-            {
-                Type scriptType = Type.GetType(name, true);
-                object scriptObj = scriptType.GetConstructor(new Type[] { }).Invoke(new object[] { });
 
-
-                Script script = (Script)scriptObj;
-                return script;
-            }
-            catch (Exception e)
-            {
-                GameManager.Log.debug("Script, " + name + " does not exist." + e.Message);
-            }
-            return null;
-        }
-
-        public static S getScript<S>(String name) where S : Script
-        {
-            Script script = getScript(name);
-            try
-            {
-                return (S)script;
-            }
-            catch (Exception e)
-            {
-                GameManager.Log.debug("Script, " + name + " is not a " + typeof(S).Name);
-            }
-            return null;
-
-        }
 
 
     }

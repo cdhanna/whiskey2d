@@ -307,6 +307,7 @@
     <Compile Include="UI\Properties\Converters\KeyConverter.cs" />
     <Compile Include="UI\Properties\Converters\LayerTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\LightTypeConverter.cs" />
+    <Compile Include="UI\Properties\Converters\ScriptConverter.cs" />
     <Compile Include="UI\Properties\Converters\ShadowPropertyTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\SpriteTypeConverter.cs" />
     <Compile Include="UI\Properties\Converters\VectorConverter.cs" />
@@ -374,6 +375,7 @@
     <Compile Include="UI\Properties\RestrictedFloatPickerControl.Designer.cs">
       <DependentUpon>RestrictedFloatPickerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Properties\ScriptPicker.cs" />
     <Compile Include="UI\Properties\ShadowPropertiesPicker.cs" />
     <Compile Include="UI\Properties\SpriteButtonControl.cs">
       <SubType>UserControl</SubType>

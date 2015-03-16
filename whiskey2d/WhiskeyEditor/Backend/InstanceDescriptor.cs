@@ -26,7 +26,7 @@ namespace WhiskeyEditor.Backend
         private TypeDescriptor typeDesc;
         private List<PropertyDescriptor> propDescs;
         private List<String> scriptNames;
-       
+        private Dictionary<String, Boolean> scriptActiveValues;
 
         
 
@@ -36,7 +36,7 @@ namespace WhiskeyEditor.Backend
         {
             propDescs = new List<PropertyDescriptor>();
             scriptNames = new List<string>();
-
+            scriptActiveValues = new Dictionary<string, bool>();
             initialize(typeDesc);
         }
 
@@ -108,13 +108,56 @@ namespace WhiskeyEditor.Backend
 
         #region Event Handler Code
 
+        private void ensureScriptActiveMap()
+        {
+            if (scriptActiveValues == null)
+            {
+                scriptActiveValues = new Dictionary<string, bool>();
+                getScriptNames().ForEach(s => setScriptActive(s, true));
+            }
+        }
+        public void setScriptActive(String name, Boolean active)
+        {
+            ensureScriptActiveMap();
+            if (!scriptActiveValues.ContainsKey(name))
+            {
+                scriptActiveValues.Add(name, active);
+            }
+            else
+            {
+                scriptActiveValues[name] = active;
+            }
+        }
+
+        public Boolean getScriptActive(String name)
+        {
+            ensureScriptActiveMap();
+            if (scriptActiveValues.ContainsKey(name))
+            {
+                return scriptActiveValues[name];
+            }
+            else return false;
+        }
+
+        private void removeScriptActiveValue(String name)
+        {
+            if (scriptActiveValues.ContainsKey(name))
+            {
+                scriptActiveValues.Remove(name);
+            }
+        }
+
+
         private void scriptAddedInType(object sender, ScriptChangedEventArgs args)
         {
             scriptNames.Add(args.Script.Name);
+            setScriptActive(args.Script.Name, true);
+            
         }
         private void scriptRemovedFromType(object sender, ScriptChangedEventArgs args)
         {
             scriptNames.Remove(args.Script.Name);
+            removeScriptActiveValue(args.Script.Name);
         }
 
         //private void propertyChangedInType(object sender, PropertyChangeEventArgs args)
@@ -209,6 +252,7 @@ namespace WhiskeyEditor.Backend
         {
             initCheck();
             scriptNames.Add(scriptName);
+            setScriptActive(scriptName, true);
         }
         public void removeScript(String scriptName)
         {
@@ -216,12 +260,15 @@ namespace WhiskeyEditor.Backend
             if (scriptNames.Contains(scriptName))
             {
                 scriptNames.Remove(scriptName);
+                removeScriptActiveValue(scriptName);
             }
             else throw new WhiskeyException("Script Not Found : " + scriptName);
         }
         public override void clearScripts()
         {
             scriptNames.Clear();
+            ensureScriptActiveMap();
+            scriptActiveValues.Clear();
             base.clearScripts();
         }
 
@@ -479,6 +526,7 @@ namespace WhiskeyEditor.Backend
             foreach (string scriptName in getScriptNames())
             {
                 inst.addScript(scriptName);
+                inst.setScriptActive(scriptName, getScriptActive(scriptName));
             }
 
             inst.Name = name;

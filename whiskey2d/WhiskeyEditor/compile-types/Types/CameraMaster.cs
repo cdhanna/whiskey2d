@@ -24,7 +24,7 @@ namespace WhiskeyEditor.compile_types.Types
             getTypeValOfName("IsDebug").Value = true;
 
             addPropertyDescriptor(new PropertyDescriptor("Target", new RealType(typeof(String), "")));
-
+            addPropertyDescriptor(new PropertyDescriptor("ObeyCamZones", new RealType(typeof(Boolean), true)));
             addScript("CameraMasterControl");
 
             base.configure();
