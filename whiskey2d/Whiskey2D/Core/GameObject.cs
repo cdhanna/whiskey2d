@@ -247,6 +247,12 @@ namespace Whiskey2D.Core
             this.scripts.Clear();
         }
 
+        [System.ComponentModel.Browsable(false)]
+        public List<Script> Scripts
+        {
+            get { return scripts; }
+        }
+
         /// <summary>
         /// Remove a script from the GameObject.
         /// Calling this function WILL NOT call onClose() on the given Script

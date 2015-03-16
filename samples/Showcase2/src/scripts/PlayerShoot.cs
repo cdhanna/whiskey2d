@@ -151,6 +151,7 @@ namespace Project
 		 			fx.Sprite.Scale *= .4f;
 		 			fx.Frames = Vector.One * 4;
 		 			fx.Speed = 2;
+		 			fx.Sprite.Depth = .3f;
 		 			fx.Sprite.Color = Color.Orange;
 		 			fx.Light.Visible = true;
 		 			fx.Light.Radius = 256f;
@@ -214,6 +215,7 @@ namespace Project
 	
 	
 }
+
 
 
 
