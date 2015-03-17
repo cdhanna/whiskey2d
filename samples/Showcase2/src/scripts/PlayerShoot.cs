@@ -36,15 +36,15 @@ namespace Project
 		 	target.Sprite.Color = new Color(255, 0, 0, 128);
 		 	target.Light.Radius = 64;
 		 	target.Light.Color = Color.Red;
-		 	target.Light.Visible = true;
+		 	target.Light.Visible = false;
 		 	target.IsDebug = true;
 		 	
 		 	
 		 	mouse = new SimpleObject(Level);
 		 	mouse.Sprite.Depth = 1;
-		 	mouse.Sprite.Color = Color.Blue;
-		 	mouse.Sprite.Scale *= .2f;
-		 	mouse.Sprite.Visible = false;
+		 	mouse.Sprite.Color = Color.Red;
+		 	mouse.Sprite.Scale *= .6f;
+		 	mouse.Sprite.Visible = true;
 		 	
 		}
 		
@@ -52,7 +52,10 @@ namespace Project
 		{
 		 
 		 
-		 	Vector dir = Input.MousePosition - new Vector(ScreenWidth/2, ScreenHeight/2);
+		 	Vector dir = Input.MousePosition - Level.Camera.getScreenCoordinate(Gob.Position);
+		 	
+		 	
+		 	
 		 	
 		 	
 		 	target.Position = Input.MouseGamePosition;
@@ -215,6 +218,10 @@ namespace Project
 	
 	
 }
+
+
+
+
 
 
 

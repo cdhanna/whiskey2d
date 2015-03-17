@@ -132,9 +132,9 @@ namespace WhiskeyEditor.MonoHelp
                 XnaColor color = lineColor;
                 if (currY == 0)
                     color = Level.BackgroundColor.Inverted;
-
-                drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY));
-                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
+                drawLine(spriteBatch, ((WhiskeyColor)lineColor).Inverted, 0f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY), 8f);
+                drawLine(spriteBatch, color, .01f, new Vector(topLeft.X, currY), new Vector(botRight.X, currY), 4f);
+                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currY, new Vector2(topLeft.X, currY - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").Y), XnaColor.Tomato, 0, Vector2.Zero, 1/ActiveCamera.Zoom, SpriteEffects.None, .04f);
 
                 currY += GridManager.Instance.GridSizeY;
             }
@@ -145,8 +145,12 @@ namespace WhiskeyEditor.MonoHelp
                 XnaColor color = lineColor;
                 if (currX == 0)
                     color = Level.BackgroundColor.Inverted;
-                drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y));
-                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Crimson, 0, Vector2.Zero, 1, SpriteEffects.None, .04f);
+                drawLine(spriteBatch, ((WhiskeyColor)lineColor).Inverted, 0f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y), 8.0f);
+                drawLine(spriteBatch, color, .01f, new Vector(currX, topLeft.Y), new Vector(currX, botRight.Y), 4.0f);
+
+                spriteBatch.DrawString(WhiskeyControl.Resources.getDefaultFont(), "" + currX, new Vector2(currX - WhiskeyControl.Resources.getDefaultFont().MeasureString("A").X, topLeft.Y), XnaColor.Tomato, (float)Math.PI / 2f, Vector2.Zero, 1 / ActiveCamera.Zoom, SpriteEffects.None, .04f);
+                
+                
                 currX += GridManager.Instance.GridSizeX;
             }
 
@@ -159,7 +163,8 @@ namespace WhiskeyEditor.MonoHelp
         private void drawLine(SpriteBatch spriteBatch, XnaColor color, float depth, Vector start, Vector end, float thickness)
         {
             Vector diff = end - start;
-
+         
+            thickness /= (ActiveCamera.Zoom/.5f);
             spriteBatch.Draw(getPixel(), start, null, color, (float)Math.Atan2(diff.Y, diff.X), new Vector2(0, .5f) , new Vector(diff.Length, thickness), SpriteEffects.None, depth);
         }
 
