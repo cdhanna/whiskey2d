@@ -44,7 +44,7 @@ namespace Project
 		 	mouse.Sprite.Depth = 1;
 		 	mouse.Sprite.Color = Color.Red;
 		 	mouse.Sprite.Scale *= .6f;
-		 	mouse.Sprite.Visible = true;
+		 	mouse.Sprite.Visible = false;
 		 	
 		}
 		
@@ -55,14 +55,29 @@ namespace Project
 		 	Vector dir = Input.MousePosition - Level.Camera.getScreenCoordinate(Gob.Position);
 		 	
 		 	
+		 	dir = Vector.Zero;
+		 	if (Input.isKeyDown(Keys.Right)){
+		 		dir.X += 1;
+		 	}
+		 	if (Input.isKeyDown(Keys.Left)){
+		 		dir.X -=1;
+		 	}
+		 	if (Input.isKeyDown(Keys.Up)){
+		 		dir.Y -= 1;
+		 	}
+		 	if (Input.isKeyDown(Keys.Down)){
+		 		dir.Y += 1;
+		 	}
+		 	if (dir.Equals(Vector.Zero)){
+		 		dir.X = Math.Sign(Gob.Velocity.X);
+		 	}
+		 	dir = dir.Unit;
+		 	
+		 	Gob.LookAngle = dir.Angle- (float) Math.PI/2;
 		 	
 		 	
 		 	
-		 	target.Position = Input.MouseGamePosition;
-		 	mouse.Position = Input.MouseGamePosition;
 		 	Vector start = Gob.GunTipPosition - Gob.Position;
-		 	//dir = Input.MouseGamePosition - start;
-		 	//mouse.Position = Gob.Position + dir.UnitSafe * 200;
 		 	
 		 	
 		 	RayCollisions<Wall> rayColls = Gob.currentRayCollisions<Wall>(start, dir);
@@ -70,6 +85,7 @@ namespace Project
 		 	RayCollision rc = null;
 		 
 		 	if (rayColls.Count > 0){
+		 		
 		 		rc = rayColls[0];
 		 		target.Position = rc.ContactPoint;
 		 	}
@@ -82,9 +98,7 @@ namespace Project
 		 		}
 		 	}
 		 	
-		 	if (rc != null){
-		 		Gob.LookAngle = rc.RayDirection.Angle - (float) Math.PI/2;
-		 	}
+		 	
 		 	
 		 	if (rayColls.Count > 0){
 		 		target.Position = rc.ContactPoint;
@@ -103,9 +117,12 @@ namespace Project
 		 		}
 		 	}
 		 	
-		 	
-		 	if (Input.isNewMouseDown(MouseButtons.Left) && rc != null){
-		 			
+		 	bool space = Input.isNewKeyDown(Keys.F);
+		 	if (space){
+		 		Log.debug("space");
+		 	}
+		 	if (space && rc != null){
+		 			Log.debug("shoot");
 		 			laserSound.duplicate().play();
 		 			//laserSound.Pan = 0;
 		 			
@@ -218,6 +235,24 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

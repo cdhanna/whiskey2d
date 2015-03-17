@@ -31,7 +31,7 @@ namespace Project
 			if (plr != null){
 				if (plr.Bounds.boundWithin(Gob.Bounds)){
 				
-					if (Input.isNewKeyDown(Keys.Space)){
+					if (Input.isNewKeyDown(Keys.Enter)){
 						
 						Gob.Pressed = !Gob.Pressed;
 						
@@ -62,6 +62,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

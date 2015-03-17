@@ -20,7 +20,7 @@ namespace Project
 		public override void onUpdate() 
 		{
 
-			if (Input.isNewKeyDown(Keys.Space)){
+			if (Input.isNewKeyDown(Keys.F1)){
 				WaterParticle wp = new WaterParticle(Level);
 				wp.Layer = Level.getLayer("Water");
 				wp.Position = Gob.Position;
@@ -37,6 +37,7 @@ namespace Project
 		
 	}
 }
+
 
 
 
