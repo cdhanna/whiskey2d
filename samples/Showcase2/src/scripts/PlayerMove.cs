@@ -40,7 +40,7 @@ namespace Project
 				Gob.Acceleration += Vector.UnitX;
 			}
 			
-			if (Input.isNewKeyDown(Keys.LeftShift)){
+			if (Input.isNewKeyDown(Keys.W)){
 				if (surface.Y > .8f){
 					jumping = true;
 					jumpCounter = 40;
@@ -68,7 +68,7 @@ namespace Project
 			}
 			
 			
-			if (Input.isKeyDown(Keys.LeftShift)){
+			if (Input.isKeyDown(Keys.W)){
 				if (jumping && jumpCounter > 0 ){
 					Gob.Acceleration -= gravity * .02f * jumpCounter;
 					jumpCounter --;
@@ -143,6 +143,8 @@ namespace Project
 		
 	}
 }
+
+
 
 
 

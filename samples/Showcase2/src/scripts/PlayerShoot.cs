@@ -117,7 +117,7 @@ namespace Project
 		 		}
 		 	}
 		 	
-		 	bool space = Input.isNewKeyDown(Keys.F);
+		 	bool space = Input.isNewKeyDown(Keys.LeftShift) || Input.isNewKeyDown(Keys.RightControl);
 		 	if (space){
 		 		Log.debug("space");
 		 	}
@@ -235,6 +235,12 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
 
 
 
