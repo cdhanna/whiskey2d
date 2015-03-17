@@ -82,11 +82,14 @@ namespace Project
 			Gob.GunTipPosition = Gob.Position + armOffset + (arm.Sprite.ImageSize.Y) * new Vector( (float)Math.Cos(lookPlus), (float)Math.Sin(lookPlus));
 			Gob.GunTipPosition -= arm.Sprite.ImageSize.X/3 * new Vector( (float)Math.Cos(look), (float)Math.Sin(look));
 			
-			
 			if ( Math.Abs(Gob.Velocity.Y) < .01f){
+				
 				//The character is moving side to side, but isn't moving up or down
 				if (Gob.Acceleration.X > 0 || Gob.Velocity.X > 2f){
-					runRight.advanceFrame();
+					
+					if (!Gob.InWater)
+						runRight.advanceFrame();
+					else jumpRightStart.advanceFrame();
 					
 					armOffset.X = 25;
 					armOffset.Y = -55;
@@ -96,20 +99,26 @@ namespace Project
 					
 				} else if (Gob.Acceleration.X < 0|| Gob.Velocity.X < -2f){
 					//runLeft.advanceFrame();
-					runLeft.advanceFrame();
+					if (!Gob.InWater)
+						runLeft.advanceFrame();
+					else jumpLeftStart.advanceFrame();
 					
 					armOffset.X = -25;
 					armOffset.Y = -55;
 					runRight.Speed = 8 - (int)Math.Abs(Gob.Velocity.X)/3;
 					
 				} else if (arm.Sprite.Scale.X < 0){
-					standRight.advanceFrame();
+					if (!Gob.InWater)
+						standRight.advanceFrame();
+					else jumpRightStart.advanceFrame();
 					
 					armOffset.X = -6;
 					armOffset.Y = -50;
 					
 				} else if (arm.Sprite.Scale.X > 0){
-					standLeft.advanceFrame();
+					if (!Gob.InWater)
+						standLeft.advanceFrame();
+					else jumpLeftStart.advanceFrame();
 					
 					armOffset.X = 6;
 					armOffset.Y = -50;
@@ -117,6 +126,9 @@ namespace Project
 				} else {
 					standRight.advanceFrame();
 				}
+				
+				
+				
 			} else {
 				//the character is moving through the air
 				
@@ -139,7 +151,7 @@ namespace Project
 					}
 					armOffset.X = 6;
 					armOffset.Y = -70;
-					if (Gob.Velocity.Y < 0) {
+					if (Gob.Velocity.Y < 0 || Gob.InWater) {
 						jumpRightStart.advanceFrame();
 						jumpRightEnd.CurrentFrame = 26;
 						
@@ -154,7 +166,7 @@ namespace Project
 					if (Gob.Acceleration.Y < 0){
 						jumpLeftStart.CurrentFrame = 15;
 					}
-					if (Gob.Velocity.Y < 0) {
+					if (Gob.Velocity.Y < 0|| Gob.InWater) {
 						jumpLeftStart.advanceFrame();
 						jumpLeftEnd.CurrentFrame = 18;
 					} else {
@@ -174,6 +186,11 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
 
 
 

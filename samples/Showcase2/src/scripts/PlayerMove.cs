@@ -44,7 +44,12 @@ namespace Project
 				if (surface.Y > .8f){
 					jumping = true;
 					jumpCounter = 40;
-					Gob.Acceleration -= gravity * 12;
+					int jumpPower = 12;
+					if (Gob.InWater){
+						jumpPower = 12;
+					}
+					Gob.Velocity = new Vector(Gob.Velocity.X, 0);
+					Gob.Acceleration = -gravity * jumpPower;
 					doubleJumped = false;
 					
 					SpriteEffect fx = new SpriteEffect(Level);
@@ -54,10 +59,13 @@ namespace Project
 					fx.Sprite.Scale *= .3f;
 					fx.Speed = 4;
 					
-				} else if (jumping && !doubleJumped ){
+				} else if (((jumping && !doubleJumped) || (surface.Y < .8f && !jumping)) && !Gob.InWater){
 					jumpCounter = 40;
 					doubleJumped = true;
-					Gob.Acceleration -= gravity * 12;
+					jumping = true;
+					int jumpPower = 12;
+					Gob.Acceleration = -gravity * jumpPower;
+					Gob.Velocity = new Vector(Gob.Velocity.X, 0);
 					SpriteEffect fx = new SpriteEffect(Level);
 					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
 					fx.Effect = "smokeJump";
@@ -65,6 +73,7 @@ namespace Project
 					fx.Sprite.Scale *= .3f;
 					fx.Speed = 4;
 				}
+				
 			}
 			
 			
@@ -74,12 +83,34 @@ namespace Project
 					jumpCounter --;
 				}
 			}
-		
+			surface = Vector.Zero;
+			
+			Gob.InWater = false;
 			var waterBlocks = Gob.currentCollisions<WaterBlock>();
 			if (waterBlocks.Count > 0){
-				Gob.Acceleration -= gravity * 1.05f;
+				Gob.InWater = true;
+			
+				if (Gob.Y > waterBlocks[0].Gob.Bounds.Top){
+					Gob.Acceleration -= gravity * 1.2f;
+					if (Gob.Velocity.Y > 0){
+						Gob.Velocity *= .8f;
+					}
+				} 
 				
+				
+				//if (Gob.Velocity.Y < 0 ||  Math.Abs(Gob.Y - waterBlocks[0].Gob.Bounds.Top) < 50){
+				//	Log.debug("can jump from water");
+					surface = Vector.UnitY;
+					//jumping = false;
+				//}
+				
+//				if (waterBlocks[0].Gob.Bounds.Top > Gob.Bounds.Top){
+//					surface = Vector.UnitY;
+//				} 
 			}
+			
+			
+			
 			Gob.Acceleration += gravity;
 		
 			Gob.Velocity += Gob.Acceleration;
@@ -94,7 +125,7 @@ namespace Project
 			
 			Collisions<Wall> wallColls = Gob.currentCollisions<Wall>();
 			
-			surface = Vector.Zero;
+			
 			foreach (Collision<Wall> c in wallColls){
 				Gob.Position -= c.MTV;
 				
@@ -110,7 +141,7 @@ namespace Project
 			
 			if (waterBlocks.Count > 0){
 				//if (Gob.Y < waterBlocks[0].Gob.Bounds.Top + 10){
-					surface = Vector.UnitY;
+					//surface = Vector.UnitY;
 				//}
 			}
 			
@@ -143,6 +174,55 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -37,7 +37,9 @@ namespace Project
 		 		Gob.Position -= Gob.Velocity;
 		 		Gob.Velocity = Gob.Velocity.Perpendicular;
 		 		Gob.Position += Gob.Velocity.Unit;
+		 		onWall = false;
 		 	} else {
+		 		Gob.Velocity = Vector.UnitY;
 		 	}
 		 	
 //		 	//check for line of sight to target
@@ -76,6 +78,7 @@ namespace Project
 		
 	}
 }
+
 
 
 
