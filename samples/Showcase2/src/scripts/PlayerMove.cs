@@ -67,10 +67,14 @@ namespace Project
 					Gob.Acceleration = -gravity * jumpPower;
 					Gob.Velocity = new Vector(Gob.Velocity.X, 0);
 					SpriteEffect fx = new SpriteEffect(Level);
-					fx.Position = Gob.Position + Vector.UnitY*Gob.Bounds.Size.Y /4;
-					fx.Effect = "smokeJump";
-					fx.Frames = Vector.One*4;
+					Vector xD = Vector.UnitX*Gob.Sprite.FrameWidth;
+					if (Gob.Velocity.X < 0){ xD *= -1;}
+					fx.Position = Gob.Position  - (Vector.UnitY*Gob.Bounds.Size.Y /2) - xD;
+					fx.Sprite.Rotation = 1.57f;
+					fx.Effect = "jump";
+					fx.Frames = new Vector(4, 2);
 					fx.Sprite.Scale *= .3f;
+					fx.Sprite.Depth = Gob.Sprite.Depth + .01f;
 					fx.Speed = 4;
 				}
 				
@@ -174,6 +178,21 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
