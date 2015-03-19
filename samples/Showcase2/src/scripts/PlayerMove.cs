@@ -20,6 +20,10 @@ namespace Project
 		
 		public override void onStart()
 		{
+		
+		
+			Level.Camera.TruePosition = Gob.Position;
+		
 		 //This code runs when the GameObject is initialized
 		}
 		
@@ -28,7 +32,9 @@ namespace Project
 			//Config conf = Objects.getObject<Config>("Config");
 			
 			
-			
+			if (Input.isNewKeyDown(Keys.Escape)){
+				GameManager.SetLevel("MainMenu.state");
+			}
 			
 			Gob.Acceleration = Vector.Zero;
 			Vector friction = new Vector(.08f, 0);
@@ -178,6 +184,11 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
 
 
 

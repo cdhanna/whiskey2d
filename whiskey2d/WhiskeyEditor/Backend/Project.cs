@@ -17,8 +17,10 @@ namespace WhiskeyEditor.Backend
     public class Project : Descriptor
     {
         public const string PROP_NAME = "Name";
-        public const string PROP_FULLSCREEN = "Fullscreen";
+        public const string PROP_FULLSCREEN = GameProperties.FULL_SCREEN;
+        public const string PROP_CLOSE_ON_EXIT = GameProperties.CLOSE_ON_EXIT;
         public const string PROP_LAST_EDITING_SCENE = "LastEditingScene";
+        
         public const string EXTENSION_PROJ = ".whiskeyproj";
         
         public const string PATH_COMPILE_EXE_CONFIG = ResourceFiles.LibExe + ".config";
@@ -140,6 +142,28 @@ namespace WhiskeyEditor.Backend
             }
         }
 
+        public Boolean CloseOnExit
+        {
+            get
+            {
+                string strVal = Settings.get(PROP_CLOSE_ON_EXIT);
+                if (strVal == null) CloseOnExit = true;
+
+                if (strVal == null || strVal.Equals("True"))
+                {
+                    return true;
+                }
+                else return false;
+            }
+            set
+            {
+                string val = value.ToString();
+                Settings.set(PROP_CLOSE_ON_EXIT, val);
+                Settings.Save();
+
+            }
+
+        }
 
         /// <summary>
         /// Get/Set the scene that the project is editing
@@ -247,6 +271,7 @@ namespace WhiskeyEditor.Backend
             
             gameSettings.set(GameProperties.START_SCENE, GameStartScene + ".state");
             gameSettings.set(GameProperties.FULL_SCREEN, IsFullScreen.ToString());
+            gameSettings.set(GameProperties.CLOSE_ON_EXIT, CloseOnExit.ToString());
             gameSettings.Save();
 
         }

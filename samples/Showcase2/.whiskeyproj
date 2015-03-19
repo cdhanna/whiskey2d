@@ -1,4 +1,5 @@
 Name=Showcase2
 LastEditingScene=default
-StartScene=Test
+StartScene=MainMenu
 Fullscreen=False
+CloseOnExit=False

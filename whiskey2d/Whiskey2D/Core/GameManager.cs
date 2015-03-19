@@ -56,6 +56,14 @@ namespace Whiskey2D.Core
             }
         }
 
+        public bool CloseOnExit
+        {
+            get
+            {
+                return bool.Parse(settings.get(GameProperties.CLOSE_ON_EXIT));
+            }
+        }
+
 
         private string CurrentScene
         {
@@ -142,6 +150,8 @@ namespace Whiskey2D.Core
 
         private GameLevel _level;
 
+        private string nextLevel = null;
+
         /// <summary>
         /// Gets the currently active Level.
         /// </summary>
@@ -217,7 +227,8 @@ namespace Whiskey2D.Core
         /// <param name="levelName">The name of the level to load. Make sure to include the .state extension</param>
         public static void SetLevel(string levelName)
         {
-            Instance.loadLevel(levelName);
+            Instance.nextLevel = levelName;
+            //Instance.loadLevel(levelName);
         }
 
         /// <summary>
@@ -411,7 +422,7 @@ namespace Whiskey2D.Core
 
         public virtual void Exit()
         {
-            UnloadContent();
+            //UnloadContent();
             GameController.Exit();
         }
 
@@ -422,7 +433,18 @@ namespace Whiskey2D.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public virtual void Update(GameTime gameTime)
         {
-            
+            if (CloseOnExit)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
+            }
+
+
+            if (nextLevel != null)
+            {
+                loadLevel(nextLevel);
+                nextLevel = null;
+            }
 
             HudManager.update();
 

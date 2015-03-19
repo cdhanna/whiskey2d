@@ -25,6 +25,19 @@ namespace WhiskeyEditor.UI.Documents
                 isFullScreen.Checked = value;
             }
         }
+
+        public bool CloseOnExit
+        {
+            get
+            {
+                return closeOnExit.Checked;
+            }
+            set
+            {
+                closeOnExit.Checked = value;
+            }
+        }
+
         public string ProjectName
         {
             get

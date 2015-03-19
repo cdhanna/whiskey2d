@@ -45,6 +45,7 @@ namespace WhiskeyEditor.UI.Documents
                 Project.Name = control.ProjectName;
                 Project.GameStartScene = control.StartScene;
                 Project.IsFullScreen = control.IsFullScreen;
+                Project.CloseOnExit = control.CloseOnExit;
                 base.save(pn);
             }));
         }
@@ -59,6 +60,7 @@ namespace WhiskeyEditor.UI.Documents
             control.setLevelOptions(levelNames);
             control.IsFullScreen = Project.IsFullScreen;
             control.StartScene = Project.GameStartScene;
+            control.CloseOnExit = Project.CloseOnExit;
 
         }
 
