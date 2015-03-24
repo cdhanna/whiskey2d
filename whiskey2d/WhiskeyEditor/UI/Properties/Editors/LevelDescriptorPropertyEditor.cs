@@ -105,12 +105,12 @@ namespace WhiskeyEditor.UI.Properties.Editors
             ShaderBaseSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderBaseSatDesc, 0, 1, .05f);
 
 
-            ShaderLightBloomThresholdDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Threshold", "Light Effects", Descriptor.Level.LightBloomSettings.BloomThreshold);
-            ShaderLightBlurdDesc = WhiskeyPropertyListGrid.addOtherProperty("Blur Amount", "Light Effects", Descriptor.Level.LightBloomSettings.BlurAmount);
-            ShaderLightBloomDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BloomIntensity);
-            ShaderLightBaseDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BaseIntensity);
-            ShaderLightBloomSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BloomSaturation);
-            ShaderLightBaseSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BaseSaturation);
+            ShaderLightBloomThresholdDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Threshold", "Light Effects", Descriptor.Level.LightBloomSettings.BloomThreshold);
+            ShaderLightBlurdDesc = WhiskeyPropertyListGrid.addOtherProperty("lBlur Amount", "Light Effects", Descriptor.Level.LightBloomSettings.BlurAmount);
+            ShaderLightBloomDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BloomIntensity);
+            ShaderLightBaseDesc = WhiskeyPropertyListGrid.addOtherProperty("lBase Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BaseIntensity);
+            ShaderLightBloomSatDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BloomSaturation);
+            ShaderLightBaseSatDesc = WhiskeyPropertyListGrid.addOtherProperty("lBase Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BaseSaturation);
 
             ShaderLightBloomThresholdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBloomThresholdDesc, 0, 1, .05f);
             ShaderLightBlurdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBlurdDesc, 0, 12, .1f);

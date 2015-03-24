@@ -50,7 +50,17 @@ namespace Whiskey2D.Core
 
         #endregion
 
+        public BloomSettings(BloomSettings settings)
+        {
 
+            Name = settings.Name;
+            BloomThreshold = settings.BloomThreshold;
+            BlurAmount = settings.BlurAmount;
+            BloomIntensity = settings.BloomIntensity;
+            BaseIntensity = settings.BaseIntensity;
+            BloomSaturation = settings.BloomSaturation;
+            BaseSaturation = settings.BaseSaturation;
+        }
         /// <summary>
         /// Constructs a new bloom settings descriptor.
         /// </summary>

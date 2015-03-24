@@ -78,8 +78,8 @@ namespace WhiskeyEditor.Backend
             LightingEnabled = true;
             ShadowingEnabled = true;
 
-            BloomSettings = BloomSettings.PresetSettings[5];
-            LightBloomSettings = BloomSettings.PresetSettings[5];
+            BloomSettings = new BloomSettings(BloomSettings.PresetSettings[5]);
+            LightBloomSettings = new BloomSettings(BloomSettings.PresetSettings[5]);
             LevelName = name;
             Layers = new List<CoreLayer>();
             Layers.Add(defaultLayer);

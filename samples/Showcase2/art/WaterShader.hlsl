@@ -19,12 +19,12 @@ float4 ps_main( PSInput PSin )  : COLOR0
 	float4 color = tex2D(sample, PSin.Texcoord);
 	
 	
-	color.r = .2f;
-	color.g = .4f;
-	color.b = .6f;
+	color.r = .1;
+	color.g = .3;
+	color.b = .4;
 	
 	if (color.a > .6){
-		color.a = .6;
+		color.a = .9;
 	} else color.a = 0;
 	
 	return color;
@@ -39,6 +39,13 @@ technique DefaultTechnique
 		PixelShader = compile ps_2_0 ps_main();
 	}
 }
+
+
+
+
+
+
+
 
 
 

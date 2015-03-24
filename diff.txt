@@ -1,0 +1,232 @@
+diff --git a/samples/Showcase2/.gamedata b/samples/Showcase2/.gamedata
+index 5a4d4f5..d585504 100644
+Binary files a/samples/Showcase2/.gamedata and b/samples/Showcase2/.gamedata differ
+diff --git a/samples/Showcase2/art/WaterShader.hlsl b/samples/Showcase2/art/WaterShader.hlsl
+index 0bb6c43..139e006 100644
+--- a/samples/Showcase2/art/WaterShader.hlsl
++++ b/samples/Showcase2/art/WaterShader.hlsl
+@@ -19,9 +19,9 @@ float4 ps_main( PSInput PSin )  : COLOR0
+ 	float4 color = tex2D(sample, PSin.Texcoord);
+ 	
+ 	
+-	color.r = .2f;
+-	color.g = .4f;
+-	color.b = .6f;
++	color.r = .8;
++	color.g = .7;
++	color.b = .4;
+ 	
+ 	if (color.a > .6){
+ 		color.a = .6;
+@@ -57,3 +57,6 @@ technique DefaultTechnique
+ 
+ 
+ 
++
++
++
+diff --git a/samples/Showcase2/art/WaterShader.mgfx b/samples/Showcase2/art/WaterShader.mgfx
+index ac80012..f2e1cfa 100644
+Binary files a/samples/Showcase2/art/WaterShader.mgfx and b/samples/Showcase2/art/WaterShader.mgfx differ
+diff --git a/samples/Showcase2/states/Test.state b/samples/Showcase2/states/Test.state
+index f87e65e..76dae57 100644
+Binary files a/samples/Showcase2/states/Test.state and b/samples/Showcase2/states/Test.state differ
+diff --git a/whiskey2d/Whiskey2D/Core/BloomSettings.cs b/whiskey2d/Whiskey2D/Core/BloomSettings.cs
+index 4a2c760..d8c810a 100644
+--- a/whiskey2d/Whiskey2D/Core/BloomSettings.cs
++++ b/whiskey2d/Whiskey2D/Core/BloomSettings.cs
+@@ -50,7 +50,17 @@ namespace Whiskey2D.Core
+ 
+         #endregion
+ 
++        public BloomSettings(BloomSettings settings)
++        {
+ 
++            Name = settings.Name;
++            BloomThreshold = settings.BloomThreshold;
++            BlurAmount = settings.BlurAmount;
++            BloomIntensity = settings.BloomIntensity;
++            BaseIntensity = settings.BaseIntensity;
++            BloomSaturation = settings.BloomSaturation;
++            BaseSaturation = settings.BaseSaturation;
++        }
+         /// <summary>
+         /// Constructs a new bloom settings descriptor.
+         /// </summary>
+diff --git a/whiskey2d/Whiskey2D/Core/CustomBlendStates.cs b/whiskey2d/Whiskey2D/Core/CustomBlendStates.cs
+index feec6ca..771f028 100644
+--- a/whiskey2d/Whiskey2D/Core/CustomBlendStates.cs
++++ b/whiskey2d/Whiskey2D/Core/CustomBlendStates.cs
+@@ -27,6 +27,8 @@ namespace Whiskey2D.Core
+             MultiplyWithAlpha.ColorBlendFunction = BlendFunction.Add;
+             MultiplyWithAlpha.ColorSourceBlend = MultiplyWithAlpha.AlphaSourceBlend = Blend.DestinationAlpha;
+ 
++
++
+             AlphaOnly = new BlendState();
+             AlphaOnly.ColorWriteChannels = ColorWriteChannels.Alpha;
+ 
+diff --git a/whiskey2d/WhiskeyEditor/Backend/EditorLevel.cs b/whiskey2d/WhiskeyEditor/Backend/EditorLevel.cs
+index d3b7e74..6654e07 100644
+--- a/whiskey2d/WhiskeyEditor/Backend/EditorLevel.cs
++++ b/whiskey2d/WhiskeyEditor/Backend/EditorLevel.cs
+@@ -78,8 +78,8 @@ namespace WhiskeyEditor.Backend
+             LightingEnabled = true;
+             ShadowingEnabled = true;
+ 
+-            BloomSettings = BloomSettings.PresetSettings[5];
+-            LightBloomSettings = BloomSettings.PresetSettings[5];
++            BloomSettings = new BloomSettings(BloomSettings.PresetSettings[5]);
++            LightBloomSettings = new BloomSettings(BloomSettings.PresetSettings[5]);
+             LevelName = name;
+             Layers = new List<CoreLayer>();
+             Layers.Add(defaultLayer);
+diff --git a/whiskey2d/WhiskeyEditor/MonoHelp/EditorRenderManager.cs b/whiskey2d/WhiskeyEditor/MonoHelp/EditorRenderManager.cs
+index 0ba34ff..0e00610 100644
+--- a/whiskey2d/WhiskeyEditor/MonoHelp/EditorRenderManager.cs
++++ b/whiskey2d/WhiskeyEditor/MonoHelp/EditorRenderManager.cs
+@@ -34,7 +34,6 @@ namespace WhiskeyEditor.MonoHelp
+ 
+ 
+         private BloomComponent bloomComponent;
+-        private BloomSettings bloomSettings;
+         private BloomComponent lightBloomComponent;
+         private RenderTarget2D hudTarget;
+         private RenderTarget2D hudObjectsTarget;
+@@ -317,8 +316,7 @@ namespace WhiskeyEditor.MonoHelp
+             {
+                 bloomComponent = new BloomComponent(GraphicsDevice, WhiskeyControl.Content);
+                 bloomComponent.loadContent();
+-                bloomSettings = BloomSettings.PresetSettings[0];
+-                bloomComponent.Settings = bloomSettings;
++                bloomComponent.Settings = BloomSettings.PresetSettings[0];
+             }
+             if (lightBloomComponent == null)
+             {
+@@ -356,7 +354,6 @@ namespace WhiskeyEditor.MonoHelp
+             renderHud();
+             //draw light radius
+             gobsToRender.ForEach( g => {
+-
+                 if (g.Light.Visible)
+                 {
+                     Convex convex = new Convex(g.Position, 0, VectorSet.Dodecahedren * (g.Light.Radius / 2));
+@@ -389,6 +386,8 @@ namespace WhiskeyEditor.MonoHelp
+             //DRAW SCENE WITH LIGHTMAP
+             GraphicsDevice.SetRenderTarget(null);
+             GraphicsDevice.Textures[1] = lightMapTarget;
++            Vector4 ambience = ((XnaColor)Level.AmbientLight).ToVector4();
++            lightEffect.Parameters["ambience"].SetValue(ambience);
+             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, Level.PreviewLighting ? lightEffect : null);
+             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
+             spriteBatch.End();
+@@ -416,9 +415,11 @@ namespace WhiskeyEditor.MonoHelp
+             setShaderValue(widthParameter, lightMapTarget.Width);
+             setShaderValue(heightParameter, lightMapTarget.Height);
+ 
++           
+             GraphicsDevice.SetRenderTarget(lightMapTarget);
+-            GraphicsDevice.Clear(Level.AmbientLight);
+-
++           
++            GraphicsDevice.Clear(XnaColor.Transparent);
++            
+             insts.ForEach(i =>
+             {
+                 if (i.Light.Visible)
+@@ -456,7 +457,7 @@ namespace WhiskeyEditor.MonoHelp
+                         });
+                     }
+ 
+-
++                    
+                     spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
+                     i.renderLight(RenderInfo);
+                     spriteBatch.End();
+@@ -464,7 +465,9 @@ namespace WhiskeyEditor.MonoHelp
+             });
+             ClearAlphaToOne();
+ 
++
+             lightBloomComponent.BeginDraw();
++            GraphicsDevice.Clear(XnaColor.Transparent);
+             spriteBatch.Begin();
+             spriteBatch.Draw(lightMapTarget, Vector.Zero, null, XnaColor.White);
+             spriteBatch.End();
+diff --git a/whiskey2d/WhiskeyEditor/UI/Properties/Editors/LevelDescriptorPropertyEditor.cs b/whiskey2d/WhiskeyEditor/UI/Properties/Editors/LevelDescriptorPropertyEditor.cs
+index 70b0be6..c738aad 100644
+--- a/whiskey2d/WhiskeyEditor/UI/Properties/Editors/LevelDescriptorPropertyEditor.cs
++++ b/whiskey2d/WhiskeyEditor/UI/Properties/Editors/LevelDescriptorPropertyEditor.cs
+@@ -105,12 +105,12 @@ namespace WhiskeyEditor.UI.Properties.Editors
+             ShaderBaseSatDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderBaseSatDesc, 0, 1, .05f);
+ 
+ 
+-            ShaderLightBloomThresholdDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Threshold", "Light Effects", Descriptor.Level.LightBloomSettings.BloomThreshold);
+-            ShaderLightBlurdDesc = WhiskeyPropertyListGrid.addOtherProperty("Blur Amount", "Light Effects", Descriptor.Level.LightBloomSettings.BlurAmount);
+-            ShaderLightBloomDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BloomIntensity);
+-            ShaderLightBaseDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BaseIntensity);
+-            ShaderLightBloomSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Bloom Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BloomSaturation);
+-            ShaderLightBaseSatDesc = WhiskeyPropertyListGrid.addOtherProperty("Base Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BaseSaturation);
++            ShaderLightBloomThresholdDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Threshold", "Light Effects", Descriptor.Level.LightBloomSettings.BloomThreshold);
++            ShaderLightBlurdDesc = WhiskeyPropertyListGrid.addOtherProperty("lBlur Amount", "Light Effects", Descriptor.Level.LightBloomSettings.BlurAmount);
++            ShaderLightBloomDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BloomIntensity);
++            ShaderLightBaseDesc = WhiskeyPropertyListGrid.addOtherProperty("lBase Intensity", "Light Effects", Descriptor.Level.LightBloomSettings.BaseIntensity);
++            ShaderLightBloomSatDesc = WhiskeyPropertyListGrid.addOtherProperty("lBloom Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BloomSaturation);
++            ShaderLightBaseSatDesc = WhiskeyPropertyListGrid.addOtherProperty("lBase Saturation", "Light Effects", Descriptor.Level.LightBloomSettings.BaseSaturation);
+ 
+             ShaderLightBloomThresholdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBloomThresholdDesc, 0, 1, .05f);
+             ShaderLightBlurdDesc.CustomTypeEditor = new UI.Properties.RestrictedFloatPicker(ShaderLightBlurdDesc, 0, 12, .1f);
+diff --git a/whiskey2d/WhiskeyEditor/compile-exe/WhiskeyRunner.exe b/whiskey2d/WhiskeyEditor/compile-exe/WhiskeyRunner.exe
+index e3f7218..7bfcb8a 100644
+Binary files a/whiskey2d/WhiskeyEditor/compile-exe/WhiskeyRunner.exe and b/whiskey2d/WhiskeyEditor/compile-exe/WhiskeyRunner.exe differ
+diff --git a/whiskey2d/WhiskeyEditor/compile-lib/Whiskey2D.dll b/whiskey2d/WhiskeyEditor/compile-lib/Whiskey2D.dll
+index 69dbfd2..11adb51 100644
+Binary files a/whiskey2d/WhiskeyEditor/compile-lib/Whiskey2D.dll and b/whiskey2d/WhiskeyEditor/compile-lib/Whiskey2D.dll differ
+diff --git a/whiskey2d/WhiskeyEditor/compile-media/light.fx b/whiskey2d/WhiskeyEditor/compile-media/light.fx
+index c65068f..d4734b0 100644
+--- a/whiskey2d/WhiskeyEditor/compile-media/light.fx
++++ b/whiskey2d/WhiskeyEditor/compile-media/light.fx
+@@ -4,6 +4,7 @@ sampler2D backgroundMap : register(s1);
+ float screenWidth;
+ float screenHeight;
+ float test;
++float4 ambience;
+ 
+ struct PS_INPUT 
+ {
+@@ -30,22 +31,24 @@ float4 SoftLight (float4 cBase, float4 cBlend)
+ 
+ float4 ps_main( PS_INPUT Input ) : COLOR0
+ {
+-	float4 bColor = tex2D( backgroundMap, Input.Texcoord );
+-	float4 pColor = tex2D( baseMap, Input.Texcoord );
+-	
+-	if (bColor.r > 1) {bColor.r = 1;} if (bColor.r < 0) { bColor.r = 0;}
++	float4 bColor = tex2D(backgroundMap, Input.Texcoord);
++
++	float4 pColor = tex2D(baseMap, Input.Texcoord);
++
++	/*if (bColor.r > 1) {bColor.r = 1;} if (bColor.r < 0) { bColor.r = 0;}
+ 	if (bColor.g > 1) {bColor.g = 1;} if (bColor.g < 0) { bColor.g = 0;}
+ 	if (bColor.b > 1) {bColor.b = 1;} if (bColor.b < 0) { bColor.b = 0;}
+ 	if (pColor.r > 1) {pColor.r = 1;} if (pColor.r < 0) { pColor.r = 0;}
+ 	if (pColor.g > 1) {pColor.g = 1;} if (pColor.g < 0) { pColor.g = 0;}
+-	if (pColor.b > 1) {pColor.b = 1;} if (pColor.b < 0) { pColor.b = 0;}
++	if (pColor.b > 1) {pColor.b = 1;} if (pColor.b < 0) { pColor.b = 0;}*/
+ 
+ 	//float4 rColor = SoftLight(bColor, pColor);
+ 
+-	
+-	
+-	float4 rColor = float4(pColor.x, pColor.y, pColor.z, 1);
++	bColor += ambience;
+ 
++	float4 rColor = pColor*bColor;
++	rColor.w = 1;
++	
+ 	
+ 	
+ 	return float4(rColor.x, rColor.y, rColor.z, rColor.w);
+diff --git a/whiskey2d/WhiskeyEditor/compile-media/light.mgfx b/whiskey2d/WhiskeyEditor/compile-media/light.mgfx
+index cc7f49a..5551fb2 100644
+Binary files a/whiskey2d/WhiskeyEditor/compile-media/light.mgfx and b/whiskey2d/WhiskeyEditor/compile-media/light.mgfx differ

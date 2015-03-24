@@ -72,8 +72,8 @@ namespace Whiskey2D.Core
             AmbientLight = Color.White;
             Camera = new Camera();
             Name = name;
-            BloomSettings = BloomSettings.PresetSettings[0];
-            BloomLightSettings = BloomSettings.PresetSettings[0];
+            BloomSettings = new BloomSettings(BloomSettings.PresetSettings[0]);
+            BloomLightSettings = new BloomSettings(BloomSettings.PresetSettings[0]);
             
         }
 

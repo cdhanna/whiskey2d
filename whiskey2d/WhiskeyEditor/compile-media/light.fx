@@ -4,6 +4,7 @@ sampler2D backgroundMap : register(s1);
 float screenWidth;
 float screenHeight;
 float test;
+float4 ambience;
 
 struct PS_INPUT 
 {
@@ -30,22 +31,24 @@ float4 SoftLight (float4 cBase, float4 cBlend)
 
 float4 ps_main( PS_INPUT Input ) : COLOR0
 {
-	float4 bColor = tex2D( backgroundMap, Input.Texcoord );
-	float4 pColor = tex2D( baseMap, Input.Texcoord );
-	
-	if (bColor.r > 1) {bColor.r = 1;} if (bColor.r < 0) { bColor.r = 0;}
+	float4 bColor = tex2D(backgroundMap, Input.Texcoord);
+
+	float4 pColor = tex2D(baseMap, Input.Texcoord);
+
+	/*if (bColor.r > 1) {bColor.r = 1;} if (bColor.r < 0) { bColor.r = 0;}
 	if (bColor.g > 1) {bColor.g = 1;} if (bColor.g < 0) { bColor.g = 0;}
 	if (bColor.b > 1) {bColor.b = 1;} if (bColor.b < 0) { bColor.b = 0;}
 	if (pColor.r > 1) {pColor.r = 1;} if (pColor.r < 0) { pColor.r = 0;}
 	if (pColor.g > 1) {pColor.g = 1;} if (pColor.g < 0) { pColor.g = 0;}
-	if (pColor.b > 1) {pColor.b = 1;} if (pColor.b < 0) { pColor.b = 0;}
+	if (pColor.b > 1) {pColor.b = 1;} if (pColor.b < 0) { pColor.b = 0;}*/
 
 	//float4 rColor = SoftLight(bColor, pColor);
 
-	
-	
-	float4 rColor = float4(pColor.x, pColor.y, pColor.z, 1);
+	bColor += ambience;
 
+	float4 rColor = pColor*bColor;
+	rColor.w = 1;
+	
 	
 	
 	return float4(rColor.x, rColor.y, rColor.z, rColor.w);

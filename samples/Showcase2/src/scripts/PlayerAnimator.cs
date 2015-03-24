@@ -29,13 +29,15 @@ namespace Project
 		
 		public override void onStart()
 		{
-			Gob.Sprite.Color = new Color(1f, 1f, 0, .1f);
+			
 			vis = new SimpleObject(Level);
 			vis.Sprite.ImagePath = "W2DSpriteSheetfix2.png";
 			vis.Sprite.Columns = 8;
 			vis.Sprite.Rows = 6;
 			vis.Sprite.Scale = Vector.One * .6f;
 			vis.Sprite.Depth = .6f;
+			vis.Sprite.Color = Gob.Sprite.Color;
+			
 			runLeft = vis.Sprite.createAnimation(8, 15, 7, true);
 			runRight = vis.Sprite.createAnimation(0, 7, 7, true);
 			standLeft = vis.Sprite.createAnimation(40, 40, 7, true);
@@ -53,8 +55,9 @@ namespace Project
 			arm.Sprite.ImagePath = "W2Dgunarm.png";
 			arm.Sprite.Scale = new Vector(-.6f, .6f);
 			arm.Sprite.Depth = .61f;
+			arm.Sprite.Color = Gob.Sprite.Color;
 			armOffset = new Vector(30, -55);
-			
+			Gob.Sprite.Color = new Color(0, 1f, 0, 0);
 		}
 		
 		
@@ -186,6 +189,11 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
 
 
 

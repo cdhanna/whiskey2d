@@ -34,7 +34,6 @@ namespace WhiskeyEditor.MonoHelp
 
 
         private BloomComponent bloomComponent;
-        private BloomSettings bloomSettings;
         private BloomComponent lightBloomComponent;
         private RenderTarget2D hudTarget;
         private RenderTarget2D hudObjectsTarget;
@@ -317,8 +316,7 @@ namespace WhiskeyEditor.MonoHelp
             {
                 bloomComponent = new BloomComponent(GraphicsDevice, WhiskeyControl.Content);
                 bloomComponent.loadContent();
-                bloomSettings = BloomSettings.PresetSettings[0];
-                bloomComponent.Settings = bloomSettings;
+                bloomComponent.Settings = BloomSettings.PresetSettings[0];
             }
             if (lightBloomComponent == null)
             {
@@ -356,7 +354,6 @@ namespace WhiskeyEditor.MonoHelp
             renderHud();
             //draw light radius
             gobsToRender.ForEach( g => {
-
                 if (g.Light.Visible)
                 {
                     Convex convex = new Convex(g.Position, 0, VectorSet.Dodecahedren * (g.Light.Radius / 2));
@@ -389,6 +386,8 @@ namespace WhiskeyEditor.MonoHelp
             //DRAW SCENE WITH LIGHTMAP
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = lightMapTarget;
+            Vector4 ambience = ((XnaColor)Level.AmbientLight).ToVector4();
+            lightEffect.Parameters["ambience"].SetValue(ambience);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, Level.PreviewLighting ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
             spriteBatch.End();
@@ -416,9 +415,11 @@ namespace WhiskeyEditor.MonoHelp
             setShaderValue(widthParameter, lightMapTarget.Width);
             setShaderValue(heightParameter, lightMapTarget.Height);
 
+           
             GraphicsDevice.SetRenderTarget(lightMapTarget);
-            GraphicsDevice.Clear(Level.AmbientLight);
-
+           
+            GraphicsDevice.Clear(XnaColor.Transparent);
+            
             insts.ForEach(i =>
             {
                 if (i.Light.Visible)
@@ -456,7 +457,7 @@ namespace WhiskeyEditor.MonoHelp
                         });
                     }
 
-
+                    
                     spriteBatch.Begin(SpriteSortMode.Immediate, CustomBlendStates.MultiplyWithAlpha, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, CameraTransform);
                     i.renderLight(RenderInfo);
                     spriteBatch.End();
@@ -464,7 +465,9 @@ namespace WhiskeyEditor.MonoHelp
             });
             ClearAlphaToOne();
 
+
             lightBloomComponent.BeginDraw();
+            GraphicsDevice.Clear(XnaColor.Transparent);
             spriteBatch.Begin();
             spriteBatch.Draw(lightMapTarget, Vector.Zero, null, XnaColor.White);
             spriteBatch.End();

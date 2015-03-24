@@ -27,6 +27,8 @@ namespace Whiskey2D.Core
             MultiplyWithAlpha.ColorBlendFunction = BlendFunction.Add;
             MultiplyWithAlpha.ColorSourceBlend = MultiplyWithAlpha.AlphaSourceBlend = Blend.DestinationAlpha;
 
+
+
             AlphaOnly = new BlendState();
             AlphaOnly.ColorWriteChannels = ColorWriteChannels.Alpha;
 

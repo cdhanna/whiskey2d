@@ -221,6 +221,9 @@ namespace Whiskey2D.Core.Managers.Impl
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Textures[1] = bloomLightComponent.OutputTarget ;
+            Vector4 ambience = ((XnaColor)GameManager.Level.AmbientLight).ToVector4();
+            lightEffect.Parameters["ambience"].SetValue(ambience);
+            
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, GameManager.Level.LightingEnabled ? lightEffect : null);
             spriteBatch.Draw(bloomComponent.OutputTarget, Vector.Zero, XnaColor.White);
 
@@ -245,7 +248,7 @@ namespace Whiskey2D.Core.Managers.Impl
             setShaderValue(heightParameter, lightMapTarget.Height);
 
             GraphicsDevice.SetRenderTarget(lightMapTarget);
-            GraphicsDevice.Clear(GameManager.Level.AmbientLight);
+            GraphicsDevice.Clear(XnaColor.Transparent);
 
             List<GameObject> lightGobs = gobs.Where(i => i.Light.Visible).ToList();
             lightGobs.ForEach(i =>
@@ -290,6 +293,7 @@ namespace Whiskey2D.Core.Managers.Impl
             ClearAlphaToOne();
 
             bloomLightComponent.BeginDraw();
+            GraphicsDevice.Clear(XnaColor.Transparent);
             spriteBatch.Begin();
             spriteBatch.Draw(lightMapTarget, Vector.Zero, null, XnaColor.White);
             spriteBatch.End();
