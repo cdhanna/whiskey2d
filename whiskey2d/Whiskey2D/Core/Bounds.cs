@@ -148,6 +148,7 @@ namespace Whiskey2D.Core
         /// <param name="hints">any special instructions for drawing</param>
         public void draw(RenderInfo info, RenderHints hints)
         {
+            //convex.Origin -= Vector.One;
             convex.render(info.SpriteBatch, info.Transform, hints);
         }
 

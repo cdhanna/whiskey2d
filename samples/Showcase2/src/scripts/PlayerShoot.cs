@@ -71,7 +71,7 @@ namespace Project
 		 	if (dir.Equals(Vector.Zero)){
 		 		dir.X = Math.Sign(Gob.Velocity.X);
 		 	}
-		 	dir = dir.Unit;
+		 	dir = dir.UnitSafe;
 		 	
 		 	Gob.LookAngle = dir.Angle- (float) Math.PI/2;
 		 	
@@ -90,7 +90,7 @@ namespace Project
 		 		target.Position = rc.ContactPoint;
 		 	}
 		 	
-		 	RayCollisions<Badguy> badguyColls = Gob.currentRayCollisions<Badguy>(start , dir);
+		 	RayCollisions<Drone> badguyColls = Gob.currentRayCollisions<Drone>(start , dir);
 		 	if (badguyColls.Count > 0){
 		 		if (rc == null || rc.Length > badguyColls[0].Length){
 		 			rc = badguyColls[0];
@@ -98,6 +98,7 @@ namespace Project
 		 		}
 		 	}
 		 	
+		
 		 	
 		 	
 		 	if (rayColls.Count > 0){
@@ -127,10 +128,11 @@ namespace Project
 		 			//laserSound.Pan = 0;
 		 			
 		 			
-		 			if (rc is RayCollision<Badguy>){
-		 				RayCollision<Badguy> brc = (RayCollision<Badguy>) rc;
+		 			if (rc is RayCollision<Drone>){
+		 				RayCollision<Drone> brc = (RayCollision<Drone>) rc;
 		 				brc.Gob.close();
 		 			}
+		 			
 		 			
 		 			
 		 			
@@ -235,6 +237,9 @@ namespace Project
 	
 	
 }
+
+
+
 
 
 

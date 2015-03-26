@@ -69,7 +69,7 @@ namespace Project
 			
 			arm.Sprite.Rotation = look;
 			vis.Position = Gob.Position + offset;
-			
+		
 			float lookPlus = look + (float)Math.PI/2;
 			
 			
@@ -189,6 +189,15 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
 
 
 

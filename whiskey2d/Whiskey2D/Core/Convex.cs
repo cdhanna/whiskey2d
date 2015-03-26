@@ -216,11 +216,7 @@ namespace Whiskey2D.Core
             else return collInfo;
         }
 
-        
 
-
-        
-        
 
         public void render(SpriteBatch spriteBatch, Matrix transform, RenderHints hints)
         {

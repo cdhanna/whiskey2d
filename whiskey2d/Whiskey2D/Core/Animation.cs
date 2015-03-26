@@ -118,6 +118,11 @@ namespace Whiskey2D.Core
 
                 int direction = Math.Sign(EndFrame - StartFrame);
 
+                if (Speed < 0)
+                {
+                    direction *= -Speed;
+                }
+
                 CurrentFrame += direction;
 
 
