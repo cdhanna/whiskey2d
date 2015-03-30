@@ -63,7 +63,7 @@ namespace WhiskeyEditor.UI.Status
                             {
                                 progressBar.Value = 0;
                                 progressBar.Visible = false;
-                                mainPanel.Visible = false;
+                                mainPanel.Visible = true;
                             }));
                         }
 
@@ -84,7 +84,7 @@ namespace WhiskeyEditor.UI.Status
             mainPanel = new Panel();
             mainPanel.AutoSize = true;
             mainPanel.BackColor = Color.Transparent;
-            mainPanel.Visible = false;
+            mainPanel.Visible = true;
 
 
             launchThreads();
@@ -112,7 +112,8 @@ namespace WhiskeyEditor.UI.Status
 
             messageLabel = new Label();
             //messageLabel.Margin = new Padding(0, 30,100, 0);
-            messageLabel.Text = " ";
+            messageLabel.Text = "hello world";
+           
             messageLabel.TextAlign = ContentAlignment.MiddleLeft;
             messageLabel.ForeColor = Color.White;
         }
@@ -132,6 +133,19 @@ namespace WhiskeyEditor.UI.Status
 
 
             
+        }
+
+        public void setMessage(string msg)
+        {
+            this.Invoke(new NoArgFunction(() =>
+            {
+               if (!progressBar.Visible)
+                {
+                    messageLabel.Text = msg;
+                }
+            }));
+            
+
         }
 
         protected override void OnPaint(PaintEventArgs e)

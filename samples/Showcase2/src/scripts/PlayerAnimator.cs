@@ -57,7 +57,7 @@ namespace Project
 			arm.Sprite.Depth = .61f;
 			arm.Sprite.Color = Gob.Sprite.Color;
 			armOffset = new Vector(30, -55);
-			Gob.Sprite.Color = new Color(0, 1f, 0, 0);
+			Gob.Sprite.Color = new Color(0, 1f, 0, 0f);
 		}
 		
 		
@@ -189,6 +189,8 @@ namespace Project
 		
 	}
 }
+
+
 
 
 

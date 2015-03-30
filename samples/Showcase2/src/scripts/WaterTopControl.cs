@@ -21,7 +21,7 @@ namespace Project
 
 			nodes = new List<WaterNode>();
 			int index = 0;
-			for (float x = (float) Gob.Bounds.Left; x < (float) Gob.Bounds.Right + 16f; x += 15f){
+			for (float x = (float) Gob.Bounds.Left; x < (float) Gob.Bounds.Right + 46f; x += 45f){
 				WaterNode node = new WaterNode(Level, new Vector(x, Gob.Bounds.Top));
 				node.Floor = Gob.Bounds.Bottom;
 				node.Layer = Gob.Layer;
@@ -220,6 +220,7 @@ namespace Project
 	
 	}
 }
+
 
 
 

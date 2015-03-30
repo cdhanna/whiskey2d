@@ -37,7 +37,7 @@ namespace Project
 			//camMaster.getScript("CameraMasterControl").Active = false;	
 			
 			obj = new SimpleObject(Level);
-			obj.Position = Gob.Position;
+			obj.Position = Gob.Position - Vector.UnitX*1000;
 			obj.Sprite.Color = Color.Red;
 			obj.Sprite.Visible = false;
 			camMaster.Target = obj.Name;
@@ -99,6 +99,9 @@ namespace Project
 		
 	}
 }
+
+
+
 
 
 

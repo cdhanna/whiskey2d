@@ -31,9 +31,9 @@ namespace WhiskeyEditor.compile_types.Scripts
 
             String code = "";
             code += "Level.Camera.Zoom = 1f;";
-            code += "Level.Camera.PositionSpeed = 20f;";
-            code += "Level.Camera.ZoomSpring = .01f;";
-            code += "Level.Camera.ZoomFriction = .1f;";
+            code += "Level.Camera.PositionSpeed = Gob.TranslationSpeed;";
+            code += "Level.Camera.ZoomSpring = Gob.ZoomSpeed;";
+            code += "Level.Camera.ZoomFriction = Gob.ZoomFriction;";
             return code;
         }
 

@@ -237,6 +237,11 @@ namespace WhiskeyEditor.MonoHelp
                 editorObjects.updateAll();
 
                 timer.Restart();
+
+                Vector camPos = WhiskeyControl.ActiveCamera.getGameCoordinate(WhiskeyControl.InputManager.MousePosition);
+                String msg = "(" + (int)camPos.X + ", " + (int)camPos.Y + ")";
+                UI.UIManager.Instance.TopView.Status.setMessage(msg);
+
             }
             Invalidate();
         }

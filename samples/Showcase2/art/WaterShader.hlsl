@@ -20,8 +20,8 @@ float4 ps_main( PSInput PSin )  : COLOR0
 	
 	
 	color.r = .1;
-	color.g = .3;
-	color.b = .4;
+	color.g = .2;
+	color.b = .3;
 	
 	if (color.a > .6){
 		color.a = .9;
@@ -39,6 +39,8 @@ technique DefaultTechnique
 		PixelShader = compile ps_2_0 ps_main();
 	}
 }
+
+
 
 
 

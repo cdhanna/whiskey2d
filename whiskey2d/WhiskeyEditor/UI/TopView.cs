@@ -51,6 +51,7 @@ namespace WhiskeyEditor.UI
         private WhiskeyStatusBar statBar;
 
         public OutputView Output { get { return outputView; } }
+        public WhiskeyStatusBar Status { get { return statBar; } }
 
         public TopView()
         {

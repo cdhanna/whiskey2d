@@ -46,6 +46,11 @@ namespace Project
 				Gob.Acceleration += Vector.UnitX;
 			}
 			
+			if (Input.isKeyDown(Keys.O)){
+				surface = Vector.UnitY;
+				jumping = false;
+			}
+			
 			if (Input.isNewKeyDown(Keys.W)){
 				if (surface.Y > .8f){
 					jumping = true;
@@ -129,7 +134,7 @@ namespace Project
 			}
 			
 			Gob.Velocity -= new Vector(Gob.Velocity.X * friction.X, Gob.Velocity.Y * friction.Y);
-			Gob.Sprite.Scale = new Vector(50 + Math.Abs(Gob.Velocity.X*15), 256);
+			Gob.Sprite.Scale = new Vector(70 + Math.Abs(Gob.Velocity.X*15), 256);
 			
 			Gob.Position += Gob.Velocity;
 			
@@ -140,6 +145,10 @@ namespace Project
 				Gob.Position -= c.MTV;
 				
 				Gob.Velocity = c.Normal.Perpendicular * c.Normal.Perpendicular.dot(Gob.Velocity);
+				
+				if (c.Gob.Speed != 0){
+					Gob.Position += c.Gob.Velocity;
+				}
 				
 				if (c.Normal.Y > .8f){
 					surface = c.Normal;
@@ -184,6 +193,13 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
 
 
 

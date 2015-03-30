@@ -29,26 +29,26 @@ namespace Project
 
 
 			//remove on collisions with walls
-			Bounds accurate = new Bounds(Gob.Position - Gob.Bounds.Size/4, Gob.Bounds.Size/2, 0);
-			foreach(var w in Objects.getAllObjectsOfType<Wall>()){
-				if (w.Bounds.boundWithin(accurate)){
-					Gob.close();
-				}
-			}
+//			Bounds accurate = new Bounds(Gob.Position - Gob.Bounds.Size/4, Gob.Bounds.Size/2, 0);
+//			foreach(var w in Objects.getAllObjectsOfType<Wall>()){
+//				if (w.Bounds.boundWithin(accurate)){
+//					Gob.close();
+//				}
+//			}
 			
 //			//add force to water
-			if (Gob.EffectWater && Gob.Sprite.Scale.Length > .1f){
-				foreach(var w in Objects.getAllObjectsOfType<WaterNode>()){
-					if (w.Bounds.boundWithin(accurate)){
-						w.Acceleration += Gob.Velocity * .1f * Gob.Sprite.Scale;
-						WaterParticle.makeSplash(Gob.Position, 4, new Vector(0, .4f * -Gob.Velocity.Y), Gob.Sprite.Scale.Length * .5f, 1, false);
-					}
-					if (w.Bounds.Bottom < accurate.Top){
-					//	Gob.close();
-					//	break;
-					}
-				}
-			}
+//			if (Gob.EffectWater && Gob.Sprite.Scale.Length > .1f){
+//				foreach(var w in Objects.getAllObjectsOfType<WaterNode>()){
+//					if (w.Bounds.boundWithin(accurate)){
+//						w.Acceleration += Gob.Velocity * .1f * Gob.Sprite.Scale;
+//						WaterParticle.makeSplash(Gob.Position, 4, new Vector(0, .4f * -Gob.Velocity.Y), Gob.Sprite.Scale.Length * .5f, 1, false);
+//					}
+//					if (w.Bounds.Bottom < accurate.Top){
+//					//	Gob.close();
+//					//	break;
+//					}
+//				}
+//			}
 			Gob.Acceleration = Vector.UnitY;
 
 		}
@@ -60,6 +60,9 @@ namespace Project
 		
 	}
 }
+
+
+
 
 
 

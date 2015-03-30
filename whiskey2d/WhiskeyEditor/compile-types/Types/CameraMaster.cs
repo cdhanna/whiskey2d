@@ -25,6 +25,9 @@ namespace WhiskeyEditor.compile_types.Types
 
             addPropertyDescriptor(new PropertyDescriptor("Target", new RealType(typeof(String), "")));
             addPropertyDescriptor(new PropertyDescriptor("ObeyCamZones", new RealType(typeof(Boolean), true)));
+            addPropertyDescriptor(new PropertyDescriptor("TranslationSpeed", new RealType(typeof(float), 20f)));
+            addPropertyDescriptor(new PropertyDescriptor("ZoomSpeed", new RealType(typeof(float), .01f)));
+            addPropertyDescriptor(new PropertyDescriptor("ZoomFriction", new RealType(typeof(float), .1f)));
             addScript("CameraMasterControl");
 
             base.configure();
