@@ -19,7 +19,7 @@ namespace Project
 		
 		public override void onStart()
 		{
-			 plr = Objects.getObject<Player>("Player1");
+			 plr = Objects.getObject<Player>("Player");
 			 scr = Gob.Scripts[1];
 			 
 			 
@@ -62,6 +62,7 @@ namespace Project
 		
 	}
 }
+
 
 
 

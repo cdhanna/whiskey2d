@@ -10,42 +10,27 @@ using Microsoft.Xna.Framework.Audio;
 namespace Project
 {
 	[Serializable] 
-	public class WallMove : Script<Wall>
+	public class Tele : Script<Button>
 	{
 	
-		bool goingToA;
-		
+		Player plr;
 	
 		public override void onStart()
 		{
-		 
-		 	goingToA = !Gob.StartOnA;
-		 
+		 	plr = Objects.getObject<Player>("Player");
+		 	plr.Position = new Vector(200);
+		 	Level.Camera.TruePosition = plr.Position;
+		 	
+		 	Objects.getObject<Wall>("WALLPIPE").Active = (Objects.getObject<Wall>("doorA").Y < 1201);
+		 	if (Objects.getObject<Wall>("WALLPIPE").Active){
+		 		Objects.getObject<Wall>("WALLPIPE").X = 9650;
+		 	}
 		}
 		
 		public override void onUpdate() 
 		{
 		 	
-		 	Vector target;
-		 	if (goingToA){
-		 		target = Gob.EndA;
-		 	} else target = Gob.EndB;
-		 
-		 
-		 	Gob.Velocity = (target - Gob.Position).UnitSafe * Gob.Speed;
 		 	
-		 	Gob.Position += Gob.Velocity;
-		 
-		 
-		 
-		 	if ( (Gob.Position - target).Length < Gob.Speed){
-		 		goingToA = !goingToA;
-		 	
-		 	}
-		 
-		 
-		 
-		 
 		}
 		
 		public override void onClose()  
@@ -55,10 +40,6 @@ namespace Project
 		
 	}
 }
-
-
-
-
 
 
 
