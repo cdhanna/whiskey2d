@@ -60,7 +60,7 @@ namespace Project
 		 	float speed = 3f;
 		 	nodes.ForEach( n=> {
 		 	
-		 		n.Velocity += -.01f * n.Velocity;
+		 		n.Velocity += -.005f * n.Velocity;
 		 	
 		 		Vector fUs = n.KValue * (n.RestPosition - n.Position);
 		 		n.Acceleration += fUs;
@@ -220,6 +220,7 @@ namespace Project
 	
 	}
 }
+
 
 
 

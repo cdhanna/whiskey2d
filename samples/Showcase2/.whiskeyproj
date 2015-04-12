@@ -1,5 +1,5 @@
 Name=Showcase2
 LastEditingScene=default
-StartScene=MainMenu
+StartScene=FinalLevel1
 Fullscreen=False
-CloseOnExit=False
+CloseOnExit=True

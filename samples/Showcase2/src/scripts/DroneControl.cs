@@ -13,31 +13,22 @@ namespace Project
 	public class DroneControl : Script<Drone>
 	{
 	
-		GameObject target;
-		Wall lastWall;
-		Wall targetWall;
-		
 		SimpleObject vis;
 		Animation a;
+		bool goingToA;
 		
 		public override void onStart()
 		{
 		
-			target = Objects.getObject(Gob.Target);
-			if (Gob.WallName.Length > 1){
-				targetWall = Objects.getObject<Wall>(Gob.WallName);
-			}
-			
 			Gob.Sprite.Visible = false;
 			vis = new SimpleObject(Level);
-			vis.Sprite.ImagePath = "blob3.png";
-			vis.Sprite.Rows = 5;
-			vis.Sprite.Columns = 4;
-			vis.Sprite.Scale = Vector.One;
-			vis.Sprite.Color = Gob.Sprite.Color;
-			vis.Sprite.Depth = .6f;
-			a = vis.Sprite.createAnimation(0,19, 5, true);
+			vis.Sprite.ImagePath = "enemy1c.png";
+			vis.Sprite.Rows = 1;
+			vis.Sprite.Columns = 27;
 			
+			vis.Sprite.Depth = .6f;
+			a = vis.Sprite.createAnimation(20,27, 7, true);
+			goingToA = true;
 		}
 		
 		public override void onUpdate() 
@@ -46,34 +37,31 @@ namespace Project
 			Gob.Acceleration = Vector.UnitY;
 
 
-			float x = Math.Sign(target.X - Gob.X);
-			
-			
 
-			if (lastWall != null && ((targetWall == lastWall) || targetWall == null)){
-				if (Gob.Bounds.Right +x > lastWall.Bounds.Right){
-					Gob.Acceleration = new Vector(0, Gob.Acceleration.Y);
-					Gob.Velocity = Vector.Zero;
-					Gob.X = lastWall.Bounds.Right - Gob.Bounds.Size.X/2;
-				} else if (Gob.Bounds.Left +x < lastWall.Bounds.Left){
-					Gob.Acceleration = new Vector(0, Gob.Acceleration.Y);
-					Gob.Velocity = Vector.Zero;
-					Gob.X = lastWall.Bounds.Left + Gob.Bounds.Size.X/2;
-				
-				} else {
-					Gob.Acceleration += Vector.UnitX * x;
-				}
-			
+
+			Vector vX = Gob.A;
+			if (!goingToA){
+				vX = Gob.B;
 			}
-
-
+			
+			float d = (vX.X - Gob.X);
+			
+			if (Math.Abs(d) < 10){
+				goingToA = !goingToA;
+			}
+			
+			float x = Math.Sign(d);
+			
+			
+			
+			Gob.Acceleration += Vector.UnitX * x * 2;
 			Gob.Velocity += Gob.Acceleration;
 			Gob.Velocity -= Gob.Velocity * .1f;
 			
 			Gob.Position += Gob.Velocity;
 
-			vis.Position = Gob.Position + new Vector(0, 20);
-			vis.Sprite.Scale = new Vector(x, 1);
+			vis.Position = Gob.Position + new Vector(0, -75);
+			vis.Sprite.Scale = new Vector(x, 1) * 1.5f;
 			//if (Gob.Velocity.X != 0){
 				a.advanceFrame();
 			
@@ -82,7 +70,7 @@ namespace Project
 			var wallColls = Gob.currentCollisions<Wall>();
 			foreach (var wallColl in wallColls){
 				Gob.Position -= wallColl.MTV;
-				lastWall = wallColl.Gob;
+
 			
 			}
 
@@ -91,21 +79,69 @@ namespace Project
 		
 		public override void onClose()  
 		{
-		 
+		 	float x = Math.Sign(vis.Sprite.Scale.X);
 		 	SpriteEffect boom = new SpriteEffect(Level);
 		 
 		 	boom.Effect = "bigBang";
 		 	boom.Frames = new Vector(1, 48);
 		 	boom.Position = Gob.Position;
-		 	boom.Speed = -3;
+		 	boom.Speed = 1;
 		 	boom.Sprite.Scale *= 1.5f;
 		 	
 		 	vis.close();
+		 	
+		 	SpriteEffect death = new SpriteEffect(Level);
+		 
+		 	death.Effect = "enemy1c";
+		 	death.Frames = new Vector(1, 27);
+		 	death.Position = Gob.Position+ new Vector(0, -75);;
+		 	death.Speed = 13;
+		 	death.StartFrame = 7;
+		 	death.EndFrame = 13;
+		 	death.Sprite.Scale = new Vector(x, 1) * 1.5f;
+		 	
 		 	
 		}
 		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

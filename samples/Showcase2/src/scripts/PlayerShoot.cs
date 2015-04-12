@@ -98,7 +98,13 @@ namespace Project
 		 		}
 		 	}
 		 	
-		
+			RayCollisions<Worm> badguyCollsWorms = Gob.currentRayCollisions<Worm>(start , dir);
+		 	if (badguyCollsWorms.Count > 0){
+		 		if (rc == null || rc.Length > badguyCollsWorms[0].Length){
+		 			rc = badguyCollsWorms[0];
+		 			target.Position = rc.ContactPoint;
+		 		}
+		 	}
 		 	
 		 	
 		 	if (rayColls.Count > 0){
@@ -237,6 +243,7 @@ namespace Project
 	
 	
 }
+
 
 
 
