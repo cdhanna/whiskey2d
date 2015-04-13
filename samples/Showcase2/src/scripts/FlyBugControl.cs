@@ -25,12 +25,13 @@ namespace Project
 
 			target = Objects.getObject(Gob.Target);
 			Gob.Sprite.Color = new Color(0, 1, 0, .2f);
+			Gob.Sprite.Visible = false;
 			vis = new SimpleObject(Level);
 			vis.Sprite.ImagePath = "enemy3.png";
 			vis.Sprite.Rows = 1;
 			vis.Sprite.Columns = 31;
 			vis.Position = Gob.Position;
-			vis.Sprite.Scale = Vector.One * .8f;
+			vis.Sprite.Scale = Gob.Sprite.Scale / 300f;
 			idle = vis.Sprite.createAnimation(13, 19, 2, true);	
 			attack = vis.Sprite.createAnimation(1, 6, 4, true);
 		}
@@ -72,12 +73,12 @@ namespace Project
 			
 				Gob.Position += Gob.Velocity;
 				
-				var colls = Gob.currentCollisions<Wall>();
-				foreach (var c in colls){
-					Gob.Position -= c.MTV;
-					Gob.Velocity = c.Normal.Perpendicular * c.Normal.Perpendicular.dot(Gob.Velocity);
-					//Gob.Velocity += c.Normal.Perpendicular;
-				}
+//				var colls = Gob.currentCollisions<Wall>();
+//				foreach (var c in colls){
+//					Gob.Position -= c.MTV;
+//					Gob.Velocity = c.Normal.Perpendicular * c.Normal.Perpendicular.dot(Gob.Velocity);
+//					//Gob.Velocity += c.Normal.Perpendicular;
+//				}
 				
 				
 			
@@ -125,7 +126,7 @@ namespace Project
 		 	death.Speed = 13;
 		 	death.StartFrame = 8;
 		 	death.EndFrame = 11;
-		 	death.Sprite.Scale = new Vector(x, 1) * .8f;
+		 	death.Sprite.Scale = new Vector(x * Gob.Sprite.Scale.X, Gob.Sprite.Scale.Y) / 300f;
 		 	
 		 
 		 
@@ -133,6 +134,12 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
 
 
 

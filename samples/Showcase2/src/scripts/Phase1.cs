@@ -37,7 +37,7 @@ namespace Project
 			obj.Sprite.Visible = false;
 			camMaster.Target = obj.Name;
 			camMaster.ObeyCamZones = false;
-		 	
+		 	Level.Camera.TargetZoom = .55f;
 		}
 		
 		public override void onUpdate() 
@@ -52,6 +52,7 @@ namespace Project
 			 	
 			 		target.Y = Math.Min(2600, target.Y + 7);
 			 		camSpeed = 7;
+			 		
 			 		if (!water.Sink){
 			 			water.Sink = true;
 			 		}
@@ -73,6 +74,15 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
 
 
 

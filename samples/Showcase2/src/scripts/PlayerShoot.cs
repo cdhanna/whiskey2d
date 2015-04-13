@@ -37,6 +37,7 @@ namespace Project
 		 	target.Light.Radius = 64;
 		 	target.Light.Color = Color.Red;
 		 	target.Light.Visible = false;
+		 	target.Sprite.Visible = false;
 		 	target.IsDebug = true;
 		 	
 		 	
@@ -148,10 +149,10 @@ namespace Project
 		 				brc.Gob.close();
 		 			}
 		 			
-		 			if (rc is RayCollision<Worm>){
-		 				RayCollision<Worm> brc = (RayCollision<Worm>) rc;
-		 				brc.Gob.close();
-		 			}
+//		 			if (rc is RayCollision<Worm>){
+//		 				RayCollision<Worm> brc = (RayCollision<Worm>) rc;
+//		 				brc.Gob.close();
+//		 			}
 		 			
 		 			if (rc is RayCollision<FlyBug>){
 		 				RayCollision<FlyBug> brc = (RayCollision<FlyBug>) rc;
@@ -260,6 +261,9 @@ namespace Project
 	
 	
 }
+
+
+
 
 
 

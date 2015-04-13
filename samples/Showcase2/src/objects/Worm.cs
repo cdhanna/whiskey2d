@@ -21,7 +21,7 @@ namespace Project
 		{
 			X = 0f;
 			Y = 0f;
-			Sprite = new Sprite("enemy2c.png", new Vector(1f, 1f), new Vector(0f, 0f), 0.5f, new Color(255, 255, 255, 255), 0f);
+			Sprite = new Sprite("__PIXEL__", new Vector(300f, 300f), new Vector(0f, 0f), 0.5f, new Color(255, 128, 0, 255), 0f);
 			Light = new Light(new Vector(0f, 0f), new Color(255, 255, 255, 255), 512f, false);
 			Shadows = new ShadowProperties(false, true, false, 1f, 100f);
 			Name = "???";

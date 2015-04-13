@@ -21,6 +21,27 @@ namespace Project
 		 	plr.Position = new Vector(200);
 		 	Level.Camera.TruePosition = plr.Position;
 		 	
+		 	SpriteEffect fx = new SpriteEffect(Level);
+		 	fx.Position = plr.Position;
+		 	fx.Effect = "teleport";
+		 	fx.Frames = new Vector(2, 5);
+		 	fx.Speed = 7;
+		 	
+		 	
+		 	fx = new SpriteEffect(Level);
+		 	fx.Position = plr.Position + new Vector(150, 200);
+		 	fx.Effect = "teleport";
+		 	fx.Frames = new Vector(2, 5);
+		 	fx.Speed = 7;
+		 	
+		 	
+		 	fx = new SpriteEffect(Level);
+		 	fx.Position = plr.Position + new Vector(65, 100);
+		 	fx.Effect = "teleport";
+		 	fx.Frames = new Vector(2, 5);
+		 	fx.Speed = 5;
+		 	fx.Sprite.Scale *= 3;
+		 	
 		 	Objects.getObject<Wall>("WALLPIPE").Active = (Objects.getObject<Wall>("doorA").Y < 1201);
 		 	if (Objects.getObject<Wall>("WALLPIPE").Active){
 		 		Objects.getObject<Wall>("WALLPIPE").X = 9650;
@@ -40,6 +61,15 @@ namespace Project
 		
 	}
 }
+
+
+
+
+
+
+
+
+
 
 
 
