@@ -60,7 +60,7 @@ namespace Project
 		 	float speed = 3f;
 		 	nodes.ForEach( n=> {
 		 	
-		 		n.Velocity += -.005f * n.Velocity;
+		 		n.Velocity += -.01f * n.Velocity;
 		 	
 		 		Vector fUs = n.KValue * (n.RestPosition - n.Position);
 		 		n.Acceleration += fUs;
@@ -206,8 +206,8 @@ namespace Project
 		
 				Gob.Velocity += new Vector(hasNeighbors ? Gob.Acceleration.X : 0, Gob.Acceleration.Y);
 				
-				if (Gob.Velocity.Length > 30){
-					Gob.Velocity = 30 * Gob.Velocity.Unit;
+				if (Gob.Velocity.Length > 60){
+					Gob.Velocity = 60 * Gob.Velocity.Unit;
 				}
 				
 				Gob.Position += Gob.Velocity;
@@ -220,6 +220,8 @@ namespace Project
 	
 	}
 }
+
+
 
 
 

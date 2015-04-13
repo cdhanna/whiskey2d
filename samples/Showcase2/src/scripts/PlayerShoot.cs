@@ -27,7 +27,7 @@ namespace Project
 		public override void onStart()
 		{
 		 	laserSound = new Sound("gunfire.wav");
-		 
+		 	laserSound.setVolume(.1f);
 		 	//laserSound.Looped = true;
 		 
 		 	//new Sound("gunfire.wav");
@@ -107,6 +107,15 @@ namespace Project
 		 	}
 		 	
 		 	
+		 	RayCollisions<FlyBug> badguyCollsBugs = Gob.currentRayCollisions<FlyBug>(start , dir);
+		 	if (badguyCollsBugs.Count > 0){
+		 		if (rc == null || rc.Length > badguyCollsBugs[0].Length){
+		 			rc = badguyCollsBugs[0];
+		 			target.Position = rc.ContactPoint;
+		 		}
+		 	}
+		 	
+		 	
 		 	if (rayColls.Count > 0){
 		 		target.Position = rc.ContactPoint;
 		 		Vector screenPos = Level.Camera.getScreenCoordinate(Gob.GunTipPosition);
@@ -130,7 +139,7 @@ namespace Project
 		 	}
 		 	if (space && rc != null){
 		 			Log.debug("shoot");
-		 			laserSound.duplicate().play();
+		 			laserSound.duplicate().setVolume(.4f).play();
 		 			//laserSound.Pan = 0;
 		 			
 		 			
@@ -139,7 +148,15 @@ namespace Project
 		 				brc.Gob.close();
 		 			}
 		 			
+		 			if (rc is RayCollision<Worm>){
+		 				RayCollision<Worm> brc = (RayCollision<Worm>) rc;
+		 				brc.Gob.close();
+		 			}
 		 			
+		 			if (rc is RayCollision<FlyBug>){
+		 				RayCollision<FlyBug> brc = (RayCollision<FlyBug>) rc;
+		 				brc.Gob.close();
+		 			}
 		 			
 		 			
 		 			float height = (Rand.Instance.nextFloat() * 20 - 10);
@@ -243,6 +260,12 @@ namespace Project
 	
 	
 }
+
+
+
+
+
+
 
 
 
